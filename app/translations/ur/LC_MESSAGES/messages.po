@@ -1,0 +1,484 @@
+# Urdu translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-10-08 16:38+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ur\n"
+"Language-Team: ur <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/blueprints/marketing/content.py:28
+msgid "CV Checker"
+msgstr "سی وی چیکر"
+
+#: app/blueprints/marketing/content.py:29
+msgid "CV Generator"
+msgstr "سی وی جنریٹر"
+
+#: app/blueprints/marketing/content.py:30
+msgid "Captions"
+msgstr "کیپشنز"
+
+#: app/blueprints/marketing/content.py:31
+msgid "Notes"
+msgstr "نوٹس"
+
+#: app/blueprints/marketing/content.py:32
+msgid "Expenses"
+msgstr "اخراجات"
+
+#: app/blueprints/marketing/content.py:36 app/templates/partials/navbar.html:37
+#: app/templates/partials/navbar.html:56
+msgid "Sign up free"
+msgstr "مفت سائن اپ کریں"
+
+#: app/blueprints/marketing/content.py:36
+msgid "With email or Google."
+msgstr "ای میل یا گوگل کے ساتھ۔"
+
+#: app/blueprints/marketing/content.py:37
+msgid "Pick a tool"
+msgstr "ٹول چنیں"
+
+#: app/blueprints/marketing/content.py:37
+msgid "All five live on your dashboard."
+msgstr "پانچوں ٹولز آپ کے ڈیش بورڈ پر موجود ہیں۔"
+
+#: app/blueprints/marketing/content.py:38
+msgid "It's all saved"
+msgstr "سب کچھ محفوظ ہے"
+
+#: app/blueprints/marketing/content.py:38
+msgid "Come back anytime, any device."
+msgstr "کبھی بھی، کسی بھی ڈیوائس سے واپس آئیں۔"
+
+#: app/blueprints/marketing/content.py:42
+msgid "No credit card"
+msgstr "کوئی کریڈٹ کارڈ نہیں"
+
+#: app/blueprints/marketing/content.py:43
+msgid "No paid plans"
+msgstr "کوئی پیڈ پلان نہیں"
+
+#: app/blueprints/marketing/content.py:44
+msgid "All five tools included"
+msgstr "پانچوں ٹولز شامل"
+
+#: app/blueprints/marketing/content.py:49
+msgid "Is Toolverse really free?"
+msgstr "کیا ٹول ورس واقعی مفت ہے؟"
+
+#: app/blueprints/marketing/content.py:50
+msgid "Yes. All five tools are free, with no paid plans and no credit card. AI tools have a fair daily limit so they stay free for everyone."
+msgstr "جی ہاں۔ پانچوں ٹولز مفت ہیں، نہ کوئی پیڈ پلان ہے اور نہ کریڈٹ کارڈ چاہیے۔ اے آئی ٹولز کی ایک مناسب روزانہ حد ہے تاکہ یہ سب کے لیے مفت رہیں۔"
+
+#: app/blueprints/marketing/content.py:54
+msgid "Why do I need to log in?"
+msgstr "مجھے لاگ ان کیوں کرنا ہوگا؟"
+
+#: app/blueprints/marketing/content.py:55
+msgid "So your CVs, notes and expenses are saved to your own account and stay private to you, on any device."
+msgstr "تاکہ آپ کی سی وی، نوٹس اور اخراجات آپ کے اپنے اکاؤنٹ میں محفوظ رہیں اور صرف آپ تک محدود رہیں، کسی بھی ڈیوائس پر۔"
+
+#: app/blueprints/marketing/content.py:59
+msgid "Is my CV safe?"
+msgstr "کیا میری سی وی محفوظ ہے؟"
+
+#: app/blueprints/marketing/content.py:60
+msgid "Yes. Your CV is stored privately and only you can open it. We never share it."
+msgstr "جی ہاں۔ آپ کی سی وی نجی طور پر محفوظ کی جاتی ہے اور صرف آپ ہی اسے کھول سکتے ہیں۔ ہم اسے کبھی کسی کے ساتھ شیئر نہیں کرتے۔"
+
+#: app/blueprints/marketing/content.py:63
+msgid "Can I use it in Urdu?"
+msgstr "کیا اسے اردو میں استعمال کیا جا سکتا ہے؟"
+
+#: app/blueprints/marketing/content.py:64
+msgid "Yes. Switch to Urdu from the menu at the top and the whole site changes to Urdu."
+msgstr "جی ہاں۔ اوپر والے مینو سے اردو چنیں اور پوری سائٹ اردو میں بدل جائے گی۔"
+
+#: app/blueprints/marketing/content.py:70 app/templates/partials/navbar.html:36
+#: app/templates/partials/navbar.html:55
+msgid "Log in"
+msgstr "لاگ ان"
+
+#: app/blueprints/marketing/content.py:71
+msgid "Accounts are almost ready. Soon you can log in with email or Google and find all your work saved."
+msgstr "اکاؤنٹس تقریباً تیار ہیں۔ جلد ہی آپ ای میل یا گوگل سے لاگ ان کر سکیں گے اور اپنا سارا کام محفوظ پائیں گے۔"
+
+#: app/blueprints/marketing/content.py:75
+msgid "Sign up"
+msgstr "سائن اپ"
+
+#: app/blueprints/marketing/content.py:76
+msgid "Free accounts are almost ready. Soon you can sign up with email or Google in under a minute."
+msgstr "مفت اکاؤنٹس تقریباً تیار ہیں۔ جلد ہی آپ ای میل یا گوگل سے ایک منٹ سے بھی کم میں سائن اپ کر سکیں گے۔"
+
+#: app/blueprints/marketing/content.py:80 app/templates/partials/footer.html:5
+msgid "Privacy"
+msgstr "پرائیویسی"
+
+#: app/blueprints/marketing/content.py:81
+msgid "We are writing a clear, simple privacy policy. It will be here soon."
+msgstr "ہم ایک واضح اور سادہ پرائیویسی پالیسی لکھ رہے ہیں۔ یہ جلد یہاں ہوگی۔"
+
+#: app/blueprints/marketing/content.py:84 app/templates/partials/footer.html:6
+msgid "Terms"
+msgstr "شرائط"
+
+#: app/blueprints/marketing/content.py:85
+msgid "We are writing simple, fair terms of use. They will be here soon."
+msgstr "ہم استعمال کی سادہ اور منصفانہ شرائط لکھ رہے ہیں۔ یہ جلد یہاں ہوں گی۔"
+
+#: app/blueprints/marketing/content.py:88 app/templates/partials/footer.html:7
+msgid "Contact"
+msgstr "رابطہ"
+
+#: app/blueprints/marketing/content.py:89
+msgid "A contact page is on its way. It will be here soon."
+msgstr "رابطے کا صفحہ تیار ہو رہا ہے۔ یہ جلد یہاں ہوگا۔"
+
+#: app/templates/base.html:7
+msgid "Free tools for work and life: CV checker, CV generator, captions, notes and expenses. One account, everything saved."
+msgstr "کام اور زندگی کے لیے مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور اخراجات۔ ایک اکاؤنٹ، سب کچھ محفوظ۔"
+
+#: app/templates/base.html:26
+msgid "Skip to content"
+msgstr "مواد پر جائیں"
+
+#: app/templates/errors/404.html:3
+msgid "Page not found"
+msgstr "صفحہ نہیں ملا"
+
+#: app/templates/errors/404.html:8
+msgid "Page not found."
+msgstr "صفحہ نہیں ملا۔"
+
+#: app/templates/errors/404.html:9
+msgid "This page does not exist or was moved."
+msgstr "یہ صفحہ موجود نہیں یا کہیں اور منتقل ہو گیا ہے۔"
+
+#: app/templates/errors/404.html:10 app/templates/errors/500.html:10
+#: app/templates/marketing/coming_soon.html:16
+msgid "Back to home"
+msgstr "ہوم پیج پر واپس"
+
+#: app/templates/errors/500.html:3
+msgid "Something went wrong"
+msgstr "کچھ غلط ہو گیا"
+
+#: app/templates/errors/500.html:8
+msgid "Something went wrong."
+msgstr "کچھ غلط ہو گیا۔"
+
+#: app/templates/errors/500.html:9
+msgid "It is not you, it is us. Please try again in a moment."
+msgstr "غلطی آپ کی نہیں، ہماری ہے۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
+
+#: app/templates/marketing/coming_soon.html:11
+msgid "Coming soon"
+msgstr "جلد آ رہا ہے"
+
+#: app/templates/marketing/coming_soon.html:17
+#: app/templates/marketing/sections/hero.html:22
+msgid "Explore tools"
+msgstr "ٹولز دیکھیں"
+
+#: app/templates/marketing/index.html:3
+msgid "Toolverse — Free tools for work and life"
+msgstr "ٹول ورس — کام اور زندگی کے لیے مفت ٹولز"
+
+#: app/templates/marketing/sections/cta.html:3
+msgid "Start free"
+msgstr "آج ہی مفت"
+
+#: app/templates/marketing/sections/cta.html:4
+msgid "today."
+msgstr "شروع کریں۔"
+
+#: app/templates/marketing/sections/cta.html:6
+msgid "Create free account"
+msgstr "مفت اکاؤنٹ بنائیں"
+
+#: app/templates/marketing/sections/demo.html:3
+msgid "1 · Upload"
+msgstr "۱ · اپ لوڈ"
+
+#: app/templates/marketing/sections/demo.html:3
+msgid "2 · AI checks"
+msgstr "۲ · اے آئی جانچ"
+
+#: app/templates/marketing/sections/demo.html:3
+msgid "3 · Get results"
+msgstr "۳ · نتائج"
+
+#: app/templates/marketing/sections/demo.html:6
+msgid "See it in action"
+msgstr "عمل میں دیکھیں"
+
+#: app/templates/marketing/sections/demo.html:8
+#: app/templates/partials/navbar.html:5
+msgid "How it works"
+msgstr "یہ کیسے کام کرتا ہے"
+
+#: app/templates/marketing/sections/demo.html:25
+#: app/templates/marketing/sections/tools.html:21
+msgid "Drop your CV here"
+msgstr "اپنی سی وی یہاں ڈالیں"
+
+#: app/templates/marketing/sections/demo.html:26
+#: app/templates/marketing/sections/tools.html:22
+msgid "PDF, up to [X] MB"
+msgstr "پی ڈی ایف، زیادہ سے زیادہ [X] ایم بی"
+
+#: app/templates/marketing/sections/demo.html:44
+msgid "AI is reading your CV…"
+msgstr "اے آئی آپ کی سی وی پڑھ رہا ہے…"
+
+#: app/templates/marketing/sections/demo.html:50
+msgid "Checking structure"
+msgstr "ساخت کی جانچ"
+
+#: app/templates/marketing/sections/demo.html:51
+msgid "Checking skills"
+msgstr "مہارتوں کی جانچ"
+
+#: app/templates/marketing/sections/demo.html:52
+msgid "Checking wording"
+msgstr "الفاظ کی جانچ"
+
+#: app/templates/marketing/sections/demo.html:61
+#: app/templates/marketing/sections/tools.html:27
+msgid "Score"
+msgstr "اسکور"
+
+#: app/templates/marketing/sections/demo.html:66
+#, python-format
+msgid "[Tip %(n)s from AI]"
+msgstr "[اے آئی کی تجویز %(n)s]"
+
+#: app/templates/marketing/sections/faq.html:4
+msgid "Questions"
+msgstr "سوالات"
+
+#: app/templates/marketing/sections/free.html:5
+#, python-format
+msgid "100%% free"
+msgstr "سو فیصد مفت"
+
+#: app/templates/marketing/sections/free.html:6
+msgid "Free today. Free tomorrow."
+msgstr "آج بھی مفت، کل بھی مفت۔"
+
+#: app/templates/marketing/sections/free.html:8
+msgid "Every tool is free for everyone. No trials, no upgrades, no surprises."
+msgstr "ہر ٹول سب کے لیے مفت ہے۔ نہ ٹرائل، نہ اپ گریڈ، نہ کوئی سرپرائز۔"
+
+#: app/templates/marketing/sections/hero.html:2
+msgid "work"
+msgstr "کام"
+
+#: app/templates/marketing/sections/hero.html:7
+msgid "New"
+msgstr "نیا"
+
+#: app/templates/marketing/sections/hero.html:8
+msgid "5 tools, all free"
+msgstr "۵ ٹولز، سب مفت"
+
+#: app/templates/marketing/sections/hero.html:13
+#, python-format
+msgid "Your free toolkit for %(highlight)s and life."
+msgstr "%(highlight)s اور زندگی کے لیے آپ کا مفت ٹول کٹ۔"
+
+#: app/templates/marketing/sections/hero.html:17
+msgid "Build and check your CV, write captions, keep notes and track expenses. One account. Everything saved."
+msgstr "اپنی سی وی بنائیں اور چیک کریں، کیپشن لکھیں، نوٹس رکھیں اور اخراجات کا حساب رکھیں۔ ایک اکاؤنٹ۔ سب کچھ محفوظ۔"
+
+#: app/templates/marketing/sections/hero.html:21
+msgid "Get started for free"
+msgstr "مفت شروع کریں"
+
+#: app/templates/marketing/sections/how_it_works.html:2
+msgid "Start in a minute."
+msgstr "ایک منٹ میں شروع کریں۔"
+
+#: app/templates/marketing/sections/preview.html:16
+#: app/templates/partials/navbar.html:4
+msgid "Tools"
+msgstr "ٹولز"
+
+#: app/templates/marketing/sections/preview.html:25
+msgid "my_cv.pdf · checked just now"
+msgstr "my_cv.pdf · ابھی چیک ہوئی"
+
+#: app/templates/marketing/sections/preview.html:27
+msgid "CV Report"
+msgstr "سی وی رپورٹ"
+
+#: app/templates/marketing/sections/preview.html:28
+msgid "Example result"
+msgstr "مثالی نتیجہ"
+
+#: app/templates/marketing/sections/preview.html:33
+msgid "Overall score"
+msgstr "مجموعی اسکور"
+
+#: app/templates/marketing/sections/preview.html:41
+#, python-format
+msgid "[Suggestion %(n)s from AI]"
+msgstr "[اے آئی کا مشورہ %(n)s]"
+
+#: app/templates/marketing/sections/tools.html:7
+msgid "Five tools. One login."
+msgstr "پانچ ٹولز۔ ایک لاگ ان۔"
+
+#: app/templates/marketing/sections/tools.html:8
+msgid "Everything you need, in one clean dashboard."
+msgstr "آپ کی ضرورت کی ہر چیز، ایک صاف ستھرے ڈیش بورڈ میں۔"
+
+#: app/templates/marketing/sections/tools.html:14
+msgid "01 — CV Checker"
+msgstr "۰۱ — سی وی چیکر"
+
+#: app/templates/marketing/sections/tools.html:14
+msgid "Know exactly what your CV is missing."
+msgstr "جانیں آپ کی سی وی میں بالکل کیا کمی ہے۔"
+
+#: app/templates/marketing/sections/tools.html:15
+msgid "Upload your CV. Get a score and clear, practical tips from AI in seconds."
+msgstr "اپنی سی وی اپ لوڈ کریں۔ چند سیکنڈز میں اے آئی سے اسکور اور واضح، عملی مشورے حاصل کریں۔"
+
+#: app/templates/marketing/sections/tools.html:16
+msgid "Check my CV"
+msgstr "میری سی وی چیک کریں"
+
+#: app/templates/marketing/sections/tools.html:31
+msgid "Tips"
+msgstr "مشورے"
+
+#: app/templates/marketing/sections/tools.html:42
+msgid "[Your Name]"
+msgstr "[آپ کا نام]"
+
+#: app/templates/marketing/sections/tools.html:43
+msgid "[Job title] · [City]"
+msgstr "[عہدہ] · [شہر]"
+
+#: app/templates/marketing/sections/tools.html:44
+msgid "Experience"
+msgstr "تجربہ"
+
+#: app/templates/marketing/sections/tools.html:50
+msgid "Skills"
+msgstr "مہارتیں"
+
+#: app/templates/marketing/sections/tools.html:58
+msgid "02 — CV Generator"
+msgstr "۰۲ — سی وی جنریٹر"
+
+#: app/templates/marketing/sections/tools.html:58
+msgid "A polished CV, without the design work."
+msgstr "ڈیزائن کی محنت کے بغیر، ایک شاندار سی وی۔"
+
+#: app/templates/marketing/sections/tools.html:59
+msgid "Fill a simple form, pick a template, download a PDF. AI can help you write the hard parts."
+msgstr "ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں، پی ڈی ایف ڈاؤن لوڈ کریں۔ مشکل حصے لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
+
+#: app/templates/marketing/sections/tools.html:60
+msgid "Build my CV"
+msgstr "میری سی وی بنائیں"
+
+#: app/templates/marketing/sections/tools.html:65
+msgid "03 — Captions"
+msgstr "۰۳ — کیپشنز"
+
+#: app/templates/marketing/sections/tools.html:65
+msgid "Never stare at an empty caption again."
+msgstr "اب خالی کیپشن کو گھورنے کی ضرورت نہیں۔"
+
+#: app/templates/marketing/sections/tools.html:66
+msgid "Type a topic. Get ready-to-post captions for Instagram and LinkedIn."
+msgstr "موضوع لکھیں۔ انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل کریں۔"
+
+#: app/templates/marketing/sections/tools.html:67
+msgid "Write captions"
+msgstr "کیپشن لکھیں"
+
+#: app/templates/marketing/sections/tools.html:70
+msgid "[Your topic, e.g. new job]"
+msgstr "[آپ کا موضوع، مثلاً نئی نوکری]"
+
+#: app/templates/marketing/sections/tools.html:71
+msgid "Generate"
+msgstr "بنائیں"
+
+#: app/templates/marketing/sections/tools.html:73
+#: app/templates/marketing/sections/tools.html:74
+#, python-format
+msgid "[Caption %(n)s from AI]"
+msgstr "[اے آئی کا کیپشن %(n)s]"
+
+#: app/templates/marketing/sections/tools.html:81
+msgid "04 — Notes"
+msgstr "۰۴ — نوٹس"
+
+#: app/templates/marketing/sections/tools.html:81
+msgid "Your ideas, saved everywhere."
+msgstr "آپ کے خیالات، ہر جگہ محفوظ۔"
+
+#: app/templates/marketing/sections/tools.html:81
+msgid "Write, edit and search notes from any device."
+msgstr "کسی بھی ڈیوائس سے نوٹس لکھیں، بدلیں اور تلاش کریں۔"
+
+#: app/templates/marketing/sections/tools.html:81
+msgid "Open Notes"
+msgstr "نوٹس کھولیں"
+
+#: app/templates/marketing/sections/tools.html:82
+msgid "05 — Expenses"
+msgstr "۰۵ — اخراجات"
+
+#: app/templates/marketing/sections/tools.html:82
+msgid "Know where your money goes."
+msgstr "جانیں آپ کا پیسہ کہاں جاتا ہے۔"
+
+#: app/templates/marketing/sections/tools.html:82
+msgid "Log spending daily, see your monthly total."
+msgstr "روزانہ خرچ لکھیں، اپنا ماہانہ کُل دیکھیں۔"
+
+#: app/templates/marketing/sections/tools.html:82
+msgid "Open Expenses"
+msgstr "اخراجات کھولیں"
+
+#: app/templates/partials/footer.html:9
+#, python-format
+msgid "© %(year)s Toolverse"
+msgstr "© %(year)s ٹول ورس"
+
+#: app/templates/partials/navbar.html:6
+msgid "FAQ"
+msgstr "سوالات"
+
+#: app/templates/partials/navbar.html:10
+msgid "Language"
+msgstr "زبان"
+
+#: app/templates/partials/navbar.html:22
+msgid "Main"
+msgstr "مرکزی"
+
+#: app/templates/partials/navbar.html:42
+msgid "Open menu"
+msgstr "مینو کھولیں"
+

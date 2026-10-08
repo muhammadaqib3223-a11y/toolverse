@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Page not found') }} — Toolverse{% endblock %}
+
+{% block content %}
+  <section class="container-page flex min-h-[70vh] flex-col items-center justify-center py-24 text-center animate-fade-in">
+    <p class="label-mono" dir="ltr">404</p>
+    <h1 class="heading mt-4 text-[44px] sm:text-6xl">{{ _('Page not found.') }}</h1>
+    <p class="mt-5 max-w-[26rem] text-[15px] text-muted">{{ _('This page does not exist or was moved.') }}</p>
+    <a href="{{ url_for('marketing.index') }}" class="btn-primary mt-8">{{ _('Back to home') }}</a>
+  </section>
+{% endblock %}

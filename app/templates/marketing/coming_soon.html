@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} — Toolverse{% endblock %}
+
+{% block content %}
+  <section class="relative overflow-hidden">
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="container-page relative flex min-h-[70vh] flex-col items-center justify-center py-24 text-center animate-fade-in">
+      <p class="hero-badge">
+        <span class="spinner spinner-sm" aria-hidden="true"></span>
+        <span>{{ _('Coming soon') }}</span>
+      </p>
+      <h1 class="heading mt-6 text-[52px] sm:text-7xl lg:text-[88px]">{{ page.title }}</h1>
+      <p class="mx-auto mt-6 max-w-[28rem] text-pretty text-[15px] text-muted">{{ page.description }}</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="{{ url_for('marketing.index') }}" class="btn-primary">{{ _('Back to home') }}</a>
+        <a href="{{ url_for('marketing.index') }}#tools" class="btn-secondary">{{ _('Explore tools') }}</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

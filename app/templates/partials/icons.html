@@ -1,0 +1,22 @@
+{# Simple line icons (stroke 1.8). Usage: {% from "partials/icons.html" import icon %} {{ icon("upload", "h-4 w-4") }} #}
+{% macro icon(name, cls="h-4 w-4") -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{%- if name == "logo" -%}
+<path d="M12 2.75 20.25 7.25v9.5L12 21.25l-8.25-4.5v-9.5z"/><path d="M3.75 7.25 12 11.75l8.25-4.5"/><path d="M12 11.75v9.5"/>
+{%- elif name == "arrow-right" -%}
+<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+{%- elif name == "upload" -%}
+<path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M4 19.5h16"/>
+{%- elif name == "plus" -%}
+<path d="M12 5v14"/><path d="M5 12h14"/>
+{%- elif name == "menu" -%}
+<path d="M4 8h16"/><path d="M4 16h16"/>
+{%- elif name == "close" -%}
+<path d="M6 6l12 12"/><path d="M18 6 6 18"/>
+{%- elif name == "check" -%}
+<path d="m5 12.5 4.5 4.5L19 7.5"/>
+{%- elif name == "file" -%}
+<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>
+{%- endif -%}
+</svg>
+{%- endmacro %}

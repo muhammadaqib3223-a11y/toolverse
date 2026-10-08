@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ current_lang }}" dir="{{ 'rtl' if is_rtl else 'ltr' }}" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Toolverse{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ _('Free tools for work and life: CV checker, CV generator, captions, notes and expenses. One account, everything saved.') }}{% endblock %}">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+  {% if is_rtl %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap">
+  {% else %}
+  {# Only the glyphs for the "اردو" label in the language switcher. #}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@500&text=%D8%A7%D8%B1%D8%AF%D9%88&display=swap">
+  {% endif %}
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/aos/aos.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <script>document.documentElement.classList.replace("no-js", "js");</script>
+</head>
+<body class="min-h-screen bg-bg font-sans text-fg antialiased">
+  <a href="#main" class="skip-link">{{ _('Skip to content') }}</a>
+
+  {% include "partials/navbar.html" %}
+
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  <script src="{{ url_for('static', filename='vendor/aos/aos.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

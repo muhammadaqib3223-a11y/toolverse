@@ -1,0 +1,19 @@
+{% from "partials/icons.html" import icon %}
+
+<section id="free" class="container-page mt-32 sm:mt-40" data-aos="fade-up">
+  <div class="surface mx-auto max-w-[880px] px-6 py-12 text-center sm:px-12 sm:py-16">
+    <p class="label-mono text-accent">{{ _('100%% free') }}</p>
+    <h2 class="heading mx-auto mt-4 max-w-[12em] text-[36px] sm:text-5xl">{{ _('Free today. Free tomorrow.') }}</h2>
+    <p class="mx-auto mt-4 max-w-[28rem] text-[14px] text-muted">
+      {{ _('Every tool is free for everyone. No trials, no upgrades, no surprises.') }}
+    </p>
+    <ul class="mt-8 flex flex-wrap justify-center gap-2.5">
+      {% for point in free_points %}
+        <li class="inline-flex items-center gap-2 rounded-full border border-line-strong bg-card px-4 py-2 text-[13px]">
+          <span class="text-accent">{{ icon("check", "h-3.5 w-3.5") }}</span>
+          {{ point }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

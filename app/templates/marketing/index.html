@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Toolverse — Free tools for work and life') }}{% endblock %}
+
+{% block content %}
+  {% include "marketing/sections/hero.html" %}
+  {% include "marketing/sections/demo.html" %}
+  {% include "marketing/sections/tools.html" %}
+  {% include "marketing/sections/how_it_works.html" %}
+  {% include "marketing/sections/free.html" %}
+  {% include "marketing/sections/faq.html" %}
+  {% include "marketing/sections/cta.html" %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+{% endblock %}

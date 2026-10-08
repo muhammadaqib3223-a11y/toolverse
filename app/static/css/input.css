@@ -1,0 +1,190 @@
+/*
+ * Tailwind source. Compile to app.css with:
+ *   .tools\tailwindcss.exe -i app/static/css/input.css -o app/static/css/app.css --minify
+ * Design tokens live in tailwind.config.js (see CLAUDE.md section 6).
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base ---------- */
+@layer base {
+  :root { color-scheme: dark; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body { line-height: 1.6; }
+
+  ::selection { background: rgb(155 140 255 / 0.35); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.accent");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Keep anchored sections clear of the sticky navbar. */
+  [id] { scroll-margin-top: 5rem; }
+
+  summary::-webkit-details-marker { display: none; }
+
+  /* Urdu (RTL): Nastaliq needs taller lines and must never get letter-spacing,
+     otherwise the joined letters break apart. */
+  [dir="rtl"] body { line-height: 2.1; }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-content px-5 sm:px-8; }
+
+  .heading { font-weight: 700; letter-spacing: -0.05em; line-height: 1; }
+  [dir="rtl"] .heading { letter-spacing: 0; line-height: 1.75; }
+
+  .label-mono {
+    @apply font-mono text-[11px] font-medium uppercase text-faint;
+    letter-spacing: 0.14em;
+  }
+  [dir="rtl"] .label-mono { letter-spacing: 0; font-family: theme("fontFamily.sans"); }
+
+  .skip-link {
+    @apply fixed start-4 top-4 z-[60] -translate-y-24 rounded-full bg-white px-4 py-2 text-sm font-medium text-black;
+    transition: transform 0.2s ease;
+  }
+  .skip-link:focus { @apply translate-y-0; }
+
+  /* Buttons: pill shape, small lift on hover. */
+  .btn {
+    @apply inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 text-[14px] font-medium;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn:hover { transform: translateY(-1px) scale(1.02); }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { @apply btn bg-white text-black hover:bg-white/90; }
+  .btn-secondary { @apply btn border border-line-strong bg-btn-secondary text-fg hover:border-[#303036]; }
+  .btn-sm { @apply h-8 px-4 text-[13px]; }
+
+  .hero-badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 pe-3 ps-1 text-[12px] text-muted;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  a.hero-badge:hover { @apply border-line-strong text-fg; }
+
+  /* Cards */
+  .surface { @apply rounded-[20px] border border-line bg-surface; }
+  .inner-card { @apply rounded-[14px] border border-line bg-card; }
+  .lift { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.35s ease; }
+  .lift:hover { transform: translateY(-4px); border-color: theme("colors.line-strong"); }
+
+  /* Navbar */
+  .site-header {
+    @apply border-b border-transparent bg-bg/70 backdrop-blur-md;
+    transition: border-color 0.3s ease;
+  }
+  .site-header.is-scrolled { @apply border-line; }
+  .nav-link { @apply text-muted transition-colors hover:text-fg; }
+  .nav-link.is-active { @apply text-fg; }
+
+  /* Purple glows */
+  .preview-glow::before {
+    content: "";
+    position: absolute;
+    inset: -12% -8% -20%;
+    z-index: -1;
+    background: radial-gradient(55% 55% at 50% 45%, rgb(155 140 255 / 0.22), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .page-glow {
+    position: absolute;
+    inset: -20% 0 auto;
+    height: 70%;
+    background: radial-gradient(45% 50% at 50% 50%, rgb(155 140 255 / 0.16), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+
+  /* Loading states */
+  .spinner {
+    @apply inline-block h-4 w-4 shrink-0 rounded-full border-2 border-line-strong border-t-accent;
+    animation: spin 0.9s linear infinite;
+  }
+  .spinner-sm { @apply h-3 w-3 border-[1.5px]; }
+
+  .bar-fill { transform-origin: left center; }
+  [dir="rtl"] .bar-fill { transform-origin: right center; }
+
+  /* "How it works" demo */
+  .demo-tab {
+    @apply h-7 rounded-full border border-line px-3 text-[11px] font-medium text-muted;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  .demo-tab:hover { @apply text-fg; }
+  .demo-tab[aria-selected="true"] { @apply border-accent bg-accent text-black; }
+
+  .demo-panel {
+    position: absolute;
+    inset: 1.25rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s linear 0.5s;
+  }
+  .demo-panel.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0s;
+  }
+  .demo-panel .bar-fill { transform: scaleX(0); }
+  .demo-panel.is-active .bar-fill { animation: bar-fill var(--fill-duration, 2.2s) cubic-bezier(0.3, 0.6, 0.3, 1) forwards; }
+  .demo-panel .stagger > * { opacity: 0; }
+  .demo-panel.is-active .stagger > * {
+    animation: fade-up 0.45s ease forwards;
+    animation-delay: calc(var(--i, 0) * 450ms + 250ms);
+  }
+
+  .faq-item[open] .faq-answer { animation: fade-up 0.35s ease both; }
+}
+
+/* ---------- Animations ---------- */
+@layer utilities {
+  .animate-rise { animation: rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both; }
+  .animate-fade-in { animation: fade-in 0.6s ease both; }
+}
+
+/* Hero heading: words blur in one by one (words are split by animations.js).
+   If the script never runs, the heading still appears after a short delay. */
+.js [data-blur-words]:not(.is-ready) { opacity: 0; animation: show-fallback 0s linear 1.5s forwards; }
+[data-blur-words] .word {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(10px);
+  animation: blur-in 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms + 100ms);
+}
+
+/* If the scroll-reveal library failed to load, never leave content hidden. */
+.no-aos [data-aos] { opacity: 1 !important; transform: none !important; }
+
+@keyframes blur-in { to { opacity: 1; filter: blur(0); transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(48px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes show-fallback { to { opacity: 1; } }
+
+/* Respect users who ask for less motion: everything shows in its final state. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .spinner { animation: none !important; }
+  .lift:hover, .btn:hover { transform: none; }
+  [data-aos] { opacity: 1 !important; transform: none !important; }
+}

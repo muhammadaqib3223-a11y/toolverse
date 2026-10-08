@@ -1,0 +1,72 @@
+{% from "partials/icons.html" import icon %}
+{# Looping "how it works" demo: Upload → AI checks → Results. Driven by static/js/animations.js. #}
+{% set demo_steps = [_('1 · Upload'), _('2 · AI checks'), _('3 · Get results')] %}
+
+<section id="how-it-works" class="container-page mt-24 sm:mt-32" data-demo data-aos="fade-up">
+  <h2 class="label-mono text-center">{{ _('See it in action') }}</h2>
+
+  <div class="mt-5 flex flex-wrap justify-center gap-2" role="tablist" aria-label="{{ _('How it works') }}">
+    {% for label in demo_steps %}
+      <button type="button" class="demo-tab" role="tab" id="demo-tab-{{ loop.index0 }}"
+              aria-controls="demo-panel-{{ loop.index0 }}"
+              aria-selected="{{ 'true' if loop.first else 'false' }}"
+              tabindex="{{ 0 if loop.first else -1 }}"
+              data-demo-tab>{{ label }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="relative mx-auto mt-5 h-[200px] max-w-[480px] overflow-hidden rounded-[18px] border border-line bg-surface">
+    {# 1 — Upload #}
+    <div class="demo-panel is-active" id="demo-panel-0" role="tabpanel" aria-labelledby="demo-tab-0" data-demo-panel>
+      <div class="flex h-full flex-col justify-center gap-4">
+        <div class="flex items-center gap-3 rounded-[14px] border border-dashed border-line-strong bg-card px-4 py-4">
+          <span class="text-accent">{{ icon("upload", "h-5 w-5") }}</span>
+          <div class="text-start">
+            <p class="text-[13px] font-medium">{{ _('Drop your CV here') }}</p>
+            <p class="text-[11px] text-faint">{{ _('PDF, up to [X] MB') }}</p>
+          </div>
+        </div>
+        <div class="inner-card flex items-center gap-3 px-4 py-3">
+          <span class="text-muted">{{ icon("file", "h-4 w-4") }}</span>
+          <span class="text-[12px]" dir="ltr">my_cv.pdf</span>
+          <div class="ms-auto h-1 w-24 overflow-hidden rounded-full bg-line-strong">
+            <div class="bar-fill h-full w-full rounded-full bg-accent" style="--fill-duration: 2.2s"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# 2 — AI checks #}
+    <div class="demo-panel" id="demo-panel-1" role="tabpanel" aria-labelledby="demo-tab-1" data-demo-panel>
+      <div class="flex h-full flex-col justify-center text-start">
+        <p class="flex items-center gap-3 text-[13px] font-medium">
+          <span class="spinner" aria-hidden="true"></span>
+          {{ _('AI is reading your CV…') }}
+        </p>
+        <div class="mt-4 h-1 overflow-hidden rounded-full bg-line-strong">
+          <div class="bar-fill h-full w-[75%] rounded-full bg-accent" style="--fill-duration: 2.6s"></div>
+        </div>
+        <ul class="stagger mt-4 space-y-1.5 text-[12px] text-muted">
+          <li style="--i: 0">{{ _('Checking structure') }}</li>
+          <li style="--i: 1">{{ _('Checking skills') }}</li>
+          <li style="--i: 2">{{ _('Checking wording') }}</li>
+        </ul>
+      </div>
+    </div>
+
+    {# 3 — Results #}
+    <div class="demo-panel" id="demo-panel-2" role="tabpanel" aria-labelledby="demo-tab-2" data-demo-panel>
+      <div class="grid h-full items-center gap-3 text-start sm:grid-cols-[0.8fr_1.2fr]">
+        <div class="inner-card hidden h-full flex-col justify-center p-4 sm:flex">
+          <p class="text-[11px] text-muted">{{ _('Score') }}</p>
+          <p class="mt-1 text-4xl font-bold tracking-tight">[72]</p>
+        </div>
+        <ul class="stagger space-y-2 text-[11px] text-muted">
+          {% for n in range(1, 4) %}
+            <li class="inner-card rounded-[12px] px-4 py-2.5" style="--i: {{ loop.index0 }}">{{ _('[Tip %(n)s from AI]', n=n) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

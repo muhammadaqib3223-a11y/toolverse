@@ -1,0 +1,9 @@
+{# Shared text block for a tool feature row. #}
+{% macro feature_text(label, title, description, cta, href) -%}
+  <div class="text-start">
+    <p class="label-mono text-accent">{{ label }}</p>
+    <h3 class="heading mt-3 max-w-[11em] text-[32px] sm:text-[40px]">{{ title }}</h3>
+    <p class="mt-4 max-w-[26rem] text-[14px] text-muted">{{ description }}</p>
+    <a href="{{ href }}" class="btn-primary btn-sm mt-6">{{ cta }}</a>
+  </div>
+{%- endmacro %}

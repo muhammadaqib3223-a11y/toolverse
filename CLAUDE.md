@@ -1,0 +1,156 @@
+# Toolverse — Project Rules & Requirements
+
+> Read this file fully before doing ANY work in this project.
+> These rules apply to every task, big or small.
+
+## 1. About the project
+
+Toolverse is a free SaaS web app: one account, five tools.
+
+- **Marketing website** (public): hero, tools, how it works, "100% free", FAQ, footer
+- **App / dashboard** (login required): sidebar with the five tools
+- **Tools:**
+  1. AI CV Checker (upload PDF → score + suggestions)
+  2. CV Generator (fill a form → choose a template → download PDF; optional AI help to write summary/experience; CVs saved and editable)
+  3. AI Caption Generator (topic → Instagram/LinkedIn captions)
+  4. Notes (create, edit, delete, search)
+  5. Expense Tracker (add expenses, monthly total)
+- CV Generator and CV Checker form one "CV section": build a CV → check it → improve it.
+- Every user's data is private to them and saved in their account.
+- Budget: **$0**. Use only free tiers. No paid services.
+
+The project owner is a beginner learning to code. Explain what you did in simple words after each task.
+
+## 2. Tech stack (fixed — do not change without asking)
+
+| Part | Choice |
+|---|---|
+| Language | Python 3 |
+| Backend | Flask (app factory + Blueprints) |
+| Frontend | Jinja2 templates + Tailwind CSS + small vanilla JS |
+| Animations | CSS animations + a light library (e.g. AOS) for scroll reveal |
+| Auth | Supabase Auth — email/password AND Google login |
+| Database | Supabase (Postgres) with Row Level Security |
+| File storage | Supabase Storage (for CV PDFs) |
+| PDF generation | A pure-Python library (e.g. xhtml2pdf) so it runs on Render free without system packages |
+| AI | Google Gemini API (free tier) |
+| Languages | English + Urdu (Flask-Babel), Urdu must be RTL |
+| Hosting | Render (free) |
+
+## 3. Golden rules for the AI assistant
+
+1. **No shortcuts.** Write code as if the app will grow to thousands of users.
+2. **Plan first.** Before coding, list the files/folders you will create or change and wait for "OK" on anything big.
+3. **Folders before code.** If something needs a new folder or module, create it properly. Never dump code into an existing file just because it is faster.
+4. **One responsibility per file.** Routes, business logic, AI calls and database calls live in separate files.
+5. **Never hardcode secrets.** All keys go in `.env`. Keep `.env.example` updated. Never commit `.env`.
+6. **Never hardcode user-facing text.** Every visible string goes through translations (English + Urdu).
+7. **AI provider must be swappable.** All AI calls go through `app/services/ai/`. Switching Gemini → OpenAI later must only need a new provider file + a config change.
+8. **Mobile-first and responsive.** Every page must work on phone, tablet and laptop.
+9. **Respect `prefers-reduced-motion`** for all animations.
+10. **Handle errors.** Show friendly messages to users, log details for the developer. No blank crashes.
+11. **Small steps.** Finish and test one feature before starting the next.
+12. **Do not delete or rewrite working code** without asking first.
+13. **Do not add new libraries** without saying why and asking first.
+14. **Follow the design** (section 6) exactly. Do not invent a new style.
+
+## 4. Folder structure
+
+```
+toolverse/
+├── app/
+│   ├── __init__.py            # create_app() factory
+│   ├── config.py              # settings loaded from .env
+│   ├── extensions.py          # Babel, etc.
+│   ├── blueprints/
+│   │   ├── marketing/         # public landing page
+│   │   ├── auth/              # login, signup, logout, Google callback
+│   │   ├── dashboard/         # dashboard home
+│   │   └── tools/
+│   │       ├── cv_checker/
+│   │       ├── cv_generator/
+│   │       ├── captions/
+│   │       ├── notes/
+│   │       └── expenses/
+│   │   (each blueprint: __init__.py, routes.py, services.py, forms.py if needed)
+│   ├── services/
+│   │   ├── ai/
+│   │   │   ├── base.py        # AIProvider interface
+│   │   │   ├── gemini.py      # Gemini implementation
+│   │   │   └── __init__.py    # get_ai_provider() from config
+│   │   ├── supabase_client.py
+│   │   ├── pdf_reader.py      # read uploaded CVs (checker)
+│   │   └── pdf_builder.py     # build CV PDFs (generator)
+│   ├── templates/
+│   │   ├── base.html
+│   │   ├── partials/          # navbar, footer, sidebar, flash messages
+│   │   ├── marketing/
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   ├── tools/
+│   │   └── cv_templates/      # CV designs used for PDF output
+│   ├── static/
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── img/
+│   └── translations/          # en, ur
+├── tests/
+├── .env.example
+├── .gitignore
+├── requirements.txt
+├── run.py
+└── README.md
+```
+
+## 5. Build phases (one at a time)
+
+1. Project setup + folder structure + marketing landing page (EN/UR toggle) → deploy on Render
+2. Auth: signup, login, logout, Google login, protected dashboard
+3. Notes tool
+4. Expense Tracker tool
+5. AI Caption Generator (first Gemini integration)
+6. CV Generator (form + templates + PDF download, then optional AI help)
+7. AI CV Checker (PDF upload + Gemini), linked with the CV Generator
+
+AI tools must have a **daily usage limit per user** to stay inside the free tier.
+
+## 6. Design (applies to the WHOLE software: homepage, auth pages, dashboard, every tool)
+
+Style reference: the approved "Version 3 — Framer style" landing page (premium, minimal, like framer.com / vercel.com).
+
+**Colors**
+- Background `#000000`, raised surfaces `#0B0B0D`, inner cards `#111113`
+- Borders `#1E1E22` (subtle) and `#222226`
+- Text `#FFFFFF`, muted text `#8F8F98`, faint labels `#6B6B73`
+- Accent (purple) `#9B8CFF` — used sparingly: highlights, active states, progress bars, one word in a heading
+- Primary button: white background, black text, pill shape. Secondary button: `#141416` with border, pill shape
+
+**Fonts (only these two, never add more)**
+- **Geist** — all headings and body text
+- **Geist Mono** — small labels, step numbers, tags (e.g. "01 — CV CHECKER")
+- Headings: bold (700), very tight letter-spacing (about -0.05em), line-height ~1
+- For Urdu text use a proper Urdu font (e.g. Noto Nastaliq Urdu) with RTL layout
+
+**Shapes**
+- Cards: 14–22px radius, 1px subtle border, no heavy shadows
+- Buttons and badges: fully rounded (pill)
+- Icons: simple line SVGs (stroke ~1.8), never emoji
+
+**Animations (smooth, never flashy)**
+- Hero heading: words blur-in one by one on load
+- Product preview: rises up on load
+- Sections: fade up when scrolled into view
+- Animated "how it works" demo (upload → AI checks → results), looping
+- Cards and buttons: small lift/scale on hover
+- Dashboard: page content fades in, loading states use spinner + progress bar
+- Always respect `prefers-reduced-motion`
+
+**Layout**
+- Max content width ~1240px, generous spacing between sections
+- Alternating left/right feature sections for tools
+- Mobile: everything stacks in one column, sidebar becomes a top/bottom menu
+
+## 7. Privacy
+
+- CVs contain personal data: store them privately, only the owner can access them.
+- Use Supabase Row Level Security on every table.

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+instance/
+
+# Secrets — never commit
+.env
+
+# Local tools (Tailwind CLI binary)
+.tools/
+
+# Translations: compiled at build time from the .po files
+*.mo
+messages.pot
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

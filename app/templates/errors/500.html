@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Something went wrong') }} — Toolverse{% endblock %}
+
+{% block content %}
+  <section class="container-page flex min-h-[70vh] flex-col items-center justify-center py-24 text-center animate-fade-in">
+    <p class="label-mono" dir="ltr">500</p>
+    <h1 class="heading mt-4 text-[44px] sm:text-6xl">{{ _('Something went wrong.') }}</h1>
+    <p class="mt-5 max-w-[26rem] text-[15px] text-muted">{{ _('It is not you, it is us. Please try again in a moment.') }}</p>
+    <a href="{{ url_for('marketing.index') }}" class="btn-primary mt-8">{{ _('Back to home') }}</a>
+  </section>
+{% endblock %}

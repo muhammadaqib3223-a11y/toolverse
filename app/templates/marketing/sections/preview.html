@@ -1,0 +1,49 @@
+{# Static preview of the dashboard with an example CV report. Decorative. #}
+<div class="container-page mt-14 sm:mt-20">
+  <div class="preview-glow relative mx-auto max-w-[1000px] animate-rise" aria-hidden="true">
+    <div class="relative overflow-hidden rounded-[22px] border border-line bg-surface">
+      <div class="relative flex h-10 items-center border-b border-line px-4">
+        <span class="flex gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-line-strong"></span>
+          <span class="h-2 w-2 rounded-full bg-line-strong"></span>
+          <span class="h-2 w-2 rounded-full bg-line-strong"></span>
+        </span>
+        <span class="absolute inset-x-0 text-center font-mono text-[10px] text-faint" dir="ltr">toolverse.app/dashboard</span>
+      </div>
+
+      <div class="grid min-h-[300px] md:grid-cols-[180px_1fr]">
+        <aside class="hidden border-e border-line p-4 md:block">
+          <p class="label-mono px-2 text-[9px]">{{ _('Tools') }}</p>
+          <ul class="mt-3 space-y-1 text-[12px]">
+            {% for name in preview_tools %}
+              <li class="rounded-lg px-2 py-1.5 {{ 'bg-card text-fg' if loop.first else 'text-muted' }}">{{ name }}</li>
+            {% endfor %}
+          </ul>
+        </aside>
+
+        <div class="p-5 text-start sm:p-6">
+          <p class="text-[11px] text-faint">{{ _('my_cv.pdf · checked just now') }}</p>
+          <div class="mt-1 flex items-center justify-between gap-3">
+            <p class="text-lg font-semibold tracking-tight">{{ _('CV Report') }}</p>
+            <span class="rounded-md border border-line px-2 py-1 font-mono text-[10px] text-faint">{{ _('Example result') }}</span>
+          </div>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_1.35fr]">
+            <div class="inner-card p-5">
+              <p class="text-[11px] text-muted">{{ _('Overall score') }}</p>
+              <p class="mt-2 text-4xl font-bold tracking-tight">[72]</p>
+              <div class="mt-4 h-1 overflow-hidden rounded-full bg-line-strong">
+                <div class="bar-fill h-full w-[72%] rounded-full bg-accent"></div>
+              </div>
+            </div>
+            <ul class="space-y-2 text-[11px] text-muted">
+              {% for n in range(1, 4) %}
+                <li class="inner-card rounded-[12px] px-4 py-3">{{ _('[Suggestion %(n)s from AI]', n=n) }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+{% from "partials/icons.html" import icon %}
+{% set highlight %}<span class="text-accent">{{ _('work') }}</span>{% endset %}
+
+<section class="relative overflow-hidden pb-6">
+  <div class="container-page pt-16 text-center sm:pt-24">
+    <a href="#tools" class="hero-badge">
+      <span class="rounded-full bg-accent px-2 py-0.5 text-[11px] font-semibold text-black">{{ _('New') }}</span>
+      <span>{{ _('5 tools, all free') }}</span>
+      {{ icon("arrow-right", "h-3 w-3 rtl:-scale-x-100") }}
+    </a>
+
+    <h1 class="heading hero-title mx-auto mt-6 max-w-[11em] text-balance text-[44px] sm:text-7xl lg:text-[88px]" data-blur-words>
+      {{ _('Your free toolkit for %(highlight)s and life.', highlight=highlight) }}
+    </h1>
+
+    <p class="mx-auto mt-6 max-w-[30rem] text-pretty text-[15px] text-muted sm:text-base">
+      {{ _('Build and check your CV, write captions, keep notes and track expenses. One account. Everything saved.') }}
+    </p>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="{{ url_for('marketing.coming_soon', page='signup') }}" class="btn-primary">{{ _('Get started for free') }}</a>
+      <a href="#tools" class="btn-secondary">{{ _('Explore tools') }}</a>
+    </div>
+  </div>
+
+  {% include "marketing/sections/preview.html" %}
+</section>
