@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /lang/
 
 Sitemap: {{ url_for('seo.sitemap', _external=True) }}

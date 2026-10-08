@@ -34,7 +34,7 @@ The project owner is a beginner learning to code. Explain what you did in simple
 | File storage | Supabase Storage (for CV PDFs) |
 | PDF generation | A pure-Python library (e.g. xhtml2pdf) so it runs on Vercel without system packages |
 | AI | Google Gemini API (free tier) |
-| Languages | English + Urdu (Flask-Babel), Urdu must be RTL |
+| Languages | English + Urdu (Flask-Babel), Urdu must be RTL. Language comes from the URL: English has no prefix (`/tools`), Urdu uses `/ur` (`/ur/tools`). Register page routes with `localized_route` from `app/i18n.py`; every page gets hreflang tags (en, ur, x-default) |
 | Hosting | Vercel (free Hobby plan) |
 
 **Vercel note:** Vercel serverless hai: server par files save nahi hoti, sab files Supabase Storage mein jayengi. Request body ki limit takreeban 4.5MB hai, is liye CV upload ki limit 4MB rakhni hai.

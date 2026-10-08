@@ -1,13 +1,11 @@
-"""HTTP routes for the marketing website."""
-from urllib.parse import urlparse
-
-from flask import abort, redirect, render_template, request, url_for
+"""HTTP routes for the marketing website. Every page exists in English (/...) and Urdu (/ur/...)."""
+from flask import abort, render_template
 
 from app.blueprints.marketing import bp, content, tools_catalog
-from app.i18n import set_language
+from app.i18n import localized_route
 
 
-@bp.get("/")
+@localized_route(bp, "/", methods=["GET"])
 def index():
     return render_template(
         "marketing/index.html",
@@ -18,7 +16,7 @@ def index():
     )
 
 
-@bp.get("/tools")
+@localized_route(bp, "/tools", methods=["GET"])
 def tools_index():
     return render_template(
         "marketing/tools/index.html",
@@ -28,7 +26,7 @@ def tools_index():
     )
 
 
-@bp.get("/tools/<slug>")
+@localized_route(bp, "/tools/<slug>", methods=["GET"])
 def tool_detail(slug):
     tool = tools_catalog.get_tool(slug)
     if tool is None:
@@ -40,24 +38,9 @@ def tool_detail(slug):
     )
 
 
-@bp.get("/coming-soon/<page>")
+@localized_route(bp, "/coming-soon/<page>", methods=["GET"])
 def coming_soon(page):
     info = content.COMING_SOON_PAGES.get(page)
     if info is None:
         abort(404)
     return render_template("marketing/coming_soon.html", page=info)
-
-
-@bp.get("/lang/<code>")
-def switch_language(code):
-    if not set_language(code):
-        abort(404)
-    return redirect(_safe_return_url())
-
-
-def _safe_return_url():
-    """Go back to the page the user came from, but only if it is on our own site."""
-    referrer = request.referrer
-    if referrer and urlparse(referrer).netloc == request.host:
-        return referrer
-    return url_for("marketing.index")

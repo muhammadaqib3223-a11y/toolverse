@@ -11,27 +11,19 @@ def test_landing_page_renders_in_english(client):
     assert '<span class="text-accent">work</span>' in html
 
 
-def test_switching_to_urdu_turns_page_rtl(client):
-    response = client.get("/lang/ur", headers={"Referer": "http://localhost/"})
-    assert response.status_code == 302
-
-    html = client.get("/").get_data(as_text=True)
+def test_urdu_home_page_is_rtl(client):
+    html = client.get("/ur").get_data(as_text=True)
     assert 'lang="ur" dir="rtl"' in html
     assert "پانچ ٹولز۔ ایک لاگ ان۔" in html
 
 
-def test_browser_language_is_used_when_nothing_chosen(client):
+def test_root_is_english_even_for_urdu_browsers(client):
     html = client.get("/", headers={"Accept-Language": "ur"}).get_data(as_text=True)
-    assert 'dir="rtl"' in html
+    assert 'lang="en" dir="ltr"' in html
 
 
-def test_unknown_language_is_404(client):
-    assert client.get("/lang/fr").status_code == 404
-
-
-def test_language_switch_never_redirects_off_site(client):
-    response = client.get("/lang/en", headers={"Referer": "https://evil.example/"})
-    assert response.headers["Location"] == "/"
+def test_unknown_language_prefix_is_404(client):
+    assert client.get("/fr/tools").status_code == 404
 
 
 @pytest.mark.parametrize("page", ["login", "signup", "privacy", "terms", "contact"])

@@ -7,6 +7,15 @@
   <meta name="description" content="{% block description %}{{ _('Free tools for work and life: CV checker, CV generator, captions, notes and expenses. One account, everything saved.') }}{% endblock %}">
   <meta name="theme-color" content="#000000">
   {% block robots %}{% endblock %}
+  {% block hreflang %}
+    {% set alternates = alternate_urls() %}
+    {% for code, url in alternates.items() %}
+      <link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+    {% endfor %}
+    {% if alternates %}
+      <link rel="alternate" hreflang="x-default" href="{{ alternates[config.BABEL_DEFAULT_LOCALE] }}">
+    {% endif %}
+  {% endblock %}
   {% block canonical %}
     {% if request.endpoint and request.endpoint != 'static' %}
       <link rel="canonical" href="{{ url_for(request.endpoint, _external=True, **(request.view_args or {})) }}">

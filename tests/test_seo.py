@@ -11,7 +11,9 @@ PAGES = ["/", "/tools", *(f"/tools/{slug}" for slug in SLUGS)]
 
 
 def _html(client, path, lang="en"):
-    return client.get(path, headers={"Accept-Language": lang}).get_data(as_text=True)
+    if lang != "en":
+        path = f"/{lang}" + ("" if path == "/" else path)
+    return client.get(path).get_data(as_text=True)
 
 
 def _json_ld(html):
@@ -108,7 +110,11 @@ def test_cv_checker_privacy_answer(client):
 
 # --- sitemap.xml and robots.txt ---
 
-def test_sitemap_lists_public_pages_on_the_request_host(client):
+def _urdu(path):
+    return "/ur" + ("" if path == "/" else path)
+
+
+def test_sitemap_lists_both_languages_on_the_request_host(client):
     response = client.get("/sitemap.xml", base_url="https://example.test")
     xml = response.get_data(as_text=True)
 
@@ -116,7 +122,12 @@ def test_sitemap_lists_public_pages_on_the_request_host(client):
     assert response.mimetype == "application/xml"
     assert xml.startswith("<?xml")
     for path in PAGES:
-        assert f"<loc>https://example.test{path}</loc>" in xml
+        en, ur = f"https://example.test{path}", f"https://example.test{_urdu(path)}"
+        assert f"<loc>{en}</loc>" in xml
+        assert f"<loc>{ur}</loc>" in xml
+        assert f'<xhtml:link rel="alternate" hreflang="ur" href="{ur}"/>' in xml
+        assert f'<xhtml:link rel="alternate" hreflang="x-default" href="{en}"/>' in xml
+    assert xml.count("<url>") == 2 * len(PAGES)
     assert "coming-soon" not in xml
 
 
@@ -126,4 +137,3 @@ def test_robots_points_to_the_sitemap(client):
 
     assert response.mimetype == "text/plain"
     assert "Sitemap: https://example.test/sitemap.xml" in text
-    assert "Disallow: /lang/" in text

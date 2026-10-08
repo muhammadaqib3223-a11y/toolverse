@@ -12,8 +12,8 @@
   <span class="inline-flex items-center gap-1.5" aria-label="{{ _('Language') }}">
     {% for code, name in languages.items() %}
       {% if not loop.first %}<span class="text-faint" aria-hidden="true">/</span>{% endif %}
-      <a href="{{ url_for('marketing.switch_language', code=code) }}"
-         lang="{{ code }}"
+      <a href="{{ language_urls[code] }}"
+         lang="{{ code }}" hreflang="{{ code }}"
          class="lang-link {{ 'text-fg' if code == current_lang else 'text-muted hover:text-fg' }}"
          {% if code == current_lang %}aria-current="true"{% endif %}>{{ 'EN' if code == 'en' else name }}</a>
     {% endfor %}

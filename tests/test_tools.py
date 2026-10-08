@@ -68,7 +68,7 @@ def test_other_tools_section_lists_every_other_tool(client, tool):
 
 
 def test_tool_page_in_urdu(client):
-    html = client.get("/tools/notes", headers={"Accept-Language": "ur"}).get_data(as_text=True)
+    html = client.get("/ur/tools/notes").get_data(as_text=True)
     assert 'dir="rtl"' in html
     assert "خصوصیات" in html and "استعمال کا طریقہ" in html
 
@@ -84,7 +84,7 @@ def test_unknown_tool_is_404(client):
 
 
 def test_tools_page_in_urdu(client):
-    html = client.get("/tools", headers={"Accept-Language": "ur"}).get_data(as_text=True)
+    html = client.get("/ur/tools").get_data(as_text=True)
     assert 'dir="rtl"' in html
     assert "بنائیں۔ چیک کریں۔ بہتر کریں۔" in html
 
