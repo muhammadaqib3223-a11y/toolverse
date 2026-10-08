@@ -32,10 +32,12 @@ The project owner is a beginner learning to code. Explain what you did in simple
 | Auth | Supabase Auth — email/password AND Google login |
 | Database | Supabase (Postgres) with Row Level Security |
 | File storage | Supabase Storage (for CV PDFs) |
-| PDF generation | A pure-Python library (e.g. xhtml2pdf) so it runs on Render free without system packages |
+| PDF generation | A pure-Python library (e.g. xhtml2pdf) so it runs on Vercel without system packages |
 | AI | Google Gemini API (free tier) |
 | Languages | English + Urdu (Flask-Babel), Urdu must be RTL |
-| Hosting | Render (free) |
+| Hosting | Vercel (free Hobby plan) |
+
+**Vercel note:** Vercel serverless hai: server par files save nahi hoti, sab files Supabase Storage mein jayengi. Request body ki limit takreeban 4.5MB hai, is liye CV upload ki limit 4MB rakhni hai.
 
 ## 3. Golden rules for the AI assistant
 
@@ -89,22 +91,24 @@ toolverse/
 │   │   ├── dashboard/
 │   │   ├── tools/
 │   │   └── cv_templates/      # CV designs used for PDF output
-│   ├── static/
-│   │   ├── css/
-│   │   ├── js/
-│   │   └── img/
 │   └── translations/          # en, ur
+├── public/
+│   └── static/                # served by Vercel's CDN (Flask serves it locally)
+│       ├── css/
+│       ├── js/
+│       └── img/
 ├── tests/
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
-├── run.py
+├── run.py                     # local: python run.py
+├── wsgi.py                    # Vercel entrypoint
 └── README.md
 ```
 
 ## 5. Build phases (one at a time)
 
-1. Project setup + folder structure + marketing landing page (EN/UR toggle) → deploy on Render
+1. Project setup + folder structure + marketing landing page (EN/UR toggle) → deploy on Vercel
 2. Auth: signup, login, logout, Google login, protected dashboard
 3. Notes tool
 4. Expense Tracker tool

@@ -47,6 +47,12 @@ def test_unknown_coming_soon_page_is_404(client):
     assert "Page not found." in response.get_data(as_text=True)
 
 
+def test_static_files_are_served_from_public(client):
+    response = client.get("/static/css/app.css")
+    assert response.status_code == 200
+    assert response.mimetype == "text/css"
+
+
 def test_production_requires_secret_key(monkeypatch):
     from app import config
 

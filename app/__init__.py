@@ -13,7 +13,8 @@ from app.i18n import get_locale, register_i18n
 
 def create_app(config_name=None):
     """Build and configure a Flask app. `config_name` overrides APP_ENV."""
-    app = Flask(__name__)
+    # Static files live in /public so Vercel's CDN serves them; Flask serves them locally.
+    app = Flask(__name__, static_folder="../public/static")
     app.config.from_object(get_config(config_name))
 
     _configure_logging(app)

@@ -12,8 +12,8 @@ instance/
 # Local tools (Tailwind CLI binary)
 .tools/
 
-# Translations: compiled at build time from the .po files
-*.mo
+# Translations: the template is regenerated; the compiled .mo files ARE committed
+# because Vercel has no build step to compile them.
 messages.pot
 
 # OS / editor

@@ -30,7 +30,7 @@ Open http://127.0.0.1:5000 in your browser. Press `Ctrl+C` in the terminal to st
 
 ## Changing styles (Tailwind)
 
-The compiled `app/static/css/app.css` is committed, so you only need this after changing classes in templates or `input.css`.
+The compiled `public/static/css/app.css` is committed, so you only need this after changing classes in templates or `input.css`.
 Download the Tailwind CLI once (v3.4.17) to `.tools\tailwindcss.exe`:
 
 ```powershell
@@ -41,7 +41,7 @@ Invoke-WebRequest https://github.com/tailwindlabs/tailwindcss/releases/download/
 Then build (add `--watch` to rebuild automatically while you work):
 
 ```powershell
-.\.tools\tailwindcss.exe -i app/static/css/input.css -o app/static/css/app.css --minify
+.\.tools\tailwindcss.exe -i public/static/css/input.css -o public/static/css/app.css --minify
 ```
 
 ## Translations (English / Urdu)
@@ -56,9 +56,20 @@ After adding or changing texts:
 .\.venv\Scripts\pybabel.exe compile -d app/translations
 ```
 
-## Deploy on Render (free)
+Commit both `messages.po` **and** the compiled `messages.mo`. Vercel has no build step, so it uses the `.mo` file from git.
+
+## Deploy on Vercel (free Hobby plan)
+
+Vercel finds the Flask app in `wsgi.py` and serves everything in `public/` (CSS, JS, images) from its CDN.
 
 1. Push this repo to GitHub.
-2. On Render: **New → Blueprint**, pick this repo. Render reads `render.yaml`.
-3. Render installs the packages, compiles the translations and starts `gunicorn run:app`.
-   `SECRET_KEY` is generated automatically.
+2. Go to https://vercel.com/new, sign in with GitHub and **Import** the `toolverse` repo.
+   Vercel detects Flask by itself — leave Build Command and Output Directory empty.
+3. Before clicking **Deploy**, open **Environment Variables** and add:
+   - `APP_ENV` = `production`
+   - `SECRET_KEY` = a long random string (`python -c "import secrets; print(secrets.token_hex(32))"`)
+   - `LOG_LEVEL` = `INFO`
+4. Click **Deploy**. Every later push to `main` deploys automatically.
+
+Good to know: Vercel is serverless, so the app cannot save files on the server (files go to Supabase Storage),
+and a request body can be at most about 4.5 MB.

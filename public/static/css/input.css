@@ -1,6 +1,6 @@
 /*
  * Tailwind source. Compile to app.css with:
- *   .tools\tailwindcss.exe -i app/static/css/input.css -o app/static/css/app.css --minify
+ *   .tools\tailwindcss.exe -i public/static/css/input.css -o public/static/css/app.css --minify
  * Design tokens live in tailwind.config.js (see CLAUDE.md section 6).
  */
 @tailwind base;
