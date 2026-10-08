@@ -13,6 +13,93 @@
   <span class="tool-icon">{{ icon(tool.icon, "h-5 w-5") }}</span>
 {%- endmacro %}
 
+{# One row inside the demo window (see DemoRow in tools_catalog.py). #}
+{% macro demo_row(row, stagger_index=None) -%}
+  <div class="flex items-center gap-3 rounded-[14px] border bg-card px-4 py-3 text-start {{ 'border-dashed border-line-strong' if row.dashed else 'border-line' }}"
+       {% if stagger_index is not none %}style="--i: {{ stagger_index }}"{% endif %}>
+    {% if row.icon %}
+      <span class="shrink-0 {{ 'text-accent' if row.accent else 'text-muted' }}">{{ icon(row.icon, "h-4 w-4") }}</span>
+    {% endif %}
+    <div class="min-w-0">
+      <p class="truncate text-[12px] {{ 'font-medium text-fg' if row.icon else 'text-muted' }}">{{ row.text }}</p>
+      {% if row.hint %}<p class="truncate text-[11px] text-faint">{{ row.hint }}</p>{% endif %}
+    </div>
+    {% if row.progress %}
+      <div class="ms-auto h-1 w-24 shrink-0 overflow-hidden rounded-full bg-line-strong">
+        <div class="bar-fill h-full w-full rounded-full bg-accent" style="--fill-duration: 2.2s"></div>
+      </div>
+    {% endif %}
+    {% if row.action %}
+      <span class="ms-auto shrink-0 text-[12px] font-medium text-accent">{{ row.action }}</span>
+    {% endif %}
+  </div>
+{%- endmacro %}
+
+{# Looping three-step demo (input → working → result). Animated by static/js/animations.js. #}
+{% macro tool_demo(demo, id_prefix="tool-demo") -%}
+  <div data-demo>
+    <div class="flex flex-wrap justify-center gap-2" role="tablist" aria-label="{{ _('How it works') }}">
+      {% for label in demo.tabs %}
+        <button type="button" class="demo-tab" role="tab" id="{{ id_prefix }}-tab-{{ loop.index0 }}"
+                aria-controls="{{ id_prefix }}-panel-{{ loop.index0 }}"
+                aria-selected="{{ 'true' if loop.first else 'false' }}"
+                tabindex="{{ 0 if loop.first else -1 }}"
+                data-demo-tab>{{ label }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="relative mx-auto mt-5 h-[240px] max-w-[480px] overflow-hidden rounded-[18px] border border-line bg-surface">
+      <div class="demo-panel is-active" id="{{ id_prefix }}-panel-0" role="tabpanel" aria-labelledby="{{ id_prefix }}-tab-0" data-demo-panel>
+        <div class="flex h-full flex-col justify-center gap-3">
+          {% for row in demo.input_rows %}{{ demo_row(row) }}{% endfor %}
+        </div>
+      </div>
+
+      <div class="demo-panel" id="{{ id_prefix }}-panel-1" role="tabpanel" aria-labelledby="{{ id_prefix }}-tab-1" data-demo-panel>
+        <div class="flex h-full flex-col justify-center text-start">
+          <p class="flex items-center gap-3 text-[13px] font-medium">
+            <span class="spinner" aria-hidden="true"></span>
+            {{ demo.working_label }}
+          </p>
+          <div class="mt-4 h-1 overflow-hidden rounded-full bg-line-strong">
+            <div class="bar-fill h-full w-[75%] rounded-full bg-accent" style="--fill-duration: 2.6s"></div>
+          </div>
+          <ul class="stagger mt-4 space-y-1.5 text-[12px] text-muted">
+            {% for check in demo.checks %}<li style="--i: {{ loop.index0 }}">{{ check }}</li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="demo-panel" id="{{ id_prefix }}-panel-2" role="tabpanel" aria-labelledby="{{ id_prefix }}-tab-2" data-demo-panel>
+        <div class="grid h-full items-center gap-3 text-start {{ 'sm:grid-cols-[0.8fr_1.2fr]' if demo.stat }}">
+          {% if demo.stat %}
+            <div class="inner-card hidden h-full flex-col justify-center p-4 sm:flex">
+              <p class="text-[11px] text-muted">{{ demo.stat.label }}</p>
+              <p class="mt-1 text-3xl font-bold tracking-tight rtl:mt-4">{{ demo.stat.value }}</p>
+            </div>
+          {% endif %}
+          <div class="stagger space-y-2">
+            {% for row in demo.result_rows %}{{ demo_row(row, loop.index0) }}{% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endmacro %}
+
+{# "01 / Title / text" steps in three columns. #}
+{% macro steps_row(steps) -%}
+  <ol class="grid border-t border-line sm:grid-cols-3">
+    {% for step in steps %}
+      <li class="border-b border-line py-7 text-start sm:border-b-0 sm:pe-8" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+        <p class="font-mono text-[11px] text-faint" dir="ltr">{{ "%02d" | format(loop.index) }}</p>
+        <h3 class="mt-3 text-[17px] font-semibold tracking-tight">{{ step.title }}</h3>
+        <p class="mt-1 text-[13px] text-muted">{{ step.text }}</p>
+      </li>
+    {% endfor %}
+  </ol>
+{%- endmacro %}
+
 {# A clickable card that opens the tool's own page. `inner` = lighter style for cards inside another card. #}
 {% macro tool_card(tool, inner=False) -%}
   <a href="{{ url_for('marketing.tool_detail', slug=tool.slug) }}"

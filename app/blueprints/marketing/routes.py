@@ -33,7 +33,11 @@ def tool_detail(slug):
     tool = tools_catalog.get_tool(slug)
     if tool is None:
         abort(404)
-    return render_template("marketing/tools/detail.html", tool=tool)
+    return render_template(
+        "marketing/tools/detail.html",
+        tool=tool,
+        other_tools=tools_catalog.other_tools(slug),
+    )
 
 
 @bp.get("/coming-soon/<page>")

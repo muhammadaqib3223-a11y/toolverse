@@ -1,15 +1,17 @@
 {% extends "base.html" %}
-{% from "marketing/tools/_macros.html" import status_badge, tool_icon with context %}
+{% from "partials/icons.html" import icon %}
+{% from "marketing/tools/_macros.html" import status_badge, tool_icon, tool_card, tool_demo, steps_row with context %}
 
-{# Step A: hero only. Step B adds the demo, features, how-to-use, FAQ and other tools. #}
+{# One template for every tool page. All content comes from tools_catalog.py. #}
 
 {% block title %}{{ tool.name }} — Toolverse{% endblock %}
 {% block description %}{{ tool.summary }}{% endblock %}
 
 {% block content %}
-  {# Until accounts exist (Phase 2), "Try it free" goes to the sign-up coming-soon page. #}
+  {# Until accounts and guest mode exist, "Try it free" goes to the sign-up coming-soon page. #}
   {% set try_url = url_for('marketing.coming_soon', page='signup') %}
 
+  {# Hero #}
   <section class="relative overflow-hidden">
     <div class="page-glow" aria-hidden="true"></div>
     <div class="container-page relative flex flex-col items-center pt-16 text-center sm:pt-24 animate-fade-in">
@@ -19,7 +21,7 @@
       </div>
       <p class="label-mono mt-6">{{ tool.category_label }}</p>
       <h1 class="heading mt-4 text-[48px] sm:text-7xl lg:text-[88px]">{{ tool.name }}</h1>
-      <p class="mx-auto mt-6 max-w-[30rem] text-pretty text-[15px] text-muted sm:text-base">{{ tool.summary }}</p>
+      <p class="mx-auto mt-6 max-w-[32rem] text-pretty text-[15px] text-muted sm:text-base">{{ tool.description }}</p>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
         <a href="{{ try_url }}" class="btn-primary">{{ _('Try it free') }}</a>
         <a href="{{ url_for('marketing.tools_index') }}" class="btn-secondary">{{ _('All tools') }}</a>
@@ -27,5 +29,59 @@
     </div>
   </section>
 
+  {# How it works: looping demo #}
+  <section id="demo" class="container-page mt-24 sm:mt-32" data-aos="fade-up">
+    <p class="label-mono text-center">{{ _('See it in action') }}</p>
+    <h2 class="heading mt-3 text-center text-[36px] sm:text-5xl">{{ _('How it works') }}</h2>
+    <div class="mt-8">{{ tool_demo(tool.demo) }}</div>
+  </section>
+
+  {# Features #}
+  <section id="features" class="container-page mt-28 sm:mt-36">
+    <h2 class="heading text-center text-[36px] sm:text-5xl" data-aos="fade-up">{{ _('Features') }}</h2>
+    <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for feature in tool.features %}
+        <li data-aos="fade-up" data-aos-delay="{{ loop.index0 * 80 }}">
+          <div class="surface lift h-full p-6 text-start">
+            <span class="tool-icon">{{ icon(feature.icon, "h-5 w-5") }}</span>
+            <h3 class="mt-5 text-[17px] font-semibold tracking-tight">{{ feature.title }}</h3>
+            <p class="mt-1.5 text-[13px] text-muted">{{ feature.text }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {# How to use #}
+  <section id="how-to-use" class="container-page mt-28 sm:mt-36">
+    <h2 class="heading text-center text-[36px] sm:text-5xl" data-aos="fade-up">{{ _('How to use') }}</h2>
+    <div class="mt-12">{{ steps_row(tool.steps) }}</div>
+  </section>
+
+  {# FAQ (same design as the landing page) #}
+  {% with faqs = tool.faqs %}
+    {% include "marketing/sections/faq.html" %}
+  {% endwith %}
+
+  {# Other tools #}
+  <section id="other-tools" class="container-page mt-28 sm:mt-36">
+    <div class="flex flex-wrap items-end justify-between gap-4" data-aos="fade-up">
+      <h2 class="heading text-[36px] sm:text-5xl">{{ _('Other tools') }}</h2>
+      <a href="{{ url_for('marketing.tools_index') }}" class="group inline-flex items-center gap-1.5 text-[13px] font-medium text-muted transition-colors hover:text-fg">
+        {{ _('All tools') }}
+        {{ icon("arrow-right", "h-3.5 w-3.5 rtl:-scale-x-100") }}
+      </a>
+    </div>
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-aos="fade-up">
+      {% for other in other_tools %}
+        <li>{{ tool_card(other) }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
   {% include "marketing/sections/cta.html" %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
 {% endblock %}

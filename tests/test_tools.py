@@ -41,6 +41,44 @@ def test_tool_detail_page(client, slug):
     assert "/coming-soon/signup" in response.get_data(as_text=True)
 
 
+@pytest.mark.parametrize("tool", TOOLS, ids=SLUGS)
+def test_tool_page_shows_all_sections(client, app, tool):
+    html = client.get(f"/tools/{tool.slug}", headers={"Accept-Language": "en"}).get_data(as_text=True)
+
+    with app.test_request_context():
+        texts = [tool.description, *(f.title for f in tool.features), *(s.title for s in tool.steps),
+                 *(q.question for q in tool.faqs), *tool.demo.tabs]
+        for text in texts:
+            assert str(text).replace("'", "&#39;") in html
+
+    assert "data-demo" in html
+    assert 'id="features"' in html and 'id="how-to-use"' in html and 'id="faq"' in html
+
+
+@pytest.mark.parametrize("tool", TOOLS, ids=SLUGS)
+def test_other_tools_section_lists_every_other_tool(client, tool):
+    html = client.get(f"/tools/{tool.slug}").get_data(as_text=True)
+    other_section = html.split('id="other-tools"', 1)[1]
+    for other in TOOLS:
+        link = f'href="/tools/{other.slug}"'
+        if other.slug == tool.slug:
+            assert link not in other_section
+        else:
+            assert link in other_section
+
+
+def test_tool_page_in_urdu(client):
+    html = client.get("/tools/notes", headers={"Accept-Language": "ur"}).get_data(as_text=True)
+    assert 'dir="rtl"' in html
+    assert "خصوصیات" in html and "استعمال کا طریقہ" in html
+
+
+def test_landing_demo_shows_upload_limit(client):
+    html = client.get("/", headers={"Accept-Language": "en"}).get_data(as_text=True)
+    assert "PDF, up to 4 MB" in html
+    assert "[X] MB" not in html
+
+
 def test_unknown_tool_is_404(client):
     assert client.get("/tools/does-not-exist").status_code == 404
 
@@ -76,5 +114,19 @@ def test_tool_data_is_complete(app, tool):
     category_keys = {c.key for c in tools_catalog.CATEGORIES} - {tools_catalog.ALL}
     assert tool.category in category_keys
     assert isinstance(tool.status, Status)
+    assert len(tool.demo.tabs) == 3
+    assert tool.demo.input_rows and tool.demo.checks and tool.demo.result_rows
+    assert tool.features and tool.faqs
+    assert len(tool.steps) == 3
     with app.test_request_context():
-        assert str(tool.name) and str(tool.summary) and tool.icon
+        assert str(tool.name) and str(tool.summary) and str(tool.description) and tool.icon
+
+
+@pytest.mark.parametrize("tool", TOOLS, ids=SLUGS)
+def test_every_icon_used_exists(app, tool):
+    icons_source = (app.root_path + "/templates/partials/icons.html")
+    with open(icons_source, encoding="utf-8") as f:
+        source = f.read()
+    for name in [tool.icon, *(feature.icon for feature in tool.features),
+                 *(row.icon for row in tool.demo.input_rows + tool.demo.result_rows if row.icon)]:
+        assert f'name == "{name}"' in source, f"missing icon: {name}"

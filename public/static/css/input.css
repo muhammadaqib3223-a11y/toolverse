@@ -58,6 +58,8 @@
     letter-spacing: 0.14em;
   }
   [dir="rtl"] .label-mono { letter-spacing: 0; font-family: theme("fontFamily.sans"); font-size: 13px; }
+  /* Tall Nastaliq letters need more room between a small label and the heading below it. */
+  [dir="rtl"] .label-mono + .heading { margin-top: 1.5rem; }
 
   .skip-link {
     @apply fixed start-4 top-4 z-[60] -translate-y-24 rounded-full bg-white px-4 py-2 text-sm font-medium text-black;

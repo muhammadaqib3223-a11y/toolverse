@@ -118,6 +118,58 @@ toolverse/
 
 AI tools must have a **daily usage limit per user** to stay inside the free tier.
 
+### Guest mode
+
+Guest mode: user bina login ke tools try kar sake. CV Checker mein 1 free check, Captions mein 3 free tries (IP ke hisaab se limit, taake Gemini ki free limit khatam na ho). CV Generator mein PDF download bina login, save ke liye login. Notes aur Expenses guest ke liye browser mein save hon, aur login karne par account mein chale jayein. Login Google se ek click mein bhi ho.
+
+### Tool requirements (promised on the public tool pages — every item must be built)
+
+The text for these lives in `app/blueprints/marketing/tools_catalog.py`. If a promise changes, update both places.
+
+**CV Checker**
+- PDF upload only, max **4 MB**
+- One overall score
+- Practical, specific tips
+- Structure check (sections clear and in order)
+- Wording check (points out weak or unclear wording)
+- Looks at skills too
+- CV saved privately in the user's account, only the owner can see it
+- Works with the CV Generator: build → check → improve in one place
+- Fair daily limit on checks
+- Make clear that AI can make mistakes
+
+**CV Generator**
+- Simple step-by-step form (details, experience, skills); no design skills needed
+- Choice of clean templates
+- Ready-to-send PDF download
+- Optional AI help to write the summary and experience; the user can edit everything
+- CVs saved in the account and editable anytime
+- A way to send a new CV to the CV Checker
+
+**Captions**
+- Topic input + platform choice: Instagram or LinkedIn
+- Captions written for the chosen platform
+- More than one caption to choose from
+- Works for any topic
+- "Copy in one tap" button on every caption
+- Captions are editable before posting
+- Fair daily limit
+
+**Notes**
+- Create a note with a **title** and text
+- Edit anytime, delete
+- Search by any word
+- Works on every device (browser on phone, tablet, laptop); no app to install
+- Only the owner can see their notes
+
+**Expenses**
+- Quick entry: amount + what it was for
+- Monthly total
+- Daily list (expenses grouped by day)
+- Works on every device; only the owner can see their expenses
+- No bank connection — the user adds expenses themselves
+- Currency: default **PKR (Rs)**; the user can change the currency in their settings
+
 ## 6. Design (applies to the WHOLE software: homepage, auth pages, dashboard, every tool)
 
 Style reference: the approved "Version 3 — Framer style" landing page (premium, minimal, like framer.com / vercel.com).
