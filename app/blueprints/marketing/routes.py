@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 from flask import abort, redirect, render_template, request, url_for
 
-from app.blueprints.marketing import bp, content
+from app.blueprints.marketing import bp, content, tools_catalog
 from app.i18n import set_language
 
 
@@ -16,6 +16,24 @@ def index():
         free_points=content.FREE_POINTS,
         faqs=content.FAQS,
     )
+
+
+@bp.get("/tools")
+def tools_index():
+    return render_template(
+        "marketing/tools/index.html",
+        categories=tools_catalog.CATEGORIES,
+        featured_tools=tools_catalog.featured_tools(),
+        grid_tools=tools_catalog.grid_tools(),
+    )
+
+
+@bp.get("/tools/<slug>")
+def tool_detail(slug):
+    tool = tools_catalog.get_tool(slug)
+    if tool is None:
+        abort(404)
+    return render_template("marketing/tools/detail.html", tool=tool)
 
 
 @bp.get("/coming-soon/<page>")

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "marketing/tools/_macros.html" import status_badge, tool_icon with context %}
+
+{# Step A: hero only. Step B adds the demo, features, how-to-use, FAQ and other tools. #}
+
+{% block title %}{{ tool.name }} — Toolverse{% endblock %}
+{% block description %}{{ tool.summary }}{% endblock %}
+
+{% block content %}
+  {# Until accounts exist (Phase 2), "Try it free" goes to the sign-up coming-soon page. #}
+  {% set try_url = url_for('marketing.coming_soon', page='signup') %}
+
+  <section class="relative overflow-hidden">
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="container-page relative flex flex-col items-center pt-16 text-center sm:pt-24 animate-fade-in">
+      <div class="flex items-center gap-3">
+        {{ tool_icon(tool) }}
+        {{ status_badge(tool) }}
+      </div>
+      <p class="label-mono mt-6">{{ tool.category_label }}</p>
+      <h1 class="heading mt-4 text-[48px] sm:text-7xl lg:text-[88px]">{{ tool.name }}</h1>
+      <p class="mx-auto mt-6 max-w-[30rem] text-pretty text-[15px] text-muted sm:text-base">{{ tool.summary }}</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="{{ try_url }}" class="btn-primary">{{ _('Try it free') }}</a>
+        <a href="{{ url_for('marketing.tools_index') }}" class="btn-secondary">{{ _('All tools') }}</a>
+      </div>
+    </div>
+  </section>
+
+  {% include "marketing/sections/cta.html" %}
+{% endblock %}

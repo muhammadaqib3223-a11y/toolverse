@@ -161,6 +161,29 @@
   }
 
   .faq-item[open] .faq-answer { animation: fade-up 0.35s ease both; }
+
+  /* Tools catalog */
+  .filter-tab {
+    @apply h-9 rounded-full border border-line px-4 text-[13px] font-medium text-muted;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  .filter-tab:hover { @apply border-line-strong text-fg; }
+  .filter-tab[aria-pressed="true"] { @apply border-accent bg-accent text-black; }
+  [dir="rtl"] .filter-tab { font-size: 15px; }
+
+  .filter-item[hidden] { display: none !important; }
+  .filter-item.is-filtered-in { animation: fade-up 0.4s ease both; }
+
+  .status-badge {
+    @apply inline-flex h-6 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-line-strong bg-card px-2.5 text-[11px] font-medium text-muted;
+  }
+  .status-badge-live { @apply border-accent/40 text-accent; }
+  .status-dot { @apply h-1.5 w-1.5 rounded-full bg-accent; }
+  [dir="rtl"] .status-badge { font-size: 13px; }
+
+  .tool-icon {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-line-strong bg-card text-fg;
+  }
 }
 
 /* ---------- Animations ---------- */

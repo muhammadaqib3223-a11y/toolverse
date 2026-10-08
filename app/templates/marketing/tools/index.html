@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% from "marketing/tools/_macros.html" import tool_card with context %}
+
+{% block title %}{{ _('Tools') }} — Toolverse{% endblock %}
+
+{% block content %}
+  {% set highlight %}<span class="text-accent">{{ _('one place') }}</span>{% endset %}
+
+  {# Header #}
+  <section class="relative overflow-hidden">
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="container-page relative pt-16 text-center sm:pt-24">
+      <p class="label-mono">{{ _('Tools') }}</p>
+      <h1 class="heading hero-title mx-auto mt-5 max-w-[12em] text-balance text-[44px] sm:text-7xl" data-blur-words>
+        {{ _('Every tool you need, in %(highlight)s.', highlight=highlight) }}
+      </h1>
+      <p class="mx-auto mt-6 max-w-[30rem] text-pretty text-[15px] text-muted sm:text-base">
+        {{ _('Five free tools, one account. Pick one to see how it works.') }}
+      </p>
+    </div>
+  </section>
+
+  <section class="container-page mt-12 sm:mt-16" data-tool-filter>
+    {# Category tabs (filtering is done by public/static/js/tools_filter.js) #}
+    <div class="flex flex-wrap justify-center gap-2" role="group" aria-label="{{ _('Filter tools by category') }}">
+      {% for category in categories %}
+        <button type="button" class="filter-tab" data-filter="{{ category.key }}"
+                aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ category.label }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="mt-10 space-y-4" data-aos="fade-up">
+      {# Featured: the CV section (generator + checker work together) #}
+      <article class="filter-item" data-filter-item data-category="cv">
+        <div class="surface grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.4fr] lg:items-center lg:gap-12">
+          <div class="text-start">
+            <p class="label-mono text-accent">{{ _('CV section') }}</p>
+            <h2 class="heading mt-3 max-w-[11em] text-[32px] sm:text-[44px]">{{ _('Build it. Check it. Improve it.') }}</h2>
+            <p class="mt-4 max-w-[26rem] text-[14px] text-muted">
+              {{ _('Create your CV with the generator, then check it with AI and fix what is missing.') }}
+            </p>
+          </div>
+          <ul class="grid gap-3 sm:grid-cols-2">
+            {% for tool in featured_tools %}
+              <li>{{ tool_card(tool, inner=True) }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </article>
+
+      {# All other tools #}
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {% for tool in grid_tools %}
+          <li class="filter-item" data-filter-item data-category="{{ tool.category }}">{{ tool_card(tool) }}</li>
+        {% endfor %}
+      </ul>
+
+      <p class="py-12 text-center text-[14px] text-muted" data-filter-empty hidden>{{ _('No tools in this category yet.') }}</p>
+    </div>
+  </section>
+
+  {% include "marketing/sections/cta.html" %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/tools_filter.js') }}" defer></script>
+{% endblock %}

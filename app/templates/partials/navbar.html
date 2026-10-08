@@ -1,9 +1,11 @@
 {% from "partials/icons.html" import icon %}
 {% set home = url_for('marketing.index') %}
+{% set on_tools_pages = request.endpoint in ('marketing.tools_index', 'marketing.tool_detail') %}
+{# (href, label, section id for scroll highlighting on the home page, is current page) #}
 {% set nav_links = [
-  ("tools", _('Tools')),
-  ("how-it-works", _('How it works')),
-  ("faq", _('FAQ')),
+  (url_for('marketing.tools_index'), _('Tools'), None, on_tools_pages),
+  (home ~ '#how-it-works', _('How it works'), 'how-it-works', False),
+  (home ~ '#faq', _('FAQ'), 'faq', False),
 ] %}
 
 {% macro language_switch() -%}
@@ -26,8 +28,10 @@
     </a>
 
     <ul class="hidden items-center gap-8 text-[13px] md:flex">
-      {% for anchor, label in nav_links %}
-        <li><a href="{{ home }}#{{ anchor }}" class="nav-link" data-nav-link="{{ anchor }}">{{ label }}</a></li>
+      {% for href, label, spy_id, current in nav_links %}
+        <li><a href="{{ href }}" class="nav-link{{ ' is-active' if current }}"
+               {% if spy_id %}data-nav-link="{{ spy_id }}"{% endif %}
+               {% if current %}aria-current="page"{% endif %}>{{ label }}</a></li>
       {% endfor %}
       <li class="text-[13px]">{{ language_switch() }}</li>
     </ul>
@@ -47,8 +51,9 @@
 
   <div id="mobile-menu" class="border-t border-line bg-bg md:hidden" hidden>
     <div class="container-page flex flex-col gap-1 py-4">
-      {% for anchor, label in nav_links %}
-        <a href="{{ home }}#{{ anchor }}" class="rounded-xl px-3 py-3 text-[15px] text-muted transition-colors hover:bg-card hover:text-fg">{{ label }}</a>
+      {% for href, label, spy_id, current in nav_links %}
+        <a href="{{ href }}" class="rounded-xl px-3 py-3 text-[15px] transition-colors hover:bg-card hover:text-fg {{ 'text-fg' if current else 'text-muted' }}"
+           {% if current %}aria-current="page"{% endif %}>{{ label }}</a>
       {% endfor %}
       <div class="px-3 py-3 text-[15px]">{{ language_switch() }}</div>
       <div class="mt-2 grid grid-cols-2 gap-3">
