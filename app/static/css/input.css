@@ -31,6 +31,19 @@
   /* Urdu (RTL): Nastaliq needs taller lines and must never get letter-spacing,
      otherwise the joined letters break apart. */
   [dir="rtl"] body { line-height: 2.1; }
+
+  /* Nastaliq looks much smaller than Latin text at the same size, so small
+     text is bumped up in Urdu. "[dir] .class" outranks the plain utility. */
+  [dir="rtl"] .text-\[8px\] { font-size: 10px; }
+  [dir="rtl"] .text-\[9px\] { font-size: 11px; }
+  [dir="rtl"] .text-\[10px\] { font-size: 12px; }
+  [dir="rtl"] .text-\[11px\] { font-size: 13px; }
+  [dir="rtl"] .text-xs,
+  [dir="rtl"] .text-\[12px\] { font-size: 14px; }
+  [dir="rtl"] .text-\[13px\] { font-size: 15px; }
+  [dir="rtl"] .text-sm,
+  [dir="rtl"] .text-\[14px\] { font-size: 16px; }
+  [dir="rtl"] .text-\[15px\] { font-size: 17px; }
 }
 
 /* ---------- Components ---------- */
@@ -44,7 +57,7 @@
     @apply font-mono text-[11px] font-medium uppercase text-faint;
     letter-spacing: 0.14em;
   }
-  [dir="rtl"] .label-mono { letter-spacing: 0; font-family: theme("fontFamily.sans"); }
+  [dir="rtl"] .label-mono { letter-spacing: 0; font-family: theme("fontFamily.sans"); font-size: 13px; }
 
   .skip-link {
     @apply fixed start-4 top-4 z-[60] -translate-y-24 rounded-full bg-white px-4 py-2 text-sm font-medium text-black;
@@ -62,12 +75,15 @@
   .btn-primary { @apply btn bg-white text-black hover:bg-white/90; }
   .btn-secondary { @apply btn border border-line-strong bg-btn-secondary text-fg hover:border-[#303036]; }
   .btn-sm { @apply h-8 px-4 text-[13px]; }
+  [dir="rtl"] .btn { font-size: 16px; }
+  [dir="rtl"] .btn-sm { font-size: 15px; }
 
   .hero-badge {
     @apply inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 pe-3 ps-1 text-[12px] text-muted;
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   a.hero-badge:hover { @apply border-line-strong text-fg; }
+  [dir="rtl"] .hero-badge { font-size: 14px; }
 
   /* Cards */
   .surface { @apply rounded-[20px] border border-line bg-surface; }
@@ -119,6 +135,7 @@
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
   .demo-tab:hover { @apply text-fg; }
+  [dir="rtl"] .demo-tab { @apply h-8 text-[13px]; }
   .demo-tab[aria-selected="true"] { @apply border-accent bg-accent text-black; }
 
   .demo-panel {
