@@ -1,17 +1,26 @@
-{% from "partials/icons.html" import icon %}
-
+{# FAQ accordion (opened/closed by static/js/faq.js). Expects `faqs`: a list of FAQ(question, answer).
+   Without JavaScript every answer stays visible. Also outputs FAQPage structured data for search engines. #}
 <section id="faq" class="container-page mt-32 sm:mt-40" data-aos="fade-up">
   <h2 class="heading text-center text-[40px] sm:text-5xl">{{ _('Questions') }}</h2>
 
-  <div class="mx-auto mt-12 max-w-[560px] border-t border-line">
+  <div class="mx-auto mt-12 max-w-[640px] border-t border-line">
     {% for item in faqs %}
-      <details class="faq-item group border-b border-line">
-        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-start text-[14px] font-medium">
-          <span>{{ item.question }}</span>
-          <span class="text-muted transition-transform duration-300 group-open:rotate-45">{{ icon("plus", "h-4 w-4") }}</span>
-        </summary>
-        <p class="faq-answer pb-5 pe-8 text-start text-[13px] text-muted">{{ item.answer }}</p>
-      </details>
+      <div class="faq-item border-b border-line" data-faq-item>
+        <h3>
+          <button type="button" class="faq-trigger" id="faq-q-{{ loop.index }}"
+                  aria-expanded="false" aria-controls="faq-a-{{ loop.index }}" data-faq-trigger>
+            <span>{{ item.question }}</span>
+            <span class="faq-icon" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="faq-panel" id="faq-a-{{ loop.index }}" role="region" aria-labelledby="faq-q-{{ loop.index }}">
+          <div class="faq-panel-inner">
+            <p class="pb-5 pe-10 text-start text-[14px] text-muted">{{ item.answer }}</p>
+          </div>
+        </div>
+      </div>
     {% endfor %}
   </div>
+
+  <script type="application/ld+json">{{ faq_schema(faqs) | tojson }}</script>
 </section>

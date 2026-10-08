@@ -4,8 +4,8 @@
 
 {# One template for every tool page. All content comes from tools_catalog.py. #}
 
-{% block title %}{{ tool.name }} — Toolverse{% endblock %}
-{% block description %}{{ tool.summary }}{% endblock %}
+{% block title %}{{ tool.seo_title }} | Toolverse{% endblock %}
+{% block description %}{{ tool.meta_description }}{% endblock %}
 
 {% block content %}
   {# Until accounts and guest mode exist, "Try it free" goes to the sign-up coming-soon page. #}
@@ -52,6 +52,18 @@
     </ul>
   </section>
 
+  {# Guide: the long article for readers and search engines #}
+  <section id="guide" class="container-page mt-28 sm:mt-36">
+    <article class="guide mx-auto max-w-[720px] text-start">
+      {% for block in tool.article %}
+        {% if block.kind == "h2" %}<h2>{{ block.text }}</h2>
+        {% elif block.kind == "h3" %}<h3>{{ block.text }}</h3>
+        {% else %}<p>{{ block.text }}</p>
+        {% endif %}
+      {% endfor %}
+    </article>
+  </section>
+
   {# How to use #}
   <section id="how-to-use" class="container-page mt-28 sm:mt-36">
     <h2 class="heading text-center text-[36px] sm:text-5xl" data-aos="fade-up">{{ _('How to use') }}</h2>
@@ -84,4 +96,5 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/faq.js') }}" defer></script>
 {% endblock %}

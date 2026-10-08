@@ -162,7 +162,65 @@
     animation-delay: calc(var(--i, 0) * 450ms + 250ms);
   }
 
-  .faq-item[open] .faq-answer { animation: fade-up 0.35s ease both; }
+  /* FAQ accordion. Answers only collapse when JavaScript runs (html.js); otherwise they stay open. */
+  .faq-trigger {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-start text-[15px] font-medium text-fg;
+    transition: color 0.2s ease;
+  }
+  .faq-trigger:hover .faq-icon { @apply border-line-strong text-fg; }
+  [dir="rtl"] .faq-trigger { font-size: 17px; }
+
+  /* A + made of two bars. Open: the whole icon turns half a circle and the
+     vertical bar lies flat, so the + becomes a −. */
+  .faq-icon {
+    @apply relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line text-muted;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), color 0.2s ease, border-color 0.2s ease;
+  }
+  .faq-icon::before,
+  .faq-icon::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 1.8px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .faq-icon::after { transform: rotate(90deg); }
+  .faq-item.is-open .faq-icon { @apply border-line-strong text-fg; transform: rotate(180deg); }
+  .faq-item.is-open .faq-icon::after { transform: rotate(0deg); }
+
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+  .js .faq-panel {
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.4s;
+  }
+  .js .faq-item.is-open .faq-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+  }
+  .faq-panel-inner { min-height: 0; overflow: hidden; }
+  .js .faq-panel-inner > p { opacity: 0; transform: translateY(-4px); transition: opacity 0.3s ease, transform 0.3s ease; }
+  .js .faq-item.is-open .faq-panel-inner > p { opacity: 1; transform: none; transition-delay: 0.08s; }
+
+  /* Long guide article on tool pages */
+  .guide h2 {
+    @apply mt-14 text-[28px] font-bold text-fg sm:text-[32px];
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+  }
+  .guide h2:first-child { @apply mt-0; }
+  .guide h3 { @apply mt-8 text-[18px] font-semibold tracking-tight text-fg; }
+  .guide p { @apply mt-3 text-[15px] text-muted; line-height: 1.75; }
+  .guide h2 + p, .guide h3 + p { @apply mt-2; }
+  [dir="rtl"] .guide h2 { letter-spacing: 0; line-height: 1.9; font-size: 30px; }
+  [dir="rtl"] .guide h3 { letter-spacing: 0; line-height: 1.9; font-size: 20px; }
+  [dir="rtl"] .guide p { font-size: 17px; line-height: 2.2; }
 
   /* Tools catalog */
   .filter-tab {

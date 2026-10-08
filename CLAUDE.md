@@ -122,9 +122,15 @@ AI tools must have a **daily usage limit per user** to stay inside the free tier
 
 Guest mode: user bina login ke tools try kar sake. CV Checker mein 1 free check, Captions mein 3 free tries (IP ke hisaab se limit, taake Gemini ki free limit khatam na ho). CV Generator mein PDF download bina login, save ke liye login. Notes aur Expenses guest ke liye browser mein save hon, aur login karne par account mein chale jayein. Login Google se ek click mein bhi ho.
 
+Guest mode ke liye zaroori baatein:
+- **IP ki ginti Supabase mein:** Vercel serverless hai, server ki memory har request ke baad khatam ho jati hai. Is liye guest tries ki ginti (IP ke hisaab se) Supabase ki table mein rakhni hai.
+- **Guest ki CV save na ho:** guest jab bina login ke CV check kare, us ki file kahin save nahi hogi — sirf check ho kar khatam. (Section 7 Privacy ke mutabiq.)
+- **Landing FAQ badalna:** guest mode banne ke baad landing page ka "Why do I need to log in?" wala jawab update karna hai, kyunki tab login ke baghair bhi tools try ho sakenge.
+- **"Try it free" seedha tool khole:** guest mode banne ke baad tool pages ka "Try it free" button coming-soon page ki jagah seedha tool kholega.
+
 ### Tool requirements (promised on the public tool pages — every item must be built)
 
-The text for these lives in `app/blueprints/marketing/tools_catalog.py`. If a promise changes, update both places.
+The text for these lives in `app/blueprints/marketing/tools_catalog.py` and `tool_articles.py`. If a promise changes, update both places.
 
 **CV Checker**
 - PDF upload only, max **4 MB**
@@ -137,13 +143,16 @@ The text for these lives in `app/blueprints/marketing/tools_catalog.py`. If a pr
 - Works with the CV Generator: build → check → improve in one place
 - Fair daily limit on checks
 - Make clear that AI can make mistakes
+- Shows a progress bar while the AI reads the CV
+- Does not rewrite the CV — it only gives a score and tips
+- Guest check: the file is only checked, never saved
 
 **CV Generator**
-- Simple step-by-step form (details, experience, skills); no design skills needed
-- Choice of clean templates
+- Simple step-by-step form: name and contact details, short summary, work experience, **education**, skills; no design skills needed
+- Choice of clean templates; the user can switch template and download again
 - Ready-to-send PDF download
-- Optional AI help to write the summary and experience; the user can edit everything
-- CVs saved in the account and editable anytime
+- Optional AI help to write the summary and experience; the user can edit everything (AI help is optional — templates and PDF work without it)
+- CVs saved in the account and editable anytime; a user can keep **several CVs** (different versions)
 - A way to send a new CV to the CV Checker
 
 **Captions**
@@ -154,6 +163,7 @@ The text for these lives in `app/blueprints/marketing/tools_catalog.py`. If a pr
 - "Copy in one tap" button on every caption
 - Captions are editable before posting
 - Fair daily limit
+- Toolverse **does not post** for the user and does not connect to social media accounts
 
 **Notes**
 - Create a note with a **title** and text
@@ -161,11 +171,14 @@ The text for these lives in `app/blueprints/marketing/tools_catalog.py`. If a pr
 - Search by any word
 - Works on every device (browser on phone, tablet, laptop); no app to install
 - Only the owner can see their notes
+- A deleted note **cannot be recovered** (no trash bin for now — if one is added later, update the FAQ)
 
 **Expenses**
 - Quick entry: amount + what it was for
 - Monthly total
 - Daily list (expenses grouped by day)
+- **Edit and delete** an expense
+- Monthly total = sum of all expenses entered for that month
 - Works on every device; only the owner can see their expenses
 - No bank connection — the user adds expenses themselves
 - Currency: default **PKR (Rs)**; the user can change the currency in their settings

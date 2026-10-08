@@ -10,6 +10,7 @@ from typing import Optional
 from flask_babel import lazy_gettext as _l
 
 from app.blueprints.marketing.content import FAQ
+from app.blueprints.marketing.tool_articles import ARTICLES
 
 
 class Status(str, Enum):
@@ -85,10 +86,13 @@ class Tool:
     icon: str          # name of an icon in templates/partials/icons.html
     summary: str       # one line, shown on the card
     description: str   # shown in the tool page hero
+    seo_title: str     # <title> of the tool page (" | Toolverse" is added)
+    meta_description: str
     demo: Demo
     features: tuple
     steps: tuple
     faqs: tuple
+    article: tuple     # long guide after Features, see tool_articles.py
     status: Status = Status.COMING_SOON
     featured: bool = False  # shown inside the big "CV section" card instead of the grid
 
@@ -108,6 +112,9 @@ TOOLS = (
         name=_l("CV Generator"),
         category="cv",
         icon="file-plus",
+        seo_title=_l("Free CV Generator – Build a CV and Download a PDF"),
+        meta_description=_l("Fill a simple form, pick a clean template and download your CV as a PDF. "
+                            "Optional AI help for your summary and experience."),
         summary=_l("Fill a form, pick a template, download a polished PDF."),
         description=_l("Fill in a simple form, choose a template and download your CV as a PDF. "
                        "AI can help you write your summary and experience."),
@@ -140,20 +147,33 @@ TOOLS = (
             HowToStep(_l("Download your PDF"), _l("Your CV is ready to send.")),
         ),
         faqs=(
-            FAQ(_l("Do I need design skills?"),
-                _l("No. You fill the form and the template handles the design.")),
-            FAQ(_l("Can I edit my CV later?"),
-                _l("Yes. Your CVs are saved in your account and you can edit them anytime.")),
-            FAQ(_l("Does AI write the whole CV?"),
-                _l("No. AI helps with your summary and experience, but you stay in control "
-                   "and can change everything.")),
+            FAQ(_l('Do I need design skills?'),
+                _l('No. You fill the form and the template handles the design.')),
+            FAQ(_l('Can I edit my CV later?'),
+                _l('Yes. Your CVs are saved in your account and you can edit them anytime.')),
+            FAQ(_l('Does AI write the whole CV?'),
+                _l('No. AI helps with your summary and experience, but you stay in control and can change everything.')),
+            FAQ(_l('Is the CV Generator free?'),
+                _l('Yes. Building and downloading your CV is free. AI writing help has a fair daily limit so it stays free for everyone.')),
+            FAQ(_l('Can I download my CV without an account?'),
+                _l('Yes. You can build your CV and download the PDF without logging in. To save your CV and edit it later, create a free account.')),
+            FAQ(_l('What format is the download?'),
+                _l('PDF. It keeps your layout the same on any device and is a common format for job applications.')),
+            FAQ(_l('Can I make more than one CV?'),
+                _l('Yes. Your CVs are saved in your account, so you can keep different versions, for example for different kinds of jobs.')),
+            FAQ(_l('Can I check my CV after building it?'),
+                _l('Yes. Use the CV Checker to get a score and tips for your new CV.')),
         ),
+        article=ARTICLES['cv-generator'],
     ),
     Tool(
         slug="cv-checker",
         name=_l("CV Checker"),
         category="cv",
         icon="file-check",
+        seo_title=_l("Free AI CV Checker – Get a Score and Clear Tips"),
+        meta_description=_l("Upload your CV as a PDF and get a score with clear, practical tips from AI. "
+                            "Free to use and private to you."),
         summary=_l("Upload your CV and get a score with clear tips from AI."),
         description=_l("Upload your CV as a PDF. AI reads it and gives you a score and clear "
                        "suggestions to make it stronger."),
@@ -188,19 +208,33 @@ TOOLS = (
             HowToStep(_l("Improve it"), _l("Use the score and tips to update your CV.")),
         ),
         faqs=(
-            FAQ(_l("Which files can I upload?"), _l("PDF files up to 4 MB.")),
-            FAQ(_l("Who can see my CV?"), _l("Only you. It is saved privately in your account.")),
-            FAQ(_l("Is there a limit?"),
-                _l("Yes, a fair daily limit on checks so the tool stays free for everyone.")),
-            FAQ(_l("Is the AI always right?"),
-                _l("AI gives helpful suggestions, but it can make mistakes. Use your own judgment too.")),
+            FAQ(_l('Which files can I upload?'),
+                _l('PDF files up to 4 MB.')),
+            FAQ(_l('Who can see my CV?'),
+                _l('Only you. If you are logged in, your CV is saved privately in your account. As a guest, your file is only checked and not saved.')),
+            FAQ(_l('Is the CV Checker free?'),
+                _l('Yes. It is free to use. There is a fair daily limit on checks so the tool stays free for everyone.')),
+            FAQ(_l('Can I check my CV without an account?'),
+                _l('Yes. You can try one check without logging in. Your file is checked and not saved. Create a free account for more checks.')),
+            FAQ(_l('What does the score mean?'),
+                _l('It is a quick summary of how clear and complete your CV looks. It is a guide, not a decision from an employer. Use the tips to see what to improve.')),
+            FAQ(_l('How long does a check take?'),
+                _l('The AI needs a moment to read your CV. A progress bar shows while it works.')),
+            FAQ(_l('Will it rewrite my CV?'),
+                _l('No. It gives you a score and tips, and you decide what to change. To build a new CV, use the CV Generator.')),
+            FAQ(_l('Is the AI always right?'),
+                _l('AI gives helpful suggestions, but it can make mistakes. Use your own judgment too.')),
         ),
+        article=ARTICLES['cv-checker'],
     ),
     Tool(
         slug="captions",
         name=_l("Captions"),
         category="writing",
         icon="message",
+        seo_title=_l("Free Caption Generator for Instagram and LinkedIn"),
+        meta_description=_l("Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
+                            "Copy in one tap and edit before you post."),
         summary=_l("Turn a topic into ready-to-post Instagram and LinkedIn captions."),
         description=_l("Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
                        "Pick the one you like, copy it and post."),
@@ -233,18 +267,31 @@ TOOLS = (
             HowToStep(_l("Copy and post"), _l("Pick your favourite caption and share it.")),
         ),
         faqs=(
-            FAQ(_l("Which platforms does it write for?"), _l("Instagram and LinkedIn.")),
-            FAQ(_l("Is there a limit?"),
-                _l("Yes, a fair daily limit so the tool stays free for everyone.")),
-            FAQ(_l("Can I change a caption?"),
-                _l("Yes. Captions are a starting point, so edit them before you post.")),
+            FAQ(_l('Which platforms does it write for?'),
+                _l('Instagram and LinkedIn.')),
+            FAQ(_l('Is the Captions tool free?'),
+                _l('Yes. It is free, with a fair daily limit so it stays free for everyone.')),
+            FAQ(_l('Can I try it without an account?'),
+                _l('Yes. You can try it up to 3 times without logging in. Create a free account to keep using it.')),
+            FAQ(_l('How many captions do I get?'),
+                _l('You get more than one caption for each topic, so you can pick the one you like best.')),
+            FAQ(_l('Can I change a caption?'),
+                _l('Yes. Captions are a starting point, so edit them before you post.')),
+            FAQ(_l('Can I use the captions for my business?'),
+                _l('Yes. You can use them for personal or business posts. Read and edit each caption before you post it.')),
+            FAQ(_l('Does it post for me?'),
+                _l('No. You copy the caption and paste it into Instagram or LinkedIn yourself. Toolverse does not connect to your social media accounts.')),
         ),
+        article=ARTICLES['captions'],
     ),
     Tool(
         slug="notes",
         name=_l("Notes"),
         category="productivity",
         icon="note",
+        seo_title=_l("Free Online Notes – Write, Edit and Search"),
+        meta_description=_l("Write notes, edit them anytime and find any note with search. "
+                            "Saved in your account and on every device."),
         summary=_l("Write, edit and search your notes from any device."),
         description=_l("Write notes, edit them anytime and find any note fast with search. "
                        "Your notes are saved in your account, so they are on every device you use."),
@@ -275,17 +322,31 @@ TOOLS = (
             HowToStep(_l("Search when you need it"), _l("Type a word to find a note.")),
         ),
         faqs=(
-            FAQ(_l("Who can see my notes?"), _l("Only you.")),
-            FAQ(_l("Does it work on my phone?"),
-                _l("Yes. It works in the browser on phone, tablet and laptop.")),
-            FAQ(_l("Do I need to install an app?"), _l("No. Toolverse works in your web browser.")),
+            FAQ(_l('Who can see my notes?'),
+                _l('Only you.')),
+            FAQ(_l('Does it work on my phone?'),
+                _l('Yes. It works in the browser on phone, tablet and laptop.')),
+            FAQ(_l('Do I need to install an app?'),
+                _l('No. Toolverse works in your web browser.')),
+            FAQ(_l('Is Notes free?'),
+                _l('Yes, completely free.')),
+            FAQ(_l('Can I use Notes without an account?'),
+                _l('Yes. Notes you write as a guest are kept in this browser only. Create a free account to move them to your account and open them on other devices.')),
+            FAQ(_l('Can I search inside my notes?'),
+                _l('Yes. Type any word and Notes shows the notes that contain it.')),
+            FAQ(_l('Can I get back a deleted note?'),
+                _l('No. When you delete a note it is removed, so only delete notes you no longer need.')),
         ),
+        article=ARTICLES['notes'],
     ),
     Tool(
         slug="expenses",
         name=_l("Expenses"),
         category="productivity",
         icon="wallet",
+        seo_title=_l("Free Expense Tracker – Daily List and Monthly Total"),
+        meta_description=_l("Log what you spend each day and see your monthly total. "
+                            "Simple, private and with no bank connection."),
         summary=_l("Log daily spending and see your monthly total."),
         description=_l("Add what you spend each day and see your total for the month. "
                        "Simple tracking, saved in your account."),
@@ -318,11 +379,22 @@ TOOLS = (
             HowToStep(_l("Check your monthly total"), _l("See where your money went.")),
         ),
         faqs=(
-            FAQ(_l("Does it connect to my bank?"),
-                _l("No. You add expenses yourself, so nothing is linked to your bank.")),
-            FAQ(_l("Who can see my expenses?"), _l("Only you.")),
-            FAQ(_l("Is it free?"), _l("Yes, completely free.")),
+            FAQ(_l('Does it connect to my bank?'),
+                _l('No. You add expenses yourself, so nothing is linked to your bank.')),
+            FAQ(_l('Who can see my expenses?'),
+                _l('Only you.')),
+            FAQ(_l('Is it free?'),
+                _l('Yes, completely free.')),
+            FAQ(_l('Can I use it without an account?'),
+                _l('Yes. Expenses you add as a guest are kept in this browser only. Create a free account to move them to your account and see them on other devices.')),
+            FAQ(_l('Can I edit or delete an expense?'),
+                _l('Yes. If you make a mistake, you can change or remove an expense.')),
+            FAQ(_l('How is the monthly total calculated?'),
+                _l('It adds up all the expenses you entered for that month.')),
+            FAQ(_l('Does it work on my phone?'),
+                _l('Yes. It works in the browser on phone, tablet and laptop.')),
         ),
+        article=ARTICLES['expenses'],
     ),
 )
 

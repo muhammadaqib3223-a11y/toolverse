@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block title %}{{ page.title }} — Toolverse{% endblock %}
+{% block description %}{{ page.description }}{% endblock %}
+{# Placeholder pages should not show up in search results. #}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
 
 {% block content %}
   <section class="relative overflow-hidden">

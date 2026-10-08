@@ -6,6 +6,12 @@
   <title>{% block title %}Toolverse{% endblock %}</title>
   <meta name="description" content="{% block description %}{{ _('Free tools for work and life: CV checker, CV generator, captions, notes and expenses. One account, everything saved.') }}{% endblock %}">
   <meta name="theme-color" content="#000000">
+  {% block robots %}{% endblock %}
+  {% block canonical %}
+    {% if request.endpoint and request.endpoint != 'static' %}
+      <link rel="canonical" href="{{ url_for(request.endpoint, _external=True, **(request.view_args or {})) }}">
+    {% endif %}
+  {% endblock %}
   <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">

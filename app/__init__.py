@@ -9,6 +9,7 @@ from app.config import get_config
 from app.errors import register_error_handlers
 from app.extensions import babel
 from app.i18n import get_locale, register_i18n
+from app.seo import faq_schema
 
 
 def create_app(config_name=None):
@@ -41,11 +42,15 @@ def _configure_logging(app):
 
 def _register_blueprints(app):
     from app.blueprints.marketing import bp as marketing_bp
+    from app.blueprints.seo import bp as seo_bp
 
     app.register_blueprint(marketing_bp)
+    app.register_blueprint(seo_bp)
 
 
 def _register_template_globals(app):
+    app.add_template_global(faq_schema)
+
     @app.context_processor
     def inject_globals():
         return {"current_year": datetime.now(timezone.utc).year}

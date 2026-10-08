@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% from "marketing/tools/_macros.html" import tool_card with context %}
 
-{% block title %}{{ _('Tools') }} — Toolverse{% endblock %}
+{% block title %}{{ _('Free Online Tools for Your CV, Captions, Notes and Expenses') }} | Toolverse{% endblock %}
+{% block description %}{{ _('Five free tools in one account: CV Checker, CV Generator, Captions, Notes and Expenses. Pick a tool to see how it works.') }}{% endblock %}
 
 {% block content %}
   {% set highlight %}<span class="text-accent">{{ _('one place') }}</span>{% endset %}
@@ -64,5 +65,4 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/animations.js') }}" defer></script>
-  <script src="{{ url_for('static', filename='js/tools_filter.js') }}" defer></script>
-{% endblock %}
+  <script src="{{ url_for('static', filename='js/tools_filter.js') }}" defer></script>{% endblock %}
