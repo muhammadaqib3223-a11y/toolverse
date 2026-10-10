@@ -48,6 +48,7 @@ def _register_blueprints(app):
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.marketing import bp as marketing_bp
     from app.blueprints.seo import bp as seo_bp
+    from app.blueprints.tools.expenses import bp as expenses_bp
     from app.blueprints.tools.notes import bp as notes_bp
 
     app.register_blueprint(marketing_bp)
@@ -55,6 +56,7 @@ def _register_blueprints(app):
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(notes_bp)
+    app.register_blueprint(expenses_bp)
 
 
 def _init_auth(app):
@@ -64,9 +66,11 @@ def _init_auth(app):
 
 
 def _init_tools(app):
+    from app.blueprints.tools.expenses import init_expenses
     from app.blueprints.tools.notes import init_notes
 
     init_notes(app)
+    init_expenses(app)
 
 
 def _register_template_globals(app):

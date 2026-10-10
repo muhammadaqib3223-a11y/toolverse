@@ -398,6 +398,8 @@ TOOLS = (
                 _l('Yes. It works in the browser on phone, tablet and laptop.')),
         ),
         article=ARTICLES['expenses'],
+        status=Status.LIVE,
+        app_endpoint="expenses.index",
     ),
 )
 

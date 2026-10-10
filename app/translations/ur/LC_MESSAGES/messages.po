@@ -4217,3 +4217,133 @@ msgstr "کچھ لکھیں…"
 msgid "Save"
 msgstr "محفوظ کریں"
 
+# ── Expenses tool ────────────────────────────────────────────────────────────
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "That expense no longer exists."
+msgstr "وہ خرچہ اب موجود نہیں ہے۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "Please enter an amount."
+msgstr "براہ کرم رقم درج کریں۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "The amount must be a positive number."
+msgstr "رقم ایک مثبت نمبر ہونی چاہیے۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "Please describe the expense."
+msgstr "براہ کرم خرچے کی تفصیل لکھیں۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "The description is too long (200 characters max)."
+msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ ۲۰۰ حروف)۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "Please enter a valid date."
+msgstr "براہ کرم درست تاریخ درج کریں۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "Expenses aren't available right now. Please try again in a moment."
+msgstr "ابھی اخراجات دستیاب نہیں ہیں۔ کچھ دیر بعد دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Log what you spend each day and see your monthly total."
+msgstr "روزانہ کے خرچے درج کریں اور ماہانہ کل دیکھیں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "You are not logged in. Your expenses are kept in this browser only."
+msgstr "آپ لاگ ان نہیں ہیں۔ آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Previous month"
+msgstr "پچھلا مہینہ"
+
+#: app/templates/tools/expenses/index.html
+msgid "Next month"
+msgstr "اگلا مہینہ"
+
+#: app/templates/tools/expenses/index.html
+msgid "Monthly total"
+msgstr "ماہانہ کل"
+
+#: app/templates/tools/expenses/index.html
+msgid "Add an expense"
+msgstr "خرچہ شامل کریں"
+
+#: app/templates/tools/expenses/index.html
+msgid "Amount"
+msgstr "رقم"
+
+#: app/templates/tools/expenses/index.html
+msgid "What was it for?"
+msgstr "کس کام کے لیے تھا؟"
+
+#: app/templates/tools/expenses/index.html
+msgid "Description"
+msgstr "تفصیل"
+
+#: app/templates/tools/expenses/index.html
+msgid "Date"
+msgstr "تاریخ"
+
+#: app/templates/tools/expenses/index.html
+msgid "Add"
+msgstr "شامل کریں"
+
+#: app/templates/tools/expenses/index.html
+msgid "No expenses this month."
+msgstr "اس مہینے کوئی خرچہ نہیں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Could not save. Please try again."
+msgstr "محفوظ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "The amount must be a positive number."
+msgstr "رقم ایک مثبت نمبر ہونی چاہیے۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Delete this expense? This cannot be undone."
+msgstr "یہ خرچہ ڈیلیٹ کریں؟ یہ واپس نہیں ہو سکتا۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Could not delete this expense. Please try again."
+msgstr "یہ خرچہ ڈیلیٹ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Could not load your expenses. Please try again."
+msgstr "آپ کے خرچے لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html
+msgid "Today"
+msgstr "آج"
+
+#: app/templates/tools/expenses/index.html
+msgid "Yesterday"
+msgstr "کل"
+
+#: app/templates/tools/expenses/index.html
+msgid "Edit expense"
+msgstr "خرچہ تبدیل کریں"
+
+#: app/templates/tools/expenses/index.html
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+#: app/templates/dashboard/app_layout.html
+msgid "You have expenses saved only in this browser. Move them to your account?"
+msgstr "آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
+
+#: app/templates/dashboard/app_layout.html
+msgid "Moving your expenses…"
+msgstr "آپ کے خرچے منتقل ہو رہے ہیں…"
+
+#: app/templates/dashboard/app_layout.html
+msgid "Your expenses are now in your account."
+msgstr "آپ کے خرچے آپ کے اکاؤنٹ میں آ گئے ہیں۔"
+
+#: app/templates/dashboard/app_layout.html
+msgid "Could not move your expenses. Please try again."
+msgstr "آپ کے خرچے منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+

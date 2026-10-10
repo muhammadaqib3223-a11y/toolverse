@@ -1,4 +1,4 @@
-"""Fake services with the same methods as the real ones (auth, notes). No network, fully predictable."""
+"""Fake services with the same methods as the real ones (auth, notes, expenses). No network."""
 import itertools
 import time
 import uuid
@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 
 from app.blueprints.auth.errors import AuthError, AuthUnavailable, SessionEnded, TokenExpired
 from app.blueprints.auth.services import EMAIL_LINK_TYPES, AuthSession, AuthUser, GoogleLogin
+from app.blueprints.tools.expenses.errors import ExpensesUnavailable
 from app.blueprints.tools.notes.errors import NotesUnavailable
 
 GOOGLE_URL = "https://test-project.supabase.co/auth/v1/authorize?provider=google"
@@ -205,4 +206,83 @@ class FakeNotesRepository:
             if already:
                 continue
             imported.append(self.insert_note(access_token, note["title"], note["content"], note.get("client_id")))
+        return imported
+
+
+@dataclass
+class FakeExpensesRepository:
+    """In-memory expenses store with the same methods as SupabaseExpensesRepository. No network."""
+    unavailable: bool = False
+    expenses: dict = field(default_factory=dict)  # access_token -> {expense_id: full expense dict}
+
+    def _bucket(self, access_token):
+        return self.expenses.setdefault(access_token, {})
+
+    def _check(self):
+        if self.unavailable:
+            raise ExpensesUnavailable()
+
+    def _public(self, exp):
+        return {key: exp[key] for key in ("id", "amount", "description", "currency", "spent_at", "created_at", "updated_at")}
+
+    def list_month(self, access_token, year, month):
+        self._check()
+        prefix = f"{year:04d}-{month:02d}"
+        rows = [
+            exp for exp in self._bucket(access_token).values()
+            if exp["spent_at"].startswith(prefix)
+        ]
+        rows.sort(key=lambda e: (e["spent_at"], e["created_at"]), reverse=True)
+        return [self._public(exp) for exp in rows]
+
+    def insert_expense(self, access_token, amount, description, currency, spent_at, client_id=None):
+        self._check()
+        bucket = self._bucket(access_token)
+        if client_id:
+            existing = next((e for e in bucket.values() if e.get("client_id") == client_id), None)
+            if existing is not None:
+                return self._public(existing)
+        now = _now_iso()
+        exp = {
+            "id": str(uuid.uuid4()),
+            "amount": str(amount),
+            "description": description,
+            "currency": currency,
+            "spent_at": spent_at,
+            "client_id": client_id,
+            "created_at": now,
+            "updated_at": now,
+        }
+        bucket[exp["id"]] = exp
+        return self._public(exp)
+
+    def update_expense(self, access_token, expense_id, amount, description, currency, spent_at):
+        self._check()
+        exp = self._bucket(access_token).get(expense_id)
+        if exp is None:
+            return None
+        exp["amount"] = str(amount)
+        exp["description"] = description
+        exp["currency"] = currency
+        exp["spent_at"] = spent_at
+        exp["updated_at"] = _now_iso()
+        return self._public(exp)
+
+    def delete_expense(self, access_token, expense_id):
+        self._check()
+        return self._bucket(access_token).pop(expense_id, None) is not None
+
+    def import_expenses(self, access_token, expenses):
+        self._check()
+        imported = []
+        for exp in expenses:
+            bucket = self._bucket(access_token)
+            already = any(e.get("client_id") == exp.get("client_id") for e in bucket.values())
+            if already:
+                continue
+            imported.append(self.insert_expense(
+                access_token,
+                exp["amount"], exp["description"], exp["currency"], exp["spent_at"],
+                exp.get("client_id"),
+            ))
         return imported

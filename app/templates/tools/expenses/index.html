@@ -1,0 +1,187 @@
+{% extends "dashboard/app_layout.html" %}
+{% from "partials/icons.html" import icon %}
+
+{# The whole tool is one screen; public/static/js/expenses/expenses_app.js drives it.
+   ServerStore (API) for logged-in users; GuestStore (localStorage) for guests — see expenses/stores.js.
+   Translated text is passed through data-text-* attributes. #}
+
+{% block title %}{{ _('Expenses') }} — Toolverse{% endblock %}
+{% block description %}{{ _('Log what you spend each day and see your monthly total.') }}{% endblock %}
+
+{% block head_extra %}{{ csrf_meta_tag() }}{% endblock %}
+
+{% block app_content %}
+  <div class="expenses-app"
+       data-expenses-app
+       data-logged-in="{{ 'true' if current_user else 'false' }}"
+       data-api-expenses="{{ url_for('expenses.api_expenses') }}"
+       data-api-expense-template="{{ url_for('expenses.api_expense', expense_id='__ID__') }}"
+       data-currency-default="PKR"
+       data-text-empty="{{ _('No expenses this month.') }}"
+       data-text-saved="{{ _('Saved') }}"
+       data-text-saving="{{ _('Saving…') }}"
+       data-text-save-failed="{{ _('Could not save. Please try again.') }}"
+       data-text-amount-required="{{ _('Please enter an amount.') }}"
+       data-text-amount-invalid="{{ _('The amount must be a positive number.') }}"
+       data-text-description-required="{{ _('Please describe the expense.') }}"
+       data-text-delete-confirm="{{ _('Delete this expense? This cannot be undone.') }}"
+       data-text-delete-failed="{{ _('Could not delete this expense. Please try again.') }}"
+       data-text-load-failed="{{ _('Could not load your expenses. Please try again.') }}"
+       data-text-today="{{ _('Today') }}"
+       data-text-yesterday="{{ _('Yesterday') }}">
+
+    <p class="label-mono">{{ _('Dashboard') }}</p>
+    <h1 class="heading mt-4 text-[36px] sm:text-5xl">{{ _('Expenses') }}</h1>
+    <p class="mt-3 max-w-[34rem] text-[14px] text-muted">
+      {{ _('Log what you spend each day and see your monthly total.') }}
+    </p>
+
+    {% if not current_user %}
+      <div class="surface mt-6 flex flex-wrap items-center justify-between gap-4 p-4">
+        <p class="flex items-center gap-2 text-[13px] text-muted">
+          {{ icon("lock", "h-4 w-4 shrink-0 text-faint") }}
+          {{ _('You are not logged in. Your expenses are kept in this browser only.') }}
+        </p>
+        <div class="flex shrink-0 items-center gap-2">
+          <a href="{{ url_for('auth.login', next=request.path) }}" class="btn-secondary btn-sm">{{ _('Log in') }}</a>
+          <a href="{{ url_for('auth.signup', next=request.path) }}" class="btn-primary btn-sm">{{ _('Sign up free') }}</a>
+        </div>
+      </div>
+    {% endif %}
+
+    {# ── Month navigation ───────────────────────────────────────────────────── #}
+    <div class="mt-6 flex items-center gap-3">
+      <button type="button"
+              class="btn-secondary btn-sm shrink-0"
+              data-action="prev-month"
+              aria-label="{{ _('Previous month') }}">
+        {{ icon("arrow-right", "h-4 w-4 rotate-180 rtl:rotate-0") }}
+      </button>
+      <span class="heading text-[18px] sm:text-[22px]" data-month-label aria-live="polite"></span>
+      <button type="button"
+              class="btn-secondary btn-sm shrink-0"
+              data-action="next-month"
+              aria-label="{{ _('Next month') }}">
+        {{ icon("arrow-right", "h-4 w-4 rtl:rotate-180") }}
+      </button>
+    </div>
+
+    {# ── Monthly total + add form ────────────────────────────────────────────── #}
+    <div class="mt-4 grid gap-4 sm:grid-cols-[1fr_auto]">
+      {# Monthly total card #}
+      <div class="surface flex items-center gap-4 p-5">
+        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card">
+          {{ icon("wallet", "h-5 w-5 text-accent") }}
+        </div>
+        <div class="min-w-0">
+          <p class="text-[12px] text-faint label-mono">{{ _('Monthly total') }}</p>
+          <p class="heading text-[22px] sm:text-[26px]" data-monthly-total>—</p>
+        </div>
+        <span class="spinner ms-auto" data-total-spinner aria-hidden="true" hidden></span>
+      </div>
+
+      {# Quick-add form #}
+      <form class="surface flex flex-col gap-3 p-5 sm:min-w-[300px]"
+            data-add-form
+            novalidate
+            aria-label="{{ _('Add an expense') }}">
+        <p class="text-[13px] font-semibold">{{ _('Add an expense') }}</p>
+        <div class="flex gap-2">
+          <div class="relative w-28 shrink-0">
+            <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint"
+                  data-currency-symbol>Rs</span>
+            <input type="number" min="0.01" step="any"
+                   class="input ps-8 w-full"
+                   data-field="amount"
+                   placeholder="0.00"
+                   aria-label="{{ _('Amount') }}"
+                   autocomplete="off">
+          </div>
+          <input type="text"
+                 class="input min-w-0 flex-1"
+                 data-field="description"
+                 maxlength="200"
+                 placeholder="{{ _('What was it for?') }}"
+                 aria-label="{{ _('Description') }}"
+                 autocomplete="off">
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <input type="date"
+                 class="input w-auto text-[13px]"
+                 data-field="spent_at"
+                 aria-label="{{ _('Date') }}">
+          <button type="submit" class="btn-primary btn-sm shrink-0" data-action="add">
+            {{ icon("plus", "h-4 w-4") }}
+            {{ _('Add') }}
+          </button>
+        </div>
+        <p class="text-[12px] text-danger" data-add-error hidden></p>
+      </form>
+    </div>
+
+    {# ── Expense list ────────────────────────────────────────────────────────── #}
+    <div class="mt-6" data-expense-list aria-live="polite">
+      <div class="flex items-center justify-center py-10">
+        <span class="spinner" data-list-spinner aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <p class="mt-6 text-center text-[13px] text-muted" data-empty-state hidden></p>
+
+    {# ── Edit modal ──────────────────────────────────────────────────────────── #}
+    <div class="fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
+         data-edit-backdrop
+         hidden
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="edit-modal-title">
+      <div class="surface w-full max-w-md rounded-2xl p-6">
+        <h2 class="heading mb-4 text-[18px]" id="edit-modal-title">{{ _('Edit expense') }}</h2>
+        <form data-edit-form novalidate>
+          <input type="hidden" data-field="id">
+          <div class="flex gap-2">
+            <div class="relative w-28 shrink-0">
+              <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint"
+                    data-edit-currency-symbol>Rs</span>
+              <input type="number" min="0.01" step="any"
+                     class="input ps-8 w-full"
+                     data-field="amount"
+                     placeholder="0.00"
+                     aria-label="{{ _('Amount') }}">
+            </div>
+            <input type="text"
+                   class="input min-w-0 flex-1"
+                   data-field="description"
+                   maxlength="200"
+                   placeholder="{{ _('What was it for?') }}"
+                   aria-label="{{ _('Description') }}">
+          </div>
+          <input type="date"
+                 class="input mt-2 w-auto text-[13px]"
+                 data-field="spent_at"
+                 aria-label="{{ _('Date') }}">
+          <p class="mt-2 text-[12px] text-danger" data-edit-error hidden></p>
+          <div class="mt-4 flex items-center justify-between gap-3">
+            <button type="button"
+                    class="inline-flex items-center gap-1.5 text-[13px] text-muted transition-colors hover:text-danger"
+                    data-action="delete">
+              {{ icon("trash", "h-4 w-4") }}
+              {{ _('Delete') }}
+            </button>
+            <div class="flex items-center gap-2">
+              <button type="button" class="btn-secondary btn-sm" data-action="cancel">{{ _('Cancel') }}</button>
+              <button type="submit" class="btn-primary btn-sm" data-action="save">{{ _('Save') }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="toast-stack" data-expenses-toasts role="status" aria-live="polite"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/expenses/stores.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/expenses/expenses_app.js') }}" defer></script>
+{% endblock %}
