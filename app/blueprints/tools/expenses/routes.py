@@ -19,7 +19,10 @@ _ERROR_STATUS = {
 @localized_route(bp, "/dashboard/expenses", methods=["GET"])
 @login_optional
 def index():
-    return render_template("tools/expenses/index.html", active_nav="expenses")
+    user_currency = None
+    if g.get("user"):
+        user_currency = g.user.metadata.get("expense_currency")
+    return render_template("tools/expenses/index.html", active_nav="expenses", user_currency=user_currency)
 
 
 @localized_route(bp, "/api/expenses", methods=["GET", "POST"])
@@ -52,6 +55,22 @@ def api_expense(expense_id):
             data.get("spent_at"),
         )
         return jsonify(expense=expense)
+    except ExpenseError as error:
+        return _error_response(error)
+
+
+@localized_route(bp, "/api/expenses/currency", methods=["POST"])
+@login_optional
+def api_set_currency():
+    try:
+        if g.get("user") is None:
+            raise ExpenseError("login_required")
+        auth_session = current_auth_session()
+        if auth_session is None:
+            raise ExpenseError("login_required")
+        data = request.get_json(silent=True) or {}
+        currency = services.set_currency_preference(auth_session, data.get("currency"))
+        return jsonify(currency=currency)
     except ExpenseError as error:
         return _error_response(error)
 

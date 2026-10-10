@@ -4347,3 +4347,43 @@ msgstr "آپ کے خرچے آپ کے اکاؤنٹ میں آ گئے ہیں۔"
 msgid "Could not move your expenses. Please try again."
 msgstr "آپ کے خرچے منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
 
+
+#: app/templates/tools/expenses/index.html
+msgid "Currency"
+msgstr "کرنسی"
+
+#: app/templates/tools/expenses/index.html
+msgid "Pakistani Rupee"
+msgstr "پاکستانی روپیہ"
+
+#: app/templates/tools/expenses/index.html
+msgid "US Dollar"
+msgstr "امریکی ڈالر"
+
+#: app/templates/tools/expenses/index.html
+msgid "Euro"
+msgstr "یورو"
+
+#: app/templates/tools/expenses/index.html
+msgid "British Pound"
+msgstr "برطانوی پاؤنڈ"
+
+#: app/templates/tools/expenses/index.html
+msgid "UAE Dirham"
+msgstr "اماراتی درہم"
+
+#: app/templates/tools/expenses/index.html
+msgid "Saudi Riyal"
+msgstr "سعودی ریال"
+
+#: app/templates/tools/expenses/index.html
+msgid "Indian Rupee"
+msgstr "بھارتی روپیہ"
+
+#: app/templates/tools/expenses/index.html
+msgid "Description is too long (200 characters max)."
+msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ 200 حروف)۔"
+
+#: app/blueprints/tools/expenses/messages.py
+msgid "Please select a valid currency."
+msgstr "براہ کرم ایک درست کرنسی منتخب کریں۔"

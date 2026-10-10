@@ -1,4 +1,4 @@
-/* Expense Tracker UI: month nav, monthly total, quick add, day-grouped list, edit/delete.
+/* Expense Tracker UI: currency picker, month nav, totals, quick-add, day-grouped list, edit/delete.
  * Works identically for guests (GuestStore) and logged-in users (ServerStore) — see stores.js.
  * All user-visible text comes from data-text-* attributes on the root element. */
 (function () {
@@ -7,28 +7,32 @@
   var root = document.querySelector("[data-expenses-app]");
   if (!root || !window.ToolverseExpenses) return;
 
-  var store = root.dataset.loggedIn === "true"
+  var isLoggedIn = root.dataset.loggedIn === "true";
+  var store = isLoggedIn
     ? window.ToolverseExpenses.makeServerStore(root)
     : window.ToolverseExpenses.GuestStore;
 
+  var GUEST_CURRENCY_KEY = "toolverse_expenses_currency";
+  var SUPPORTED_CURRENCIES = ["PKR", "USD", "EUR", "GBP", "AED", "SAR", "INR"];
+  var CURRENCY_DEFAULT = root.dataset.currencyDefault || "PKR";
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
 
-  var monthLabel   = root.querySelector("[data-month-label]");
-  var prevBtn      = root.querySelector('[data-action="prev-month"]');
-  var nextBtn      = root.querySelector('[data-action="next-month"]');
-  var totalEl      = root.querySelector("[data-monthly-total]");
-  var totalSpinner = root.querySelector("[data-total-spinner]");
-  var addForm      = root.querySelector("[data-add-form]");
-  var addError     = root.querySelector("[data-add-error]");
-  var listEl       = root.querySelector("[data-expense-list]");
-  var listSpinner  = root.querySelector("[data-list-spinner]");
-  var emptyState   = root.querySelector("[data-empty-state]");
-  var toastStack   = root.querySelector("[data-expenses-toasts]");
-  var editBackdrop = root.querySelector("[data-edit-backdrop]");
-  var editForm     = root.querySelector("[data-edit-form]");
-  var editError    = root.querySelector("[data-edit-error]");
+  var currencyPicker  = root.querySelector("[data-currency-picker]");
+  var monthLabel      = root.querySelector("[data-month-label]");
+  var prevBtn         = root.querySelector('[data-action="prev-month"]');
+  var nextBtn         = root.querySelector('[data-action="next-month"]');
+  var totalEl         = root.querySelector("[data-monthly-total]");
+  var totalSpinner    = root.querySelector("[data-total-spinner]");
+  var addForm         = root.querySelector("[data-add-form]");
+  var listEl          = root.querySelector("[data-expense-list]");
+  var listSpinner     = root.querySelector("[data-list-spinner]");
+  var emptyState      = root.querySelector("[data-empty-state]");
+  var toastStack      = root.querySelector("[data-expenses-toasts]");
+  var editBackdrop    = root.querySelector("[data-edit-backdrop]");
+  var editForm        = root.querySelector("[data-edit-form]");
+  var editError       = root.querySelector("[data-edit-error]");
   var currencySymbolEls = root.querySelectorAll("[data-currency-symbol], [data-edit-currency-symbol]");
 
   var TEXT = {
@@ -39,6 +43,7 @@
     amountRequired:     root.dataset.textAmountRequired,
     amountInvalid:      root.dataset.textAmountInvalid,
     descRequired:       root.dataset.textDescriptionRequired,
+    descTooLong:        root.dataset.textDescriptionTooLong,
     deleteConfirm:      root.dataset.textDeleteConfirm,
     deleteFailed:       root.dataset.textDeleteFailed,
     loadFailed:         root.dataset.textLoadFailed,
@@ -46,28 +51,60 @@
     yesterday:          root.dataset.textYesterday,
   };
 
-  var CURRENCY_DEFAULT = root.dataset.currencyDefault || "PKR";
-
   // ── State ─────────────────────────────────────────────────────────────────
 
   var now = new Date();
   var state = {
-    year: now.getFullYear(),
-    month: now.getMonth() + 1,  // 1-based
+    year:     now.getFullYear(),
+    month:    now.getMonth() + 1,  // 1-based
     expenses: [],
-    total: 0,
-    loading: false,
+    loading:  false,
     currency: CURRENCY_DEFAULT,
   };
 
-  // Detect currency from first stored expense (guest) or from any existing expense.
-  // The add form's currency field defaults to this.
-  function detectedCurrency() {
-    return (state.expenses[0] && state.expenses[0].currency) || CURRENCY_DEFAULT;
+  // ── Currency: load preference ─────────────────────────────────────────────
+
+  function loadCurrencyPreference() {
+    var saved;
+    if (isLoggedIn) {
+      saved = (root.dataset.userCurrency || "").trim().toUpperCase();
+    } else {
+      try { saved = localStorage.getItem(GUEST_CURRENCY_KEY) || ""; } catch (e) { saved = ""; }
+    }
+    if (saved && SUPPORTED_CURRENCIES.indexOf(saved) !== -1) {
+      state.currency = saved;
+    }
+    if (currencyPicker) currencyPicker.value = state.currency;
+    updateCurrencyHints();
+  }
+
+  function saveCurrencyPreference(currency) {
+    state.currency = currency;
+    updateCurrencyHints();
+    if (isLoggedIn) {
+      var url = root.dataset.apiSetCurrency;
+      if (!url) return;
+      var csrf = (document.querySelector('meta[name="csrf-token"]') || {}).content || "";
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+        body: JSON.stringify({ currency: currency }),
+      }).catch(function () { /* best effort */ });
+    } else {
+      try { localStorage.setItem(GUEST_CURRENCY_KEY, currency); } catch (e) { /* noop */ }
+    }
+  }
+
+  if (currencyPicker) {
+    currencyPicker.addEventListener("change", function () {
+      saveCurrencyPreference(currencyPicker.value);
+      renderTotal();
+    });
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────
 
+  loadCurrencyPreference();
   setDefaultDate();
   loadMonth();
 
@@ -89,10 +126,11 @@
 
   addForm.addEventListener("submit", function (e) {
     e.preventDefault();
+    clearFieldErrors(addForm);
     var data = readAddForm();
     var err = validateData(data);
-    if (err) { showAddError(errText(err)); return; }
-    showAddError("");
+    if (err) { showFieldError(addForm, err.field, errText(err.code)); return; }
+
     var addBtn = addForm.querySelector('[data-action="add"]');
     addBtn.disabled = true;
 
@@ -102,7 +140,6 @@
         clearAddForm();
         if (expense.spentAt && monthOf(expense.spentAt) === state.year + "-" + pad(state.month)) {
           state.expenses.unshift(expense);
-          state.total = roundTotal(state.total + (parseFloat(expense.amount) || 0));
           renderList();
           renderTotal();
         }
@@ -110,8 +147,16 @@
       })
       .catch(function (err) {
         addBtn.disabled = false;
-        showAddError(errText(err));
+        var code = (err && err.code) || "";
+        var field = fieldForCode(code);
+        showFieldError(addForm, field, errText(code));
       });
+  });
+
+  // Clear error state on input.
+  addForm.addEventListener("input", function (e) {
+    var field = e.target.closest("[data-field]");
+    if (field) clearFieldError(addForm, field.dataset.field);
   });
 
   // ── Edit modal ────────────────────────────────────────────────────────────
@@ -128,11 +173,12 @@
 
   editForm.addEventListener("submit", function (e) {
     e.preventDefault();
+    clearFieldErrors(editForm);
+    editError.hidden = true;
     var id = editForm.querySelector('[data-field="id"]').value;
     var data = readEditForm();
     var err = validateData(data);
-    if (err) { showEditError(errText(err)); return; }
-    showEditError("");
+    if (err) { showEditFieldError(err.field, errText(err.code)); return; }
 
     var saveBtn = editForm.querySelector('[data-action="save"]');
     saveBtn.disabled = true;
@@ -143,9 +189,6 @@
         closeEdit();
         var idx = state.expenses.findIndex(function (e) { return e.id === id; });
         if (idx !== -1) {
-          var old = state.expenses[idx];
-          state.total = roundTotal(state.total - (parseFloat(old.amount) || 0) + (parseFloat(updated.amount) || 0));
-          // Keep in list only if still in this month; otherwise remove.
           if (updated.spentAt && monthOf(updated.spentAt) === state.year + "-" + pad(state.month)) {
             state.expenses[idx] = updated;
           } else {
@@ -158,7 +201,14 @@
       })
       .catch(function (err) {
         saveBtn.disabled = false;
-        showEditError(errText(err));
+        var code = (err && err.code) || "";
+        var field = fieldForCode(code);
+        if (field) {
+          showEditFieldError(field, errText(code));
+        } else {
+          editError.textContent = errText(code);
+          editError.hidden = false;
+        }
       });
   });
 
@@ -169,10 +219,7 @@
     store.remove(id)
       .then(function () {
         var idx = state.expenses.findIndex(function (e) { return e.id === id; });
-        if (idx !== -1) {
-          state.total = roundTotal(state.total - (parseFloat(state.expenses[idx].amount) || 0));
-          state.expenses.splice(idx, 1);
-        }
+        if (idx !== -1) state.expenses.splice(idx, 1);
         closeEdit();
         renderList();
         renderTotal();
@@ -182,13 +229,18 @@
       });
   });
 
+  editForm.addEventListener("input", function (e) {
+    var field = e.target.closest("[data-field]");
+    if (field) clearEditFieldError(field.dataset.field);
+  });
+
   // ── Load & render ─────────────────────────────────────────────────────────
 
   function loadMonth() {
     state.loading = true;
     renderMonthLabel();
     totalEl.textContent = "—";
-    if (totalSpinner) { totalSpinner.hidden = false; }
+    if (totalSpinner) totalSpinner.hidden = false;
     listEl.innerHTML = '<div class="flex items-center justify-center py-10">'
       + '<span class="spinner" aria-hidden="true"></span></div>';
     emptyState.hidden = true;
@@ -196,16 +248,14 @@
     store.listMonth(state.year, state.month)
       .then(function (result) {
         state.expenses = result.expenses;
-        state.total = result.total;
         state.loading = false;
-        if (totalSpinner) { totalSpinner.hidden = true; }
+        if (totalSpinner) totalSpinner.hidden = true;
         renderTotal();
         renderList();
-        updateCurrencyHints();
       })
       .catch(function () {
         state.loading = false;
-        if (totalSpinner) { totalSpinner.hidden = true; }
+        if (totalSpinner) totalSpinner.hidden = true;
         listEl.innerHTML = "";
         showToast(TEXT.loadFailed, "error");
       });
@@ -217,8 +267,20 @@
   }
 
   function renderTotal() {
-    var currency = detectedCurrency();
-    totalEl.textContent = formatAmount(state.total, currency);
+    // Group amounts by currency; show separate totals if there are multiple currencies.
+    var totals = {};
+    state.expenses.forEach(function (exp) {
+      var c = (exp.currency || state.currency).toUpperCase();
+      totals[c] = (totals[c] || 0) + (parseFloat(exp.amount) || 0);
+    });
+    var keys = Object.keys(totals);
+    if (!keys.length) {
+      totalEl.textContent = formatAmount(0, state.currency);
+      return;
+    }
+    totalEl.textContent = keys.map(function (c) {
+      return formatAmount(Math.round(totals[c] * 100) / 100, c);
+    }).join("  ·  ");
   }
 
   function renderList() {
@@ -269,11 +331,10 @@
 
     var amount = document.createElement("span");
     amount.className = "shrink-0 text-[14px] font-semibold tabular-nums";
-    amount.textContent = formatAmount(exp.amount, exp.currency);
+    amount.textContent = formatAmount(exp.amount, exp.currency || state.currency);
 
     row.appendChild(desc);
     row.appendChild(amount);
-
     row.addEventListener("click", function () { openEdit(exp); });
     return row;
   }
@@ -285,9 +346,10 @@
     editForm.querySelector('[data-field="amount"]').value = exp.amount;
     editForm.querySelector('[data-field="description"]').value = exp.description;
     editForm.querySelector('[data-field="spent_at"]').value = exp.spentAt || "";
-    var editSymbol = editForm.querySelector('[data-edit-currency-symbol]');
-    if (editSymbol) editSymbol.textContent = currencySymbol(exp.currency || CURRENCY_DEFAULT);
-    showEditError("");
+    var editSymbol = editForm.querySelector("[data-edit-currency-symbol]");
+    if (editSymbol) editSymbol.textContent = currencySymbol(exp.currency || state.currency);
+    clearFieldErrors(editForm);
+    editError.hidden = true;
     editBackdrop.hidden = false;
     var firstInput = editForm.querySelector("input:not([type=hidden])");
     if (firstInput) firstInput.focus();
@@ -303,7 +365,7 @@
     return {
       amount:      addForm.querySelector('[data-field="amount"]').value,
       description: addForm.querySelector('[data-field="description"]').value,
-      currency:    CURRENCY_DEFAULT,
+      currency:    state.currency,
       spentAt:     addForm.querySelector('[data-field="spent_at"]').value,
     };
   }
@@ -312,7 +374,7 @@
     return {
       amount:      editForm.querySelector('[data-field="amount"]').value,
       description: editForm.querySelector('[data-field="description"]').value,
-      currency:    CURRENCY_DEFAULT,
+      currency:    state.currency,
       spentAt:     editForm.querySelector('[data-field="spent_at"]').value,
     };
   }
@@ -330,47 +392,91 @@
 
   function validateData(data) {
     var amount = parseFloat(String(data.amount || "").replace(",", "."));
-    if (!data.amount && data.amount !== 0) return "amount_required";
-    if (isNaN(amount) || amount <= 0) return "amount_invalid";
-    if (!data.description || !String(data.description).trim()) return "description_required";
+    if (!data.amount && data.amount !== 0) return { field: "amount", code: "amount_required" };
+    if (isNaN(amount) || amount <= 0) return { field: "amount", code: "amount_invalid" };
+    var desc = String(data.description || "").trim();
+    if (!desc) return { field: "description", code: "description_required" };
+    if (desc.length > 200) return { field: "description", code: "description_too_long" };
     return null;
   }
 
-  function errText(err) {
-    var code = (err && err.code) || (typeof err === "string" ? err : "");
+  function fieldForCode(code) {
+    if (code === "amount_required" || code === "amount_invalid") return "amount";
+    if (code === "description_required" || code === "description_too_long") return "description";
+    if (code === "date_invalid") return "spent_at";
+    return null;
+  }
+
+  function errText(code) {
     if (code === "amount_required") return TEXT.amountRequired;
     if (code === "amount_invalid")  return TEXT.amountInvalid;
     if (code === "description_required") return TEXT.descRequired;
+    if (code === "description_too_long") return TEXT.descTooLong;
     return TEXT.saveFailed;
   }
 
-  function showAddError(msg) {
-    addError.textContent = msg;
-    addError.hidden = !msg;
+  // Per-field error helpers for the add form.
+  function showFieldError(form, fieldName, msg) {
+    if (!fieldName) {
+      // Fall back to a generic error on the submit button's row.
+      var genericSlot = form.querySelector("[data-field-error]");
+      if (genericSlot) { genericSlot.textContent = msg; genericSlot.hidden = false; }
+      return;
+    }
+    var input = form.querySelector('[data-field="' + fieldName + '"]');
+    if (input) input.classList.add("is-invalid");
+    var slot = form.querySelector('[data-field-error="' + fieldName + '"]');
+    if (slot) { slot.textContent = msg; slot.hidden = false; }
   }
 
-  function showEditError(msg) {
-    editError.textContent = msg;
-    editError.hidden = !msg;
+  function clearFieldError(form, fieldName) {
+    var input = form.querySelector('[data-field="' + fieldName + '"]');
+    if (input) input.classList.remove("is-invalid");
+    var slot = form.querySelector('[data-field-error="' + fieldName + '"]');
+    if (slot) { slot.textContent = ""; slot.hidden = true; }
+  }
+
+  function clearFieldErrors(form) {
+    form.querySelectorAll("[data-field-error]").forEach(function (el) {
+      el.textContent = ""; el.hidden = true;
+    });
+    form.querySelectorAll(".is-invalid").forEach(function (el) {
+      el.classList.remove("is-invalid");
+    });
+  }
+
+  // Per-field error helpers for the edit form (uses data-edit-field-error).
+  function showEditFieldError(fieldName, msg) {
+    if (!fieldName) {
+      editError.textContent = msg; editError.hidden = false; return;
+    }
+    var input = editForm.querySelector('[data-field="' + fieldName + '"]');
+    if (input) input.classList.add("is-invalid");
+    var slot = editForm.querySelector('[data-edit-field-error="' + fieldName + '"]');
+    if (slot) { slot.textContent = msg; slot.hidden = false; }
+  }
+
+  function clearEditFieldError(fieldName) {
+    var input = editForm.querySelector('[data-field="' + fieldName + '"]');
+    if (input) input.classList.remove("is-invalid");
+    var slot = editForm.querySelector('[data-edit-field-error="' + fieldName + '"]');
+    if (slot) { slot.textContent = ""; slot.hidden = true; }
   }
 
   function updateCurrencyHints() {
-    var sym = currencySymbol(detectedCurrency());
+    var sym = currencySymbol(state.currency);
     currencySymbolEls.forEach(function (el) { el.textContent = sym; });
   }
 
   function currencySymbol(currency) {
-    if (currency === "PKR") return "Rs";
-    if (currency === "USD") return "$";
-    if (currency === "EUR") return "€";
-    if (currency === "GBP") return "£";
-    return currency;
+    var sym = { PKR: "Rs", USD: "$", EUR: "€", GBP: "£", AED: "AED", SAR: "SAR", INR: "₹" };
+    return sym[(currency || "").toUpperCase()] || currency || "Rs";
   }
 
   function formatAmount(amount, currency) {
     var num = parseFloat(amount) || 0;
-    var sym = currencySymbol(currency || CURRENCY_DEFAULT);
-    return sym + " " + num.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    var sym = currencySymbol(currency || state.currency);
+    return sym + " " + num.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
   }
 
   function formatDate(dateStr) {
@@ -382,9 +488,7 @@
       var parts = dateStr.split("-");
       var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
       return d.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" });
-    } catch (e) {
-      return dateStr;
-    }
+    } catch (e) { return dateStr; }
   }
 
   function monthOf(dateStr) {
@@ -393,10 +497,6 @@
 
   function pad(n) {
     return n < 10 ? "0" + n : String(n);
-  }
-
-  function roundTotal(n) {
-    return Math.round((parseFloat(n) || 0) * 100) / 100;
   }
 
   // ── Toasts ────────────────────────────────────────────────────────────────

@@ -7,6 +7,7 @@ from app.blueprints.tools.expenses.repository import get_repository
 
 DESCRIPTION_MAX_LENGTH = 200
 CURRENCY_DEFAULT = "PKR"
+SUPPORTED_CURRENCIES = ("PKR", "USD", "EUR", "GBP", "AED", "SAR", "INR")
 
 _ID_RE = re.compile(r"^[0-9a-fA-F-]{8,36}$")
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -37,6 +38,16 @@ def delete_expense(access_token, expense_id):
     _validate_id(expense_id)
     if not get_repository().delete_expense(access_token, expense_id):
         raise ExpenseNotFound()
+
+
+def set_currency_preference(auth_session, currency):
+    """Save the user's preferred currency in their Supabase user_metadata."""
+    currency = (currency or CURRENCY_DEFAULT).strip().upper()
+    if currency not in SUPPORTED_CURRENCIES:
+        raise ExpenseError("currency_invalid")
+    from app.blueprints.auth.services import get_auth_service  # avoid circular at module level
+    get_auth_service().update_user_metadata(auth_session, {"expense_currency": currency})
+    return currency
 
 
 def import_expenses(access_token, guest_expenses):

@@ -13,6 +13,15 @@ def test_guest_can_open_the_notes_page(client, notes_repository):
     assert response.status_code == 200
 
 
+def test_guest_notes_page_is_not_a_redirect(client, notes_repository):
+    response = client.get("/dashboard/notes", follow_redirects=False)
+    assert response.status_code == 200
+
+
+def test_guest_can_open_urdu_notes_page(client, notes_repository):
+    assert client.get("/ur/dashboard/notes").status_code == 200
+
+
 def test_logged_in_user_can_open_the_notes_page(client, log_in, notes_repository):
     log_in()
     response = client.get("/dashboard/notes")

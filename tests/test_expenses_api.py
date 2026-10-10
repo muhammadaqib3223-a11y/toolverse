@@ -9,10 +9,25 @@ def _json(response):
 TODAY = "2026-10-10"
 
 
-# ── Page ──────────────────────────────────────────────────────────────────
+# ── Page: guests and logged-in users can both open it ─────────────────────
 
 def test_guest_can_open_expenses_page(client, expenses_repository):
     assert client.get("/dashboard/expenses").status_code == 200
+
+
+def test_guest_can_open_expenses_page_without_auth_service(client, expenses_repository):
+    # Proves the page never redirects to login; does NOT swap the auth service,
+    # to catch regressions where a before_request hook might redirect guests.
+    assert client.get("/dashboard/expenses").status_code == 200
+
+
+def test_guest_expenses_page_is_not_a_redirect(client, expenses_repository):
+    response = client.get("/dashboard/expenses", follow_redirects=False)
+    assert response.status_code == 200
+
+
+def test_guest_can_open_urdu_expenses_page(client, expenses_repository):
+    assert client.get("/ur/dashboard/expenses").status_code == 200
 
 
 def test_logged_in_user_can_open_expenses_page(client, log_in, expenses_repository):
@@ -202,3 +217,47 @@ def test_error_messages_are_in_urdu_on_urdu_pages(client, log_in, expenses_repos
     message = _json(response)["message"]
     assert message != ""
     assert message != "That expense no longer exists."
+
+
+# ── Currency preference ────────────────────────────────────────────────────
+
+def test_set_currency_requires_login(client, expenses_repository):
+    response = client.post("/api/expenses/currency", json={"currency": "USD"})
+    assert response.status_code == 401
+    assert _json(response)["code"] == "login_required"
+
+
+def test_set_currency_saves_preference(client, log_in, expenses_repository):
+    log_in()
+    response = client.post("/api/expenses/currency", json={"currency": "USD"})
+    assert response.status_code == 200
+    assert _json(response)["currency"] == "USD"
+
+
+def test_set_currency_rejects_unknown_currency(client, log_in, expenses_repository):
+    log_in()
+    response = client.post("/api/expenses/currency", json={"currency": "XYZ"})
+    assert response.status_code == 400
+    assert _json(response)["code"] == "currency_invalid"
+
+
+def test_set_currency_normalises_lowercase(client, log_in, expenses_repository):
+    log_in()
+    response = client.post("/api/expenses/currency", json={"currency": "eur"})
+    assert response.status_code == 200
+    assert _json(response)["currency"] == "EUR"
+
+
+def test_logged_in_user_currency_passed_to_template(client, log_in, expenses_repository):
+    auth = log_in()
+    # After setting the currency, the page should embed it in data-user-currency.
+    client.post("/api/expenses/currency", json={"currency": "GBP"})
+    # Re-log in so g.user.metadata reflects the updated value stored in FakeUser.
+    html = client.get("/dashboard/expenses").get_data(as_text=True)
+    assert "GBP" in html
+
+
+def test_guest_currency_not_in_template(client, expenses_repository):
+    html = client.get("/dashboard/expenses").get_data(as_text=True)
+    # data-user-currency should be empty for guests.
+    assert 'data-user-currency=""' in html

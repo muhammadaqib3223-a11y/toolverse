@@ -16,6 +16,8 @@
        data-logged-in="{{ 'true' if current_user else 'false' }}"
        data-api-expenses="{{ url_for('expenses.api_expenses') }}"
        data-api-expense-template="{{ url_for('expenses.api_expense', expense_id='__ID__') }}"
+       data-api-set-currency="{{ url_for('expenses.api_set_currency') }}"
+       data-user-currency="{{ user_currency or '' }}"
        data-currency-default="PKR"
        data-text-empty="{{ _('No expenses this month.') }}"
        data-text-saved="{{ _('Saved') }}"
@@ -24,6 +26,7 @@
        data-text-amount-required="{{ _('Please enter an amount.') }}"
        data-text-amount-invalid="{{ _('The amount must be a positive number.') }}"
        data-text-description-required="{{ _('Please describe the expense.') }}"
+       data-text-description-too-long="{{ _('Description is too long (200 characters max).') }}"
        data-text-delete-confirm="{{ _('Delete this expense? This cannot be undone.') }}"
        data-text-delete-failed="{{ _('Could not delete this expense. Please try again.') }}"
        data-text-load-failed="{{ _('Could not load your expenses. Please try again.') }}"
@@ -49,8 +52,27 @@
       </div>
     {% endif %}
 
-    {# ── Month navigation ───────────────────────────────────────────────────── #}
+    {# ── Currency picker ────────────────────────────────────────────────────── #}
     <div class="mt-6 flex items-center gap-3">
+      <label for="currency-picker" class="text-[12px] text-faint label-mono shrink-0">
+        {{ _('Currency') }}
+      </label>
+      <select id="currency-picker"
+              class="input w-auto text-[13px] py-1 px-2 h-8"
+              data-currency-picker
+              aria-label="{{ _('Currency') }}">
+        <option value="PKR">PKR — {{ _('Pakistani Rupee') }}</option>
+        <option value="USD">USD — {{ _('US Dollar') }}</option>
+        <option value="EUR">EUR — {{ _('Euro') }}</option>
+        <option value="GBP">GBP — {{ _('British Pound') }}</option>
+        <option value="AED">AED — {{ _('UAE Dirham') }}</option>
+        <option value="SAR">SAR — {{ _('Saudi Riyal') }}</option>
+        <option value="INR">INR — {{ _('Indian Rupee') }}</option>
+      </select>
+    </div>
+
+    {# ── Month navigation ───────────────────────────────────────────────────── #}
+    <div class="mt-4 flex items-center gap-3">
       <button type="button"
               class="btn-secondary btn-sm shrink-0"
               data-action="prev-month"
@@ -66,58 +88,74 @@
       </button>
     </div>
 
-    {# ── Monthly total + add form ────────────────────────────────────────────── #}
-    <div class="mt-4 grid gap-4 sm:grid-cols-[1fr_auto]">
-      {# Monthly total card #}
-      <div class="surface flex items-center gap-4 p-5">
-        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card">
-          {{ icon("wallet", "h-5 w-5 text-accent") }}
-        </div>
-        <div class="min-w-0">
-          <p class="text-[12px] text-faint label-mono">{{ _('Monthly total') }}</p>
-          <p class="heading text-[22px] sm:text-[26px]" data-monthly-total>—</p>
-        </div>
-        <span class="spinner ms-auto" data-total-spinner aria-hidden="true" hidden></span>
+    {# ── Monthly total ──────────────────────────────────────────────────────── #}
+    <div class="surface mt-4 flex items-center gap-4 p-5">
+      <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card">
+        {{ icon("wallet", "h-5 w-5 text-accent") }}
       </div>
+      <div class="min-w-0">
+        <p class="text-[12px] text-faint label-mono">{{ _('Monthly total') }}</p>
+        <p class="heading text-[22px] sm:text-[26px]" data-monthly-total>&#8212;</p>
+      </div>
+      <span class="spinner ms-auto" data-total-spinner aria-hidden="true" hidden></span>
+    </div>
 
-      {# Quick-add form #}
-      <form class="surface flex flex-col gap-3 p-5 sm:min-w-[300px]"
-            data-add-form
-            novalidate
-            aria-label="{{ _('Add an expense') }}">
-        <p class="text-[13px] font-semibold">{{ _('Add an expense') }}</p>
-        <div class="flex gap-2">
-          <div class="relative w-28 shrink-0">
-            <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint"
+    {# ── Quick-add form (one row on desktop, stacked on mobile) ─────────────── #}
+    <form class="surface mt-4 p-4 sm:p-5"
+          data-add-form
+          novalidate
+          aria-label="{{ _('Add an expense') }}">
+      <p class="mb-3 text-[13px] font-semibold">{{ _('Add an expense') }}</p>
+
+      {# One row on sm+: [Amount] [Description] [Date] [Add]
+         Stacked on mobile. Each field has its own error slot below it. #}
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-2">
+
+        {# Amount: currency symbol inside the input box on the left #}
+        <div class="flex flex-col gap-1 sm:w-36 sm:shrink-0">
+          <div class="relative">
+            <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint select-none"
                   data-currency-symbol>Rs</span>
             <input type="number" min="0.01" step="any"
-                   class="input ps-8 w-full"
+                   class="input ps-8 w-full h-10"
                    data-field="amount"
                    placeholder="0.00"
                    aria-label="{{ _('Amount') }}"
                    autocomplete="off">
           </div>
+          <p class="text-[11px] text-danger" data-field-error="amount" hidden></p>
+        </div>
+
+        {# Description: flexible, fills remaining space #}
+        <div class="flex flex-col gap-1 sm:flex-1">
           <input type="text"
-                 class="input min-w-0 flex-1"
+                 class="input w-full h-10"
                  data-field="description"
                  maxlength="200"
                  placeholder="{{ _('What was it for?') }}"
                  aria-label="{{ _('Description') }}"
                  autocomplete="off">
+          <p class="text-[11px] text-danger" data-field-error="description" hidden></p>
         </div>
-        <div class="flex items-center justify-between gap-2">
+
+        {# Date: only as wide as needed #}
+        <div class="flex flex-col gap-1 sm:shrink-0">
           <input type="date"
-                 class="input w-auto text-[13px]"
+                 class="input w-auto h-10 text-[13px]"
                  data-field="spent_at"
                  aria-label="{{ _('Date') }}">
-          <button type="submit" class="btn-primary btn-sm shrink-0" data-action="add">
-            {{ icon("plus", "h-4 w-4") }}
-            {{ _('Add') }}
-          </button>
+          <p class="text-[11px] text-danger" data-field-error="spent_at" hidden></p>
         </div>
-        <p class="text-[12px] text-danger" data-add-error hidden></p>
-      </form>
-    </div>
+
+        {# Add button: same height as inputs #}
+        <button type="submit"
+                class="btn-primary h-10 shrink-0 px-5"
+                data-action="add">
+          {{ icon("plus", "h-4 w-4") }}
+          {{ _('Add') }}
+        </button>
+      </div>
+    </form>
 
     {# ── Expense list ────────────────────────────────────────────────────────── #}
     <div class="mt-6" data-expense-list aria-live="polite">
@@ -139,28 +177,43 @@
         <h2 class="heading mb-4 text-[18px]" id="edit-modal-title">{{ _('Edit expense') }}</h2>
         <form data-edit-form novalidate>
           <input type="hidden" data-field="id">
-          <div class="flex gap-2">
-            <div class="relative w-28 shrink-0">
+
+          {# Amount row #}
+          <div class="flex flex-col gap-1 mb-3">
+            <div class="relative">
               <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint"
                     data-edit-currency-symbol>Rs</span>
               <input type="number" min="0.01" step="any"
-                     class="input ps-8 w-full"
+                     class="input ps-8 w-full h-10"
                      data-field="amount"
                      placeholder="0.00"
                      aria-label="{{ _('Amount') }}">
             </div>
+            <p class="text-[11px] text-danger" data-edit-field-error="amount" hidden></p>
+          </div>
+
+          {# Description #}
+          <div class="flex flex-col gap-1 mb-3">
             <input type="text"
-                   class="input min-w-0 flex-1"
+                   class="input w-full h-10"
                    data-field="description"
                    maxlength="200"
                    placeholder="{{ _('What was it for?') }}"
                    aria-label="{{ _('Description') }}">
+            <p class="text-[11px] text-danger" data-edit-field-error="description" hidden></p>
           </div>
-          <input type="date"
-                 class="input mt-2 w-auto text-[13px]"
-                 data-field="spent_at"
-                 aria-label="{{ _('Date') }}">
+
+          {# Date #}
+          <div class="flex flex-col gap-1">
+            <input type="date"
+                   class="input w-auto h-10 text-[13px]"
+                   data-field="spent_at"
+                   aria-label="{{ _('Date') }}">
+            <p class="text-[11px] text-danger" data-edit-field-error="spent_at" hidden></p>
+          </div>
+
           <p class="mt-2 text-[12px] text-danger" data-edit-error hidden></p>
+
           <div class="mt-4 flex items-center justify-between gap-3">
             <button type="button"
                     class="inline-flex items-center gap-1.5 text-[13px] text-muted transition-colors hover:text-danger"

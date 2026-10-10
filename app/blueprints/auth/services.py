@@ -71,6 +71,11 @@ class AuthUser:
     id: str
     email: str
     name: str = ""
+    metadata: dict = None  # user_metadata from Supabase (read-only snapshot at token issue time)
+
+    def __post_init__(self):
+        if self.metadata is None:
+            object.__setattr__(self, "metadata", {})
 
     @property
     def display_name(self):
@@ -132,6 +137,13 @@ class SupabaseAuthService:
             client = self._client()
             client.auth.set_session(auth_session.access_token, auth_session.refresh_token)
             client.auth.update_user({"password": new_password})
+
+    def update_user_metadata(self, auth_session, updates):
+        """Merge `updates` dict into the user's user_metadata. Returns nothing."""
+        with self._errors("update_user_metadata"):
+            client = self._client()
+            client.auth.set_session(auth_session.access_token, auth_session.refresh_token)
+            client.auth.update_user({"data": updates})
 
     def start_google_login(self, callback_url):
         """Build the Google login URL (PKCE). No network call is made here."""
@@ -203,7 +215,12 @@ class SupabaseAuthService:
         if response is None or response.user is None:
             raise SessionEnded()
         user = response.user
-        return AuthUser(id=user.id, email=user.email or "", name=_name_from_metadata(user.user_metadata))
+        return AuthUser(
+            id=user.id,
+            email=user.email or "",
+            name=_name_from_metadata(user.user_metadata),
+            metadata=user.user_metadata or {},
+        )
 
     def _client(self):
         return create_supabase_client()
@@ -251,6 +268,7 @@ def _user_from_claims(claims):
         id=claims["sub"],
         email=claims.get("email") or "",
         name=_name_from_metadata(claims.get("user_metadata")),
+        metadata=claims.get("user_metadata") or {},
     )
 
 

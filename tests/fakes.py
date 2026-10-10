@@ -23,6 +23,7 @@ class FakeUser:
     password: str
     name: str = ""
     confirmed: bool = True
+    metadata: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -101,6 +102,13 @@ class FakeAuthService:
             raise AuthError("same_password")
         self.users[email].password = new_password
 
+    def update_user_metadata(self, auth_session, updates):
+        self._record("update_user_metadata", auth_session.access_token, updates)
+        email = self.access_tokens.get(auth_session.access_token)
+        if email is None:
+            raise SessionEnded()
+        self.users[email].metadata.update(updates)
+
     def start_google_login(self, callback_url):
         self._record("start_google_login", callback_url)
         return GoogleLogin(url=f"{GOOGLE_URL}&redirect_to={callback_url}", code_verifier=GOOGLE_VERIFIER)
@@ -134,7 +142,7 @@ class FakeAuthService:
         if email is None:
             raise SessionEnded()
         user = self.users[email]
-        return AuthUser(id=user.id, email=user.email, name=user.name)
+        return AuthUser(id=user.id, email=user.email, name=user.name, metadata=user.metadata)
 
 
 def _now_iso():

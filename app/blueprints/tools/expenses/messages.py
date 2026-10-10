@@ -8,6 +8,7 @@ ERROR_MESSAGES = {
     "description_required": _l("Please describe the expense."),
     "description_too_long": _l("The description is too long (200 characters max)."),
     "date_invalid": _l("Please enter a valid date."),
+    "currency_invalid": _l("Please select a valid currency."),
     "unavailable": _l("Expenses aren't available right now. Please try again in a moment."),
     "unknown": _l("Something went wrong. Please try again."),
 }
