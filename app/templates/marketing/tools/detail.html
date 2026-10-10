@@ -8,8 +8,8 @@
 {% block description %}{{ tool.meta_description }}{% endblock %}
 
 {% block content %}
-  {# Until accounts and guest mode exist, "Try it free" goes to the sign-up coming-soon page. #}
-  {% set try_url = url_for('marketing.coming_soon', page='signup') %}
+  {# Until guest mode exists, "Try it free" goes to the sign-up page. #}
+  {% set try_url = url_for('auth.signup') %}
 
   {# Hero #}
   <section class="relative overflow-hidden">

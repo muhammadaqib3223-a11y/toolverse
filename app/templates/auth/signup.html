@@ -1,0 +1,35 @@
+{% extends "auth/_layout.html" %}
+{% from "auth/_form.html" import page_heading, form_alert, email_field, password_field, submit_button, google_button, divider with context %}
+
+{% block title %}{{ _('Sign up') }} — Toolverse{% endblock %}
+{% block description %}{{ _('Create your free Toolverse account with email or Google. All five tools, no credit card.') }}{% endblock %}
+{% block robots %}{% endblock %}
+
+{% block auth_header %}
+  {% set highlight %}<span class="text-accent">{{ _('free') }}</span>{% endset %}
+  {{ page_heading(_('Sign up'), _('Create your %(highlight)s account.', highlight=highlight),
+                  _('One account for all five tools. Your work is saved and private to you.')) }}
+{% endblock %}
+
+{% block auth_body %}
+  {{ form_alert(error) }}
+  <div class="{{ 'mt-5' if error }}">{{ google_button(next_url) }}</div>
+  <div class="my-6">{{ divider() }}</div>
+  <form method="post" class="space-y-5" novalidate data-auth-form>
+    {{ form.hidden_tag() }}
+    {{ email_field(form.email, autofocus=not form.email.data) }}
+    {{ password_field(form.password, "new-password",
+                      hint=_('At least %(count)s characters.', count=config.PASSWORD_MIN_LENGTH)) }}
+    {{ submit_button(_('Create account')) }}
+  </form>
+  <p class="mt-5 text-center text-[12px] text-faint">
+    {% set terms %}<a href="{{ url_for('marketing.coming_soon', page='terms') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Terms') }}</a>{% endset %}
+    {% set privacy %}<a href="{{ url_for('marketing.coming_soon', page='privacy') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Privacy Policy') }}</a>{% endset %}
+    {{ _('By signing up you agree to our %(terms)s and %(privacy)s.', terms=terms, privacy=privacy) }}
+  </p>
+{% endblock %}
+
+{% block auth_footer %}
+  {{ _('Already have an account?') }}
+  <a href="{{ url_for('auth.login', next=next_url) }}" class="font-medium text-fg hover:text-accent">{{ _('Log in') }}</a>
+{% endblock %}

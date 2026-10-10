@@ -1,0 +1,31 @@
+{% extends "auth/_layout.html" %}
+{% from "auth/_form.html" import page_heading, form_alert, submit_button with context %}
+
+{% block title %}{{ _('Reset your password') if is_recovery else _('Confirm your email') }} — Toolverse{% endblock %}
+
+{% block auth_header %}
+  {% if error %}
+    {{ page_heading(_('Email link'), _("This link doesn't work.")) }}
+  {% elif is_recovery %}
+    {{ page_heading(_('Forgot password'), _('Reset your password.'),
+                    _('Press the button to continue and choose a new password.')) }}
+  {% else %}
+    {{ page_heading(_('Almost there'), _('Confirm your email.'),
+                    _('Press the button to confirm your email and open your dashboard.')) }}
+  {% endif %}
+{% endblock %}
+
+{% block auth_body %}
+  {% if error %}
+    {{ form_alert(error) }}
+    <a href="{{ url_for('auth.forgot_password') if is_recovery else url_for('auth.login') }}" class="btn-primary mt-5 h-11 w-full">
+      {{ _('Get a new link') if is_recovery else _('Go to log in') }}
+    </a>
+  {% else %}
+    {# The one-time token is only used when this button is pressed, so email scanners can't use it up. #}
+    <form method="post" data-auth-form>
+      {{ form.hidden_tag() }}
+      {{ submit_button(_('Continue') if is_recovery else _('Confirm my email')) }}
+    </form>
+  {% endif %}
+{% endblock %}

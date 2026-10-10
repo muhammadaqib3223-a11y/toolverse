@@ -7,7 +7,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.config import get_config
 from app.errors import register_error_handlers
-from app.extensions import babel
+from app.extensions import babel, csrf
 from app.i18n import get_locale, register_i18n
 from app.seo import faq_schema
 
@@ -25,8 +25,10 @@ def create_app(config_name=None):
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
     babel.init_app(app, locale_selector=get_locale)
+    csrf.init_app(app)
     register_i18n(app)
     _register_blueprints(app)
+    _init_auth(app)
     register_error_handlers(app)
     _register_template_globals(app)
 
@@ -41,11 +43,21 @@ def _configure_logging(app):
 
 
 def _register_blueprints(app):
+    from app.blueprints.auth import bp as auth_bp
+    from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.marketing import bp as marketing_bp
     from app.blueprints.seo import bp as seo_bp
 
     app.register_blueprint(marketing_bp)
     app.register_blueprint(seo_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(dashboard_bp)
+
+
+def _init_auth(app):
+    from app.blueprints.auth import init_auth
+
+    init_auth(app)
 
 
 def _register_template_globals(app):

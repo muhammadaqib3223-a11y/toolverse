@@ -1,0 +1,11 @@
+{# Log out is a POST with a CSRF token, so other sites can't log people out. #}
+{% from "partials/icons.html" import icon %}
+{% macro logout_form(button_class, with_icon=false, icon_only=false) -%}
+  <form method="post" action="{{ url_for('auth.logout') }}" class="contents">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="{{ button_class }}"{% if icon_only %} aria-label="{{ _('Log out') }}"{% endif %}>
+      {%- if with_icon or icon_only %}{{ icon("log-out", "h-4 w-4 rtl:-scale-x-100") }}{% endif -%}
+      {%- if not icon_only %}<span>{{ _('Log out') }}</span>{% endif -%}
+    </button>
+  </form>
+{%- endmacro %}

@@ -1,4 +1,6 @@
 {% from "partials/icons.html" import icon %}
+{% from "partials/language_switch.html" import language_switch with context %}
+{% from "partials/logout_form.html" import logout_form %}
 {% set home = url_for('marketing.index') %}
 {% set on_tools_pages = request.endpoint in ('marketing.tools_index', 'marketing.tool_detail') %}
 {# (href, label, section id for scroll highlighting on the home page, is current page) #}
@@ -8,17 +10,6 @@
   (home ~ '#faq', _('FAQ'), 'faq', False),
 ] %}
 
-{% macro language_switch() -%}
-  <span class="inline-flex items-center gap-1.5" aria-label="{{ _('Language') }}">
-    {% for code, name in languages.items() %}
-      {% if not loop.first %}<span class="text-faint" aria-hidden="true">/</span>{% endif %}
-      <a href="{{ language_urls[code] }}"
-         lang="{{ code }}" hreflang="{{ code }}"
-         class="lang-link {{ 'text-fg' if code == current_lang else 'text-muted hover:text-fg' }}"
-         {% if code == current_lang %}aria-current="true"{% endif %}>{{ 'EN' if code == 'en' else name }}</a>
-    {% endfor %}
-  </span>
-{%- endmacro %}
 
 <header class="site-header sticky top-0 z-50" data-site-header>
   <nav class="container-page flex h-16 items-center justify-between gap-6" aria-label="{{ _('Main') }}">
@@ -37,8 +28,13 @@
     </ul>
 
     <div class="hidden items-center gap-5 md:flex">
-      <a href="{{ url_for('marketing.coming_soon', page='login') }}" class="text-[13px] text-fg/90 transition-colors hover:text-fg">{{ _('Log in') }}</a>
-      <a href="{{ url_for('marketing.coming_soon', page='signup') }}" class="btn-primary btn-sm">{{ _('Sign up free') }}</a>
+      {% if current_user %}
+        {{ logout_form("text-[13px] text-fg/90 transition-colors hover:text-fg") }}
+        <a href="{{ url_for('dashboard.home') }}" class="btn-primary btn-sm">{{ _('Dashboard') }}</a>
+      {% else %}
+        <a href="{{ url_for('auth.login') }}" class="text-[13px] text-fg/90 transition-colors hover:text-fg">{{ _('Log in') }}</a>
+        <a href="{{ url_for('auth.signup') }}" class="btn-primary btn-sm">{{ _('Sign up free') }}</a>
+      {% endif %}
     </div>
 
     <button type="button" class="-me-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-fg md:hidden"
@@ -57,8 +53,13 @@
       {% endfor %}
       <div class="px-3 py-3 text-[15px]">{{ language_switch() }}</div>
       <div class="mt-2 grid grid-cols-2 gap-3">
-        <a href="{{ url_for('marketing.coming_soon', page='login') }}" class="btn-secondary">{{ _('Log in') }}</a>
-        <a href="{{ url_for('marketing.coming_soon', page='signup') }}" class="btn-primary">{{ _('Sign up free') }}</a>
+        {% if current_user %}
+          {{ logout_form("btn-secondary w-full") }}
+          <a href="{{ url_for('dashboard.home') }}" class="btn-primary">{{ _('Dashboard') }}</a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}" class="btn-secondary">{{ _('Log in') }}</a>
+          <a href="{{ url_for('auth.signup') }}" class="btn-primary">{{ _('Sign up free') }}</a>
+        {% endif %}
       </div>
     </div>
   </div>

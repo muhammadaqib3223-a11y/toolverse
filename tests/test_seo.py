@@ -41,7 +41,7 @@ def test_canonical_link_uses_the_request_host(client):
     assert '<link rel="canonical" href="https://example.test/tools/notes">' in html
 
 
-@pytest.mark.parametrize("path", ["/coming-soon/login", "/does-not-exist"])
+@pytest.mark.parametrize("path", ["/coming-soon/privacy", "/does-not-exist"])
 def test_placeholder_and_error_pages_are_noindex(client, path):
     assert '<meta name="robots" content="noindex">' in _html(client, path)
 

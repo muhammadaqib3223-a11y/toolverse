@@ -40,13 +40,18 @@
 <body class="min-h-screen bg-bg font-sans text-fg antialiased">
   <a href="#main" class="skip-link">{{ _('Skip to content') }}</a>
 
-  {% include "partials/navbar.html" %}
+  {% include "partials/flash_messages.html" %}
 
-  <main id="main">
-    {% block content %}{% endblock %}
-  </main>
+  {# The dashboard replaces this whole block with its own layout (sidebar, no footer). #}
+  {% block body %}
+    {% include "partials/navbar.html" %}
 
-  {% include "partials/footer.html" %}
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+  {% endblock %}
 
   <script src="{{ url_for('static', filename='vendor/aos/aos.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>

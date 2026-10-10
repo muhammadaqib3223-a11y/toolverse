@@ -1,4 +1,4 @@
-/* Site-wide behaviour: mobile menu, navbar border on scroll, active nav link, scroll reveal. */
+/* Site-wide behaviour: mobile menu, navbar border on scroll, active nav link, scroll reveal, toasts. */
 (function () {
   "use strict";
 
@@ -78,8 +78,31 @@
     });
   }
 
+  // Flash messages: close button; success/info messages also close by themselves.
+  function initToasts() {
+    var AUTO_CLOSE_MS = 6000;
+
+    function close(toast) {
+      if (!toast.isConnected) return;
+      if (reduceMotion) {
+        toast.remove();
+        return;
+      }
+      toast.classList.add("is-leaving");
+      toast.addEventListener("animationend", function () { toast.remove(); }, { once: true });
+    }
+
+    document.querySelectorAll("[data-toast]").forEach(function (toast) {
+      toast.querySelector("[data-toast-close]").addEventListener("click", function () { close(toast); });
+      if (toast.dataset.toastKind !== "error") {
+        setTimeout(function () { close(toast); }, AUTO_CLOSE_MS);
+      }
+    });
+  }
+
   initMobileMenu();
   initHeaderBorder();
   initScrollSpy();
   initScrollReveal();
+  initToasts();
 })();

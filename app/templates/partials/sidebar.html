@@ -1,0 +1,88 @@
+{# Dashboard navigation. Laptop/tablet: sidebar on the side. Phone: top bar + bottom menu.
+   Import with: {% from "partials/sidebar.html" import sidebar, mobile_top_bar, mobile_bottom_nav with context %}
+   Tools show "Soon" until they are built; each tool phase turns its entry into a link. #}
+{% from "partials/icons.html" import icon %}
+{% from "partials/language_switch.html" import language_switch with context %}
+{% from "partials/logout_form.html" import logout_form %}
+
+{% macro _avatar(user) -%}
+  <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong bg-card text-[13px] font-semibold uppercase text-fg" aria-hidden="true">
+    {{- user.display_name[:1] -}}
+  </span>
+{%- endmacro %}
+
+{% macro sidebar(user, active="home") -%}
+  <aside class="app-sidebar hidden md:flex" aria-label="{{ _('Dashboard menu') }}">
+    <a href="{{ url_for('marketing.index') }}" class="flex items-center gap-2 px-3 text-[15px] font-semibold tracking-tight">
+      {{ icon("logo", "h-5 w-5") }}
+      <span>Toolverse</span>
+    </a>
+
+    <nav class="mt-8 flex-1 overflow-y-auto" aria-label="{{ _('Dashboard') }}">
+      <a href="{{ url_for('dashboard.home') }}" class="side-link{{ ' is-active' if active == 'home' }}"
+         {% if active == 'home' %}aria-current="page"{% endif %}>
+        {{ icon("home", "h-4 w-4") }}
+        <span>{{ _('Dashboard') }}</span>
+      </a>
+
+      <p class="label-mono mt-7 px-3">{{ _('Tools') }}</p>
+      <ul class="mt-2 space-y-0.5">
+        {% for tool in nav_tools %}
+          <li>
+            <span class="side-link is-disabled" aria-disabled="true">
+              {{ icon(tool.icon, "h-4 w-4") }}
+              <span class="min-w-0 flex-1 truncate">{{ tool.name }}</span>
+              <span class="soon-badge">{{ _('Soon') }}</span>
+            </span>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <div class="border-t border-line pt-4">
+      <div class="flex items-center gap-3 px-2">
+        {{ _avatar(user) }}
+        <div class="min-w-0">
+          <p class="truncate text-[13px] font-medium text-fg">{{ user.display_name }}</p>
+          <p class="truncate text-[12px] text-faint" dir="ltr">{{ user.email }}</p>
+        </div>
+      </div>
+      <div class="mt-4 flex items-center justify-between gap-3 px-2 text-[13px]">
+        {{ language_switch() }}
+        {{ logout_form("inline-flex items-center gap-2 text-muted transition-colors hover:text-fg", with_icon=true) }}
+      </div>
+    </div>
+  </aside>
+{%- endmacro %}
+
+{% macro mobile_top_bar(user) -%}
+  <header class="site-header sticky top-0 z-40 border-line md:hidden">
+    <div class="flex h-14 items-center justify-between gap-4 px-5">
+      <a href="{{ url_for('marketing.index') }}" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight">
+        {{ icon("logo", "h-5 w-5") }}
+        <span>Toolverse</span>
+      </a>
+      <div class="flex items-center gap-4 text-[13px]">
+        {{ language_switch() }}
+        {{ logout_form("-me-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:text-fg", icon_only=true) }}
+      </div>
+    </div>
+  </header>
+{%- endmacro %}
+
+{% macro mobile_bottom_nav(active="home") -%}
+  <nav class="mobile-nav md:hidden" aria-label="{{ _('Dashboard menu') }}">
+    <a href="{{ url_for('dashboard.home') }}" class="mobile-nav-item{{ ' is-active' if active == 'home' }}"
+       {% if active == 'home' %}aria-current="page"{% endif %}>
+      {{ icon("home", "h-5 w-5") }}
+      <span class="max-w-full truncate">{{ _('Home') }}</span>
+    </a>
+    {% for tool in nav_tools %}
+      <span class="mobile-nav-item is-disabled" aria-disabled="true"
+            title="{{ tool.name }} · {{ _('Coming soon') }}">
+        {{ icon(tool.icon, "h-5 w-5") }}
+        <span class="max-w-full truncate">{{ tool.name }}</span>
+      </span>
+    {% endfor %}
+  </nav>
+{%- endmacro %}

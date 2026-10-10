@@ -1,5 +1,6 @@
 """App settings. Secrets come from environment variables (.env locally)."""
 import os
+from datetime import timedelta
 
 from dotenv import load_dotenv
 
@@ -19,6 +20,21 @@ class BaseConfig:
 
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
+    # How long a user stays logged in without visiting (renewed on every visit).
+    PERMANENT_SESSION_LIFETIME = timedelta(days=30)
+
+    # Supabase (Auth now; database and storage in later phases).
+    # The publishable key (sb_publishable_...) is safe to use in the browser; the legacy anon key also works.
+    # Never put the secret / service_role key here.
+    SUPABASE_URL = os.environ.get("SUPABASE_URL", "").strip().rstrip("/")
+    SUPABASE_PUBLISHABLE_KEY = os.environ.get("SUPABASE_PUBLISHABLE_KEY", "").strip()
+    SUPABASE_TIMEOUT_SECONDS = 10
+
+    PASSWORD_MIN_LENGTH = 8   # must match Authentication -> Providers -> Email in Supabase
+    PASSWORD_MAX_LENGTH = 72  # Supabase (bcrypt) ignores anything longer
+
+    # CSRF tokens stay valid as long as the session, so a login form left open for hours still works.
+    WTF_CSRF_TIME_LIMIT = None
 
 
 class DevelopmentConfig(BaseConfig):
@@ -29,6 +45,9 @@ class DevelopmentConfig(BaseConfig):
 class TestingConfig(BaseConfig):
     TESTING = True
     SECRET_KEY = "test-only-secret-key"
+    WTF_CSRF_ENABLED = False  # tests that check CSRF turn it back on
+    SUPABASE_URL = "https://test-project.supabase.co"
+    SUPABASE_PUBLISHABLE_KEY = "sb_publishable_test"
 
 
 class ProductionConfig(BaseConfig):

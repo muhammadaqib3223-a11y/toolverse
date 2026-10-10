@@ -1,0 +1,19 @@
+{# Short messages after an action ("You're logged out"). Shown as toasts; main.js closes them. #}
+{% from "partials/icons.html" import icon %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="toast-stack" role="status" aria-live="polite">
+      {% for category, message in messages %}
+        {% set kind = category if category in ("success", "error") else "info" %}
+        <div class="toast toast-{{ kind }}" data-toast data-toast-kind="{{ kind }}">
+          <span class="toast-icon">{{ icon({"success": "check", "error": "alert"}.get(kind, "info"), "h-4 w-4") }}</span>
+          <p class="min-w-0 flex-1">{{ message }}</p>
+          <button type="button" class="toast-close" data-toast-close>
+            <span class="sr-only">{{ _('Close') }}</span>
+            {{ icon("close", "h-3.5 w-3.5") }}
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}

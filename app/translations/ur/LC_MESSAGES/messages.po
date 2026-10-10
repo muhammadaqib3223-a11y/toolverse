@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-08 18:38+0500\n"
+"POT-Creation-Date: 2026-10-10 13:04+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ur\n"
@@ -17,6 +17,133 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
+
+#: app/errors.py:24
+msgid "This form expired. Please try again."
+msgstr "یہ فارم پرانا ہو گیا تھا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/blueprints/auth/forms.py:22
+#, python-format
+msgid "Use at least %(count)s characters."
+msgstr "کم از کم %(count)s حروف لکھیں۔"
+
+#: app/blueprints/auth/forms.py:24
+#, python-format
+msgid "Use at most %(count)s characters."
+msgstr "زیادہ سے زیادہ %(count)s حروف لکھیں۔"
+
+#: app/blueprints/auth/forms.py:29
+msgid "Email"
+msgstr "ای میل"
+
+#: app/blueprints/auth/forms.py:32
+msgid "Please enter your email."
+msgstr "براہ کرم اپنا ای میل لکھیں۔"
+
+#: app/blueprints/auth/forms.py:33 app/blueprints/auth/forms.py:34
+#: app/blueprints/auth/messages.py:9
+msgid "Please enter a valid email address."
+msgstr "براہ کرم درست ای میل ایڈریس لکھیں۔"
+
+#: app/blueprints/auth/forms.py:41 app/blueprints/auth/forms.py:47
+msgid "Password"
+msgstr "پاس ورڈ"
+
+#: app/blueprints/auth/forms.py:41
+msgid "Please enter your password."
+msgstr "براہ کرم اپنا پاس ورڈ لکھیں۔"
+
+#: app/blueprints/auth/forms.py:48 app/blueprints/auth/forms.py:59
+msgid "Please choose a password."
+msgstr "براہ کرم پاس ورڈ چنیں۔"
+
+#: app/blueprints/auth/forms.py:58 app/templates/auth/reset_password.html:7
+msgid "New password"
+msgstr "نیا پاس ورڈ"
+
+#: app/blueprints/auth/forms.py:62
+msgid "Repeat new password"
+msgstr "نیا پاس ورڈ دوبارہ لکھیں"
+
+#: app/blueprints/auth/forms.py:64
+msgid "Please type your new password again."
+msgstr "براہ کرم اپنا نیا پاس ورڈ دوبارہ لکھیں۔"
+
+#: app/blueprints/auth/forms.py:65
+msgid "The two passwords don't match."
+msgstr "دونوں پاس ورڈ ایک جیسے نہیں ہیں۔"
+
+#: app/blueprints/auth/messages.py:5
+msgid "That email and password don't match. Please try again."
+msgstr "یہ ای میل اور پاس ورڈ آپس میں نہیں ملتے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/blueprints/auth/messages.py:6
+msgid "Please confirm your email first. Open the link we sent you."
+msgstr "پہلے اپنا ای میل کنفرم کریں۔ ہمارا بھیجا ہوا لنک کھولیں۔"
+
+#: app/blueprints/auth/messages.py:7
+msgid "This password is too weak or too common. Please choose a stronger one."
+msgstr "یہ پاس ورڈ بہت کمزور یا بہت عام ہے۔ براہ کرم مضبوط پاس ورڈ چنیں۔"
+
+#: app/blueprints/auth/messages.py:8
+msgid "Your new password must be different from the old one."
+msgstr "نیا پاس ورڈ پرانے پاس ورڈ سے مختلف ہونا چاہیے۔"
+
+#: app/blueprints/auth/messages.py:10
+msgid "We can't send emails to this address yet. Please try another email."
+msgstr ""
+"ہم ابھی اس ایڈریس پر ای میل نہیں بھیج سکتے۔ براہ کرم کوئی اور ای میل "
+"آزمائیں۔"
+
+#: app/blueprints/auth/messages.py:11
+msgid "New sign-ups are paused right now. Please try again later."
+msgstr "نئے سائن اپ ابھی رُکے ہوئے ہیں۔ براہ کرم بعد میں کوشش کریں۔"
+
+#: app/blueprints/auth/messages.py:12
+msgid "Too many attempts. Please wait a few minutes and try again."
+msgstr "بہت زیادہ کوششیں ہو گئیں۔ چند منٹ رُک کر دوبارہ کوشش کریں۔"
+
+#: app/blueprints/auth/messages.py:13
+msgid "This link has expired or was already used. Please ask for a new one."
+msgstr ""
+"اس لنک کی مدت ختم ہو گئی ہے یا یہ پہلے استعمال ہو چکا ہے۔ براہ کرم نیا "
+"لنک منگوائیں۔"
+
+#: app/blueprints/auth/messages.py:14
+msgid "Google login didn't work. Please try again."
+msgstr "گوگل سے لاگ ان نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/blueprints/auth/messages.py:15
+msgid "Your session has ended. Please log in again."
+msgstr "آپ کا سیشن ختم ہو گیا ہے۔ براہ کرم دوبارہ لاگ ان کریں۔"
+
+#: app/blueprints/auth/messages.py:16
+msgid "Login isn't available right now. Please try again in a few minutes."
+msgstr "لاگ ان ابھی دستیاب نہیں۔ براہ کرم چند منٹ بعد کوشش کریں۔"
+
+#: app/blueprints/auth/messages.py:17
+msgid "Something went wrong. Please try again."
+msgstr "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/blueprints/auth/routes.py:62
+msgid "Welcome to Toolverse!"
+msgstr "ٹول ورس میں خوش آمدید!"
+
+#: app/blueprints/auth/routes.py:135
+msgid "Your email is confirmed. Welcome to Toolverse!"
+msgstr "آپ کا ای میل کنفرم ہو گیا۔ ٹول ورس میں خوش آمدید!"
+
+#: app/blueprints/auth/routes.py:148
+msgid "To choose a new password, open the reset link from your email."
+msgstr "نیا پاس ورڈ چننے کے لیے اپنی ای میل میں آیا ہوا ری سیٹ لنک کھولیں۔"
+
+#: app/blueprints/auth/routes.py:159
+msgid "Your password has been changed."
+msgstr "آپ کا پاس ورڈ بدل دیا گیا ہے۔"
+
+#: app/blueprints/auth/routes.py:212
+msgid "You're logged out. See you soon!"
+msgstr "آپ لاگ آؤٹ ہو گئے ہیں۔ جلد ملیں گے!"
 
 #: app/blueprints/marketing/content.py:28
 #: app/blueprints/marketing/tools_catalog.py:171
@@ -43,8 +170,8 @@ msgstr "نوٹس"
 msgid "Expenses"
 msgstr "اخراجات"
 
-#: app/blueprints/marketing/content.py:36 app/templates/partials/navbar.html:41
-#: app/templates/partials/navbar.html:61
+#: app/blueprints/marketing/content.py:36 app/templates/auth/login.html:29
+#: app/templates/partials/navbar.html:36 app/templates/partials/navbar.html:61
 msgid "Sign up free"
 msgstr "مفت سائن اپ کریں"
 
@@ -85,71 +212,69 @@ msgid "Is Toolverse really free?"
 msgstr "کیا ٹول ورس واقعی مفت ہے؟"
 
 #: app/blueprints/marketing/content.py:50
-msgid "Yes. All five tools are free, with no paid plans and no credit card. AI tools have a fair daily limit so they stay free for everyone."
-msgstr "جی ہاں۔ پانچوں ٹولز مفت ہیں، نہ کوئی پیڈ پلان ہے اور نہ کریڈٹ کارڈ چاہیے۔ اے آئی ٹولز کی ایک مناسب روزانہ حد ہے تاکہ یہ سب کے لیے مفت رہیں۔"
+msgid ""
+"Yes. All five tools are free, with no paid plans and no credit card. AI "
+"tools have a fair daily limit so they stay free for everyone."
+msgstr ""
+"جی ہاں۔ پانچوں ٹولز مفت ہیں، نہ کوئی پیڈ پلان ہے اور نہ کریڈٹ کارڈ چاہیے۔"
+" اے آئی ٹولز کی ایک مناسب روزانہ حد ہے تاکہ یہ سب کے لیے مفت رہیں۔"
 
 #: app/blueprints/marketing/content.py:54
 msgid "Why do I need to log in?"
 msgstr "مجھے لاگ ان کیوں کرنا ہوگا؟"
 
 #: app/blueprints/marketing/content.py:55
-msgid "So your CVs, notes and expenses are saved to your own account and stay private to you, on any device."
-msgstr "تاکہ آپ کی سی وی، نوٹس اور اخراجات آپ کے اپنے اکاؤنٹ میں محفوظ رہیں اور صرف آپ تک محدود رہیں، کسی بھی ڈیوائس پر۔"
+msgid ""
+"So your CVs, notes and expenses are saved to your own account and stay "
+"private to you, on any device."
+msgstr ""
+"تاکہ آپ کی سی وی، نوٹس اور اخراجات آپ کے اپنے اکاؤنٹ میں محفوظ رہیں اور "
+"صرف آپ تک محدود رہیں، کسی بھی ڈیوائس پر۔"
 
 #: app/blueprints/marketing/content.py:59
 msgid "Is my CV safe?"
 msgstr "کیا میری سی وی محفوظ ہے؟"
 
 #: app/blueprints/marketing/content.py:60
-msgid "Yes. Your CV is stored privately and only you can open it. We never share it."
-msgstr "جی ہاں۔ آپ کی سی وی نجی طور پر محفوظ کی جاتی ہے اور صرف آپ ہی اسے کھول سکتے ہیں۔ ہم اسے کبھی کسی کے ساتھ شیئر نہیں کرتے۔"
+msgid ""
+"Yes. Your CV is stored privately and only you can open it. We never share"
+" it."
+msgstr ""
+"جی ہاں۔ آپ کی سی وی نجی طور پر محفوظ کی جاتی ہے اور صرف آپ ہی اسے کھول "
+"سکتے ہیں۔ ہم اسے کبھی کسی کے ساتھ شیئر نہیں کرتے۔"
 
 #: app/blueprints/marketing/content.py:63
 msgid "Can I use it in Urdu?"
 msgstr "کیا اسے اردو میں استعمال کیا جا سکتا ہے؟"
 
 #: app/blueprints/marketing/content.py:64
-msgid "Yes. Switch to Urdu from the menu at the top and the whole site changes to Urdu."
+msgid ""
+"Yes. Switch to Urdu from the menu at the top and the whole site changes "
+"to Urdu."
 msgstr "جی ہاں۔ اوپر والے مینو سے اردو چنیں اور پوری سائٹ اردو میں بدل جائے گی۔"
 
-#: app/blueprints/marketing/content.py:70 app/templates/partials/navbar.html:40
-#: app/templates/partials/navbar.html:60
-msgid "Log in"
-msgstr "لاگ ان"
-
-#: app/blueprints/marketing/content.py:71
-msgid "Accounts are almost ready. Soon you can log in with email or Google and find all your work saved."
-msgstr "اکاؤنٹس تقریباً تیار ہیں۔ جلد ہی آپ ای میل یا گوگل سے لاگ ان کر سکیں گے اور اپنا سارا کام محفوظ پائیں گے۔"
-
-#: app/blueprints/marketing/content.py:75
-msgid "Sign up"
-msgstr "سائن اپ"
-
-#: app/blueprints/marketing/content.py:76
-msgid "Free accounts are almost ready. Soon you can sign up with email or Google in under a minute."
-msgstr "مفت اکاؤنٹس تقریباً تیار ہیں۔ جلد ہی آپ ای میل یا گوگل سے ایک منٹ سے بھی کم میں سائن اپ کر سکیں گے۔"
-
-#: app/blueprints/marketing/content.py:80 app/templates/partials/footer.html:5
+#: app/blueprints/marketing/content.py:70 app/templates/partials/footer.html:5
 msgid "Privacy"
 msgstr "پرائیویسی"
 
-#: app/blueprints/marketing/content.py:81
+#: app/blueprints/marketing/content.py:71
 msgid "We are writing a clear, simple privacy policy. It will be here soon."
 msgstr "ہم ایک واضح اور سادہ پرائیویسی پالیسی لکھ رہے ہیں۔ یہ جلد یہاں ہوگی۔"
 
-#: app/blueprints/marketing/content.py:84 app/templates/partials/footer.html:6
+#: app/blueprints/marketing/content.py:74 app/templates/auth/signup.html:26
+#: app/templates/partials/footer.html:6
 msgid "Terms"
 msgstr "شرائط"
 
-#: app/blueprints/marketing/content.py:85
+#: app/blueprints/marketing/content.py:75
 msgid "We are writing simple, fair terms of use. They will be here soon."
 msgstr "ہم استعمال کی سادہ اور منصفانہ شرائط لکھ رہے ہیں۔ یہ جلد یہاں ہوں گی۔"
 
-#: app/blueprints/marketing/content.py:88 app/templates/partials/footer.html:7
+#: app/blueprints/marketing/content.py:78 app/templates/partials/footer.html:7
 msgid "Contact"
 msgstr "رابطہ"
 
-#: app/blueprints/marketing/content.py:89
+#: app/blueprints/marketing/content.py:79
 msgid "A contact page is on its way. It will be here soon."
 msgstr "رابطے کا صفحہ تیار ہو رہا ہے۔ یہ جلد یہاں ہوگا۔"
 
@@ -158,12 +283,26 @@ msgid "What is the CV Checker?"
 msgstr "سی وی چیکر کیا ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:20
-msgid "The CV Checker is a free tool that reads your CV and shows you how to make it better. You upload your CV as a PDF, and AI looks at how it is written and organised. You then get an overall score and a short list of practical tips."
-msgstr "سی وی چیکر ایک مفت ٹول ہے جو آپ کی سی وی پڑھ کر بتاتا ہے کہ اسے کیسے بہتر بنایا جائے۔ آپ اپنی سی وی پی ڈی ایف میں اپ لوڈ کرتے ہیں اور اے آئی دیکھتا ہے کہ یہ کیسے لکھی اور ترتیب دی گئی ہے۔ پھر آپ کو ایک مجموعی اسکور اور چند عملی مشوروں کی مختصر فہرست ملتی ہے۔"
+msgid ""
+"The CV Checker is a free tool that reads your CV and shows you how to "
+"make it better. You upload your CV as a PDF, and AI looks at how it is "
+"written and organised. You then get an overall score and a short list of "
+"practical tips."
+msgstr ""
+"سی وی چیکر ایک مفت ٹول ہے جو آپ کی سی وی پڑھ کر بتاتا ہے کہ اسے کیسے بہتر"
+" بنایا جائے۔ آپ اپنی سی وی پی ڈی ایف میں اپ لوڈ کرتے ہیں اور اے آئی "
+"دیکھتا ہے کہ یہ کیسے لکھی اور ترتیب دی گئی ہے۔ پھر آپ کو ایک مجموعی اسکور"
+" اور چند عملی مشوروں کی مختصر فہرست ملتی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:21
-msgid "It does not rewrite your CV for you. Instead, it points out what is missing or unclear, so you can decide what to change. You stay in control of your own CV."
-msgstr "یہ آپ کی سی وی خود دوبارہ نہیں لکھتا۔ بلکہ یہ بتاتا ہے کہ کیا کمی ہے یا کیا واضح نہیں، تاکہ آپ خود فیصلہ کریں کہ کیا بدلنا ہے۔ آپ کی سی وی پر اختیار آپ ہی کا رہتا ہے۔"
+msgid ""
+"It does not rewrite your CV for you. Instead, it points out what is "
+"missing or unclear, so you can decide what to change. You stay in control"
+" of your own CV."
+msgstr ""
+"یہ آپ کی سی وی خود دوبارہ نہیں لکھتا۔ بلکہ یہ بتاتا ہے کہ کیا کمی ہے یا "
+"کیا واضح نہیں، تاکہ آپ خود فیصلہ کریں کہ کیا بدلنا ہے۔ آپ کی سی وی پر "
+"اختیار آپ ہی کا رہتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:22
 #: app/blueprints/marketing/tool_articles.py:57
@@ -174,36 +313,72 @@ msgid "Who is it for?"
 msgstr "یہ کس کے لیے ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:23
-msgid "The CV Checker is useful for anyone applying for a job or an internship. That includes students writing their first CV, people changing careers, and experienced professionals who have not updated their CV in a while."
-msgstr "سی وی چیکر ہر اُس شخص کے لیے مفید ہے جو نوکری یا انٹرن شپ کے لیے درخواست دے رہا ہو۔ اس میں وہ طلبہ بھی شامل ہیں جو اپنی پہلی سی وی لکھ رہے ہیں، وہ لوگ جو اپنا شعبہ بدل رہے ہیں، اور وہ تجربہ کار افراد جنہوں نے کافی عرصے سے اپنی سی وی اپ ڈیٹ نہیں کی۔"
+msgid ""
+"The CV Checker is useful for anyone applying for a job or an internship. "
+"That includes students writing their first CV, people changing careers, "
+"and experienced professionals who have not updated their CV in a while."
+msgstr ""
+"سی وی چیکر ہر اُس شخص کے لیے مفید ہے جو نوکری یا انٹرن شپ کے لیے درخواست "
+"دے رہا ہو۔ اس میں وہ طلبہ بھی شامل ہیں جو اپنی پہلی سی وی لکھ رہے ہیں، وہ"
+" لوگ جو اپنا شعبہ بدل رہے ہیں، اور وہ تجربہ کار افراد جنہوں نے کافی عرصے "
+"سے اپنی سی وی اپ ڈیٹ نہیں کی۔"
 
 #: app/blueprints/marketing/tool_articles.py:24
-msgid "It also helps if you have no one to review your CV for you. A second opinion can catch problems that are easy to miss after you have read your own CV many times."
-msgstr "یہ تب بھی کام آتا ہے جب آپ کی سی وی دیکھنے والا کوئی نہ ہو۔ دوسری رائے اُن غلطیوں کو پکڑ سکتی ہے جو اپنی سی وی کئی بار پڑھنے کے بعد آسانی سے نظر انداز ہو جاتی ہیں۔"
+msgid ""
+"It also helps if you have no one to review your CV for you. A second "
+"opinion can catch problems that are easy to miss after you have read your"
+" own CV many times."
+msgstr ""
+"یہ تب بھی کام آتا ہے جب آپ کی سی وی دیکھنے والا کوئی نہ ہو۔ دوسری رائے "
+"اُن غلطیوں کو پکڑ سکتی ہے جو اپنی سی وی کئی بار پڑھنے کے بعد آسانی سے نظر"
+" انداز ہو جاتی ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:25
 msgid "Why check your CV before you apply?"
 msgstr "درخواست دینے سے پہلے سی وی کیوں چیک کریں؟"
 
 #: app/blueprints/marketing/tool_articles.py:26
-msgid "Recruiters often have many CVs to read for one role, so they may spend only a short time on each one. If your CV is hard to read or leaves out important details, a strong candidate can be overlooked."
-msgstr "ریکروٹرز کے پاس اکثر ایک ہی عہدے کے لیے بہت سی سی ویز ہوتی ہیں، اس لیے وہ ہر سی وی پر تھوڑا ہی وقت لگا پاتے ہیں۔ اگر آپ کی سی وی پڑھنے میں مشکل ہو یا اہم معلومات چھوٹ جائیں تو ایک اچھا امیدوار بھی نظر انداز ہو سکتا ہے۔"
+msgid ""
+"Recruiters often have many CVs to read for one role, so they may spend "
+"only a short time on each one. If your CV is hard to read or leaves out "
+"important details, a strong candidate can be overlooked."
+msgstr ""
+"ریکروٹرز کے پاس اکثر ایک ہی عہدے کے لیے بہت سی سی ویز ہوتی ہیں، اس لیے وہ"
+" ہر سی وی پر تھوڑا ہی وقت لگا پاتے ہیں۔ اگر آپ کی سی وی پڑھنے میں مشکل ہو"
+" یا اہم معلومات چھوٹ جائیں تو ایک اچھا امیدوار بھی نظر انداز ہو سکتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:27
-msgid "Checking your CV first helps you fix simple problems before anyone else sees them. It is a quick step that can make your application clearer."
-msgstr "پہلے اپنی سی وی چیک کرنے سے آپ چھوٹی غلطیاں کسی اور کے دیکھنے سے پہلے ہی ٹھیک کر لیتے ہیں۔ یہ ایک جلدی ہونے والا قدم ہے جو آپ کی درخواست کو زیادہ واضح بنا سکتا ہے۔"
+msgid ""
+"Checking your CV first helps you fix simple problems before anyone else "
+"sees them. It is a quick step that can make your application clearer."
+msgstr ""
+"پہلے اپنی سی وی چیک کرنے سے آپ چھوٹی غلطیاں کسی اور کے دیکھنے سے پہلے ہی "
+"ٹھیک کر لیتے ہیں۔ یہ ایک جلدی ہونے والا قدم ہے جو آپ کی درخواست کو زیادہ "
+"واضح بنا سکتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:28
 msgid "What the checker looks at"
 msgstr "چیکر کیا دیکھتا ہے"
 
 #: app/blueprints/marketing/tool_articles.py:29
-msgid "The checker looks at three main areas. Structure: are your sections clear and in a sensible order? Skills: are your skills easy to find and relevant to the work you want? Wording: are there sentences that are weak, vague or hard to follow?"
-msgstr "چیکر تین بنیادی چیزیں دیکھتا ہے۔ ساخت: کیا آپ کے سیکشنز واضح اور مناسب ترتیب میں ہیں؟ مہارتیں: کیا آپ کی مہارتیں آسانی سے نظر آتی ہیں اور اُس کام سے متعلق ہیں جو آپ چاہتے ہیں؟ الفاظ: کیا کچھ جملے کمزور، مبہم یا سمجھنے میں مشکل ہیں؟"
+msgid ""
+"The checker looks at three main areas. Structure: are your sections clear"
+" and in a sensible order? Skills: are your skills easy to find and "
+"relevant to the work you want? Wording: are there sentences that are "
+"weak, vague or hard to follow?"
+msgstr ""
+"چیکر تین بنیادی چیزیں دیکھتا ہے۔ ساخت: کیا آپ کے سیکشنز واضح اور مناسب "
+"ترتیب میں ہیں؟ مہارتیں: کیا آپ کی مہارتیں آسانی سے نظر آتی ہیں اور اُس "
+"کام سے متعلق ہیں جو آپ چاہتے ہیں؟ الفاظ: کیا کچھ جملے کمزور، مبہم یا "
+"سمجھنے میں مشکل ہیں؟"
 
 #: app/blueprints/marketing/tool_articles.py:30
-msgid "Based on these, you get one overall score that shows where your CV stands, plus specific tips you can act on."
-msgstr "انہی کی بنیاد پر آپ کو ایک مجموعی اسکور ملتا ہے جو بتاتا ہے کہ آپ کی سی وی کہاں کھڑی ہے، اور ساتھ میں ایسے واضح مشورے جن پر آپ عمل کر سکیں۔"
+msgid ""
+"Based on these, you get one overall score that shows where your CV "
+"stands, plus specific tips you can act on."
+msgstr ""
+"انہی کی بنیاد پر آپ کو ایک مجموعی اسکور ملتا ہے جو بتاتا ہے کہ آپ کی سی "
+"وی کہاں کھڑی ہے، اور ساتھ میں ایسے واضح مشورے جن پر آپ عمل کر سکیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:31
 msgid "Tips for a stronger CV"
@@ -214,152 +389,276 @@ msgid "Keep it easy to scan"
 msgstr "اسے سرسری نظر میں پڑھنے کے قابل رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:33
-msgid "Use clear section headings such as Experience, Education and Skills. Short bullet points are easier to read than long paragraphs."
-msgstr "تجربہ، تعلیم اور مہارتیں جیسے واضح عنوانات استعمال کریں۔ لمبے پیراگراف کے بجائے مختصر نکات پڑھنے میں آسان ہوتے ہیں۔"
+msgid ""
+"Use clear section headings such as Experience, Education and Skills. "
+"Short bullet points are easier to read than long paragraphs."
+msgstr ""
+"تجربہ، تعلیم اور مہارتیں جیسے واضح عنوانات استعمال کریں۔ لمبے پیراگراف کے"
+" بجائے مختصر نکات پڑھنے میں آسان ہوتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:34
 msgid "Show what you achieved, not only what you did"
 msgstr "صرف کام نہیں، اپنی کامیابیاں بھی دکھائیں"
 
 #: app/blueprints/marketing/tool_articles.py:35
-msgid "Instead of only listing duties, describe what changed because of your work. For example, “Built a weekly report that the team used for planning” says more than “Responsible for reports”."
-msgstr "صرف ذمہ داریوں کی فہرست دینے کے بجائے بتائیں کہ آپ کے کام سے کیا فرق پڑا۔ مثال کے طور پر “ہفتہ وار رپورٹ بنائی جسے ٹیم منصوبہ بندی کے لیے استعمال کرتی تھی” کہنا “رپورٹس کا ذمہ دار” لکھنے سے زیادہ بتاتا ہے۔"
+msgid ""
+"Instead of only listing duties, describe what changed because of your "
+"work. For example, “Built a weekly report that the team used for "
+"planning” says more than “Responsible for reports”."
+msgstr ""
+"صرف ذمہ داریوں کی فہرست دینے کے بجائے بتائیں کہ آپ کے کام سے کیا فرق پڑا۔"
+" مثال کے طور پر “ہفتہ وار رپورٹ بنائی جسے ٹیم منصوبہ بندی کے لیے استعمال "
+"کرتی تھی” کہنا “رپورٹس کا ذمہ دار” لکھنے سے زیادہ بتاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:36
 msgid "Match the job you are applying for"
 msgstr "جس نوکری کے لیے درخواست دے رہے ہیں اس کے مطابق رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:37
-msgid "Read the job description and make sure the skills it asks for appear in your CV, as long as you really have them. Never add skills you do not have."
-msgstr "نوکری کی تفصیل پڑھیں اور دیکھیں کہ جو مہارتیں مانگی گئی ہیں وہ آپ کی سی وی میں نظر آئیں، بشرطیکہ وہ واقعی آپ کے پاس ہوں۔ کبھی وہ مہارتیں نہ لکھیں جو آپ کے پاس نہیں۔"
+msgid ""
+"Read the job description and make sure the skills it asks for appear in "
+"your CV, as long as you really have them. Never add skills you do not "
+"have."
+msgstr ""
+"نوکری کی تفصیل پڑھیں اور دیکھیں کہ جو مہارتیں مانگی گئی ہیں وہ آپ کی سی "
+"وی میں نظر آئیں، بشرطیکہ وہ واقعی آپ کے پاس ہوں۔ کبھی وہ مہارتیں نہ لکھیں"
+" جو آپ کے پاس نہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:38
 msgid "Check the basics"
 msgstr "بنیادی چیزیں چیک کریں"
 
 #: app/blueprints/marketing/tool_articles.py:39
-msgid "Make sure your name, phone number and email address are correct and easy to find. Use a professional email address."
-msgstr "یقینی بنائیں کہ آپ کا نام، فون نمبر اور ای میل درست ہوں اور آسانی سے مل جائیں۔ ایک پروفیشنل ای میل ایڈریس استعمال کریں۔"
+msgid ""
+"Make sure your name, phone number and email address are correct and easy "
+"to find. Use a professional email address."
+msgstr ""
+"یقینی بنائیں کہ آپ کا نام، فون نمبر اور ای میل درست ہوں اور آسانی سے مل "
+"جائیں۔ ایک پروفیشنل ای میل ایڈریس استعمال کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:40
 msgid "Use a clean, readable layout"
 msgstr "صاف اور پڑھنے میں آسان ترتیب رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:41
-msgid "Choose a simple font and leave space between sections. A busy design can make it harder to find the information that matters. If you need a fresh layout, the CV Generator can help."
-msgstr "سادہ فونٹ چنیں اور سیکشنز کے درمیان جگہ چھوڑیں۔ زیادہ سجاوٹ والا ڈیزائن اہم معلومات ڈھونڈنا مشکل بنا سکتا ہے۔ اگر آپ کو نئی ترتیب چاہیے تو سی وی جنریٹر مدد کر سکتا ہے۔"
+msgid ""
+"Choose a simple font and leave space between sections. A busy design can "
+"make it harder to find the information that matters. If you need a fresh "
+"layout, the CV Generator can help."
+msgstr ""
+"سادہ فونٹ چنیں اور سیکشنز کے درمیان جگہ چھوڑیں۔ زیادہ سجاوٹ والا ڈیزائن "
+"اہم معلومات ڈھونڈنا مشکل بنا سکتا ہے۔ اگر آپ کو نئی ترتیب چاہیے تو سی وی "
+"جنریٹر مدد کر سکتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:42
 msgid "Common CV mistakes to avoid"
 msgstr "سی وی کی عام غلطیاں جن سے بچنا چاہیے"
 
 #: app/blueprints/marketing/tool_articles.py:43
-msgid "Spelling and grammar errors. Even small mistakes can give a careless impression. Read your CV slowly, and let the checker point out unclear wording."
-msgstr "ہجے اور گرامر کی غلطیاں۔ چھوٹی غلطیاں بھی لاپرواہی کا تاثر دے سکتی ہیں۔ اپنی سی وی آہستہ پڑھیں اور غیر واضح الفاظ کے لیے چیکر کی مدد لیں۔"
+msgid ""
+"Spelling and grammar errors. Even small mistakes can give a careless "
+"impression. Read your CV slowly, and let the checker point out unclear "
+"wording."
+msgstr ""
+"ہجے اور گرامر کی غلطیاں۔ چھوٹی غلطیاں بھی لاپرواہی کا تاثر دے سکتی ہیں۔ "
+"اپنی سی وی آہستہ پڑھیں اور غیر واضح الفاظ کے لیے چیکر کی مدد لیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:44
-msgid "Too much text. Long blocks of text are hard to scan. Cut words that do not add meaning."
-msgstr "بہت زیادہ متن۔ لمبے پیراگراف سرسری نظر میں پڑھنا مشکل ہوتے ہیں۔ وہ الفاظ ہٹا دیں جو کوئی معنی نہیں بڑھاتے۔"
+msgid ""
+"Too much text. Long blocks of text are hard to scan. Cut words that do "
+"not add meaning."
+msgstr ""
+"بہت زیادہ متن۔ لمبے پیراگراف سرسری نظر میں پڑھنا مشکل ہوتے ہیں۔ وہ الفاظ "
+"ہٹا دیں جو کوئی معنی نہیں بڑھاتے۔"
 
 #: app/blueprints/marketing/tool_articles.py:45
-msgid "Missing dates or unclear job titles. Readers want to understand your timeline quickly."
-msgstr "تاریخوں کا نہ ہونا یا عہدوں کا غیر واضح ہونا۔ پڑھنے والا آپ کے کام کی ترتیب جلدی سمجھنا چاہتا ہے۔"
+msgid ""
+"Missing dates or unclear job titles. Readers want to understand your "
+"timeline quickly."
+msgstr ""
+"تاریخوں کا نہ ہونا یا عہدوں کا غیر واضح ہونا۔ پڑھنے والا آپ کے کام کی "
+"ترتیب جلدی سمجھنا چاہتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:46
-msgid "One CV for every job. A CV that is not adjusted for the role can miss the skills that matter most."
-msgstr "ہر نوکری کے لیے ایک ہی سی وی۔ جو سی وی عہدے کے مطابق نہ بدلی جائے اس میں سب سے اہم مہارتیں رہ سکتی ہیں۔"
+msgid ""
+"One CV for every job. A CV that is not adjusted for the role can miss the"
+" skills that matter most."
+msgstr ""
+"ہر نوکری کے لیے ایک ہی سی وی۔ جو سی وی عہدے کے مطابق نہ بدلی جائے اس میں "
+"سب سے اہم مہارتیں رہ سکتی ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:47
-msgid "Outdated information. Remove old details that no longer help your application."
-msgstr "پرانی معلومات۔ وہ پرانی تفصیلات ہٹا دیں جو اب آپ کی درخواست میں مدد نہیں کرتیں۔"
+msgid ""
+"Outdated information. Remove old details that no longer help your "
+"application."
+msgstr ""
+"پرانی معلومات۔ وہ پرانی تفصیلات ہٹا دیں جو اب آپ کی درخواست میں مدد نہیں "
+"کرتیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:48
 msgid "How it works with the CV Generator"
 msgstr "یہ سی وی جنریٹر کے ساتھ کیسے کام کرتا ہے"
 
 #: app/blueprints/marketing/tool_articles.py:49
-msgid "Toolverse has two CV tools that work together. You can build your CV with the CV Generator, check it with the CV Checker and then improve it using the tips. Both are free and part of the same account."
-msgstr "ٹول ورس میں سی وی کے دو ٹولز ہیں جو مل کر کام کرتے ہیں۔ آپ سی وی جنریٹر سے سی وی بنا سکتے ہیں، سی وی چیکر سے اسے چیک کر سکتے ہیں اور پھر مشوروں کی مدد سے اسے بہتر بنا سکتے ہیں۔ دونوں مفت ہیں اور ایک ہی اکاؤنٹ کا حصہ ہیں۔"
+msgid ""
+"Toolverse has two CV tools that work together. You can build your CV with"
+" the CV Generator, check it with the CV Checker and then improve it using"
+" the tips. Both are free and part of the same account."
+msgstr ""
+"ٹول ورس میں سی وی کے دو ٹولز ہیں جو مل کر کام کرتے ہیں۔ آپ سی وی جنریٹر "
+"سے سی وی بنا سکتے ہیں، سی وی چیکر سے اسے چیک کر سکتے ہیں اور پھر مشوروں "
+"کی مدد سے اسے بہتر بنا سکتے ہیں۔ دونوں مفت ہیں اور ایک ہی اکاؤنٹ کا حصہ "
+"ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:50
 msgid "A note on AI"
 msgstr "اے آئی کے بارے میں ایک بات"
 
 #: app/blueprints/marketing/tool_articles.py:51
-msgid "The checker uses AI to give suggestions. AI can be very helpful, but it can also make mistakes. Treat the score and tips as guidance, and use your own judgement before you make changes."
-msgstr "چیکر مشورے دینے کے لیے اے آئی استعمال کرتا ہے۔ اے آئی بہت مددگار ہو سکتا ہے لیکن غلطی بھی کر سکتا ہے۔ اسکور اور مشوروں کو رہنمائی سمجھیں اور تبدیلی کرنے سے پہلے اپنی سمجھ بوجھ بھی استعمال کریں۔"
+msgid ""
+"The checker uses AI to give suggestions. AI can be very helpful, but it "
+"can also make mistakes. Treat the score and tips as guidance, and use "
+"your own judgement before you make changes."
+msgstr ""
+"چیکر مشورے دینے کے لیے اے آئی استعمال کرتا ہے۔ اے آئی بہت مددگار ہو سکتا "
+"ہے لیکن غلطی بھی کر سکتا ہے۔ اسکور اور مشوروں کو رہنمائی سمجھیں اور "
+"تبدیلی کرنے سے پہلے اپنی سمجھ بوجھ بھی استعمال کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:54
 msgid "What is the CV Generator?"
 msgstr "سی وی جنریٹر کیا ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:55
-msgid "The CV Generator helps you create a clean, professional CV without any design skills. You fill in a simple form, choose a template and download your CV as a PDF."
-msgstr "سی وی جنریٹر ڈیزائن کی کسی مہارت کے بغیر ایک صاف اور پروفیشنل سی وی بنانے میں آپ کی مدد کرتا ہے۔ آپ ایک سادہ فارم بھرتے ہیں، ٹیمپلیٹ چنتے ہیں اور اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ کر لیتے ہیں۔"
+msgid ""
+"The CV Generator helps you create a clean, professional CV without any "
+"design skills. You fill in a simple form, choose a template and download "
+"your CV as a PDF."
+msgstr ""
+"سی وی جنریٹر ڈیزائن کی کسی مہارت کے بغیر ایک صاف اور پروفیشنل سی وی بنانے"
+" میں آپ کی مدد کرتا ہے۔ آپ ایک سادہ فارم بھرتے ہیں، ٹیمپلیٹ چنتے ہیں اور "
+"اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ کر لیتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:56
-msgid "If you are not sure how to describe yourself, AI can help you write your summary and work experience. You can edit everything it suggests."
-msgstr "اگر آپ کو سمجھ نہ آئے کہ اپنے بارے میں کیا لکھیں تو اے آئی آپ کا خلاصہ اور کام کا تجربہ لکھنے میں مدد کر سکتا ہے۔ اس کی ہر تجویز میں آپ تبدیلی کر سکتے ہیں۔"
+msgid ""
+"If you are not sure how to describe yourself, AI can help you write your "
+"summary and work experience. You can edit everything it suggests."
+msgstr ""
+"اگر آپ کو سمجھ نہ آئے کہ اپنے بارے میں کیا لکھیں تو اے آئی آپ کا خلاصہ "
+"اور کام کا تجربہ لکھنے میں مدد کر سکتا ہے۔ اس کی ہر تجویز میں آپ تبدیلی "
+"کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:58
-msgid "It is made for anyone who needs a CV without spending a long time on formatting: students and fresh graduates, people returning to work, and anyone who finds formatting a document frustrating."
-msgstr "یہ ہر اُس شخص کے لیے ہے جسے فارمیٹنگ پر زیادہ وقت لگائے بغیر سی وی چاہیے: طلبہ اور نئے گریجویٹس، دوبارہ کام شروع کرنے والے، اور وہ سب جنہیں ڈاکیومنٹ کی فارمیٹنگ تھکا دیتی ہے۔"
+msgid ""
+"It is made for anyone who needs a CV without spending a long time on "
+"formatting: students and fresh graduates, people returning to work, and "
+"anyone who finds formatting a document frustrating."
+msgstr ""
+"یہ ہر اُس شخص کے لیے ہے جسے فارمیٹنگ پر زیادہ وقت لگائے بغیر سی وی چاہیے:"
+" طلبہ اور نئے گریجویٹس، دوبارہ کام شروع کرنے والے، اور وہ سب جنہیں "
+"ڈاکیومنٹ کی فارمیٹنگ تھکا دیتی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:59
-msgid "If you already have a CV but it looks out of date, you can rebuild it here with a cleaner layout."
-msgstr "اگر آپ کے پاس پہلے سے سی وی ہے لیکن وہ پرانی لگتی ہے تو آپ اسے یہاں زیادہ صاف ترتیب کے ساتھ دوبارہ بنا سکتے ہیں۔"
+msgid ""
+"If you already have a CV but it looks out of date, you can rebuild it "
+"here with a cleaner layout."
+msgstr ""
+"اگر آپ کے پاس پہلے سے سی وی ہے لیکن وہ پرانی لگتی ہے تو آپ اسے یہاں زیادہ"
+" صاف ترتیب کے ساتھ دوبارہ بنا سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:60
 msgid "Why use a CV generator?"
 msgstr "سی وی جنریٹر کیوں استعمال کریں؟"
 
 #: app/blueprints/marketing/tool_articles.py:61
-msgid "Formatting a CV by hand takes time. Margins move, fonts change and sections end up uneven. A generator takes care of the layout, so you can focus on what you want to say."
-msgstr "ہاتھ سے سی وی کی فارمیٹنگ میں وقت لگتا ہے۔ مارجن کھسک جاتے ہیں، فونٹ بدل جاتے ہیں اور سیکشنز اوپر نیچے ہو جاتے ہیں۔ جنریٹر ترتیب خود سنبھال لیتا ہے تاکہ آپ اس پر توجہ دیں کہ آپ کیا کہنا چاہتے ہیں۔"
+msgid ""
+"Formatting a CV by hand takes time. Margins move, fonts change and "
+"sections end up uneven. A generator takes care of the layout, so you can "
+"focus on what you want to say."
+msgstr ""
+"ہاتھ سے سی وی کی فارمیٹنگ میں وقت لگتا ہے۔ مارجن کھسک جاتے ہیں، فونٹ بدل "
+"جاتے ہیں اور سیکشنز اوپر نیچے ہو جاتے ہیں۔ جنریٹر ترتیب خود سنبھال لیتا "
+"ہے تاکہ آپ اس پر توجہ دیں کہ آپ کیا کہنا چاہتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:62
-msgid "Your CVs are saved in your account, so you can come back later, edit them and download a new PDF whenever your details change."
-msgstr "آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں، اس لیے جب بھی آپ کی معلومات بدلیں، آپ واپس آ کر ان میں تبدیلی کر سکتے ہیں اور نئی پی ڈی ایف ڈاؤن لوڈ کر سکتے ہیں۔"
+msgid ""
+"Your CVs are saved in your account, so you can come back later, edit them"
+" and download a new PDF whenever your details change."
+msgstr ""
+"آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں، اس لیے جب بھی آپ کی معلومات"
+" بدلیں، آپ واپس آ کر ان میں تبدیلی کر سکتے ہیں اور نئی پی ڈی ایف ڈاؤن لوڈ"
+" کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:63
 msgid "What you add in the form"
 msgstr "فارم میں آپ کیا شامل کرتے ہیں"
 
 #: app/blueprints/marketing/tool_articles.py:64
-msgid "The form asks for the information most CVs need: your name and contact details, a short summary, your work experience, education and skills. You add them step by step."
-msgstr "فارم وہ معلومات مانگتا ہے جو زیادہ تر سی ویز میں ہوتی ہیں: آپ کا نام اور رابطے کی تفصیل، ایک مختصر خلاصہ، کام کا تجربہ، تعلیم اور مہارتیں۔ آپ یہ سب قدم بہ قدم شامل کرتے ہیں۔"
+msgid ""
+"The form asks for the information most CVs need: your name and contact "
+"details, a short summary, your work experience, education and skills. You"
+" add them step by step."
+msgstr ""
+"فارم وہ معلومات مانگتا ہے جو زیادہ تر سی ویز میں ہوتی ہیں: آپ کا نام اور "
+"رابطے کی تفصیل، ایک مختصر خلاصہ، کام کا تجربہ، تعلیم اور مہارتیں۔ آپ یہ "
+"سب قدم بہ قدم شامل کرتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:65
 msgid "Choosing a template"
 msgstr "ٹیمپلیٹ کیسے چنیں"
 
 #: app/blueprints/marketing/tool_articles.py:66
-msgid "Pick a template that is easy to read. A simple layout with clear headings works well for most jobs. You can switch to a different template and download your CV again."
-msgstr "ایسا ٹیمپلیٹ چنیں جو پڑھنے میں آسان ہو۔ واضح عنوانات والی سادہ ترتیب زیادہ تر نوکریوں کے لیے اچھی رہتی ہے۔ آپ دوسرا ٹیمپلیٹ چن کر اپنی سی وی دوبارہ ڈاؤن لوڈ کر سکتے ہیں۔"
+msgid ""
+"Pick a template that is easy to read. A simple layout with clear headings"
+" works well for most jobs. You can switch to a different template and "
+"download your CV again."
+msgstr ""
+"ایسا ٹیمپلیٹ چنیں جو پڑھنے میں آسان ہو۔ واضح عنوانات والی سادہ ترتیب "
+"زیادہ تر نوکریوں کے لیے اچھی رہتی ہے۔ آپ دوسرا ٹیمپلیٹ چن کر اپنی سی وی "
+"دوبارہ ڈاؤن لوڈ کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:67
 msgid "What makes a good CV layout?"
 msgstr "سی وی کی اچھی ترتیب کیسی ہوتی ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:68
-msgid "A good layout guides the reader’s eye. Your name and contact details sit at the top, the most important section comes next, and every section uses the same style for headings and dates. Space between sections makes the page calm and easy to read."
-msgstr "اچھی ترتیب پڑھنے والے کی نظر کو راستہ دکھاتی ہے۔ آپ کا نام اور رابطے کی تفصیل سب سے اوپر ہوتی ہے، اس کے بعد سب سے اہم سیکشن آتا ہے، اور ہر سیکشن میں عنوانات اور تاریخوں کا انداز ایک جیسا ہوتا ہے۔ سیکشنز کے درمیان جگہ صفحے کو پُرسکون اور پڑھنے میں آسان بناتی ہے۔"
+msgid ""
+"A good layout guides the reader’s eye. Your name and contact details sit "
+"at the top, the most important section comes next, and every section uses"
+" the same style for headings and dates. Space between sections makes the "
+"page calm and easy to read."
+msgstr ""
+"اچھی ترتیب پڑھنے والے کی نظر کو راستہ دکھاتی ہے۔ آپ کا نام اور رابطے کی "
+"تفصیل سب سے اوپر ہوتی ہے، اس کے بعد سب سے اہم سیکشن آتا ہے، اور ہر سیکشن "
+"میں عنوانات اور تاریخوں کا انداز ایک جیسا ہوتا ہے۔ سیکشنز کے درمیان جگہ "
+"صفحے کو پُرسکون اور پڑھنے میں آسان بناتی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:69
 msgid "One page or two?"
 msgstr "ایک صفحہ یا دو؟"
 
 #: app/blueprints/marketing/tool_articles.py:70
-msgid "There is no single rule. Early in your career, one page is often enough. With more experience, a second page can be fine if everything on it is useful. What matters most is that every line earns its place."
-msgstr "اس کا کوئی ایک اصول نہیں۔ کیریئر کے شروع میں اکثر ایک صفحہ کافی ہوتا ہے۔ زیادہ تجربے کے ساتھ دوسرا صفحہ بھی ٹھیک ہے اگر اس پر لکھی ہر چیز کارآمد ہو۔ سب سے اہم بات یہ ہے کہ ہر لائن اپنی جگہ کی حق دار ہو۔"
+msgid ""
+"There is no single rule. Early in your career, one page is often enough. "
+"With more experience, a second page can be fine if everything on it is "
+"useful. What matters most is that every line earns its place."
+msgstr ""
+"اس کا کوئی ایک اصول نہیں۔ کیریئر کے شروع میں اکثر ایک صفحہ کافی ہوتا ہے۔ "
+"زیادہ تجربے کے ساتھ دوسرا صفحہ بھی ٹھیک ہے اگر اس پر لکھی ہر چیز کارآمد "
+"ہو۔ سب سے اہم بات یہ ہے کہ ہر لائن اپنی جگہ کی حق دار ہو۔"
 
 #: app/blueprints/marketing/tool_articles.py:71
 msgid "Keep your CV up to date"
 msgstr "اپنی سی وی اپ ڈیٹ رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:72
-msgid "Update your CV when you finish a course, start a new role or learn a new skill. Small, regular updates are easier than rewriting everything when you suddenly need to apply."
-msgstr "جب کوئی کورس مکمل کریں، نیا عہدہ شروع کریں یا کوئی نئی مہارت سیکھیں تو اپنی سی وی اپ ڈیٹ کریں۔ اچانک درخواست دینی پڑے تو سب کچھ دوبارہ لکھنے سے بہتر ہے کہ وقتاً فوقتاً چھوٹی تبدیلیاں کرتے رہیں۔"
+msgid ""
+"Update your CV when you finish a course, start a new role or learn a new "
+"skill. Small, regular updates are easier than rewriting everything when "
+"you suddenly need to apply."
+msgstr ""
+"جب کوئی کورس مکمل کریں، نیا عہدہ شروع کریں یا کوئی نئی مہارت سیکھیں تو "
+"اپنی سی وی اپ ڈیٹ کریں۔ اچانک درخواست دینی پڑے تو سب کچھ دوبارہ لکھنے سے "
+"بہتر ہے کہ وقتاً فوقتاً چھوٹی تبدیلیاں کرتے رہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:73
 msgid "Tips for writing your CV"
@@ -370,32 +669,50 @@ msgid "Write a short, specific summary"
 msgstr "مختصر اور واضح خلاصہ لکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:75
-msgid "Two or three sentences are enough. Say what you do, what you are good at and what kind of role you want."
-msgstr "دو تین جملے کافی ہیں۔ بتائیں کہ آپ کیا کرتے ہیں، کس چیز میں اچھے ہیں اور کس طرح کا عہدہ چاہتے ہیں۔"
+msgid ""
+"Two or three sentences are enough. Say what you do, what you are good at "
+"and what kind of role you want."
+msgstr ""
+"دو تین جملے کافی ہیں۔ بتائیں کہ آپ کیا کرتے ہیں، کس چیز میں اچھے ہیں اور "
+"کس طرح کا عہدہ چاہتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:76
 msgid "Use action words in your experience"
 msgstr "تجربے میں عملی الفاظ استعمال کریں"
 
 #: app/blueprints/marketing/tool_articles.py:77
-msgid "Start bullet points with words like “built”, “managed”, “organised” or “improved”. They describe your experience more clearly than phrases like “was responsible for”."
-msgstr "نکات کو “بنایا”، “سنبھالا”، “منظم کیا” یا “بہتر کیا” جیسے الفاظ سے شروع کریں۔ یہ “کا ذمہ دار تھا” جیسے جملوں سے زیادہ واضح طور پر آپ کا تجربہ بتاتے ہیں۔"
+msgid ""
+"Start bullet points with words like “built”, “managed”, “organised” or "
+"“improved”. They describe your experience more clearly than phrases like "
+"“was responsible for”."
+msgstr ""
+"نکات کو “بنایا”، “سنبھالا”، “منظم کیا” یا “بہتر کیا” جیسے الفاظ سے شروع "
+"کریں۔ یہ “کا ذمہ دار تھا” جیسے جملوں سے زیادہ واضح طور پر آپ کا تجربہ "
+"بتاتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:78
 msgid "List skills you can actually show"
 msgstr "وہی مہارتیں لکھیں جو آپ واقعی دکھا سکیں"
 
 #: app/blueprints/marketing/tool_articles.py:79
-msgid "Focus on skills that matter for the jobs you want, and that you could talk about confidently in an interview."
-msgstr "اُن مہارتوں پر توجہ دیں جو آپ کی مطلوبہ نوکریوں کے لیے اہم ہوں اور جن پر آپ انٹرویو میں اعتماد سے بات کر سکیں۔"
+msgid ""
+"Focus on skills that matter for the jobs you want, and that you could "
+"talk about confidently in an interview."
+msgstr ""
+"اُن مہارتوں پر توجہ دیں جو آپ کی مطلوبہ نوکریوں کے لیے اہم ہوں اور جن پر "
+"آپ انٹرویو میں اعتماد سے بات کر سکیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:80
 msgid "Keep it to the point"
 msgstr "بات مختصر رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:81
-msgid "Many recruiters prefer a CV they can scan quickly. Include what is relevant to the role and leave out the rest."
-msgstr "بہت سے ریکروٹرز ایسی سی وی پسند کرتے ہیں جو جلدی پڑھی جا سکے۔ عہدے سے متعلق چیزیں شامل کریں اور باقی چھوڑ دیں۔"
+msgid ""
+"Many recruiters prefer a CV they can scan quickly. Include what is "
+"relevant to the role and leave out the rest."
+msgstr ""
+"بہت سے ریکروٹرز ایسی سی وی پسند کرتے ہیں جو جلدی پڑھی جا سکے۔ عہدے سے "
+"متعلق چیزیں شامل کریں اور باقی چھوڑ دیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:82
 #: app/blueprints/marketing/tool_articles.py:124
@@ -405,104 +722,190 @@ msgid "Common mistakes to avoid"
 msgstr "عام غلطیاں جن سے بچنا چاہیے"
 
 #: app/blueprints/marketing/tool_articles.py:83
-msgid "Copying AI text without reading it. AI suggestions are a starting point. Read them, correct anything that is not true and make them sound like you."
-msgstr "اے آئی کا لکھا بغیر پڑھے لگا دینا۔ اے آئی کی تجاویز صرف ایک آغاز ہیں۔ انہیں پڑھیں، جو بات درست نہ ہو اسے ٹھیک کریں اور انہیں اپنے انداز میں ڈھالیں۔"
+msgid ""
+"Copying AI text without reading it. AI suggestions are a starting point. "
+"Read them, correct anything that is not true and make them sound like "
+"you."
+msgstr ""
+"اے آئی کا لکھا بغیر پڑھے لگا دینا۔ اے آئی کی تجاویز صرف ایک آغاز ہیں۔ "
+"انہیں پڑھیں، جو بات درست نہ ہو اسے ٹھیک کریں اور انہیں اپنے انداز میں "
+"ڈھالیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:84
-msgid "Adding personal details that are not needed. What is expected, such as a photo or date of birth, differs by country and employer, so check what is normal where you apply."
-msgstr "غیر ضروری ذاتی معلومات شامل کرنا۔ تصویر یا تاریخ پیدائش جیسی چیزوں کی توقع ہر ملک اور ادارے میں مختلف ہوتی ہے، اس لیے دیکھیں کہ جہاں آپ درخواست دے رہے ہیں وہاں کیا عام ہے۔"
+msgid ""
+"Adding personal details that are not needed. What is expected, such as a "
+"photo or date of birth, differs by country and employer, so check what is"
+" normal where you apply."
+msgstr ""
+"غیر ضروری ذاتی معلومات شامل کرنا۔ تصویر یا تاریخ پیدائش جیسی چیزوں کی "
+"توقع ہر ملک اور ادارے میں مختلف ہوتی ہے، اس لیے دیکھیں کہ جہاں آپ درخواست"
+" دے رہے ہیں وہاں کیا عام ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:85
-msgid "Inconsistent dates and formats. Use the same date style throughout your CV."
-msgstr "تاریخوں اور انداز میں فرق۔ پوری سی وی میں تاریخ لکھنے کا ایک ہی انداز رکھیں۔"
+msgid ""
+"Inconsistent dates and formats. Use the same date style throughout your "
+"CV."
+msgstr ""
+"تاریخوں اور انداز میں فرق۔ پوری سی وی میں تاریخ لکھنے کا ایک ہی انداز "
+"رکھیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:86
-msgid "Forgetting to proofread. Check names, numbers and spelling before you download the final PDF."
-msgstr "دوبارہ پڑھنا بھول جانا۔ آخری پی ڈی ایف ڈاؤن لوڈ کرنے سے پہلے نام، نمبر اور ہجے چیک کریں۔"
+msgid ""
+"Forgetting to proofread. Check names, numbers and spelling before you "
+"download the final PDF."
+msgstr ""
+"دوبارہ پڑھنا بھول جانا۔ آخری پی ڈی ایف ڈاؤن لوڈ کرنے سے پہلے نام، نمبر "
+"اور ہجے چیک کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:87
 msgid "Build it, then check it"
 msgstr "پہلے بنائیں، پھر چیک کریں"
 
 #: app/blueprints/marketing/tool_articles.py:88
-msgid "After you build your CV, you can check it with the CV Checker. It gives you a score and tips, so you can improve your CV before you send it."
-msgstr "سی وی بنانے کے بعد آپ اسے سی وی چیکر سے چیک کر سکتے ہیں۔ یہ آپ کو اسکور اور مشورے دیتا ہے تاکہ بھیجنے سے پہلے آپ اپنی سی وی بہتر بنا سکیں۔"
+msgid ""
+"After you build your CV, you can check it with the CV Checker. It gives "
+"you a score and tips, so you can improve your CV before you send it."
+msgstr ""
+"سی وی بنانے کے بعد آپ اسے سی وی چیکر سے چیک کر سکتے ہیں۔ یہ آپ کو اسکور "
+"اور مشورے دیتا ہے تاکہ بھیجنے سے پہلے آپ اپنی سی وی بہتر بنا سکیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:89
 msgid "Do I have to use the AI help?"
 msgstr "کیا اے آئی کی مدد لینا ضروری ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:90
-msgid "No. AI help is optional. You can write every part yourself and still use the templates and the PDF download."
-msgstr "نہیں۔ اے آئی کی مدد اختیاری ہے۔ آپ سب کچھ خود لکھ سکتے ہیں اور پھر بھی ٹیمپلیٹس اور پی ڈی ایف ڈاؤن لوڈ استعمال کر سکتے ہیں۔"
+msgid ""
+"No. AI help is optional. You can write every part yourself and still use "
+"the templates and the PDF download."
+msgstr ""
+"نہیں۔ اے آئی کی مدد اختیاری ہے۔ آپ سب کچھ خود لکھ سکتے ہیں اور پھر بھی "
+"ٹیمپلیٹس اور پی ڈی ایف ڈاؤن لوڈ استعمال کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:93
 msgid "What is the Captions tool?"
 msgstr "کیپشنز ٹول کیا ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:94
-msgid "The Captions tool writes social media captions for you. You type a topic, choose Instagram or LinkedIn, and get several ready-to-post captions to choose from."
-msgstr "کیپشنز ٹول آپ کے لیے سوشل میڈیا کیپشن لکھتا ہے۔ آپ موضوع لکھتے ہیں، انسٹاگرام یا لنکڈ اِن چنتے ہیں، اور آپ کو چننے کے لیے پوسٹ کرنے کو تیار کئی کیپشن مل جاتے ہیں۔"
+msgid ""
+"The Captions tool writes social media captions for you. You type a topic,"
+" choose Instagram or LinkedIn, and get several ready-to-post captions to "
+"choose from."
+msgstr ""
+"کیپشنز ٹول آپ کے لیے سوشل میڈیا کیپشن لکھتا ہے۔ آپ موضوع لکھتے ہیں، "
+"انسٹاگرام یا لنکڈ اِن چنتے ہیں، اور آپ کو چننے کے لیے پوسٹ کرنے کو تیار "
+"کئی کیپشن مل جاتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:95
-msgid "You can copy any caption in one tap and edit it before you post, so the final words are always yours."
-msgstr "آپ کوئی بھی کیپشن ایک ٹیپ میں کاپی کر سکتے ہیں اور پوسٹ کرنے سے پہلے اس میں تبدیلی کر سکتے ہیں، اس لیے آخری الفاظ ہمیشہ آپ کے اپنے ہوتے ہیں۔"
+msgid ""
+"You can copy any caption in one tap and edit it before you post, so the "
+"final words are always yours."
+msgstr ""
+"آپ کوئی بھی کیپشن ایک ٹیپ میں کاپی کر سکتے ہیں اور پوسٹ کرنے سے پہلے اس "
+"میں تبدیلی کر سکتے ہیں، اس لیے آخری الفاظ ہمیشہ آپ کے اپنے ہوتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:97
-msgid "It is useful for anyone who posts online and sometimes gets stuck on what to write: small business owners, freelancers, students sharing an achievement, job seekers posting on LinkedIn and creators who post often."
-msgstr "یہ ہر اُس شخص کے لیے مفید ہے جو آن لائن پوسٹ کرتا ہے اور کبھی کبھی سوچ میں پڑ جاتا ہے کہ کیا لکھے: چھوٹے کاروبار کے مالکان، فری لانسرز، اپنی کامیابی شیئر کرنے والے طلبہ، لنکڈ اِن پر پوسٹ کرنے والے نوکری کے متلاشی، اور اکثر پوسٹ کرنے والے کری ایٹرز۔"
+msgid ""
+"It is useful for anyone who posts online and sometimes gets stuck on what"
+" to write: small business owners, freelancers, students sharing an "
+"achievement, job seekers posting on LinkedIn and creators who post often."
+msgstr ""
+"یہ ہر اُس شخص کے لیے مفید ہے جو آن لائن پوسٹ کرتا ہے اور کبھی کبھی سوچ "
+"میں پڑ جاتا ہے کہ کیا لکھے: چھوٹے کاروبار کے مالکان، فری لانسرز، اپنی "
+"کامیابی شیئر کرنے والے طلبہ، لنکڈ اِن پر پوسٹ کرنے والے نوکری کے متلاشی، "
+"اور اکثر پوسٹ کرنے والے کری ایٹرز۔"
 
 #: app/blueprints/marketing/tool_articles.py:98
 msgid "Why use a caption generator?"
 msgstr "کیپشن جنریٹر کیوں استعمال کریں؟"
 
 #: app/blueprints/marketing/tool_articles.py:99
-msgid "Writing a caption can take longer than taking the photo. A generator gives you a few starting points quickly, so you spend less time staring at an empty box."
-msgstr "کبھی کیپشن لکھنے میں تصویر کھینچنے سے زیادہ وقت لگ جاتا ہے۔ جنریٹر آپ کو جلدی سے چند آغاز دے دیتا ہے، تاکہ آپ کو خالی خانے کو گھورتے ہوئے کم وقت گزارنا پڑے۔"
+msgid ""
+"Writing a caption can take longer than taking the photo. A generator "
+"gives you a few starting points quickly, so you spend less time staring "
+"at an empty box."
+msgstr ""
+"کبھی کیپشن لکھنے میں تصویر کھینچنے سے زیادہ وقت لگ جاتا ہے۔ جنریٹر آپ کو "
+"جلدی سے چند آغاز دے دیتا ہے، تاکہ آپ کو خالی خانے کو گھورتے ہوئے کم وقت "
+"گزارنا پڑے۔"
 
 #: app/blueprints/marketing/tool_articles.py:100
-msgid "Seeing several options also helps you find the tone you want, whether that is friendly, professional or short and simple."
-msgstr "کئی آپشنز دیکھنے سے آپ کو اپنا مطلوبہ انداز ڈھونڈنے میں بھی مدد ملتی ہے، چاہے وہ دوستانہ ہو، پروفیشنل ہو یا مختصر اور سادہ۔"
+msgid ""
+"Seeing several options also helps you find the tone you want, whether "
+"that is friendly, professional or short and simple."
+msgstr ""
+"کئی آپشنز دیکھنے سے آپ کو اپنا مطلوبہ انداز ڈھونڈنے میں بھی مدد ملتی ہے، "
+"چاہے وہ دوستانہ ہو، پروفیشنل ہو یا مختصر اور سادہ۔"
 
 #: app/blueprints/marketing/tool_articles.py:101
 msgid "Instagram and LinkedIn are different"
 msgstr "انسٹاگرام اور لنکڈ اِن مختلف ہیں"
 
 #: app/blueprints/marketing/tool_articles.py:102
-msgid "Instagram captions are often short, casual and personal. LinkedIn posts are usually more professional and can explain a little more, such as what you learned or achieved. The tool writes for the platform you choose."
-msgstr "انسٹاگرام کے کیپشن اکثر مختصر، غیر رسمی اور ذاتی ہوتے ہیں۔ لنکڈ اِن کی پوسٹس عموماً زیادہ پروفیشنل ہوتی ہیں اور تھوڑی زیادہ وضاحت کر سکتی ہیں، جیسے آپ نے کیا سیکھا یا حاصل کیا۔ یہ ٹول آپ کے چنے ہوئے پلیٹ فارم کے مطابق لکھتا ہے۔"
+msgid ""
+"Instagram captions are often short, casual and personal. LinkedIn posts "
+"are usually more professional and can explain a little more, such as what"
+" you learned or achieved. The tool writes for the platform you choose."
+msgstr ""
+"انسٹاگرام کے کیپشن اکثر مختصر، غیر رسمی اور ذاتی ہوتے ہیں۔ لنکڈ اِن کی "
+"پوسٹس عموماً زیادہ پروفیشنل ہوتی ہیں اور تھوڑی زیادہ وضاحت کر سکتی ہیں، "
+"جیسے آپ نے کیا سیکھا یا حاصل کیا۔ یہ ٹول آپ کے چنے ہوئے پلیٹ فارم کے "
+"مطابق لکھتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:103
 msgid "Captions are a starting point"
 msgstr "کیپشن ایک آغاز ہیں"
 
 #: app/blueprints/marketing/tool_articles.py:104
-msgid "AI can suggest ideas, but it does not know your full story. Think of each caption as a draft. Change words, add details and remove anything that does not fit."
-msgstr "اے آئی خیالات دے سکتا ہے لیکن آپ کی پوری کہانی نہیں جانتا۔ ہر کیپشن کو ایک مسودہ سمجھیں۔ الفاظ بدلیں، تفصیل شامل کریں اور جو مناسب نہ لگے اسے ہٹا دیں۔"
+msgid ""
+"AI can suggest ideas, but it does not know your full story. Think of each"
+" caption as a draft. Change words, add details and remove anything that "
+"does not fit."
+msgstr ""
+"اے آئی خیالات دے سکتا ہے لیکن آپ کی پوری کہانی نہیں جانتا۔ ہر کیپشن کو "
+"ایک مسودہ سمجھیں۔ الفاظ بدلیں، تفصیل شامل کریں اور جو مناسب نہ لگے اسے "
+"ہٹا دیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:105
 msgid "Writing for Instagram"
 msgstr "انسٹاگرام کے لیے لکھنا"
 
 #: app/blueprints/marketing/tool_articles.py:106
-msgid "On Instagram, the image does most of the work. A caption can add context, a feeling or a small story. Short lines and simple words usually read well on a phone screen."
-msgstr "انسٹاگرام پر زیادہ تر کام تصویر کرتی ہے۔ کیپشن اس میں پس منظر، کوئی احساس یا ایک چھوٹی سی کہانی شامل کر سکتا ہے۔ مختصر لائنیں اور سادہ الفاظ عموماً فون کی اسکرین پر اچھے لگتے ہیں۔"
+msgid ""
+"On Instagram, the image does most of the work. A caption can add context,"
+" a feeling or a small story. Short lines and simple words usually read "
+"well on a phone screen."
+msgstr ""
+"انسٹاگرام پر زیادہ تر کام تصویر کرتی ہے۔ کیپشن اس میں پس منظر، کوئی احساس"
+" یا ایک چھوٹی سی کہانی شامل کر سکتا ہے۔ مختصر لائنیں اور سادہ الفاظ "
+"عموماً فون کی اسکرین پر اچھے لگتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:107
 msgid "Writing for LinkedIn"
 msgstr "لنکڈ اِن کے لیے لکھنا"
 
 #: app/blueprints/marketing/tool_articles.py:108
-msgid "On LinkedIn, people often share news about work, learning and careers. A good post explains what happened, why it matters to you and, if it fits, what you learned. Keep paragraphs short so the post is easy to read."
-msgstr "لنکڈ اِن پر لوگ اکثر کام، سیکھنے اور کیریئر کی خبریں شیئر کرتے ہیں۔ اچھی پوسٹ بتاتی ہے کہ کیا ہوا، یہ آپ کے لیے کیوں اہم ہے اور اگر مناسب ہو تو آپ نے کیا سیکھا۔ پیراگراف مختصر رکھیں تاکہ پوسٹ آسانی سے پڑھی جا سکے۔"
+msgid ""
+"On LinkedIn, people often share news about work, learning and careers. A "
+"good post explains what happened, why it matters to you and, if it fits, "
+"what you learned. Keep paragraphs short so the post is easy to read."
+msgstr ""
+"لنکڈ اِن پر لوگ اکثر کام، سیکھنے اور کیریئر کی خبریں شیئر کرتے ہیں۔ اچھی "
+"پوسٹ بتاتی ہے کہ کیا ہوا، یہ آپ کے لیے کیوں اہم ہے اور اگر مناسب ہو تو آپ"
+" نے کیا سیکھا۔ پیراگراف مختصر رکھیں تاکہ پوسٹ آسانی سے پڑھی جا سکے۔"
 
 #: app/blueprints/marketing/tool_articles.py:109
 msgid "Topics you can type"
 msgstr "آپ کون سے موضوعات لکھ سکتے ہیں"
 
 #: app/blueprints/marketing/tool_articles.py:110
-msgid "A new job or promotion, finishing a course, launching a product, an event you attended, a team milestone, a look behind the scenes of your work or a simple thank-you post."
-msgstr "نئی نوکری یا ترقی، کوئی کورس مکمل کرنا، کوئی پروڈکٹ لانچ کرنا، کسی ایونٹ میں شرکت، ٹیم کی کوئی کامیابی، آپ کے کام کے پیچھے کی ایک جھلک، یا شکریے کی ایک سادہ سی پوسٹ۔"
+msgid ""
+"A new job or promotion, finishing a course, launching a product, an event"
+" you attended, a team milestone, a look behind the scenes of your work or"
+" a simple thank-you post."
+msgstr ""
+"نئی نوکری یا ترقی، کوئی کورس مکمل کرنا، کوئی پروڈکٹ لانچ کرنا، کسی ایونٹ "
+"میں شرکت، ٹیم کی کوئی کامیابی، آپ کے کام کے پیچھے کی ایک جھلک، یا شکریے "
+"کی ایک سادہ سی پوسٹ۔"
 
 #: app/blueprints/marketing/tool_articles.py:111
 msgid "Tips for better captions"
@@ -513,16 +916,25 @@ msgid "Give a clear topic"
 msgstr "واضح موضوع دیں"
 
 #: app/blueprints/marketing/tool_articles.py:113
-msgid "“Started a new job as a junior designer” gives better results than “new job”. A few extra details help the AI understand what you mean."
-msgstr "“جونیئر ڈیزائنر کے طور پر نئی نوکری شروع کی” لکھنا صرف “نئی نوکری” سے بہتر نتیجہ دیتا ہے۔ تھوڑی سی اضافی تفصیل اے آئی کو آپ کی بات سمجھنے میں مدد دیتی ہے۔"
+msgid ""
+"“Started a new job as a junior designer” gives better results than “new "
+"job”. A few extra details help the AI understand what you mean."
+msgstr ""
+"“جونیئر ڈیزائنر کے طور پر نئی نوکری شروع کی” لکھنا صرف “نئی نوکری” سے "
+"بہتر نتیجہ دیتا ہے۔ تھوڑی سی اضافی تفصیل اے آئی کو آپ کی بات سمجھنے میں "
+"مدد دیتی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:114
 msgid "Make it sound like you"
 msgstr "اسے اپنے انداز میں لکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:115
-msgid "Edit the caption so it matches how you normally speak. Add a personal detail that only you would know."
-msgstr "کیپشن میں ایسی تبدیلی کریں کہ وہ آپ کے عام بولنے کے انداز جیسا لگے۔ کوئی ایسی ذاتی بات شامل کریں جو صرف آپ جانتے ہوں۔"
+msgid ""
+"Edit the caption so it matches how you normally speak. Add a personal "
+"detail that only you would know."
+msgstr ""
+"کیپشن میں ایسی تبدیلی کریں کہ وہ آپ کے عام بولنے کے انداز جیسا لگے۔ کوئی "
+"ایسی ذاتی بات شامل کریں جو صرف آپ جانتے ہوں۔"
 
 #: app/blueprints/marketing/tool_articles.py:116
 msgid "Start strong"
@@ -530,99 +942,182 @@ msgstr "مضبوط آغاز کریں"
 
 #: app/blueprints/marketing/tool_articles.py:117
 msgid "The first line is what people see first, so make it clear and interesting."
-msgstr "پہلی لائن وہ ہے جو لوگ سب سے پہلے دیکھتے ہیں، اس لیے اسے واضح اور دلچسپ رکھیں۔"
+msgstr ""
+"پہلی لائن وہ ہے جو لوگ سب سے پہلے دیکھتے ہیں، اس لیے اسے واضح اور دلچسپ "
+"رکھیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:118
 msgid "End with a question or a thank you"
 msgstr "آخر میں سوال یا شکریہ"
 
 #: app/blueprints/marketing/tool_articles.py:119
-msgid "A simple question can invite comments. On LinkedIn, you might thank the people who helped you."
-msgstr "ایک سادہ سا سوال لوگوں کو تبصرہ کرنے کی دعوت دیتا ہے۔ لنکڈ اِن پر آپ اُن لوگوں کا شکریہ ادا کر سکتے ہیں جنہوں نے آپ کی مدد کی۔"
+msgid ""
+"A simple question can invite comments. On LinkedIn, you might thank the "
+"people who helped you."
+msgstr ""
+"ایک سادہ سا سوال لوگوں کو تبصرہ کرنے کی دعوت دیتا ہے۔ لنکڈ اِن پر آپ اُن "
+"لوگوں کا شکریہ ادا کر سکتے ہیں جنہوں نے آپ کی مدد کی۔"
 
 #: app/blueprints/marketing/tool_articles.py:120
 msgid "Keep hashtags relevant"
 msgstr "ہیش ٹیگز متعلقہ رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:121
-msgid "Use a few hashtags that really relate to your post, rather than many unrelated ones."
-msgstr "بہت سے غیر متعلقہ ہیش ٹیگز کے بجائے چند ایسے ہیش ٹیگز استعمال کریں جو واقعی آپ کی پوسٹ سے متعلق ہوں۔"
+msgid ""
+"Use a few hashtags that really relate to your post, rather than many "
+"unrelated ones."
+msgstr ""
+"بہت سے غیر متعلقہ ہیش ٹیگز کے بجائے چند ایسے ہیش ٹیگز استعمال کریں جو "
+"واقعی آپ کی پوسٹ سے متعلق ہوں۔"
 
 #: app/blueprints/marketing/tool_articles.py:122
 msgid "Check facts and names"
 msgstr "حقائق اور نام چیک کریں"
 
 #: app/blueprints/marketing/tool_articles.py:123
-msgid "If your caption mentions a company, a person or a date, make sure it is correct. AI only knows what you tell it, so it cannot check these details for you."
-msgstr "اگر آپ کے کیپشن میں کسی کمپنی، شخص یا تاریخ کا ذکر ہو تو یقینی بنائیں کہ وہ درست ہو۔ اے آئی صرف وہی جانتا ہے جو آپ اسے بتاتے ہیں، اس لیے وہ یہ تفصیلات آپ کے لیے چیک نہیں کر سکتا۔"
+msgid ""
+"If your caption mentions a company, a person or a date, make sure it is "
+"correct. AI only knows what you tell it, so it cannot check these details"
+" for you."
+msgstr ""
+"اگر آپ کے کیپشن میں کسی کمپنی، شخص یا تاریخ کا ذکر ہو تو یقینی بنائیں کہ "
+"وہ درست ہو۔ اے آئی صرف وہی جانتا ہے جو آپ اسے بتاتے ہیں، اس لیے وہ یہ "
+"تفصیلات آپ کے لیے چیک نہیں کر سکتا۔"
 
 #: app/blueprints/marketing/tool_articles.py:125
-msgid "Posting without reading. Always read a caption before you post and check that every detail is correct."
-msgstr "بغیر پڑھے پوسٹ کرنا۔ پوسٹ کرنے سے پہلے ہمیشہ کیپشن پڑھیں اور دیکھیں کہ ہر تفصیل درست ہو۔"
+msgid ""
+"Posting without reading. Always read a caption before you post and check "
+"that every detail is correct."
+msgstr ""
+"بغیر پڑھے پوسٹ کرنا۔ پوسٹ کرنے سے پہلے ہمیشہ کیپشن پڑھیں اور دیکھیں کہ ہر"
+" تفصیل درست ہو۔"
 
 #: app/blueprints/marketing/tool_articles.py:126
-msgid "Using the same caption on both platforms. What works on Instagram may feel out of place on LinkedIn."
-msgstr "دونوں پلیٹ فارمز پر ایک ہی کیپشن لگانا۔ جو انسٹاگرام پر اچھا لگے وہ لنکڈ اِن پر عجیب لگ سکتا ہے۔"
+msgid ""
+"Using the same caption on both platforms. What works on Instagram may "
+"feel out of place on LinkedIn."
+msgstr ""
+"دونوں پلیٹ فارمز پر ایک ہی کیپشن لگانا۔ جو انسٹاگرام پر اچھا لگے وہ لنکڈ "
+"اِن پر عجیب لگ سکتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:127
-msgid "Making claims you cannot back up. Keep your captions honest, especially on LinkedIn, where people may know your work."
-msgstr "ایسے دعوے کرنا جو آپ ثابت نہ کر سکیں۔ اپنے کیپشن سچے رکھیں، خاص طور پر لنکڈ اِن پر جہاں لوگ آپ کے کام سے واقف ہو سکتے ہیں۔"
+msgid ""
+"Making claims you cannot back up. Keep your captions honest, especially "
+"on LinkedIn, where people may know your work."
+msgstr ""
+"ایسے دعوے کرنا جو آپ ثابت نہ کر سکیں۔ اپنے کیپشن سچے رکھیں، خاص طور پر "
+"لنکڈ اِن پر جہاں لوگ آپ کے کام سے واقف ہو سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:128
-msgid "Hiding the main point. Long captions can work, but the first line should still say what the post is about."
-msgstr "اصل بات چھپا دینا۔ لمبے کیپشن بھی چل سکتے ہیں، لیکن پہلی لائن میں ہی بتا دیں کہ پوسٹ کس بارے میں ہے۔"
+msgid ""
+"Hiding the main point. Long captions can work, but the first line should "
+"still say what the post is about."
+msgstr ""
+"اصل بات چھپا دینا۔ لمبے کیپشن بھی چل سکتے ہیں، لیکن پہلی لائن میں ہی بتا "
+"دیں کہ پوسٹ کس بارے میں ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:129
-msgid "Forgetting your audience. Think about who will read the post and what they care about."
-msgstr "اپنے پڑھنے والوں کو بھول جانا۔ سوچیں کہ پوسٹ کون پڑھے گا اور اسے کس چیز میں دلچسپی ہے۔"
+msgid ""
+"Forgetting your audience. Think about who will read the post and what "
+"they care about."
+msgstr ""
+"اپنے پڑھنے والوں کو بھول جانا۔ سوچیں کہ پوسٹ کون پڑھے گا اور اسے کس چیز "
+"میں دلچسپی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:130
-msgid "Using captions word for word every time. Changing a few words keeps your posts sounding fresh and personal."
-msgstr "ہر بار کیپشن لفظ بہ لفظ استعمال کرنا۔ چند الفاظ بدل دینے سے آپ کی پوسٹس تازہ اور ذاتی لگتی ہیں۔"
+msgid ""
+"Using captions word for word every time. Changing a few words keeps your "
+"posts sounding fresh and personal."
+msgstr ""
+"ہر بار کیپشن لفظ بہ لفظ استعمال کرنا۔ چند الفاظ بدل دینے سے آپ کی پوسٹس "
+"تازہ اور ذاتی لگتی ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:131
 msgid "Free, with a fair daily limit"
 msgstr "مفت، ایک مناسب روزانہ حد کے ساتھ"
 
 #: app/blueprints/marketing/tool_articles.py:132
-msgid "The Captions tool is free to use. There is a daily limit so the AI stays free for everyone. You can also try it a few times without an account."
-msgstr "کیپشنز ٹول استعمال کے لیے مفت ہے۔ روزانہ کی ایک حد ہے تاکہ اے آئی سب کے لیے مفت رہے۔ آپ اکاؤنٹ کے بغیر بھی اسے چند بار آزما سکتے ہیں۔"
+msgid ""
+"The Captions tool is free to use. There is a daily limit so the AI stays "
+"free for everyone. You can also try it a few times without an account."
+msgstr ""
+"کیپشنز ٹول استعمال کے لیے مفت ہے۔ روزانہ کی ایک حد ہے تاکہ اے آئی سب کے "
+"لیے مفت رہے۔ آپ اکاؤنٹ کے بغیر بھی اسے چند بار آزما سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:135
 msgid "What is the Notes tool?"
 msgstr "نوٹس ٹول کیا ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:136
-msgid "Notes is a simple place to write things down and find them later. You can create a note with a title and text, edit it anytime, delete it when you no longer need it and search all your notes by any word."
-msgstr "نوٹس چیزیں لکھنے اور بعد میں ڈھونڈنے کی ایک سادہ جگہ ہے۔ آپ عنوان اور متن کے ساتھ نوٹ بنا سکتے ہیں، جب چاہیں اس میں تبدیلی کر سکتے ہیں، ضرورت نہ ہو تو ڈیلیٹ کر سکتے ہیں اور کسی بھی لفظ سے اپنے تمام نوٹس میں تلاش کر سکتے ہیں۔"
+msgid ""
+"Notes is a simple place to write things down and find them later. You can"
+" create a note with a title and text, edit it anytime, delete it when you"
+" no longer need it and search all your notes by any word."
+msgstr ""
+"نوٹس چیزیں لکھنے اور بعد میں ڈھونڈنے کی ایک سادہ جگہ ہے۔ آپ عنوان اور متن"
+" کے ساتھ نوٹ بنا سکتے ہیں، جب چاہیں اس میں تبدیلی کر سکتے ہیں، ضرورت نہ "
+"ہو تو ڈیلیٹ کر سکتے ہیں اور کسی بھی لفظ سے اپنے تمام نوٹس میں تلاش کر "
+"سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:137
-msgid "Your notes are saved in your Toolverse account, so you can open them on your phone, tablet or laptop."
-msgstr "آپ کے نوٹس آپ کے ٹول ورس اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے آپ انہیں فون، ٹیبلٹ یا لیپ ٹاپ پر کھول سکتے ہیں۔"
+msgid ""
+"Your notes are saved in your Toolverse account, so you can open them on "
+"your phone, tablet or laptop."
+msgstr ""
+"آپ کے نوٹس آپ کے ٹول ورس اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے آپ انہیں فون، "
+"ٹیبلٹ یا لیپ ٹاپ پر کھول سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:139
-msgid "Notes is for students keeping class notes, people planning a project and anyone who writes down ideas, lists or reminders. If you often think “I wrote that down somewhere”, Notes can help."
-msgstr "نوٹس اُن طلبہ کے لیے ہے جو کلاس کے نوٹس رکھتے ہیں، اُن لوگوں کے لیے جو کسی پروجیکٹ کی منصوبہ بندی کر رہے ہیں، اور ہر اُس شخص کے لیے جو خیالات، فہرستیں یا یاد دہانیاں لکھتا ہے۔ اگر آپ اکثر سوچتے ہیں کہ “یہ میں نے کہیں لکھا تھا” تو نوٹس آپ کی مدد کر سکتا ہے۔"
+msgid ""
+"Notes is for students keeping class notes, people planning a project and "
+"anyone who writes down ideas, lists or reminders. If you often think “I "
+"wrote that down somewhere”, Notes can help."
+msgstr ""
+"نوٹس اُن طلبہ کے لیے ہے جو کلاس کے نوٹس رکھتے ہیں، اُن لوگوں کے لیے جو "
+"کسی پروجیکٹ کی منصوبہ بندی کر رہے ہیں، اور ہر اُس شخص کے لیے جو خیالات، "
+"فہرستیں یا یاد دہانیاں لکھتا ہے۔ اگر آپ اکثر سوچتے ہیں کہ “یہ میں نے کہیں"
+" لکھا تھا” تو نوٹس آپ کی مدد کر سکتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:140
 msgid "Why use an online notes app?"
 msgstr "آن لائن نوٹس ایپ کیوں استعمال کریں؟"
 
 #: app/blueprints/marketing/tool_articles.py:141
-msgid "Paper notes get lost, and notes saved on one device are not with you when you switch to another. Notes saved in your account are there wherever you log in."
-msgstr "کاغذ کے نوٹس گم ہو جاتے ہیں، اور ایک ڈیوائس پر محفوظ نوٹس دوسری ڈیوائس پر ساتھ نہیں ہوتے۔ اکاؤنٹ میں محفوظ نوٹس وہاں موجود ہوتے ہیں جہاں بھی آپ لاگ ان کریں۔"
+msgid ""
+"Paper notes get lost, and notes saved on one device are not with you when"
+" you switch to another. Notes saved in your account are there wherever "
+"you log in."
+msgstr ""
+"کاغذ کے نوٹس گم ہو جاتے ہیں، اور ایک ڈیوائس پر محفوظ نوٹس دوسری ڈیوائس پر"
+" ساتھ نہیں ہوتے۔ اکاؤنٹ میں محفوظ نوٹس وہاں موجود ہوتے ہیں جہاں بھی آپ "
+"لاگ ان کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:142
-msgid "Search makes a big difference. Instead of scrolling through everything, you type a word and find the note you need."
-msgstr "سرچ بہت فرق ڈالتی ہے۔ سب کچھ اسکرول کرنے کے بجائے آپ ایک لفظ لکھتے ہیں اور مطلوبہ نوٹ مل جاتا ہے۔"
+msgid ""
+"Search makes a big difference. Instead of scrolling through everything, "
+"you type a word and find the note you need."
+msgstr ""
+"سرچ بہت فرق ڈالتی ہے۔ سب کچھ اسکرول کرنے کے بجائے آپ ایک لفظ لکھتے ہیں "
+"اور مطلوبہ نوٹ مل جاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:143
 msgid "Notes compared with other ways of saving things"
 msgstr "چیزیں محفوظ کرنے کے دوسرے طریقوں کے مقابلے میں نوٹس"
 
 #: app/blueprints/marketing/tool_articles.py:144
-msgid "Many people save ideas by sending messages to themselves in chat apps, or keep photos of whiteboards and paper lists. These work for a while, but they are hard to search and easy to lose among other messages and photos. A notes tool keeps your writing in one place, with titles you choose and a search box that finds what you need."
-msgstr "بہت سے لوگ چیٹ ایپس میں خود کو میسج بھیج کر خیالات محفوظ کرتے ہیں، یا وائٹ بورڈ اور کاغذ کی فہرستوں کی تصویریں رکھ لیتے ہیں۔ یہ کچھ عرصہ تو کام کرتا ہے، لیکن ان میں تلاش کرنا مشکل ہوتا ہے اور یہ دوسرے میسجز اور تصویروں میں آسانی سے گم ہو جاتے ہیں۔ نوٹس ٹول آپ کی تحریر ایک جگہ رکھتا ہے، آپ کے اپنے عنوانات اور ایک سرچ باکس کے ساتھ جو مطلوبہ چیز ڈھونڈ دیتا ہے۔"
+msgid ""
+"Many people save ideas by sending messages to themselves in chat apps, or"
+" keep photos of whiteboards and paper lists. These work for a while, but "
+"they are hard to search and easy to lose among other messages and photos."
+" A notes tool keeps your writing in one place, with titles you choose and"
+" a search box that finds what you need."
+msgstr ""
+"بہت سے لوگ چیٹ ایپس میں خود کو میسج بھیج کر خیالات محفوظ کرتے ہیں، یا "
+"وائٹ بورڈ اور کاغذ کی فہرستوں کی تصویریں رکھ لیتے ہیں۔ یہ کچھ عرصہ تو کام"
+" کرتا ہے، لیکن ان میں تلاش کرنا مشکل ہوتا ہے اور یہ دوسرے میسجز اور "
+"تصویروں میں آسانی سے گم ہو جاتے ہیں۔ نوٹس ٹول آپ کی تحریر ایک جگہ رکھتا "
+"ہے، آپ کے اپنے عنوانات اور ایک سرچ باکس کے ساتھ جو مطلوبہ چیز ڈھونڈ دیتا "
+"ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:145
 #: app/blueprints/marketing/tools_catalog.py:202
@@ -640,8 +1135,12 @@ msgid "Works in your browser"
 msgstr "آپ کے براؤزر میں چلتا ہے"
 
 #: app/blueprints/marketing/tool_articles.py:148
-msgid "There is no app to install. Notes works in your web browser on phone, tablet and laptop."
-msgstr "کوئی ایپ انسٹال کرنے کی ضرورت نہیں۔ نوٹس فون، ٹیبلٹ اور لیپ ٹاپ کے ویب براؤزر میں چلتا ہے۔"
+msgid ""
+"There is no app to install. Notes works in your web browser on phone, "
+"tablet and laptop."
+msgstr ""
+"کوئی ایپ انسٹال کرنے کی ضرورت نہیں۔ نوٹس فون، ٹیبلٹ اور لیپ ٹاپ کے ویب "
+"براؤزر میں چلتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:149
 #: app/blueprints/marketing/tool_articles.py:192
@@ -649,40 +1148,67 @@ msgid "Try it without an account"
 msgstr "اکاؤنٹ کے بغیر آزمائیں"
 
 #: app/blueprints/marketing/tool_articles.py:150
-msgid "You can start writing without logging in. Your notes are kept in your browser, and when you create a free account they move to your account."
-msgstr "آپ لاگ ان کیے بغیر لکھنا شروع کر سکتے ہیں۔ آپ کے نوٹس آپ کے براؤزر میں رکھے جاتے ہیں، اور جب آپ مفت اکاؤنٹ بناتے ہیں تو وہ آپ کے اکاؤنٹ میں منتقل ہو جاتے ہیں۔"
+msgid ""
+"You can start writing without logging in. Your notes are kept in your "
+"browser, and when you create a free account they move to your account."
+msgstr ""
+"آپ لاگ ان کیے بغیر لکھنا شروع کر سکتے ہیں۔ آپ کے نوٹس آپ کے براؤزر میں "
+"رکھے جاتے ہیں، اور جب آپ مفت اکاؤنٹ بناتے ہیں تو وہ آپ کے اکاؤنٹ میں "
+"منتقل ہو جاتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:151
 msgid "What to keep in Notes"
 msgstr "نوٹس میں کیا رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:152
-msgid "Meeting notes and action points, study notes and summaries, ideas for projects, to-do lists and reminders, recipes, book lists and anything else you want to remember."
-msgstr "میٹنگ کے نوٹس اور کرنے کے کام، پڑھائی کے نوٹس اور خلاصے، پروجیکٹس کے خیالات، کاموں کی فہرستیں اور یاد دہانیاں، کھانے کی ترکیبیں، کتابوں کی فہرستیں اور ہر وہ چیز جو آپ یاد رکھنا چاہیں۔"
+msgid ""
+"Meeting notes and action points, study notes and summaries, ideas for "
+"projects, to-do lists and reminders, recipes, book lists and anything "
+"else you want to remember."
+msgstr ""
+"میٹنگ کے نوٹس اور کرنے کے کام، پڑھائی کے نوٹس اور خلاصے، پروجیکٹس کے "
+"خیالات، کاموں کی فہرستیں اور یاد دہانیاں، کھانے کی ترکیبیں، کتابوں کی "
+"فہرستیں اور ہر وہ چیز جو آپ یاد رکھنا چاہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:153
 msgid "Using Notes for study"
 msgstr "پڑھائی کے لیے نوٹس"
 
 #: app/blueprints/marketing/tool_articles.py:154
-msgid "Write a short summary in your own words after each class or chapter. Put the subject and topic in the title, such as “Biology – Cells”, so you can find it before an exam."
-msgstr "ہر کلاس یا باب کے بعد اپنے الفاظ میں ایک مختصر خلاصہ لکھیں۔ عنوان میں مضمون اور موضوع لکھیں، جیسے “حیاتیات – خلیے”، تاکہ امتحان سے پہلے آسانی سے مل جائے۔"
+msgid ""
+"Write a short summary in your own words after each class or chapter. Put "
+"the subject and topic in the title, such as “Biology – Cells”, so you can"
+" find it before an exam."
+msgstr ""
+"ہر کلاس یا باب کے بعد اپنے الفاظ میں ایک مختصر خلاصہ لکھیں۔ عنوان میں "
+"مضمون اور موضوع لکھیں، جیسے “حیاتیات – خلیے”، تاکہ امتحان سے پہلے آسانی "
+"سے مل جائے۔"
 
 #: app/blueprints/marketing/tool_articles.py:155
 msgid "Using Notes for work"
 msgstr "کام کے لیے نوٹس"
 
 #: app/blueprints/marketing/tool_articles.py:156
-msgid "After a meeting, write down the decisions and next steps while they are fresh. A note titled with the meeting name and date is easy to find later."
-msgstr "میٹنگ کے بعد فیصلے اور اگلے قدم فوراً لکھ لیں جب وہ ذہن میں تازہ ہوں۔ میٹنگ کے نام اور تاریخ والے عنوان کا نوٹ بعد میں آسانی سے مل جاتا ہے۔"
+msgid ""
+"After a meeting, write down the decisions and next steps while they are "
+"fresh. A note titled with the meeting name and date is easy to find "
+"later."
+msgstr ""
+"میٹنگ کے بعد فیصلے اور اگلے قدم فوراً لکھ لیں جب وہ ذہن میں تازہ ہوں۔ "
+"میٹنگ کے نام اور تاریخ والے عنوان کا نوٹ بعد میں آسانی سے مل جاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:157
 msgid "Using Notes at home"
 msgstr "گھر کے لیے نوٹس"
 
 #: app/blueprints/marketing/tool_articles.py:158
-msgid "Keep shopping lists, plans for an event or a list of things to fix around the house. Update the list as you go and delete it when the job is done."
-msgstr "خریداری کی فہرستیں، کسی تقریب کی منصوبہ بندی یا گھر میں ٹھیک کرنے والی چیزوں کی فہرست رکھیں۔ کام کے ساتھ ساتھ فہرست اپ ڈیٹ کریں اور کام ختم ہونے پر ڈیلیٹ کر دیں۔"
+msgid ""
+"Keep shopping lists, plans for an event or a list of things to fix around"
+" the house. Update the list as you go and delete it when the job is done."
+msgstr ""
+"خریداری کی فہرستیں، کسی تقریب کی منصوبہ بندی یا گھر میں ٹھیک کرنے والی "
+"چیزوں کی فہرست رکھیں۔ کام کے ساتھ ساتھ فہرست اپ ڈیٹ کریں اور کام ختم ہونے"
+" پر ڈیلیٹ کر دیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:159
 msgid "Tips for keeping useful notes"
@@ -701,16 +1227,24 @@ msgid "Keep one topic per note"
 msgstr "ہر نوٹ میں ایک موضوع رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:163
-msgid "Short notes about one subject are easier to search and update than one very long note."
-msgstr "ایک موضوع پر مختصر نوٹس کو تلاش کرنا اور اپ ڈیٹ کرنا ایک بہت لمبے نوٹ سے آسان ہوتا ہے۔"
+msgid ""
+"Short notes about one subject are easier to search and update than one "
+"very long note."
+msgstr ""
+"ایک موضوع پر مختصر نوٹس کو تلاش کرنا اور اپ ڈیٹ کرنا ایک بہت لمبے نوٹ سے "
+"آسان ہوتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:164
 msgid "Use the words you will search for"
 msgstr "وہ الفاظ لکھیں جن سے آپ تلاش کریں گے"
 
 #: app/blueprints/marketing/tool_articles.py:165
-msgid "Think about how you will look for the note later, and include those words in the title or text."
-msgstr "سوچیں کہ بعد میں آپ یہ نوٹ کیسے ڈھونڈیں گے، اور وہی الفاظ عنوان یا متن میں شامل کریں۔"
+msgid ""
+"Think about how you will look for the note later, and include those words"
+" in the title or text."
+msgstr ""
+"سوچیں کہ بعد میں آپ یہ نوٹ کیسے ڈھونڈیں گے، اور وہی الفاظ عنوان یا متن "
+"میں شامل کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:166
 msgid "Clean up from time to time"
@@ -718,27 +1252,43 @@ msgstr "وقتاً فوقتاً صفائی کریں"
 
 #: app/blueprints/marketing/tool_articles.py:167
 msgid "Delete notes you no longer need, so the important ones stay easy to find."
-msgstr "جن نوٹس کی اب ضرورت نہیں انہیں ڈیلیٹ کر دیں، تاکہ اہم نوٹس آسانی سے ملتے رہیں۔"
+msgstr ""
+"جن نوٹس کی اب ضرورت نہیں انہیں ڈیلیٹ کر دیں، تاکہ اہم نوٹس آسانی سے ملتے "
+"رہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:169
 msgid "Keeping everything in one giant note. It becomes hard to read and update."
-msgstr "سب کچھ ایک بہت بڑے نوٹ میں رکھنا۔ اسے پڑھنا اور اپ ڈیٹ کرنا مشکل ہو جاتا ہے۔"
+msgstr ""
+"سب کچھ ایک بہت بڑے نوٹ میں رکھنا۔ اسے پڑھنا اور اپ ڈیٹ کرنا مشکل ہو جاتا "
+"ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:170
 msgid "Vague titles. Titles like “Misc” or “Stuff” will not help you later."
 msgstr "مبہم عنوانات۔ “متفرق” یا “چیزیں” جیسے عنوانات بعد میں کام نہیں آتے۔"
 
 #: app/blueprints/marketing/tool_articles.py:171
-msgid "Saving passwords in notes. Your notes are private, but a password manager is a safer place for passwords."
-msgstr "نوٹس میں پاس ورڈ رکھنا۔ آپ کے نوٹس نجی ہیں، لیکن پاس ورڈز کے لیے پاس ورڈ مینیجر زیادہ محفوظ جگہ ہے۔"
+msgid ""
+"Saving passwords in notes. Your notes are private, but a password manager"
+" is a safer place for passwords."
+msgstr ""
+"نوٹس میں پاس ورڈ رکھنا۔ آپ کے نوٹس نجی ہیں، لیکن پاس ورڈز کے لیے پاس ورڈ "
+"مینیجر زیادہ محفوظ جگہ ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:172
-msgid "Writing notes and never going back. Notes are most useful when you return to them and keep them up to date."
-msgstr "نوٹس لکھ کر کبھی واپس نہ دیکھنا۔ نوٹس سب سے زیادہ تب کام آتے ہیں جب آپ انہیں دوبارہ دیکھیں اور اپ ڈیٹ رکھیں۔"
+msgid ""
+"Writing notes and never going back. Notes are most useful when you return"
+" to them and keep them up to date."
+msgstr ""
+"نوٹس لکھ کر کبھی واپس نہ دیکھنا۔ نوٹس سب سے زیادہ تب کام آتے ہیں جب آپ "
+"انہیں دوبارہ دیکھیں اور اپ ڈیٹ رکھیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:173
-msgid "Writing in a hurry and never fixing it. If a note is hard to understand later, take a moment to tidy it up."
-msgstr "جلدی میں لکھ کر کبھی درست نہ کرنا۔ اگر کوئی نوٹ بعد میں سمجھ نہ آئے تو تھوڑا وقت نکال کر اسے صاف کر لیں۔"
+msgid ""
+"Writing in a hurry and never fixing it. If a note is hard to understand "
+"later, take a moment to tidy it up."
+msgstr ""
+"جلدی میں لکھ کر کبھی درست نہ کرنا۔ اگر کوئی نوٹ بعد میں سمجھ نہ آئے تو "
+"تھوڑا وقت نکال کر اسے صاف کر لیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:174
 msgid "Free and simple"
@@ -746,107 +1296,188 @@ msgstr "مفت اور سادہ"
 
 #: app/blueprints/marketing/tool_articles.py:175
 msgid "Notes is free. It focuses on the basics: write, edit, delete and search."
-msgstr "نوٹس مفت ہے۔ یہ بنیادی کاموں پر توجہ دیتا ہے: لکھنا، ترمیم، ڈیلیٹ اور تلاش۔"
+msgstr ""
+"نوٹس مفت ہے۔ یہ بنیادی کاموں پر توجہ دیتا ہے: لکھنا، ترمیم، ڈیلیٹ اور "
+"تلاش۔"
 
 #: app/blueprints/marketing/tool_articles.py:176
-msgid "There are no complicated folders or settings to learn, so you can start writing straight away."
-msgstr "کوئی پیچیدہ فولڈر یا سیٹنگز سیکھنے کی ضرورت نہیں، اس لیے آپ فوراً لکھنا شروع کر سکتے ہیں۔"
+msgid ""
+"There are no complicated folders or settings to learn, so you can start "
+"writing straight away."
+msgstr ""
+"کوئی پیچیدہ فولڈر یا سیٹنگز سیکھنے کی ضرورت نہیں، اس لیے آپ فوراً لکھنا "
+"شروع کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:179
 msgid "What is the Expenses tool?"
 msgstr "اخراجات ٹول کیا ہے؟"
 
 #: app/blueprints/marketing/tool_articles.py:180
-msgid "Expenses is a simple expense tracker. You add what you spend each day, and the tool shows your expenses by day and your total for the month."
-msgstr "اخراجات ایک سادہ خرچ ٹریکر ہے۔ آپ روزانہ کا خرچ لکھتے ہیں اور یہ ٹول آپ کے اخراجات دن کے حساب سے اور مہینے کا کُل دکھاتا ہے۔"
+msgid ""
+"Expenses is a simple expense tracker. You add what you spend each day, "
+"and the tool shows your expenses by day and your total for the month."
+msgstr ""
+"اخراجات ایک سادہ خرچ ٹریکر ہے۔ آپ روزانہ کا خرچ لکھتے ہیں اور یہ ٹول آپ "
+"کے اخراجات دن کے حساب سے اور مہینے کا کُل دکھاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:181
-msgid "You enter every expense yourself. Expenses does not connect to your bank, so nothing is linked to your bank account."
-msgstr "ہر خرچ آپ خود لکھتے ہیں۔ یہ ٹول آپ کے بینک سے نہیں جڑتا، اس لیے آپ کے بینک اکاؤنٹ سے کچھ بھی منسلک نہیں ہوتا۔"
+msgid ""
+"You enter every expense yourself. Expenses does not connect to your bank,"
+" so nothing is linked to your bank account."
+msgstr ""
+"ہر خرچ آپ خود لکھتے ہیں۔ یہ ٹول آپ کے بینک سے نہیں جڑتا، اس لیے آپ کے "
+"بینک اکاؤنٹ سے کچھ بھی منسلک نہیں ہوتا۔"
 
 #: app/blueprints/marketing/tool_articles.py:183
-msgid "It is for students managing pocket money, families keeping an eye on household spending, freelancers, and anyone who wants to know where their money goes each month."
-msgstr "یہ اُن طلبہ کے لیے ہے جو جیب خرچ سنبھالتے ہیں، اُن گھرانوں کے لیے جو گھر کے خرچ پر نظر رکھتے ہیں، فری لانسرز کے لیے، اور ہر اُس شخص کے لیے جو جاننا چاہتا ہے کہ ہر مہینے اس کا پیسہ کہاں جاتا ہے۔"
+msgid ""
+"It is for students managing pocket money, families keeping an eye on "
+"household spending, freelancers, and anyone who wants to know where their"
+" money goes each month."
+msgstr ""
+"یہ اُن طلبہ کے لیے ہے جو جیب خرچ سنبھالتے ہیں، اُن گھرانوں کے لیے جو گھر "
+"کے خرچ پر نظر رکھتے ہیں، فری لانسرز کے لیے، اور ہر اُس شخص کے لیے جو "
+"جاننا چاہتا ہے کہ ہر مہینے اس کا پیسہ کہاں جاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:184
-msgid "You do not need any finance knowledge to use it. If you can write down what you spent, you can use Expenses."
-msgstr "اسے استعمال کرنے کے لیے فنانس کی کسی سمجھ کی ضرورت نہیں۔ اگر آپ لکھ سکتے ہیں کہ کیا خرچ کیا، تو آپ اخراجات ٹول استعمال کر سکتے ہیں۔"
+msgid ""
+"You do not need any finance knowledge to use it. If you can write down "
+"what you spent, you can use Expenses."
+msgstr ""
+"اسے استعمال کرنے کے لیے فنانس کی کسی سمجھ کی ضرورت نہیں۔ اگر آپ لکھ سکتے "
+"ہیں کہ کیا خرچ کیا، تو آپ اخراجات ٹول استعمال کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:185
 msgid "Why track your expenses?"
 msgstr "اخراجات کا حساب کیوں رکھیں؟"
 
 #: app/blueprints/marketing/tool_articles.py:186
-msgid "Small purchases are easy to forget, but they add up. Writing them down shows you where your money actually goes."
-msgstr "چھوٹی خریداریاں آسانی سے بھول جاتی ہیں لیکن مل کر بڑی رقم بن جاتی ہیں۔ انہیں لکھنے سے پتہ چلتا ہے کہ آپ کا پیسہ اصل میں کہاں جاتا ہے۔"
+msgid ""
+"Small purchases are easy to forget, but they add up. Writing them down "
+"shows you where your money actually goes."
+msgstr ""
+"چھوٹی خریداریاں آسانی سے بھول جاتی ہیں لیکن مل کر بڑی رقم بن جاتی ہیں۔ "
+"انہیں لکھنے سے پتہ چلتا ہے کہ آپ کا پیسہ اصل میں کہاں جاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:187
-msgid "When you know your monthly total, it becomes easier to plan, set a budget and notice spending you want to cut."
-msgstr "جب آپ کو اپنا ماہانہ کُل معلوم ہو تو منصوبہ بندی کرنا، بجٹ بنانا اور وہ خرچ پہچاننا آسان ہو جاتا ہے جو آپ کم کرنا چاہتے ہیں۔"
+msgid ""
+"When you know your monthly total, it becomes easier to plan, set a budget"
+" and notice spending you want to cut."
+msgstr ""
+"جب آپ کو اپنا ماہانہ کُل معلوم ہو تو منصوبہ بندی کرنا، بجٹ بنانا اور وہ "
+"خرچ پہچاننا آسان ہو جاتا ہے جو آپ کم کرنا چاہتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:188
 msgid "Simple by design"
 msgstr "جان بوجھ کر سادہ"
 
 #: app/blueprints/marketing/tool_articles.py:189
-msgid "Expenses focuses on the basics: a quick entry, a daily list and a monthly total. There are no complicated reports to set up."
-msgstr "اخراجات بنیادی چیزوں پر توجہ دیتا ہے: جلدی اندراج، روزانہ فہرست اور ماہانہ کُل۔ کوئی پیچیدہ رپورٹس سیٹ کرنے کی ضرورت نہیں۔"
+msgid ""
+"Expenses focuses on the basics: a quick entry, a daily list and a monthly"
+" total. There are no complicated reports to set up."
+msgstr ""
+"اخراجات بنیادی چیزوں پر توجہ دیتا ہے: جلدی اندراج، روزانہ فہرست اور "
+"ماہانہ کُل۔ کوئی پیچیدہ رپورٹس سیٹ کرنے کی ضرورت نہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:190
 msgid "Private and on every device"
 msgstr "نجی اور ہر ڈیوائس پر"
 
 #: app/blueprints/marketing/tool_articles.py:191
-msgid "Your expenses are saved in your account and only you can see them. Add an expense on your phone when you pay, then check your total later on your laptop."
-msgstr "آپ کے اخراجات آپ کے اکاؤنٹ میں محفوظ رہتے ہیں اور صرف آپ انہیں دیکھ سکتے ہیں۔ ادائیگی کرتے وقت فون پر خرچ لکھیں اور بعد میں لیپ ٹاپ پر اپنا کُل دیکھ لیں۔"
+msgid ""
+"Your expenses are saved in your account and only you can see them. Add an"
+" expense on your phone when you pay, then check your total later on your "
+"laptop."
+msgstr ""
+"آپ کے اخراجات آپ کے اکاؤنٹ میں محفوظ رہتے ہیں اور صرف آپ انہیں دیکھ سکتے "
+"ہیں۔ ادائیگی کرتے وقت فون پر خرچ لکھیں اور بعد میں لیپ ٹاپ پر اپنا کُل "
+"دیکھ لیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:193
-msgid "You can start adding expenses without logging in. They are kept in your browser, and when you create a free account they move to your account."
-msgstr "آپ لاگ ان کیے بغیر خرچ لکھنا شروع کر سکتے ہیں۔ یہ آپ کے براؤزر میں رکھے جاتے ہیں، اور جب آپ مفت اکاؤنٹ بناتے ہیں تو آپ کے اکاؤنٹ میں منتقل ہو جاتے ہیں۔"
+msgid ""
+"You can start adding expenses without logging in. They are kept in your "
+"browser, and when you create a free account they move to your account."
+msgstr ""
+"آپ لاگ ان کیے بغیر خرچ لکھنا شروع کر سکتے ہیں۔ یہ آپ کے براؤزر میں رکھے "
+"جاتے ہیں، اور جب آپ مفت اکاؤنٹ بناتے ہیں تو آپ کے اکاؤنٹ میں منتقل ہو "
+"جاتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:194
 msgid "What to track"
 msgstr "کن چیزوں کا حساب رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:195
-msgid "Food and groceries, transport, bills, mobile top-ups and anything else you spend on regularly. Start simple; you can add more detail over time."
-msgstr "کھانا اور سودا سلف، سفر، بل، موبائل بیلنس اور ہر وہ چیز جس پر آپ باقاعدگی سے خرچ کرتے ہیں۔ سادگی سے شروع کریں، وقت کے ساتھ مزید تفصیل شامل کر سکتے ہیں۔"
+msgid ""
+"Food and groceries, transport, bills, mobile top-ups and anything else "
+"you spend on regularly. Start simple; you can add more detail over time."
+msgstr ""
+"کھانا اور سودا سلف، سفر، بل، موبائل بیلنس اور ہر وہ چیز جس پر آپ باقاعدگی"
+" سے خرچ کرتے ہیں۔ سادگی سے شروع کریں، وقت کے ساتھ مزید تفصیل شامل کر سکتے"
+" ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:196
-msgid "Some people also record money they send to family or give as gifts, so their monthly total shows the full picture."
-msgstr "کچھ لوگ وہ رقم بھی لکھتے ہیں جو وہ گھر والوں کو بھیجتے ہیں یا تحفے میں دیتے ہیں، تاکہ ان کا ماہانہ کُل پوری تصویر دکھائے۔"
+msgid ""
+"Some people also record money they send to family or give as gifts, so "
+"their monthly total shows the full picture."
+msgstr ""
+"کچھ لوگ وہ رقم بھی لکھتے ہیں جو وہ گھر والوں کو بھیجتے ہیں یا تحفے میں "
+"دیتے ہیں، تاکہ ان کا ماہانہ کُل پوری تصویر دکھائے۔"
 
 #: app/blueprints/marketing/tool_articles.py:197
 msgid "Getting started with a simple budget"
 msgstr "سادہ بجٹ کی شروعات"
 
 #: app/blueprints/marketing/tool_articles.py:198
-msgid "Tracking is the first step towards a budget. After a month of recording your spending, look at your total and the kinds of things you spent on. You can then choose a sensible amount for the next month and use your monthly total to see how you are doing."
-msgstr "حساب رکھنا بجٹ کی طرف پہلا قدم ہے۔ ایک مہینہ اپنا خرچ لکھنے کے بعد اپنا کُل اور وہ چیزیں دیکھیں جن پر آپ نے خرچ کیا۔ پھر آپ اگلے مہینے کے لیے ایک مناسب رقم طے کر سکتے ہیں اور ماہانہ کُل سے دیکھ سکتے ہیں کہ آپ کیسا کر رہے ہیں۔"
+msgid ""
+"Tracking is the first step towards a budget. After a month of recording "
+"your spending, look at your total and the kinds of things you spent on. "
+"You can then choose a sensible amount for the next month and use your "
+"monthly total to see how you are doing."
+msgstr ""
+"حساب رکھنا بجٹ کی طرف پہلا قدم ہے۔ ایک مہینہ اپنا خرچ لکھنے کے بعد اپنا "
+"کُل اور وہ چیزیں دیکھیں جن پر آپ نے خرچ کیا۔ پھر آپ اگلے مہینے کے لیے ایک"
+" مناسب رقم طے کر سکتے ہیں اور ماہانہ کُل سے دیکھ سکتے ہیں کہ آپ کیسا کر "
+"رہے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:199
 msgid "Look for patterns"
 msgstr "عادتیں پہچانیں"
 
 #: app/blueprints/marketing/tool_articles.py:200
-msgid "Your daily list makes it easier to notice habits, such as spending more at weekends or on certain days. Once you see a pattern, you can decide whether you want to change it."
-msgstr "روزانہ فہرست سے عادتیں پہچاننا آسان ہو جاتا ہے، جیسے ہفتے کے آخر میں یا کچھ خاص دنوں میں زیادہ خرچ کرنا۔ جب آپ کو کوئی عادت نظر آئے تو آپ طے کر سکتے ہیں کہ اسے بدلنا ہے یا نہیں۔"
+msgid ""
+"Your daily list makes it easier to notice habits, such as spending more "
+"at weekends or on certain days. Once you see a pattern, you can decide "
+"whether you want to change it."
+msgstr ""
+"روزانہ فہرست سے عادتیں پہچاننا آسان ہو جاتا ہے، جیسے ہفتے کے آخر میں یا "
+"کچھ خاص دنوں میں زیادہ خرچ کرنا۔ جب آپ کو کوئی عادت نظر آئے تو آپ طے کر "
+"سکتے ہیں کہ اسے بدلنا ہے یا نہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:201
 msgid "Plan for bills"
 msgstr "بلوں کا خیال رکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:202
-msgid "Some costs, such as utility bills or fees, come every month. Adding them when you pay them gives you a more complete picture of your monthly spending."
-msgstr "کچھ خرچ، جیسے بجلی گیس کے بل یا فیس، ہر مہینے آتے ہیں۔ ادائیگی کرتے ہی انہیں لکھ لینے سے آپ کے ماہانہ خرچ کی زیادہ مکمل تصویر سامنے آتی ہے۔"
+msgid ""
+"Some costs, such as utility bills or fees, come every month. Adding them "
+"when you pay them gives you a more complete picture of your monthly "
+"spending."
+msgstr ""
+"کچھ خرچ، جیسے بجلی گیس کے بل یا فیس، ہر مہینے آتے ہیں۔ ادائیگی کرتے ہی "
+"انہیں لکھ لینے سے آپ کے ماہانہ خرچ کی زیادہ مکمل تصویر سامنے آتی ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:203
 msgid "Be patient with yourself"
 msgstr "اپنے ساتھ صبر سے کام لیں"
 
 #: app/blueprints/marketing/tool_articles.py:204
-msgid "The aim is to understand your spending, not to feel bad about it. Small changes made over a few months are often easier to keep than big changes made all at once."
-msgstr "مقصد اپنے خرچ کو سمجھنا ہے، خود کو برا محسوس کرانا نہیں۔ چند مہینوں میں کی گئی چھوٹی تبدیلیاں اکثر ایک دم کی گئی بڑی تبدیلیوں سے زیادہ دیر تک قائم رہتی ہیں۔"
+msgid ""
+"The aim is to understand your spending, not to feel bad about it. Small "
+"changes made over a few months are often easier to keep than big changes "
+"made all at once."
+msgstr ""
+"مقصد اپنے خرچ کو سمجھنا ہے، خود کو برا محسوس کرانا نہیں۔ چند مہینوں میں "
+"کی گئی چھوٹی تبدیلیاں اکثر ایک دم کی گئی بڑی تبدیلیوں سے زیادہ دیر تک "
+"قائم رہتی ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:205
 msgid "Tips for tracking expenses"
@@ -873,8 +1504,12 @@ msgid "Include small purchases"
 msgstr "چھوٹی خریداریاں بھی لکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:211
-msgid "Tea, snacks and small top-ups are easy to skip, but they are often where money disappears."
-msgstr "چائے، اسنیکس اور چھوٹے بیلنس لکھنا رہ جاتے ہیں، حالانکہ پیسہ اکثر یہیں غائب ہوتا ہے۔"
+msgid ""
+"Tea, snacks and small top-ups are easy to skip, but they are often where "
+"money disappears."
+msgstr ""
+"چائے، اسنیکس اور چھوٹے بیلنس لکھنا رہ جاتے ہیں، حالانکہ پیسہ اکثر یہیں "
+"غائب ہوتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:212
 msgid "Check your total once a week"
@@ -882,35 +1517,59 @@ msgstr "ہفتے میں ایک بار کُل دیکھیں"
 
 #: app/blueprints/marketing/tool_articles.py:213
 msgid "A quick weekly look helps you stay on track before the month ends."
-msgstr "ہفتے میں ایک بار سرسری نظر ڈالنے سے مہینہ ختم ہونے سے پہلے آپ اپنے منصوبے پر قائم رہتے ہیں۔"
+msgstr ""
+"ہفتے میں ایک بار سرسری نظر ڈالنے سے مہینہ ختم ہونے سے پہلے آپ اپنے منصوبے"
+" پر قائم رہتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:215
-msgid "Only tracking big purchases. Small daily costs can add up to a large part of your month."
-msgstr "صرف بڑی خریداریوں کا حساب رکھنا۔ روزانہ کے چھوٹے خرچ مل کر مہینے کا بڑا حصہ بن سکتے ہیں۔"
+msgid ""
+"Only tracking big purchases. Small daily costs can add up to a large part"
+" of your month."
+msgstr ""
+"صرف بڑی خریداریوں کا حساب رکھنا۔ روزانہ کے چھوٹے خرچ مل کر مہینے کا بڑا "
+"حصہ بن سکتے ہیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:216
-msgid "Waiting until the end of the month. By then it is hard to remember everything."
+msgid ""
+"Waiting until the end of the month. By then it is hard to remember "
+"everything."
 msgstr "مہینے کے آخر تک انتظار کرنا۔ تب تک سب کچھ یاد رکھنا مشکل ہو جاتا ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:217
-msgid "Giving up after a few days. Tracking works best as a habit, and even an imperfect record is more useful than none."
-msgstr "چند دن بعد چھوڑ دینا۔ حساب رکھنا عادت بن جائے تو سب سے زیادہ کام آتا ہے، اور ادھورا ریکارڈ بھی کسی ریکارڈ کے نہ ہونے سے بہتر ہے۔"
+msgid ""
+"Giving up after a few days. Tracking works best as a habit, and even an "
+"imperfect record is more useful than none."
+msgstr ""
+"چند دن بعد چھوڑ دینا۔ حساب رکھنا عادت بن جائے تو سب سے زیادہ کام آتا ہے، "
+"اور ادھورا ریکارڈ بھی کسی ریکارڈ کے نہ ہونے سے بہتر ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:218
-msgid "Mixing personal and business spending. If you run a business, mention it in the description so you can tell them apart."
-msgstr "ذاتی اور کاروباری خرچ ملا دینا۔ اگر آپ کاروبار کرتے ہیں تو تفصیل میں لکھ دیں تاکہ دونوں میں فرق کر سکیں۔"
+msgid ""
+"Mixing personal and business spending. If you run a business, mention it "
+"in the description so you can tell them apart."
+msgstr ""
+"ذاتی اور کاروباری خرچ ملا دینا۔ اگر آپ کاروبار کرتے ہیں تو تفصیل میں لکھ "
+"دیں تاکہ دونوں میں فرق کر سکیں۔"
 
 #: app/blueprints/marketing/tool_articles.py:219
-msgid "Guessing amounts. Write the exact amount when you can, so your monthly total stays accurate."
-msgstr "رقم کا اندازہ لگانا۔ جہاں ممکن ہو اصل رقم لکھیں تاکہ آپ کا ماہانہ کُل درست رہے۔"
+msgid ""
+"Guessing amounts. Write the exact amount when you can, so your monthly "
+"total stays accurate."
+msgstr ""
+"رقم کا اندازہ لگانا۔ جہاں ممکن ہو اصل رقم لکھیں تاکہ آپ کا ماہانہ کُل "
+"درست رہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:220
 msgid "Free, with no bank connection"
 msgstr "مفت، بینک سے جوڑے بغیر"
 
 #: app/blueprints/marketing/tool_articles.py:221
-msgid "Expenses is free to use. Because you add expenses yourself, you decide exactly what is recorded."
-msgstr "اخراجات ٹول استعمال کے لیے مفت ہے۔ چونکہ خرچ آپ خود لکھتے ہیں، اس لیے کیا ریکارڈ ہو یہ آپ ہی طے کرتے ہیں۔"
+msgid ""
+"Expenses is free to use. Because you add expenses yourself, you decide "
+"exactly what is recorded."
+msgstr ""
+"اخراجات ٹول استعمال کے لیے مفت ہے۔ چونکہ خرچ آپ خود لکھتے ہیں، اس لیے کیا"
+" ریکارڈ ہو یہ آپ ہی طے کرتے ہیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:30
 msgid "All"
@@ -933,16 +1592,24 @@ msgid "Free CV Generator – Build a CV and Download a PDF"
 msgstr "مفت سی وی جنریٹر – سی وی بنائیں اور پی ڈی ایف ڈاؤن لوڈ کریں"
 
 #: app/blueprints/marketing/tools_catalog.py:116
-msgid "Fill a simple form, pick a clean template and download your CV as a PDF. Optional AI help for your summary and experience."
-msgstr "ایک سادہ فارم بھریں، صاف ستھرا ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ کریں۔ خلاصے اور تجربے کے لیے اے آئی کی اختیاری مدد۔"
+msgid ""
+"Fill a simple form, pick a clean template and download your CV as a PDF. "
+"Optional AI help for your summary and experience."
+msgstr ""
+"ایک سادہ فارم بھریں، صاف ستھرا ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں "
+"ڈاؤن لوڈ کریں۔ خلاصے اور تجربے کے لیے اے آئی کی اختیاری مدد۔"
 
 #: app/blueprints/marketing/tools_catalog.py:118
 msgid "Fill a form, pick a template, download a polished PDF."
 msgstr "فارم بھریں، ٹیمپلیٹ چنیں اور ایک شاندار پی ڈی ایف ڈاؤن لوڈ کریں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:119
-msgid "Fill in a simple form, choose a template and download your CV as a PDF. AI can help you write your summary and experience."
-msgstr "ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ کریں۔ خلاصہ اور تجربہ لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
+msgid ""
+"Fill in a simple form, choose a template and download your CV as a PDF. "
+"AI can help you write your summary and experience."
+msgstr ""
+"ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ "
+"کریں۔ خلاصہ اور تجربہ لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:123
 msgid "1 · Fill the form"
@@ -1081,47 +1748,69 @@ msgstr "کیا بعد میں تبدیلی ہو سکتی ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:153
 msgid "Yes. Your CVs are saved in your account and you can edit them anytime."
-msgstr "جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں اور آپ کبھی بھی ان میں تبدیلی کر سکتے ہیں۔"
+msgstr ""
+"جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں اور آپ کبھی بھی ان "
+"میں تبدیلی کر سکتے ہیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:154
 msgid "Does AI write the whole CV?"
 msgstr "کیا اے آئی پوری سی وی لکھتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:155
-msgid "No. AI helps with your summary and experience, but you stay in control and can change everything."
-msgstr "نہیں۔ اے آئی خلاصہ اور تجربہ لکھنے میں مدد کرتا ہے، لیکن فیصلہ آپ کا ہے اور آپ سب کچھ بدل سکتے ہیں۔"
+msgid ""
+"No. AI helps with your summary and experience, but you stay in control "
+"and can change everything."
+msgstr ""
+"نہیں۔ اے آئی خلاصہ اور تجربہ لکھنے میں مدد کرتا ہے، لیکن فیصلہ آپ کا ہے "
+"اور آپ سب کچھ بدل سکتے ہیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:156
 msgid "Is the CV Generator free?"
 msgstr "کیا سی وی جنریٹر مفت ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:157
-msgid "Yes. Building and downloading your CV is free. AI writing help has a fair daily limit so it stays free for everyone."
-msgstr "جی ہاں۔ سی وی بنانا اور ڈاؤن لوڈ کرنا مفت ہے۔ اے آئی سے لکھنے کی مدد کی روزانہ ایک مناسب حد ہے تاکہ یہ سب کے لیے مفت رہے۔"
+msgid ""
+"Yes. Building and downloading your CV is free. AI writing help has a fair"
+" daily limit so it stays free for everyone."
+msgstr ""
+"جی ہاں۔ سی وی بنانا اور ڈاؤن لوڈ کرنا مفت ہے۔ اے آئی سے لکھنے کی مدد کی "
+"روزانہ ایک مناسب حد ہے تاکہ یہ سب کے لیے مفت رہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:158
 msgid "Can I download my CV without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر سی وی ڈاؤن لوڈ ہو سکتی ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:159
-msgid "Yes. You can build your CV and download the PDF without logging in. To save your CV and edit it later, create a free account."
-msgstr "جی ہاں۔ لاگ ان کیے بغیر آپ سی وی بنا کر پی ڈی ایف ڈاؤن لوڈ کر سکتے ہیں۔ سی وی محفوظ کرنے اور بعد میں بدلنے کے لیے مفت اکاؤنٹ بنائیں۔"
+msgid ""
+"Yes. You can build your CV and download the PDF without logging in. To "
+"save your CV and edit it later, create a free account."
+msgstr ""
+"جی ہاں۔ لاگ ان کیے بغیر آپ سی وی بنا کر پی ڈی ایف ڈاؤن لوڈ کر سکتے ہیں۔ "
+"سی وی محفوظ کرنے اور بعد میں بدلنے کے لیے مفت اکاؤنٹ بنائیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:160
 msgid "What format is the download?"
 msgstr "ڈاؤن لوڈ کس فارمیٹ میں ہوتی ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:161
-msgid "PDF. It keeps your layout the same on any device and is a common format for job applications."
-msgstr "پی ڈی ایف میں۔ یہ ہر ڈیوائس پر آپ کی ترتیب ایک جیسی رکھتی ہے اور نوکری کی درخواستوں کے لیے عام فارمیٹ ہے۔"
+msgid ""
+"PDF. It keeps your layout the same on any device and is a common format "
+"for job applications."
+msgstr ""
+"پی ڈی ایف میں۔ یہ ہر ڈیوائس پر آپ کی ترتیب ایک جیسی رکھتی ہے اور نوکری کی"
+" درخواستوں کے لیے عام فارمیٹ ہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:162
 msgid "Can I make more than one CV?"
 msgstr "کیا ایک سے زیادہ سی ویز بن سکتی ہیں؟"
 
 #: app/blueprints/marketing/tools_catalog.py:163
-msgid "Yes. Your CVs are saved in your account, so you can keep different versions, for example for different kinds of jobs."
-msgstr "جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں، اس لیے آپ مختلف ورژن رکھ سکتے ہیں، مثلاً مختلف قسم کی نوکریوں کے لیے۔"
+msgid ""
+"Yes. Your CVs are saved in your account, so you can keep different "
+"versions, for example for different kinds of jobs."
+msgstr ""
+"جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں، اس لیے آپ مختلف "
+"ورژن رکھ سکتے ہیں، مثلاً مختلف قسم کی نوکریوں کے لیے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:164
 msgid "Can I check my CV after building it?"
@@ -1136,16 +1825,24 @@ msgid "Free AI CV Checker – Get a Score and Clear Tips"
 msgstr "مفت اے آئی سی وی چیکر – اسکور اور واضح مشورے حاصل کریں"
 
 #: app/blueprints/marketing/tools_catalog.py:175
-msgid "Upload your CV as a PDF and get a score with clear, practical tips from AI. Free to use and private to you."
-msgstr "اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں اور اے آئی سے اسکور اور واضح، عملی مشورے حاصل کریں۔ استعمال مفت اور صرف آپ کے لیے۔"
+msgid ""
+"Upload your CV as a PDF and get a score with clear, practical tips from "
+"AI. Free to use and private to you."
+msgstr ""
+"اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں اور اے آئی سے اسکور اور واضح، عملی "
+"مشورے حاصل کریں۔ استعمال مفت اور صرف آپ کے لیے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:177
 msgid "Upload your CV and get a score with clear tips from AI."
 msgstr "اپنی سی وی اپ لوڈ کریں اور اے آئی سے اسکور اور واضح مشورے حاصل کریں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:178
-msgid "Upload your CV as a PDF. AI reads it and gives you a score and clear suggestions to make it stronger."
-msgstr "اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں۔ اے آئی اسے پڑھ کر آپ کو اسکور اور واضح مشورے دیتا ہے تاکہ آپ کی سی وی مزید مضبوط بنے۔"
+msgid ""
+"Upload your CV as a PDF. AI reads it and gives you a score and clear "
+"suggestions to make it stronger."
+msgstr ""
+"اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں۔ اے آئی اسے پڑھ کر آپ کو اسکور اور "
+"واضح مشورے دیتا ہے تاکہ آپ کی سی وی مزید مضبوط بنے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:182
 #: app/templates/marketing/sections/demo.html:3
@@ -1294,72 +1991,112 @@ msgid "Who can see my CV?"
 msgstr "میری سی وی کون دیکھ سکتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:214
-msgid "Only you. If you are logged in, your CV is saved privately in your account. As a guest, your file is only checked and not saved."
-msgstr "صرف آپ۔ اگر آپ لاگ ان ہیں تو آپ کی سی وی آپ کے اکاؤنٹ میں نجی طور پر محفوظ ہوتی ہے۔ مہمان کے طور پر آپ کی فائل صرف چیک ہوتی ہے، محفوظ نہیں کی جاتی۔"
+msgid ""
+"Only you. If you are logged in, your CV is saved privately in your "
+"account. As a guest, your file is only checked and not saved."
+msgstr ""
+"صرف آپ۔ اگر آپ لاگ ان ہیں تو آپ کی سی وی آپ کے اکاؤنٹ میں نجی طور پر "
+"محفوظ ہوتی ہے۔ مہمان کے طور پر آپ کی فائل صرف چیک ہوتی ہے، محفوظ نہیں کی "
+"جاتی۔"
 
 #: app/blueprints/marketing/tools_catalog.py:215
 msgid "Is the CV Checker free?"
 msgstr "کیا سی وی چیکر مفت ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:216
-msgid "Yes. It is free to use. There is a fair daily limit on checks so the tool stays free for everyone."
-msgstr "جی ہاں، یہ استعمال کے لیے مفت ہے۔ روزانہ چیکس کی ایک مناسب حد ہے تاکہ یہ ٹول سب کے لیے مفت رہے۔"
+msgid ""
+"Yes. It is free to use. There is a fair daily limit on checks so the tool"
+" stays free for everyone."
+msgstr ""
+"جی ہاں، یہ استعمال کے لیے مفت ہے۔ روزانہ چیکس کی ایک مناسب حد ہے تاکہ یہ "
+"ٹول سب کے لیے مفت رہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:217
 msgid "Can I check my CV without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر سی وی چیک ہو سکتی ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:218
-msgid "Yes. You can try one check without logging in. Your file is checked and not saved. Create a free account for more checks."
-msgstr "جی ہاں۔ لاگ ان کیے بغیر آپ ایک بار چیک کر سکتے ہیں۔ آپ کی فائل صرف چیک ہوتی ہے، محفوظ نہیں کی جاتی۔ مزید چیکس کے لیے مفت اکاؤنٹ بنائیں۔"
+msgid ""
+"Yes. You can try one check without logging in. Your file is checked and "
+"not saved. Create a free account for more checks."
+msgstr ""
+"جی ہاں۔ لاگ ان کیے بغیر آپ ایک بار چیک کر سکتے ہیں۔ آپ کی فائل صرف چیک "
+"ہوتی ہے، محفوظ نہیں کی جاتی۔ مزید چیکس کے لیے مفت اکاؤنٹ بنائیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:219
 msgid "What does the score mean?"
 msgstr "اسکور کا کیا مطلب ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:220
-msgid "It is a quick summary of how clear and complete your CV looks. It is a guide, not a decision from an employer. Use the tips to see what to improve."
-msgstr "یہ ایک فوری خلاصہ ہے کہ آپ کی سی وی کتنی واضح اور مکمل لگتی ہے۔ یہ رہنمائی ہے، کسی آجر کا فیصلہ نہیں۔ مشوروں سے دیکھیں کہ کیا بہتر کرنا ہے۔"
+msgid ""
+"It is a quick summary of how clear and complete your CV looks. It is a "
+"guide, not a decision from an employer. Use the tips to see what to "
+"improve."
+msgstr ""
+"یہ ایک فوری خلاصہ ہے کہ آپ کی سی وی کتنی واضح اور مکمل لگتی ہے۔ یہ "
+"رہنمائی ہے، کسی آجر کا فیصلہ نہیں۔ مشوروں سے دیکھیں کہ کیا بہتر کرنا ہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:221
 msgid "How long does a check take?"
 msgstr "چیک میں کتنا وقت لگتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:222
-msgid "The AI needs a moment to read your CV. A progress bar shows while it works."
-msgstr "اے آئی کو آپ کی سی وی پڑھنے کے لیے تھوڑا وقت چاہیے۔ اس دوران ایک پراگریس بار نظر آتی ہے۔"
+msgid ""
+"The AI needs a moment to read your CV. A progress bar shows while it "
+"works."
+msgstr ""
+"اے آئی کو آپ کی سی وی پڑھنے کے لیے تھوڑا وقت چاہیے۔ اس دوران ایک پراگریس "
+"بار نظر آتی ہے۔"
 
 #: app/blueprints/marketing/tools_catalog.py:223
 msgid "Will it rewrite my CV?"
 msgstr "کیا یہ میری سی وی دوبارہ لکھے گا؟"
 
 #: app/blueprints/marketing/tools_catalog.py:224
-msgid "No. It gives you a score and tips, and you decide what to change. To build a new CV, use the CV Generator."
-msgstr "نہیں۔ یہ اسکور اور مشورے دیتا ہے، بدلنا کیا ہے یہ آپ طے کرتے ہیں۔ نئی سی وی بنانے کے لیے سی وی جنریٹر استعمال کریں۔"
+msgid ""
+"No. It gives you a score and tips, and you decide what to change. To "
+"build a new CV, use the CV Generator."
+msgstr ""
+"نہیں۔ یہ اسکور اور مشورے دیتا ہے، بدلنا کیا ہے یہ آپ طے کرتے ہیں۔ نئی سی "
+"وی بنانے کے لیے سی وی جنریٹر استعمال کریں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:225
 msgid "Is the AI always right?"
 msgstr "کیا اے آئی ہمیشہ درست ہوتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:226
-msgid "AI gives helpful suggestions, but it can make mistakes. Use your own judgment too."
-msgstr "اے آئی مفید مشورے دیتا ہے لیکن غلطی بھی کر سکتا ہے۔ اپنی سمجھ بوجھ بھی استعمال کریں۔"
+msgid ""
+"AI gives helpful suggestions, but it can make mistakes. Use your own "
+"judgment too."
+msgstr ""
+"اے آئی مفید مشورے دیتا ہے لیکن غلطی بھی کر سکتا ہے۔ اپنی سمجھ بوجھ بھی "
+"استعمال کریں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:235
 msgid "Free Caption Generator for Instagram and LinkedIn"
 msgstr "انسٹاگرام اور لنکڈ اِن کے لیے مفت کیپشن جنریٹر"
 
 #: app/blueprints/marketing/tools_catalog.py:236
-msgid "Type a topic and get ready-to-post captions for Instagram and LinkedIn. Copy in one tap and edit before you post."
-msgstr "موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل کریں۔ ایک ٹیپ میں کاپی کریں اور پوسٹ سے پہلے بدلیں۔"
+msgid ""
+"Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
+"Copy in one tap and edit before you post."
+msgstr ""
+"موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن "
+"حاصل کریں۔ ایک ٹیپ میں کاپی کریں اور پوسٹ سے پہلے بدلیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:238
 msgid "Turn a topic into ready-to-post Instagram and LinkedIn captions."
-msgstr "کسی بھی موضوع کو انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشنز میں بدلیں۔"
+msgstr ""
+"کسی بھی موضوع کو انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشنز "
+"میں بدلیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:239
-msgid "Type a topic and get ready-to-post captions for Instagram and LinkedIn. Pick the one you like, copy it and post."
-msgstr "موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل کریں۔ جو پسند آئے، کاپی کریں اور پوسٹ کر دیں۔"
+msgid ""
+"Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
+"Pick the one you like, copy it and post."
+msgstr ""
+"موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن "
+"حاصل کریں۔ جو پسند آئے، کاپی کریں اور پوسٹ کر دیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:242
 msgid "1 · Type a topic"
@@ -1514,16 +2251,24 @@ msgid "Can I try it without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر آزما سکتے ہیں؟"
 
 #: app/blueprints/marketing/tools_catalog.py:275
-msgid "Yes. You can try it up to 3 times without logging in. Create a free account to keep using it."
-msgstr "جی ہاں۔ لاگ ان کیے بغیر آپ اسے ۳ بار تک آزما سکتے ہیں۔ استعمال جاری رکھنے کے لیے مفت اکاؤنٹ بنائیں۔"
+msgid ""
+"Yes. You can try it up to 3 times without logging in. Create a free "
+"account to keep using it."
+msgstr ""
+"جی ہاں۔ لاگ ان کیے بغیر آپ اسے ۳ بار تک آزما سکتے ہیں۔ استعمال جاری رکھنے"
+" کے لیے مفت اکاؤنٹ بنائیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:276
 msgid "How many captions do I get?"
 msgstr "مجھے کتنے کیپشن ملتے ہیں؟"
 
 #: app/blueprints/marketing/tools_catalog.py:277
-msgid "You get more than one caption for each topic, so you can pick the one you like best."
-msgstr "ہر موضوع کے لیے آپ کو ایک سے زیادہ کیپشن ملتے ہیں تاکہ آپ اپنا پسندیدہ چن سکیں۔"
+msgid ""
+"You get more than one caption for each topic, so you can pick the one you"
+" like best."
+msgstr ""
+"ہر موضوع کے لیے آپ کو ایک سے زیادہ کیپشن ملتے ہیں تاکہ آپ اپنا پسندیدہ چن"
+" سکیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:278
 msgid "Can I change a caption?"
@@ -1538,32 +2283,49 @@ msgid "Can I use the captions for my business?"
 msgstr "کیا یہ کیپشن کاروبار کے لیے استعمال ہو سکتے ہیں؟"
 
 #: app/blueprints/marketing/tools_catalog.py:281
-msgid "Yes. You can use them for personal or business posts. Read and edit each caption before you post it."
-msgstr "جی ہاں۔ آپ انہیں ذاتی یا کاروباری پوسٹس کے لیے استعمال کر سکتے ہیں۔ پوسٹ کرنے سے پہلے ہر کیپشن پڑھیں اور ضرورت ہو تو بدلیں۔"
+msgid ""
+"Yes. You can use them for personal or business posts. Read and edit each "
+"caption before you post it."
+msgstr ""
+"جی ہاں۔ آپ انہیں ذاتی یا کاروباری پوسٹس کے لیے استعمال کر سکتے ہیں۔ پوسٹ "
+"کرنے سے پہلے ہر کیپشن پڑھیں اور ضرورت ہو تو بدلیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:282
 msgid "Does it post for me?"
 msgstr "کیا یہ خود پوسٹ کرتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:283
-msgid "No. You copy the caption and paste it into Instagram or LinkedIn yourself. Toolverse does not connect to your social media accounts."
-msgstr "نہیں۔ آپ کیپشن کاپی کر کے خود انسٹاگرام یا لنکڈ اِن پر لگاتے ہیں۔ ٹول ورس آپ کے سوشل میڈیا اکاؤنٹس سے نہیں جڑتا۔"
+msgid ""
+"No. You copy the caption and paste it into Instagram or LinkedIn "
+"yourself. Toolverse does not connect to your social media accounts."
+msgstr ""
+"نہیں۔ آپ کیپشن کاپی کر کے خود انسٹاگرام یا لنکڈ اِن پر لگاتے ہیں۔ ٹول ورس"
+" آپ کے سوشل میڈیا اکاؤنٹس سے نہیں جڑتا۔"
 
 #: app/blueprints/marketing/tools_catalog.py:292
 msgid "Free Online Notes – Write, Edit and Search"
 msgstr "مفت آن لائن نوٹس – لکھیں، بدلیں اور تلاش کریں"
 
 #: app/blueprints/marketing/tools_catalog.py:293
-msgid "Write notes, edit them anytime and find any note with search. Saved in your account and on every device."
-msgstr "نوٹس لکھیں، جب چاہیں بدلیں اور سرچ سے کوئی بھی نوٹ ڈھونڈیں۔ آپ کے اکاؤنٹ میں محفوظ اور ہر ڈیوائس پر۔"
+msgid ""
+"Write notes, edit them anytime and find any note with search. Saved in "
+"your account and on every device."
+msgstr ""
+"نوٹس لکھیں، جب چاہیں بدلیں اور سرچ سے کوئی بھی نوٹ ڈھونڈیں۔ آپ کے اکاؤنٹ "
+"میں محفوظ اور ہر ڈیوائس پر۔"
 
 #: app/blueprints/marketing/tools_catalog.py:295
 msgid "Write, edit and search your notes from any device."
 msgstr "کسی بھی ڈیوائس سے اپنے نوٹس لکھیں، بدلیں اور تلاش کریں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:296
-msgid "Write notes, edit them anytime and find any note fast with search. Your notes are saved in your account, so they are on every device you use."
-msgstr "نوٹس لکھیں، جب چاہیں ان میں تبدیلی کریں اور سرچ سے کوئی بھی نوٹ جلدی ڈھونڈیں۔ آپ کے نوٹس آپ کے اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے ہر ڈیوائس پر موجود ہوتے ہیں۔"
+msgid ""
+"Write notes, edit them anytime and find any note fast with search. Your "
+"notes are saved in your account, so they are on every device you use."
+msgstr ""
+"نوٹس لکھیں، جب چاہیں ان میں تبدیلی کریں اور سرچ سے کوئی بھی نوٹ جلدی "
+"ڈھونڈیں۔ آپ کے نوٹس آپ کے اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے ہر ڈیوائس پر "
+"موجود ہوتے ہیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:299
 msgid "1 · Write"
@@ -1708,8 +2470,13 @@ msgid "Can I use Notes without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر نوٹس استعمال ہو سکتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:334
-msgid "Yes. Notes you write as a guest are kept in this browser only. Create a free account to move them to your account and open them on other devices."
-msgstr "جی ہاں۔ مہمان کے طور پر لکھے گئے نوٹس صرف اسی براؤزر میں رہتے ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر کھولنے کے لیے مفت اکاؤنٹ بنائیں۔"
+msgid ""
+"Yes. Notes you write as a guest are kept in this browser only. Create a "
+"free account to move them to your account and open them on other devices."
+msgstr ""
+"جی ہاں۔ مہمان کے طور پر لکھے گئے نوٹس صرف اسی براؤزر میں رہتے ہیں۔ انہیں "
+"اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر کھولنے کے لیے مفت اکاؤنٹ "
+"بنائیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:335
 msgid "Can I search inside my notes?"
@@ -1724,24 +2491,36 @@ msgid "Can I get back a deleted note?"
 msgstr "کیا ڈیلیٹ کیا ہوا نوٹ واپس مل سکتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:338
-msgid "No. When you delete a note it is removed, so only delete notes you no longer need."
-msgstr "نہیں۔ ڈیلیٹ کرنے پر نوٹ ختم ہو جاتا ہے، اس لیے صرف وہی نوٹس ڈیلیٹ کریں جن کی ضرورت نہ ہو۔"
+msgid ""
+"No. When you delete a note it is removed, so only delete notes you no "
+"longer need."
+msgstr ""
+"نہیں۔ ڈیلیٹ کرنے پر نوٹ ختم ہو جاتا ہے، اس لیے صرف وہی نوٹس ڈیلیٹ کریں جن"
+" کی ضرورت نہ ہو۔"
 
 #: app/blueprints/marketing/tools_catalog.py:347
 msgid "Free Expense Tracker – Daily List and Monthly Total"
 msgstr "مفت خرچ ٹریکر – روزانہ فہرست اور ماہانہ کُل"
 
 #: app/blueprints/marketing/tools_catalog.py:348
-msgid "Log what you spend each day and see your monthly total. Simple, private and with no bank connection."
-msgstr "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔ سادہ، نجی اور بینک سے جوڑے بغیر۔"
+msgid ""
+"Log what you spend each day and see your monthly total. Simple, private "
+"and with no bank connection."
+msgstr ""
+"روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔ سادہ، نجی اور بینک سے "
+"جوڑے بغیر۔"
 
 #: app/blueprints/marketing/tools_catalog.py:350
 msgid "Log daily spending and see your monthly total."
 msgstr "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:351
-msgid "Add what you spend each day and see your total for the month. Simple tracking, saved in your account."
-msgstr "روزانہ کا خرچ لکھیں اور مہینے کا کُل دیکھیں۔ سادہ حساب، آپ کے اکاؤنٹ میں محفوظ۔"
+msgid ""
+"Add what you spend each day and see your total for the month. Simple "
+"tracking, saved in your account."
+msgstr ""
+"روزانہ کا خرچ لکھیں اور مہینے کا کُل دیکھیں۔ سادہ حساب، آپ کے اکاؤنٹ میں "
+"محفوظ۔"
 
 #: app/blueprints/marketing/tools_catalog.py:354
 msgid "1 · Add an expense"
@@ -1884,8 +2663,13 @@ msgid "Can I use it without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر استعمال ہو سکتا ہے؟"
 
 #: app/blueprints/marketing/tools_catalog.py:389
-msgid "Yes. Expenses you add as a guest are kept in this browser only. Create a free account to move them to your account and see them on other devices."
-msgstr "جی ہاں۔ مہمان کے طور پر لکھے گئے اخراجات صرف اسی براؤزر میں رہتے ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر دیکھنے کے لیے مفت اکاؤنٹ بنائیں۔"
+msgid ""
+"Yes. Expenses you add as a guest are kept in this browser only. Create a "
+"free account to move them to your account and see them on other devices."
+msgstr ""
+"جی ہاں۔ مہمان کے طور پر لکھے گئے اخراجات صرف اسی براؤزر میں رہتے ہیں۔ "
+"انہیں اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر دیکھنے کے لیے مفت "
+"اکاؤنٹ بنائیں۔"
 
 #: app/blueprints/marketing/tools_catalog.py:390
 msgid "Can I edit or delete an expense?"
@@ -1904,26 +2688,297 @@ msgid "It adds up all the expenses you entered for that month."
 msgstr "یہ اُس مہینے میں لکھے گئے تمام اخراجات کو جمع کرتا ہے۔"
 
 #: app/templates/base.html:7
-msgid "Free tools for work and life: CV checker, CV generator, captions, notes and expenses. One account, everything saved."
-msgstr "کام اور زندگی کے لیے مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور اخراجات۔ ایک اکاؤنٹ، سب کچھ محفوظ۔"
+msgid ""
+"Free tools for work and life: CV checker, CV generator, captions, notes "
+"and expenses. One account, everything saved."
+msgstr ""
+"کام اور زندگی کے لیے مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور"
+" اخراجات۔ ایک اکاؤنٹ، سب کچھ محفوظ۔"
 
-#: app/templates/base.html:32
+#: app/templates/base.html:41
 msgid "Skip to content"
 msgstr "مواد پر جائیں"
+
+#: app/templates/auth/_form.html:60 app/templates/auth/_form.html:61
+msgid "Show password"
+msgstr "پاس ورڈ دکھائیں"
+
+#: app/templates/auth/_form.html:60
+msgid "Hide password"
+msgstr "پاس ورڈ چھپائیں"
+
+#: app/templates/auth/_form.html:87
+msgid "Continue with Google"
+msgstr "گوگل کے ساتھ جاری رکھیں"
+
+#: app/templates/auth/_form.html:92
+msgid "or"
+msgstr "یا"
+
+#: app/templates/auth/check_email.html:5
+msgid "Check your email"
+msgstr "اپنا ای میل دیکھیں"
+
+#: app/templates/auth/check_email.html:8 app/templates/auth/email_link.html:13
+msgid "Almost there"
+msgstr "بس تھوڑا سا باقی"
+
+#: app/templates/auth/check_email.html:8
+msgid "Check your email."
+msgstr "اپنا ای میل دیکھیں۔"
+
+#: app/templates/auth/check_email.html:17
+#, python-format
+msgid ""
+"If an account exists for %(email)s, we sent it a link to choose a new "
+"password."
+msgstr ""
+"اگر %(email)s کا اکاؤنٹ موجود ہے تو ہم نے اس پر نیا پاس ورڈ چننے کا لنک "
+"بھیج دیا ہے۔"
+
+#: app/templates/auth/check_email.html:19
+#, python-format
+msgid ""
+"We sent a link to %(email)s. Open it to confirm your email and start "
+"using Toolverse."
+msgstr ""
+"ہم نے %(email)s پر ایک لنک بھیجا ہے۔ اسے کھول کر اپنا ای میل کنفرم کریں "
+"اور ٹول ورس استعمال کرنا شروع کریں۔"
+
+#: app/templates/auth/check_email.html:23
+msgid "Can't find it? Look in your spam or promotions folder."
+msgstr "نہیں مل رہا؟ اپنا اسپیم یا پروموشنز فولڈر دیکھیں۔"
+
+#: app/templates/auth/check_email.html:24
+msgid "The link works on any device, so you can open it on your phone."
+msgstr "یہ لنک کسی بھی ڈیوائس پر چلتا ہے، آپ اسے اپنے فون پر بھی کھول سکتے ہیں۔"
+
+#: app/templates/auth/check_email.html:31
+msgid "Try another email"
+msgstr "کوئی اور ای میل آزمائیں"
+
+#: app/templates/auth/check_email.html:33
+msgid "Wrong email?"
+msgstr "ای میل غلط ہے؟"
+
+#: app/templates/auth/check_email.html:34
+msgid "Sign up again"
+msgstr "دوبارہ سائن اپ کریں"
+
+#: app/templates/auth/check_email.html:37
+msgid "Back to log in"
+msgstr "لاگ ان پر واپس"
+
+#: app/templates/auth/email_link.html:4
+msgid "Reset your password"
+msgstr "اپنا پاس ورڈ ری سیٹ کریں"
+
+#: app/templates/auth/email_link.html:4
+msgid "Confirm your email"
+msgstr "اپنا ای میل کنفرم کریں"
+
+#: app/templates/auth/email_link.html:8
+msgid "Email link"
+msgstr "ای میل لنک"
+
+#: app/templates/auth/email_link.html:8
+msgid "This link doesn't work."
+msgstr "یہ لنک کام نہیں کر رہا۔"
+
+#: app/templates/auth/email_link.html:10
+#: app/templates/auth/forgot_password.html:4
+#: app/templates/auth/forgot_password.html:7
+msgid "Forgot password"
+msgstr "پاس ورڈ بھول گئے"
+
+#: app/templates/auth/email_link.html:10
+#: app/templates/auth/forgot_password.html:7
+msgid "Reset your password."
+msgstr "اپنا پاس ورڈ ری سیٹ کریں۔"
+
+#: app/templates/auth/email_link.html:11
+msgid "Press the button to continue and choose a new password."
+msgstr "بٹن دبا کر آگے بڑھیں اور نیا پاس ورڈ چنیں۔"
+
+#: app/templates/auth/email_link.html:13
+msgid "Confirm your email."
+msgstr "اپنا ای میل کنفرم کریں۔"
+
+#: app/templates/auth/email_link.html:14
+msgid "Press the button to confirm your email and open your dashboard."
+msgstr "بٹن دبا کر اپنا ای میل کنفرم کریں اور اپنا ڈیش بورڈ کھولیں۔"
+
+#: app/templates/auth/email_link.html:22
+msgid "Get a new link"
+msgstr "نیا لنک منگوائیں"
+
+#: app/templates/auth/email_link.html:22
+msgid "Go to log in"
+msgstr "لاگ ان پر جائیں"
+
+#: app/templates/auth/email_link.html:28
+msgid "Continue"
+msgstr "جاری رکھیں"
+
+#: app/templates/auth/email_link.html:28
+msgid "Confirm my email"
+msgstr "میرا ای میل کنفرم کریں"
+
+#: app/templates/auth/forgot_password.html:8
+msgid "Enter your email and we'll send you a link to choose a new password."
+msgstr "اپنا ای میل لکھیں، ہم آپ کو نیا پاس ورڈ چننے کا لنک بھیج دیں گے۔"
+
+#: app/templates/auth/forgot_password.html:16
+msgid "Send reset link"
+msgstr "ری سیٹ لنک بھیجیں"
+
+#: app/templates/auth/forgot_password.html:21
+msgid "Remembered it?"
+msgstr "یاد آ گیا؟"
+
+#: app/templates/auth/forgot_password.html:22 app/templates/auth/login.html:4
+#: app/templates/auth/login.html:10 app/templates/auth/login.html:23
+#: app/templates/auth/signup.html:34 app/templates/partials/navbar.html:35
+#: app/templates/partials/navbar.html:60
+msgid "Log in"
+msgstr "لاگ ان"
+
+#: app/templates/auth/login.html:5
+msgid "Log in to Toolverse with email or Google and find all your work saved."
+msgstr "ای میل یا گوگل سے ٹول ورس میں لاگ ان کریں اور اپنا سارا کام محفوظ پائیں۔"
+
+#: app/templates/auth/login.html:9
+msgid "back"
+msgstr "دوبارہ"
+
+#: app/templates/auth/login.html:10
+#, python-format
+msgid "Welcome %(highlight)s."
+msgstr "%(highlight)s خوش آمدید۔"
+
+#: app/templates/auth/login.html:11
+msgid "Log in to find all your work saved."
+msgstr "لاگ ان کریں اور اپنا سارا کام محفوظ پائیں۔"
+
+#: app/templates/auth/login.html:21
+msgid "Forgot password?"
+msgstr "پاس ورڈ بھول گئے؟"
+
+#: app/templates/auth/login.html:28
+msgid "New to Toolverse?"
+msgstr "ٹول ورس پر نئے ہیں؟"
+
+#: app/templates/auth/reset_password.html:4
+msgid "Choose a new password"
+msgstr "نیا پاس ورڈ چنیں"
+
+#: app/templates/auth/reset_password.html:7
+msgid "Choose a new password."
+msgstr "نیا پاس ورڈ چنیں۔"
+
+#: app/templates/auth/reset_password.html:8
+msgid "Pick something you have not used before."
+msgstr "ایسا پاس ورڈ چنیں جو آپ نے پہلے استعمال نہ کیا ہو۔"
+
+#: app/templates/auth/reset_password.html:16 app/templates/auth/signup.html:22
+#, python-format
+msgid "At least %(count)s characters."
+msgstr "کم از کم %(count)s حروف۔"
+
+#: app/templates/auth/reset_password.html:18
+msgid "Save new password"
+msgstr "نیا پاس ورڈ محفوظ کریں"
+
+#: app/templates/auth/reset_password.html:23
+msgid "Back to dashboard"
+msgstr "ڈیش بورڈ پر واپس"
+
+#: app/templates/auth/signup.html:4 app/templates/auth/signup.html:10
+msgid "Sign up"
+msgstr "سائن اپ"
+
+#: app/templates/auth/signup.html:5
+msgid ""
+"Create your free Toolverse account with email or Google. All five tools, "
+"no credit card."
+msgstr ""
+"ای میل یا گوگل سے اپنا مفت ٹول ورس اکاؤنٹ بنائیں۔ پانچوں ٹولز، کوئی کریڈٹ"
+" کارڈ نہیں۔"
+
+#: app/templates/auth/signup.html:9
+msgid "free"
+msgstr "مفت"
+
+#: app/templates/auth/signup.html:10
+#, python-format
+msgid "Create your %(highlight)s account."
+msgstr "اپنا %(highlight)s اکاؤنٹ بنائیں۔"
+
+#: app/templates/auth/signup.html:11
+msgid "One account for all five tools. Your work is saved and private to you."
+msgstr ""
+"پانچوں ٹولز کے لیے ایک اکاؤنٹ۔ آپ کا کام محفوظ رہتا ہے اور صرف آپ دیکھ "
+"سکتے ہیں۔"
+
+#: app/templates/auth/signup.html:23
+msgid "Create account"
+msgstr "اکاؤنٹ بنائیں"
+
+#: app/templates/auth/signup.html:27
+msgid "Privacy Policy"
+msgstr "پرائیویسی پالیسی"
+
+#: app/templates/auth/signup.html:28
+#, python-format
+msgid "By signing up you agree to our %(terms)s and %(privacy)s."
+msgstr "سائن اپ کر کے آپ ہماری %(terms)s اور %(privacy)s سے متفق ہوتے ہیں۔"
+
+#: app/templates/auth/signup.html:33
+msgid "Already have an account?"
+msgstr "پہلے سے اکاؤنٹ ہے؟"
+
+#: app/templates/dashboard/home.html:5 app/templates/dashboard/home.html:9
+#: app/templates/partials/navbar.html:33 app/templates/partials/navbar.html:58
+#: app/templates/partials/sidebar.html:21
+#: app/templates/partials/sidebar.html:25
+msgid "Dashboard"
+msgstr "ڈیش بورڈ"
+
+#: app/templates/dashboard/home.html:10
+#, python-format
+msgid "Welcome, %(name)s."
+msgstr "خوش آمدید، %(name)s۔"
+
+#: app/templates/dashboard/home.html:12
+msgid ""
+"Your account is ready. The five tools are being built and will appear "
+"here one by one."
+msgstr ""
+"آپ کا اکاؤنٹ تیار ہے۔ پانچوں ٹولز بن رہے ہیں اور ایک ایک کر کے یہاں آتے "
+"جائیں گے۔"
+
+#: app/templates/dashboard/home.html:16
+msgid "Your tools"
+msgstr "آپ کے ٹولز"
+
+#: app/templates/dashboard/home.html:28
+#: app/templates/marketing/tools/_macros.html:115
+msgid "Learn more"
+msgstr "مزید جانیں"
 
 #: app/templates/errors/404.html:3
 msgid "Page not found"
 msgstr "صفحہ نہیں ملا"
 
-#: app/templates/errors/404.html:10
+#: app/templates/errors/404.html:11
 msgid "Page not found."
 msgstr "صفحہ نہیں ملا۔"
 
-#: app/templates/errors/404.html:11
+#: app/templates/errors/404.html:12
 msgid "This page does not exist or was moved."
 msgstr "یہ صفحہ موجود نہیں یا کہیں اور منتقل ہو گیا ہے۔"
 
-#: app/templates/errors/404.html:12 app/templates/errors/500.html:12
+#: app/templates/errors/404.html:13 app/templates/errors/500.html:13
 #: app/templates/marketing/coming_soon.html:19
 msgid "Back to home"
 msgstr "ہوم پیج پر واپس"
@@ -1932,16 +2987,17 @@ msgstr "ہوم پیج پر واپس"
 msgid "Something went wrong"
 msgstr "کچھ غلط ہو گیا"
 
-#: app/templates/errors/500.html:10
+#: app/templates/errors/500.html:11
 msgid "Something went wrong."
 msgstr "کچھ غلط ہو گیا۔"
 
-#: app/templates/errors/500.html:11
+#: app/templates/errors/500.html:12
 msgid "It is not you, it is us. Please try again in a moment."
 msgstr "غلطی آپ کی نہیں، ہماری ہے۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
 #: app/templates/marketing/coming_soon.html:14
 #: app/templates/marketing/tools/_macros.html:8
+#: app/templates/partials/sidebar.html:82
 msgid "Coming soon"
 msgstr "جلد آ رہا ہے"
 
@@ -1974,7 +3030,7 @@ msgstr "عمل میں دیکھیں"
 #: app/templates/marketing/sections/demo.html:8
 #: app/templates/marketing/tools/_macros.html:41
 #: app/templates/marketing/tools/detail.html:35
-#: app/templates/partials/navbar.html:7
+#: app/templates/partials/navbar.html:9
 msgid "How it works"
 msgstr "یہ کیسے کام کرتا ہے"
 
@@ -2018,8 +3074,12 @@ msgid "Your free toolkit for %(highlight)s and life."
 msgstr "%(highlight)s اور زندگی کے لیے آپ کا مفت ٹول کٹ۔"
 
 #: app/templates/marketing/sections/hero.html:17
-msgid "Build and check your CV, write captions, keep notes and track expenses. One account. Everything saved."
-msgstr "اپنی سی وی بنائیں اور چیک کریں، کیپشن لکھیں، نوٹس رکھیں اور اخراجات کا حساب رکھیں۔ ایک اکاؤنٹ۔ سب کچھ محفوظ۔"
+msgid ""
+"Build and check your CV, write captions, keep notes and track expenses. "
+"One account. Everything saved."
+msgstr ""
+"اپنی سی وی بنائیں اور چیک کریں، کیپشن لکھیں، نوٹس رکھیں اور اخراجات کا "
+"حساب رکھیں۔ ایک اکاؤنٹ۔ سب کچھ محفوظ۔"
 
 #: app/templates/marketing/sections/hero.html:21
 msgid "Get started for free"
@@ -2035,7 +3095,7 @@ msgstr "ٹول ورس · ڈیش بورڈ"
 
 #: app/templates/marketing/sections/preview.html:16
 #: app/templates/marketing/tools/index.html:14
-#: app/templates/partials/navbar.html:6
+#: app/templates/partials/navbar.html:8 app/templates/partials/sidebar.html:28
 msgid "Tools"
 msgstr "ٹولز"
 
@@ -2074,7 +3134,9 @@ msgstr "جانیں آپ کی سی وی میں بالکل کیا کمی ہے۔"
 
 #: app/templates/marketing/sections/tools.html:15
 msgid "Upload your CV. Get a score and clear, practical tips from AI in seconds."
-msgstr "اپنی سی وی اپ لوڈ کریں۔ چند سیکنڈز میں اے آئی سے اسکور اور واضح، عملی مشورے حاصل کریں۔"
+msgstr ""
+"اپنی سی وی اپ لوڈ کریں۔ چند سیکنڈز میں اے آئی سے اسکور اور واضح، عملی "
+"مشورے حاصل کریں۔"
 
 #: app/templates/marketing/sections/tools.html:16
 msgid "Check my CV"
@@ -2093,8 +3155,12 @@ msgid "A polished CV, without the design work."
 msgstr "ڈیزائن کی محنت کے بغیر، ایک شاندار سی وی۔"
 
 #: app/templates/marketing/sections/tools.html:41
-msgid "Fill a simple form, pick a template, download a PDF. AI can help you write the hard parts."
-msgstr "ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں، پی ڈی ایف ڈاؤن لوڈ کریں۔ مشکل حصے لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
+msgid ""
+"Fill a simple form, pick a template, download a PDF. AI can help you "
+"write the hard parts."
+msgstr ""
+"ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں، پی ڈی ایف ڈاؤن لوڈ کریں۔ مشکل حصے "
+"لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
 
 #: app/templates/marketing/sections/tools.html:42
 msgid "Build my CV"
@@ -2118,7 +3184,9 @@ msgstr "اب خالی کیپشن کو گھورنے کی ضرورت نہیں۔"
 
 #: app/templates/marketing/sections/tools.html:66
 msgid "Type a topic. Get ready-to-post captions for Instagram and LinkedIn."
-msgstr "موضوع لکھیں۔ انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل کریں۔"
+msgstr ""
+"موضوع لکھیں۔ انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل "
+"کریں۔"
 
 #: app/templates/marketing/sections/tools.html:67
 msgid "Write captions"
@@ -2166,10 +3234,6 @@ msgstr "اخراجات کھولیں"
 msgid "Live"
 msgstr "لائیو"
 
-#: app/templates/marketing/tools/_macros.html:115
-msgid "Learn more"
-msgstr "مزید جانیں"
-
 #: app/templates/marketing/tools/detail.html:26
 msgid "Try it free"
 msgstr "مفت آزمائیں"
@@ -2196,8 +3260,12 @@ msgid "Free Online Tools for Your CV, Captions, Notes and Expenses"
 msgstr "سی وی، کیپشنز، نوٹس اور اخراجات کے لیے مفت آن لائن ٹولز"
 
 #: app/templates/marketing/tools/index.html:5
-msgid "Five free tools in one account: CV Checker, CV Generator, Captions, Notes and Expenses. Pick a tool to see how it works."
-msgstr "ایک اکاؤنٹ میں پانچ مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور اخراجات۔ کوئی ٹول چنیں اور دیکھیں یہ کیسے کام کرتا ہے۔"
+msgid ""
+"Five free tools in one account: CV Checker, CV Generator, Captions, Notes"
+" and Expenses. Pick a tool to see how it works."
+msgstr ""
+"ایک اکاؤنٹ میں پانچ مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور "
+"اخراجات۔ کوئی ٹول چنیں اور دیکھیں یہ کیسے کام کرتا ہے۔"
 
 #: app/templates/marketing/tools/index.html:8
 msgid "one place"
@@ -2210,7 +3278,9 @@ msgstr "آپ کی ضرورت کا ہر ٹول، %(highlight)s۔"
 
 #: app/templates/marketing/tools/index.html:19
 msgid "Five free tools, one account. Pick one to see how it works."
-msgstr "پانچ مفت ٹولز، ایک اکاؤنٹ۔ کوئی بھی ٹول چنیں اور دیکھیں کہ یہ کیسے کام کرتا ہے۔"
+msgstr ""
+"پانچ مفت ٹولز، ایک اکاؤنٹ۔ کوئی بھی ٹول چنیں اور دیکھیں کہ یہ کیسے کام "
+"کرتا ہے۔"
 
 #: app/templates/marketing/tools/index.html:26
 msgid "Filter tools by category"
@@ -2225,31 +3295,57 @@ msgid "Build it. Check it. Improve it."
 msgstr "بنائیں۔ چیک کریں۔ بہتر کریں۔"
 
 #: app/templates/marketing/tools/index.html:41
-msgid "Create your CV with the generator, then check it with AI and fix what is missing."
-msgstr "جنریٹر سے اپنی سی وی بنائیں، پھر اے آئی سے چیک کریں اور جو کمی ہو اسے پورا کریں۔"
+msgid ""
+"Create your CV with the generator, then check it with AI and fix what is "
+"missing."
+msgstr ""
+"جنریٹر سے اپنی سی وی بنائیں، پھر اے آئی سے چیک کریں اور جو کمی ہو اسے "
+"پورا کریں۔"
 
 #: app/templates/marketing/tools/index.html:59
 msgid "No tools in this category yet."
 msgstr "اس کیٹیگری میں ابھی کوئی ٹول نہیں۔"
+
+#: app/templates/partials/flash_messages.html:12
+msgid "Close"
+msgstr "بند کریں"
 
 #: app/templates/partials/footer.html:9
 #, python-format
 msgid "© %(year)s Toolverse"
 msgstr "© %(year)s ٹول ورس"
 
-#: app/templates/partials/navbar.html:8
-msgid "FAQ"
-msgstr "سوالات"
-
-#: app/templates/partials/navbar.html:12
+#: app/templates/partials/language_switch.html:3
 msgid "Language"
 msgstr "زبان"
 
-#: app/templates/partials/navbar.html:24
+#: app/templates/partials/logout_form.html:6
+#: app/templates/partials/logout_form.html:8
+msgid "Log out"
+msgstr "لاگ آؤٹ"
+
+#: app/templates/partials/navbar.html:10
+msgid "FAQ"
+msgstr "سوالات"
+
+#: app/templates/partials/navbar.html:15
 msgid "Main"
 msgstr "مرکزی"
 
-#: app/templates/partials/navbar.html:46
+#: app/templates/partials/navbar.html:42
 msgid "Open menu"
 msgstr "مینو کھولیں"
+
+#: app/templates/partials/sidebar.html:15
+#: app/templates/partials/sidebar.html:74
+msgid "Dashboard menu"
+msgstr "ڈیش بورڈ مینو"
+
+#: app/templates/partials/sidebar.html:35
+msgid "Soon"
+msgstr "جلد"
+
+#: app/templates/partials/sidebar.html:78
+msgid "Home"
+msgstr "ہوم"
 

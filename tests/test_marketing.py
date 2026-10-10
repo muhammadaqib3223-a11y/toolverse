@@ -26,11 +26,28 @@ def test_unknown_language_prefix_is_404(client):
     assert client.get("/fr/tools").status_code == 404
 
 
-@pytest.mark.parametrize("page", ["login", "signup", "privacy", "terms", "contact"])
+@pytest.mark.parametrize("page", ["privacy", "terms", "contact"])
 def test_coming_soon_pages(client, page):
     response = client.get(f"/coming-soon/{page}")
     assert response.status_code == 200
     assert "Coming soon" in response.get_data(as_text=True)
+
+
+@pytest.mark.parametrize("old,new", [
+    ("/coming-soon/login", "/login"),
+    ("/coming-soon/signup", "/signup"),
+    ("/ur/coming-soon/signup", "/ur/signup"),
+])
+def test_old_login_and_signup_links_redirect_to_the_real_pages(client, old, new):
+    response = client.get(old)
+    assert response.status_code == 301
+    assert response.headers["Location"] == new
+
+
+def test_sign_up_buttons_go_to_the_signup_page(client):
+    html = client.get("/").get_data(as_text=True)
+    assert 'href="/signup"' in html
+    assert "/coming-soon/signup" not in html
 
 
 def test_unknown_coming_soon_page_is_404(client):

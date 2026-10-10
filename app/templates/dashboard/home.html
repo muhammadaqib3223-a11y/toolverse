@@ -1,0 +1,35 @@
+{% extends "dashboard/app_layout.html" %}
+{% from "partials/icons.html" import icon %}
+{% from "marketing/tools/_macros.html" import status_badge, tool_icon with context %}
+
+{% block title %}{{ _('Dashboard') }} — Toolverse{% endblock %}
+
+{% block app_content %}
+  {% set name_html %}<span class="text-accent">{{ user.display_name }}</span>{% endset %}
+  <p class="label-mono">{{ _('Dashboard') }}</p>
+  <h1 class="heading mt-4 break-words text-[40px] sm:text-6xl">{{ _('Welcome, %(name)s.', name=name_html) }}</h1>
+  <p class="mt-5 max-w-[34rem] text-pretty text-[15px] text-muted">
+    {{ _('Your account is ready. The five tools are being built and will appear here one by one.') }}
+  </p>
+
+  <section class="mt-10 sm:mt-12" aria-labelledby="your-tools">
+    <h2 id="your-tools" class="label-mono">{{ _('Your tools') }}</h2>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {% for tool in tools %}
+        <li class="surface lift flex flex-col p-5">
+          <div class="flex items-center justify-between gap-3">
+            {{ tool_icon(tool) }}
+            {{ status_badge(tool) }}
+          </div>
+          <h3 class="mt-5 text-[17px] font-semibold tracking-tight">{{ tool.name }}</h3>
+          <p class="mt-1.5 flex-1 text-[14px] text-muted">{{ tool.summary }}</p>
+          <a href="{{ url_for('marketing.tool_detail', slug=tool.slug) }}"
+             class="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg/90 transition-colors hover:text-accent">
+            {{ _('Learn more') }}
+            {{ icon("arrow-right", "h-3.5 w-3.5 rtl:-scale-x-100") }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

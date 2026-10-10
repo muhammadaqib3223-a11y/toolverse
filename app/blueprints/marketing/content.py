@@ -66,16 +66,6 @@ FAQS = (
 )
 
 COMING_SOON_PAGES = {
-    "login": ComingSoonPage(
-        _l("Log in"),
-        _l("Accounts are almost ready. Soon you can log in with email or Google "
-           "and find all your work saved."),
-    ),
-    "signup": ComingSoonPage(
-        _l("Sign up"),
-        _l("Free accounts are almost ready. Soon you can sign up with email or Google "
-           "in under a minute."),
-    ),
     "privacy": ComingSoonPage(
         _l("Privacy"),
         _l("We are writing a clear, simple privacy policy. It will be here soon."),

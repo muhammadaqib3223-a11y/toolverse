@@ -1,7 +1,7 @@
 # Phase 2 — Auth + Dashboard (plan)
 
-> Status: **plan only, not approved yet.** No code has been written for Phase 2.
-> Open questions are at the end — answer them before starting.
+> Status: **approved and built (code done, tests pass).** Abhi baaqi: section A–C ke Supabase/Google
+> dashboard steps aap ko khud karne hain, phir apne email se asal login test karna hai.
 
 Goal (CLAUDE.md section 5): Supabase Auth with email/password signup, login, logout,
 password reset and Google login. A protected dashboard after login, with the 5 tools
@@ -58,6 +58,16 @@ app/templates/partials/sidebar.html, flash_messages.html
 tests/test_auth.py, test_dashboard.py  # fake auth service instead of Supabase, no network
 ```
 
+Banate waqt yeh chhoti files bhi bani, taake har file ka ek hi kaam rahe:
+
+- `auth/errors.py`: hamare apne error types (jaise `AuthUnavailable`, `SessionEnded`).
+- `auth/messages.py`: har error code ka English + Urdu message.
+- `auth/tokens.py`: login token ko apne server par check karna (PyJWT + Supabase ki public keys).
+- `auth/redirects.py`: `next=` ko safe banana (open redirect se bachao).
+- `tests/fakes.py` aur `tests/test_auth_services.py`: nakli Supabase ke saath tests.
+- `docs/supabase-email-templates.md`: email templates jo Supabase mein paste karne hain.
+- **Email link par button:** `/auth/confirm` kholne se token use nahi hota. User "Confirm my email" dabata hai tab hota hai. Kuch email programs (jaise Outlook) links khud khol lete hain, aur token pehle hi khatam ho jata.
+
 - **Messages:** saare messages English + Urdu mein translate honge.
 - **Error codes:** Supabase ke codes achhe messages mein badle jayenge, jaise `invalid_credentials`, `email_not_confirmed`, `weak_password`, `over_email_send_rate_limit`. Poori detail sirf log mein jayegi.
 - **Database:** is phase mein koi table nahi banega, Supabase ka `auth.users` kaafi hai. Tables (notes waghera) aur RLS Phase 3 se aayenge.
@@ -110,7 +120,8 @@ Install ke baad check karna hai ke `supabase` ka version token ko apne server pa
    - **Confirm signup:** `{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=email`
    - **Reset password:** `{{ .RedirectTo }}?token_hash={{ .TokenHash }}&type=recovery`
 
-   Poora template HTML code ke saath diya jayega, aap ko sirf paste karna hoga.
+   Poore templates (English + Urdu) [supabase-email-templates.md](supabase-email-templates.md) mein hain. Wahan se copy karke paste karein.
+6. **Project Settings → JWT Keys:** agar wahan "Legacy JWT secret" chal raha ho to **JWT Signing Keys** par switch kar lein (naye projects mein yeh pehle se hota hai). Is se har page par login ki jaanch hamare server par hi ho jati hai, Supabase ko call nahi karni padti.
 
 ## B. Google Cloud (Google login)
 
@@ -141,13 +152,8 @@ Google ka Client ID aur Secret **sirf Supabase** mein jayenge. Hamari `.env` ya 
 
 ---
 
-## Open questions (shuru karne se pehle jawab chahiye)
+## Faisle (answered 2026-10-10)
 
-1. **Emails ke liye SMTP:** Supabase ka free built-in email ab sirf project ke team members ke emails par bhejta hai, aur woh bhi bohot kam (ghante mein 2–3). Asal users ko confirm aur reset ke emails ke liye free SMTP chahiye. Options:
-   - **(a)** Abhi development mein sirf apne email se test karein, SMTP baad mein lagayein.
-   - **(b)** Brevo ka free plan (300 emails/din). Domain ki zaroorat nahi, sirf sender email verify karna hota hai, lekin emails kabhi kabhi spam mein ja sakte hain.
-   - **(c)** Resend ka free plan. Behtar hai lekin apna domain chahiye, aur domain ke paise lagte hain.
-
-   Mashwara: abhi **(a)**, aur live karne se pehle **(b)**.
-2. **Vercel URL:** kya project Vercel par deploy ho chuka hai? Us ka URL kya hai? Yeh Supabase ki Site URL aur Redirect URLs ke liye chahiye.
-3. **Libraries:** `supabase`, `Flask-WTF` aur `email-validator` ki ijazat hai?
+1. **Emails:** abhi option **(a)**: sirf apne email se test. Live karne se pehle **Brevo** ka SMTP lagana hai (CLAUDE.md mein note hai).
+2. **Vercel URL:** abhi asal URL nahi mila (sirf `https://YAHAN-APNA-LINK.vercel.app` likha tha). Supabase ki Site URL aur Redirect URLs ke liye asal URL chahiye.
+3. **Libraries:** `supabase`, `Flask-WTF`, `email-validator` aur `PyJWT` ki ijazat mil gayi.

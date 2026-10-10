@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{# Shared layout of the auth pages: one centred card under a heading. #}
+
+{# Utility pages are kept out of search results; login and signup turn this off. #}
+{% block robots %}<meta name="robots" content="noindex">{% endblock %}
+
+{% block content %}
+  <section class="relative overflow-hidden">
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="container-page relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center py-14 sm:py-20">
+      <div class="w-full max-w-[420px] animate-fade-in">
+        <div class="text-center">
+          {% block auth_header %}{% endblock %}
+        </div>
+        <div class="surface mt-8 p-6 sm:p-8">
+          {% block auth_body %}{% endblock %}
+        </div>
+        <div class="mt-6 text-center text-[13px] text-muted">
+          {% block auth_footer %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
+{% endblock %}

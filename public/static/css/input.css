@@ -28,6 +28,9 @@
 
   summary::-webkit-details-marker { display: none; }
 
+  /* The hidden attribute always wins over classes that set display (e.g. a hidden .spinner). */
+  [hidden] { display: none !important; }
+
   /* Urdu (RTL): Nastaliq needs taller lines and must never get letter-spacing,
      otherwise the joined letters break apart. */
   [dir="rtl"] body { line-height: 2.1; }
@@ -246,6 +249,77 @@
   }
 }
 
+/* ---------- Forms, toasts and the dashboard ---------- */
+@layer components {
+  /* Forms (auth pages) */
+  .field-label { @apply block text-[13px] font-medium text-fg/90; }
+  .input {
+    @apply mt-2 block h-11 w-full rounded-xl border border-line-strong bg-card px-4 text-[15px] text-fg placeholder:text-faint;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input:hover { border-color: #303036; }
+  .input:focus { outline: none; border-color: theme("colors.accent"); box-shadow: 0 0 0 3px rgb(155 140 255 / 0.18); }
+  .input.is-invalid { border-color: rgb(255 138 138 / 0.6); }
+  .field-hint { @apply mt-2 text-[12px] text-faint; }
+  .field-error { @apply mt-2 text-[13px] text-danger; }
+  .form-alert { @apply flex items-start gap-2.5 rounded-[14px] border border-danger/25 bg-danger/[0.08] px-4 py-3 text-start text-[13px] text-fg; }
+  [dir="rtl"] .field-label { font-size: 15px; }
+  [dir="rtl"] .field-hint { font-size: 14px; }
+  [dir="rtl"] .field-error, [dir="rtl"] .form-alert { font-size: 15px; }
+
+  .password-toggle {
+    @apply absolute inset-y-0 end-1 my-auto inline-flex h-9 w-9 items-center justify-center rounded-full text-muted;
+    transition: color 0.2s ease;
+  }
+  .password-toggle:hover { @apply text-fg; }
+
+  .divider { @apply flex items-center gap-3 text-[12px] text-faint; }
+  .divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: theme("colors.line"); }
+
+  /* Toasts (flash messages) */
+  .toast-stack {
+    @apply pointer-events-none fixed inset-x-0 top-20 z-[70] flex flex-col items-center gap-2 px-4 md:items-end md:px-6;
+  }
+  .toast {
+    @apply pointer-events-auto flex w-full max-w-[26rem] items-start gap-3 rounded-[14px] border border-line-strong bg-surface py-3 pe-2 ps-4 text-[14px] text-fg;
+    animation: toast-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .toast.is-leaving { animation: toast-out 0.25s ease forwards; }
+  .toast-icon { @apply mt-0.5 shrink-0 text-muted; }
+  .toast-success .toast-icon { @apply text-accent; }
+  .toast-error .toast-icon { @apply text-danger; }
+  .toast-close {
+    @apply -my-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-faint;
+    transition: color 0.2s ease;
+  }
+  .toast-close:hover { @apply text-fg; }
+  [dir="rtl"] .toast { font-size: 16px; }
+
+  /* Dashboard */
+  .app-sidebar { @apply sticky top-0 h-screen w-[248px] shrink-0 flex-col border-e border-line bg-surface px-3 py-5; }
+  .side-link {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2 text-[14px] text-muted;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  a.side-link:hover { @apply bg-card text-fg; }
+  .side-link.is-active { @apply bg-card text-fg; }
+  .side-link.is-active svg { @apply text-accent; }
+  .side-link.is-disabled { @apply cursor-default text-faint; }
+  .soon-badge { @apply shrink-0 rounded-full border border-line px-2 py-px font-mono text-[10px] uppercase text-faint; letter-spacing: 0.08em; }
+  [dir="rtl"] .side-link { font-size: 16px; }
+  [dir="rtl"] .soon-badge { letter-spacing: 0; font-family: theme("fontFamily.sans"); font-size: 12px; }
+
+  .mobile-nav {
+    @apply fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-line bg-bg/90 backdrop-blur-md;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-nav-item { @apply flex min-w-0 flex-col items-center gap-1 px-1 py-2.5 text-[10px] text-muted; }
+  .mobile-nav-item.is-active { @apply text-fg; }
+  .mobile-nav-item.is-active svg { @apply text-accent; }
+  .mobile-nav-item.is-disabled { @apply text-faint opacity-70; }
+  [dir="rtl"] .mobile-nav-item { font-size: 11px; line-height: 1.6; }
+}
+
 /* ---------- Animations ---------- */
 @layer utilities {
   .animate-rise { animation: rise 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both; }
@@ -274,6 +348,8 @@
 @keyframes bar-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes show-fallback { to { opacity: 1; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-8px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes toast-out { to { opacity: 0; transform: translateY(-6px); } }
 
 /* Respect users who ask for less motion: everything shows in its final state. */
 @media (prefers-reduced-motion: reduce) {

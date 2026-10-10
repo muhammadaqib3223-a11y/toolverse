@@ -37,6 +37,8 @@ The project owner is a beginner learning to code. Explain what you did in simple
 | Languages | English + Urdu (Flask-Babel), Urdu must be RTL. Language comes from the URL: English has no prefix (`/tools`), Urdu uses `/ur` (`/ur/tools`). Register page routes with `localized_route` from `app/i18n.py`; every page gets hreflang tags (en, ur, x-default) |
 | Hosting | Vercel (free Hobby plan) |
 
+**Emails (signup confirm, password reset):** abhi development mein Supabase ka built-in email use ho raha hai, jo sirf project team ke emails par aur bohot kam (ghante mein 2–3) bhejta hai. Is liye abhi sirf apne email se test karna hai. **Live karne se pehle Brevo (free plan, 300 emails/din) ka SMTP Supabase mein lagana zaroori hai**, warna asal users ko confirm/reset emails nahi milenge.
+
 **Vercel note:** Vercel serverless hai: server par files save nahi hoti, sab files Supabase Storage mein jayengi. Request body ki limit takreeban 4.5MB hai, is liye CV upload ki limit 4MB rakhni hai.
 
 ## 3. Golden rules for the AI assistant

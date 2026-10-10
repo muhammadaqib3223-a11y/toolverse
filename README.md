@@ -58,6 +58,21 @@ After adding or changing texts:
 
 Commit both `messages.po` **and** the compiled `messages.mo`. Vercel has no build step, so it uses the `.mo` file from git.
 
+## Accounts (Supabase Auth)
+
+Login uses Supabase Auth (email/password and Google). Put the project URL and the **publishable** key in `.env`
+(never the secret / service_role key):
+
+```
+SUPABASE_URL=https://abcd1234.supabase.co
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+```
+
+The Supabase and Google dashboard settings are in [docs/phase2-plan.md](docs/phase2-plan.md) (sections A–C),
+and the email templates to paste are in [docs/supabase-email-templates.md](docs/supabase-email-templates.md).
+Without these keys the website still works, but login shows "Login isn't available right now".
+Tests never call Supabase: they use the fake service in `tests/fakes.py`.
+
 ## Deploy on Vercel (free Hobby plan)
 
 Vercel finds the Flask app in `wsgi.py` and serves everything in `public/` (CSS, JS, images) from its CDN.
@@ -69,6 +84,7 @@ Vercel finds the Flask app in `wsgi.py` and serves everything in `public/` (CSS,
    - `APP_ENV` = `production`
    - `SECRET_KEY` = a long random string (`python -c "import secrets; print(secrets.token_hex(32))"`)
    - `LOG_LEVEL` = `INFO`
+   - `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (see "Accounts" below)
 4. Click **Deploy**. Every later push to `main` deploys automatically.
 
 Good to know: Vercel is serverless, so the app cannot save files on the server (files go to Supabase Storage),

@@ -1,0 +1,38 @@
+{% extends "auth/_layout.html" %}
+{% from "partials/icons.html" import icon %}
+{% from "auth/_form.html" import page_heading with context %}
+
+{% block title %}{{ _('Check your email') }} — Toolverse{% endblock %}
+
+{% block auth_header %}
+  {{ page_heading(_('Almost there'), _('Check your email.')) }}
+{% endblock %}
+
+{% block auth_body %}
+  {% set email_html %}<strong class="font-medium text-fg" dir="ltr">{{ email }}</strong>{% endset %}
+  <div class="flex flex-col items-center text-center">
+    <span class="tool-icon text-accent">{{ icon("mail", "h-5 w-5") }}</span>
+    <p class="mt-5 text-[15px] text-muted">
+      {% if kind == "reset" %}
+        {{ _('If an account exists for %(email)s, we sent it a link to choose a new password.', email=email_html) }}
+      {% else %}
+        {{ _('We sent a link to %(email)s. Open it to confirm your email and start using Toolverse.', email=email_html) }}
+      {% endif %}
+    </p>
+    <ul class="mt-6 w-full space-y-2 text-start text-[13px] text-muted">
+      <li class="inner-card flex items-start gap-3 px-4 py-3">{{ icon("search", "mt-0.5 h-4 w-4 shrink-0 text-faint") }}<span>{{ _("Can't find it? Look in your spam or promotions folder.") }}</span></li>
+      <li class="inner-card flex items-start gap-3 px-4 py-3">{{ icon("devices", "mt-0.5 h-4 w-4 shrink-0 text-faint") }}<span>{{ _('The link works on any device, so you can open it on your phone.') }}</span></li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block auth_footer %}
+  {% if kind == "reset" %}
+    <a href="{{ url_for('auth.forgot_password') }}" class="font-medium text-fg hover:text-accent">{{ _('Try another email') }}</a>
+  {% else %}
+    {{ _('Wrong email?') }}
+    <a href="{{ url_for('auth.signup') }}" class="font-medium text-fg hover:text-accent">{{ _('Sign up again') }}</a>
+  {% endif %}
+  <span class="mx-2 text-faint" aria-hidden="true">·</span>
+  <a href="{{ url_for('auth.login') }}" class="font-medium text-fg hover:text-accent">{{ _('Back to log in') }}</a>
+{% endblock %}

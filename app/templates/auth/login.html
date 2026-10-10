@@ -1,0 +1,30 @@
+{% extends "auth/_layout.html" %}
+{% from "auth/_form.html" import page_heading, form_alert, email_field, password_field, submit_button, google_button, divider with context %}
+
+{% block title %}{{ _('Log in') }} — Toolverse{% endblock %}
+{% block description %}{{ _('Log in to Toolverse with email or Google and find all your work saved.') }}{% endblock %}
+{% block robots %}{% endblock %}
+
+{% block auth_header %}
+  {% set highlight %}<span class="text-accent">{{ _('back') }}</span>{% endset %}
+  {{ page_heading(_('Log in'), _('Welcome %(highlight)s.', highlight=highlight),
+                  _('Log in to find all your work saved.')) }}
+{% endblock %}
+
+{% block auth_body %}
+  {{ form_alert(error) }}
+  <div class="{{ 'mt-5' if error }}">{{ google_button(next_url) }}</div>
+  <div class="my-6">{{ divider() }}</div>
+  <form method="post" class="space-y-5" novalidate data-auth-form>
+    {{ form.hidden_tag() }}
+    {{ email_field(form.email, autofocus=not form.email.data) }}
+    {% set forgot %}<a href="{{ url_for('auth.forgot_password') }}" class="text-[12px] text-muted transition-colors hover:text-fg">{{ _('Forgot password?') }}</a>{% endset %}
+    {{ password_field(form.password, "current-password", label_extra=forgot) }}
+    {{ submit_button(_('Log in')) }}
+  </form>
+{% endblock %}
+
+{% block auth_footer %}
+  {{ _('New to Toolverse?') }}
+  <a href="{{ url_for('auth.signup', next=next_url) }}" class="font-medium text-fg hover:text-accent">{{ _('Sign up free') }}</a>
+{% endblock %}

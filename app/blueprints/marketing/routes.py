@@ -1,5 +1,5 @@
 """HTTP routes for the marketing website. Every page exists in English (/...) and Urdu (/ur/...)."""
-from flask import abort, render_template
+from flask import abort, redirect, render_template, url_for
 
 from app.blueprints.marketing import bp, content, tools_catalog
 from app.i18n import localized_route
@@ -40,6 +40,9 @@ def tool_detail(slug):
 
 @localized_route(bp, "/coming-soon/<page>", methods=["GET"])
 def coming_soon(page):
+    # Login and signup were coming-soon pages in Phase 1; old links now go to the real pages.
+    if page in ("login", "signup"):
+        return redirect(url_for(f"auth.{page}"), code=301)
     info = content.COMING_SOON_PAGES.get(page)
     if info is None:
         abort(404)

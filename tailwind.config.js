@@ -17,6 +17,7 @@ module.exports = {
         muted: "#8F8F98",
         faint: "#6B6B73",
         accent: "#9B8CFF",
+        danger: "#FF8A8A", // only for error messages in forms
         "btn-secondary": "#141416",
       },
       fontFamily: {

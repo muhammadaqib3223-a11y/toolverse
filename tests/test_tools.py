@@ -38,7 +38,7 @@ def test_coming_soon_badge_shown_for_tools_not_live(client):
 def test_tool_detail_page(client, slug):
     response = client.get(f"/tools/{slug}")
     assert response.status_code == 200
-    assert "/coming-soon/signup" in response.get_data(as_text=True)
+    assert 'href="/signup" class="btn-primary"' in response.get_data(as_text=True)
 
 
 @pytest.mark.parametrize("tool", TOOLS, ids=SLUGS)

@@ -13,7 +13,10 @@ def _get(client, path):
     ("/", "/ur"),
     ("/tools", "/ur/tools"),
     ("/tools/cv-checker", "/ur/tools/cv-checker"),
-    ("/coming-soon/login", "/ur/coming-soon/login"),
+    ("/coming-soon/privacy", "/ur/coming-soon/privacy"),
+    ("/login", "/ur/login"),
+    ("/signup", "/ur/signup"),
+    ("/forgot-password", "/ur/forgot-password"),
 ])
 def test_every_page_exists_in_both_languages(client, en, ur):
     en_html, ur_html = _get(client, en), _get(client, ur)
