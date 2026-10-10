@@ -232,3 +232,27 @@ Style reference: the approved "Version 3 — Framer style" landing page (premium
 
 - CVs contain personal data: store them privately, only the owner can access them.
 - Use Supabase Row Level Security on every table.
+
+## 8. Progress & decisions (keep this updated after every step)
+
+**Done (all tested and pushed to `main`):**
+- Phase 1: landing page, `/tools` catalog, tool pages with guides/FAQs, Urdu under `/ur` with hreflang, sitemap/robots, Vercel hosting.
+- Phase 2: Supabase Auth: signup, login, logout, forgot/reset password, Google login, protected `/dashboard` with sidebar (all five tools "Soon"). Plan and setup steps: `docs/phase2-plan.md`; email templates: `docs/supabase-email-templates.md`.
+- Privacy Policy (`/privacy`) and Terms (`/terms`), English + Urdu, text approved by the owner. Text lives in `app/blueprints/marketing/legal.py`.
+
+**Next:** Phase 3, Notes.
+
+**How auth works (follow this in every later phase):**
+- Supabase calls only go through `app/blueprints/auth/services.py` (`get_auth_service()`). Routes never see Supabase errors: they get an `AuthError` with a code, and `auth/messages.py` has the English + Urdu text.
+- A new Supabase client is made per request (`app/services/supabase_client.py`), never shared between users. Only the **publishable** key is used; never put the secret/service_role key in the app.
+- The login cookie holds only the access token, refresh token and expiry. Tokens are checked on our server (PyJWT + Supabase public keys) and refreshed automatically. The current user is `g.user` (`None` for guests).
+- Protect pages with `login_required` (logged-in only) or `login_optional` (guests too — use this for tools, because of guest mode).
+- Every form uses Flask-WTF (CSRF). Logout is POST only. `?next=` links go through `safe_next_url`.
+- Email links use `token_hash` behind a "Confirm" button (`/auth/confirm`), so they work on any device and email scanners can't use them up.
+- Tests never call Supabase: use the `auth_service` / `log_in` fixtures and `tests/fakes.py`.
+
+**Still to do by the owner (outside the code):**
+- Supabase + Google Cloud dashboard setup (`docs/phase2-plan.md`, sections A–C), and put `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY` in `.env` and in Vercel.
+- Send the real Vercel URL (only the placeholder `YAHAN-APNA-LINK` was given) for Supabase's Site URL and Redirect URLs.
+- Test real signup/login/reset/Google login with own email.
+- Before going live: Brevo SMTP (see section 2).
