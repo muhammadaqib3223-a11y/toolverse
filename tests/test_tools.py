@@ -1,4 +1,5 @@
 import pytest
+from flask import url_for
 
 from app.blueprints.marketing import tools_catalog
 from app.blueprints.marketing.tools_catalog import TOOLS, Status
@@ -35,10 +36,16 @@ def test_coming_soon_badge_shown_for_tools_not_live(client):
 
 
 @pytest.mark.parametrize("slug", SLUGS)
-def test_tool_detail_page(client, slug):
+def test_tool_detail_page(client, app, slug):
+    tool = tools_catalog.get_tool(slug)
     response = client.get(f"/tools/{slug}")
+    html = response.get_data(as_text=True)
     assert response.status_code == 200
-    assert 'href="/signup" class="btn-primary"' in response.get_data(as_text=True)
+
+    hero = html.split('id="demo"', 1)[0]  # the bottom CTA also has a "Sign up free" button
+    with app.test_request_context():
+        try_url = url_for(tool.app_endpoint) if tool.is_live else url_for("auth.signup")
+    assert f'href="{try_url}" class="btn-primary"' in hero
 
 
 @pytest.mark.parametrize("tool", TOOLS, ids=SLUGS)

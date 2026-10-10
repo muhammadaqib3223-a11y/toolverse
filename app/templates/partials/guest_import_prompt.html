@@ -1,0 +1,14 @@
+{# Shown after login, on any dashboard page, when this browser still holds guest notes.
+   public/static/js/notes/guest_import.js shows it and moves the notes on "Move to my account". #}
+<div class="surface mb-6 flex flex-wrap items-center justify-between gap-4 p-4" data-guest-import-prompt hidden
+     data-api-import="{{ url_for('notes.api_import') }}"
+     data-text-message="{{ _('You have notes saved only in this browser. Move them to your account?') }}"
+     data-text-moving="{{ _('Moving your notes…') }}"
+     data-text-moved="{{ _('Your notes are now in your account.') }}"
+     data-text-move-failed="{{ _('Could not move your notes. Please try again.') }}">
+  <p class="text-[13px] text-muted" data-guest-import-message></p>
+  <div class="flex shrink-0 items-center gap-2">
+    <button type="button" class="btn-secondary btn-sm" data-action="dismiss">{{ _('Not now') }}</button>
+    <button type="button" class="btn-primary btn-sm" data-action="move">{{ _('Move to my account') }}</button>
+  </div>
+</div>

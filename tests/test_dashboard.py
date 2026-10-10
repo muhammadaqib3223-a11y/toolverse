@@ -1,5 +1,6 @@
 """The dashboard (login required) with the five tools in the sidebar."""
 import pytest
+from flask import url_for
 
 from app.blueprints.marketing.tools_catalog import TOOLS
 
@@ -32,14 +33,21 @@ def test_dashboard_uses_the_email_when_there_is_no_name(client, log_in):
     assert '<span class="text-accent">ali.raza</span>' in _html(client.get("/dashboard"))
 
 
-def test_dashboard_lists_every_tool_as_coming_soon(client, log_in):
+def test_dashboard_lists_tools_live_and_coming_soon(client, log_in, app):
     log_in()
     html = _html(client.get("/dashboard"))
-    for tool in TOOLS:
-        assert f'href="/tools/{tool.slug}"' in html
-    # Sidebar (laptop) + bottom menu (phone) both list all five tools.
-    assert html.count('class="soon-badge"') == len(TOOLS)
-    assert html.count('class="mobile-nav-item is-disabled"') == len(TOOLS)
+    live = [tool for tool in TOOLS if tool.is_live]
+    not_live = [tool for tool in TOOLS if not tool.is_live]
+
+    for tool in not_live:
+        assert f'href="/tools/{tool.slug}"' in html  # "Learn more" card link
+    with app.test_request_context():
+        for tool in live:
+            assert f'href="{url_for(tool.app_endpoint)}"' in html  # "Open" card link + sidebar
+
+    # Sidebar (laptop) + bottom menu (phone) both mark only the tools that aren't live yet.
+    assert html.count('class="soon-badge"') == len(not_live)
+    assert html.count('class="mobile-nav-item is-disabled"') == len(not_live)
 
 
 def test_dashboard_has_a_logout_button_and_no_marketing_footer(client, log_in):

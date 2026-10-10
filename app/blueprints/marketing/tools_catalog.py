@@ -95,6 +95,7 @@ class Tool:
     article: tuple     # long guide after Features, see tool_articles.py
     status: Status = Status.COMING_SOON
     featured: bool = False  # shown inside the big "CV section" card instead of the grid
+    app_endpoint: Optional[str] = None  # url_for() endpoint of the tool itself, once status is LIVE
 
     @property
     def is_live(self):
@@ -338,6 +339,8 @@ TOOLS = (
                 _l('No. When you delete a note it is removed, so only delete notes you no longer need.')),
         ),
         article=ARTICLES['notes'],
+        status=Status.LIVE,
+        app_endpoint="notes.index",
     ),
     Tool(
         slug="expenses",

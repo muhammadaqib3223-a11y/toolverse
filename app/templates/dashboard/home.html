@@ -23,9 +23,9 @@
           </div>
           <h3 class="mt-5 text-[17px] font-semibold tracking-tight">{{ tool.name }}</h3>
           <p class="mt-1.5 flex-1 text-[14px] text-muted">{{ tool.summary }}</p>
-          <a href="{{ url_for('marketing.tool_detail', slug=tool.slug) }}"
+          <a href="{{ url_for(tool.app_endpoint) if tool.is_live else url_for('marketing.tool_detail', slug=tool.slug) }}"
              class="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg/90 transition-colors hover:text-accent">
-            {{ _('Learn more') }}
+            {{ _('Open') if tool.is_live else _('Learn more') }}
             {{ icon("arrow-right", "h-3.5 w-3.5 rtl:-scale-x-100") }}
           </a>
         </li>

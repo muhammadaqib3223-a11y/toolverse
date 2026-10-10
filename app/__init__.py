@@ -29,6 +29,7 @@ def create_app(config_name=None):
     register_i18n(app)
     _register_blueprints(app)
     _init_auth(app)
+    _init_tools(app)
     register_error_handlers(app)
     _register_template_globals(app)
 
@@ -47,11 +48,13 @@ def _register_blueprints(app):
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.marketing import bp as marketing_bp
     from app.blueprints.seo import bp as seo_bp
+    from app.blueprints.tools.notes import bp as notes_bp
 
     app.register_blueprint(marketing_bp)
     app.register_blueprint(seo_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(notes_bp)
 
 
 def _init_auth(app):
@@ -60,9 +63,25 @@ def _init_auth(app):
     init_auth(app)
 
 
+def _init_tools(app):
+    from app.blueprints.tools.notes import init_notes
+
+    init_notes(app)
+
+
 def _register_template_globals(app):
+    from app.blueprints.marketing.tools_catalog import TOOLS
+
     app.add_template_global(faq_schema)
 
     @app.context_processor
     def inject_globals():
         return {"current_year": datetime.now(timezone.utc).year}
+
+    # The tools shown in the dashboard sidebar / bottom menu. App-level (not a blueprint
+    # context processor) because the sidebar is shared by the dashboard AND every tool's own
+    # blueprint (Notes, then the rest), and a blueprint's context processor only runs for that
+    # blueprint's own views.
+    @app.context_processor
+    def inject_nav_tools():
+        return {"nav_tools": TOOLS}

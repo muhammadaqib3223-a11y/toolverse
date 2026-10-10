@@ -239,8 +239,9 @@ Style reference: the approved "Version 3 — Framer style" landing page (premium
 - Phase 1: landing page, `/tools` catalog, tool pages with guides/FAQs, Urdu under `/ur` with hreflang, sitemap/robots, Vercel hosting.
 - Phase 2: Supabase Auth: signup, login, logout, forgot/reset password, Google login, protected `/dashboard` with sidebar (all five tools "Soon"). Plan and setup steps: `docs/phase2-plan.md`; email templates: `docs/supabase-email-templates.md`.
 - Privacy Policy (`/privacy`) and Terms (`/terms`), English + Urdu, text approved by the owner. Text lives in `app/blueprints/marketing/legal.py`.
+- Phase 3: Notes tool, live at `/dashboard/notes` (+ `/ur`). Logged-in users' notes are in Supabase with Row Level Security; guests keep notes in the browser (`localStorage`) and get offered a one-tap move into their account after logging in. Notes catalog entry is now "Live"; its tool page's "Try it free" and the dashboard sidebar/home card open the tool directly. SQL to run once in Supabase: `supabase/migrations/20261010_notes.sql`.
 
-**Next:** Phase 3, Notes.
+**Next:** Phase 4, Expense Tracker.
 
 **How auth works (follow this in every later phase):**
 - Supabase calls only go through `app/blueprints/auth/services.py` (`get_auth_service()`). Routes never see Supabase errors: they get an `AuthError` with a code, and `auth/messages.py` has the English + Urdu text.
@@ -251,8 +252,17 @@ Style reference: the approved "Version 3 — Framer style" landing page (premium
 - Email links use `token_hash` behind a "Confirm" button (`/auth/confirm`), so they work on any device and email scanners can't use them up.
 - Tests never call Supabase: use the `auth_service` / `log_in` fixtures and `tests/fakes.py`.
 
+**How a tool with Supabase data + guest mode works (follow this pattern for Expenses, Captions, CVs):**
+- Layering: `routes.py` (HTTP + the JSON API) → `services.py` (validation/limits, no Supabase) → `repository.py` (the only file that talks to Supabase, turns its errors into the tool's own error type). `app.extensions["<tool>_repository"]` holds the active repository, so tests swap in a fake one (`tests/fakes.py`) and never call Supabase.
+- A logged-in user's own Supabase client (`create_user_client(access_token)` in `app/services/supabase_client.py`) carries their access token, so the database sees them as `auth.uid()` and Row Level Security does the rest. The access token comes from `current_auth_session()` (`app/blueprints/auth/session.py`).
+- The tool's page route uses `login_optional`; its JSON API routes do too, but check `g.user` themselves and return a JSON `login_required` error (not a redirect) for a guest.
+- Guest data lives in the browser only (`localStorage`), behind a small store object with the same methods (`list`/`create`/`update`/`remove`) as the server-backed one, so the page's JS doesn't need to know which one it's using (see `public/static/js/notes/stores.js`). After login, `partials/guest_import_prompt.html` + `public/static/js/notes/guest_import.js` offer to move it into the account via an `/api/<tool>/import` endpoint; a guest row's own id is sent as `client_id` so a database unique constraint makes retrying safe.
+- A tool's own blueprint needs `localized_route` on every page AND every API route (so error messages come back in the right language), and registers a template global for whatever the sidebar needs through the **app-level** `_register_template_globals()` in `app/__init__.py`, not a `@bp.context_processor` (a blueprint's context processor only runs for that blueprint's own views, not for a shared template rendered by a different tool's blueprint).
+
 **Still to do by the owner (outside the code):**
 - Supabase + Google Cloud dashboard setup (`docs/phase2-plan.md`, sections A–C), and put `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY` in `.env` and in Vercel.
 - Send the real Vercel URL (only the placeholder `YAHAN-APNA-LINK` was given) for Supabase's Site URL and Redirect URLs.
 - Test real signup/login/reset/Google login with own email.
+- Run `supabase/migrations/20261010_notes.sql` once in the Supabase SQL Editor (see the chat for the exact steps), then test Notes with a real account.
 - Before going live: Brevo SMTP (see section 2).
+- Pre-existing gap, not from Phase 3: a handful of older strings (some Terms/Privacy lines, a couple of FAQ answers, a few landing-page lines) still have no Urdu translation in `app/translations/ur/LC_MESSAGES/messages.po`. Worth a dedicated pass later.

@@ -1,10 +1,13 @@
-"""A fake auth service with the same methods as SupabaseAuthService. No network, fully predictable."""
+"""Fake services with the same methods as the real ones (auth, notes). No network, fully predictable."""
 import itertools
 import time
+import uuid
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 
 from app.blueprints.auth.errors import AuthError, AuthUnavailable, SessionEnded, TokenExpired
 from app.blueprints.auth.services import EMAIL_LINK_TYPES, AuthSession, AuthUser, GoogleLogin
+from app.blueprints.tools.notes.errors import NotesUnavailable
 
 GOOGLE_URL = "https://test-project.supabase.co/auth/v1/authorize?provider=google"
 GOOGLE_VERIFIER = "test-code-verifier"
@@ -131,3 +134,75 @@ class FakeAuthService:
             raise SessionEnded()
         user = self.users[email]
         return AuthUser(id=user.id, email=user.email, name=user.name)
+
+
+def _now_iso():
+    return datetime.now(timezone.utc).isoformat()
+
+
+@dataclass
+class FakeNotesRepository:
+    """In-memory notes store with the same methods as SupabaseNotesRepository. No network.
+
+    Notes are kept per access_token, the same way the real repository keeps them per user
+    (RLS keys off the token's user) — two different tokens never see each other's notes.
+    """
+    unavailable: bool = False
+    notes: dict = field(default_factory=dict)  # access_token -> {note_id: full note dict}
+
+    def _bucket(self, access_token):
+        return self.notes.setdefault(access_token, {})
+
+    def _check(self):
+        if self.unavailable:
+            raise NotesUnavailable()
+
+    def _public(self, note):
+        return {key: note[key] for key in ("id", "title", "content", "created_at", "updated_at")}
+
+    def list_notes(self, access_token, limit, offset):
+        self._check()
+        rows = sorted(self._bucket(access_token).values(), key=lambda note: note["updated_at"], reverse=True)
+        return [self._public(note) for note in rows[offset:offset + limit]]
+
+    def insert_note(self, access_token, title, content, client_id=None):
+        self._check()
+        bucket = self._bucket(access_token)
+        if client_id:
+            existing = next((note for note in bucket.values() if note.get("client_id") == client_id), None)
+            if existing is not None:
+                return self._public(existing)
+        now = _now_iso()
+        note = {
+            "id": str(uuid.uuid4()),  # looks like a real Supabase id, so the id-format check passes
+            "title": title,
+            "content": content,
+            "client_id": client_id,
+            "created_at": now,
+            "updated_at": now,
+        }
+        bucket[note["id"]] = note
+        return self._public(note)
+
+    def update_note(self, access_token, note_id, title, content):
+        self._check()
+        note = self._bucket(access_token).get(note_id)
+        if note is None:
+            return None
+        note["title"], note["content"], note["updated_at"] = title, content, _now_iso()
+        return self._public(note)
+
+    def delete_note(self, access_token, note_id):
+        self._check()
+        return self._bucket(access_token).pop(note_id, None) is not None
+
+    def import_notes(self, access_token, notes):
+        self._check()
+        imported = []
+        for note in notes:
+            bucket = self._bucket(access_token)
+            already = any(existing.get("client_id") == note.get("client_id") for existing in bucket.values())
+            if already:
+                continue
+            imported.append(self.insert_note(access_token, note["title"], note["content"], note.get("client_id")))
+        return imported

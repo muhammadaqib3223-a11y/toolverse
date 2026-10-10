@@ -11,9 +11,3 @@ from app.i18n import localized_route
 @login_required
 def home():
     return render_template("dashboard/home.html", user=g.user, tools=TOOLS)
-
-
-@bp.context_processor
-def inject_nav_tools():
-    """The tools listed in the sidebar of every dashboard page."""
-    return {"nav_tools": TOOLS}

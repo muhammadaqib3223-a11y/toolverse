@@ -2,7 +2,7 @@ import pytest
 
 from app import create_app
 from app.blueprints.auth.session import SESSION_KEY
-from tests.fakes import FakeAuthService
+from tests.fakes import FakeAuthService, FakeNotesRepository
 
 
 @pytest.fixture
@@ -21,6 +21,14 @@ def auth_service(app):
     service = FakeAuthService()
     app.extensions["auth_service"] = service
     return service
+
+
+@pytest.fixture
+def notes_repository(app):
+    """Replace Supabase with the fake notes repository for this test."""
+    repository = FakeNotesRepository()
+    app.extensions["notes_repository"] = repository
+    return repository
 
 
 @pytest.fixture

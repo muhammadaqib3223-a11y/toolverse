@@ -335,6 +335,37 @@
   .mobile-nav-item.is-active svg { @apply text-accent; }
   .mobile-nav-item.is-disabled { @apply text-faint opacity-70; }
   [dir="rtl"] .mobile-nav-item { font-size: 11px; line-height: 1.6; }
+
+  /* Notes tool: a list pane and an editor pane. Side by side from md up; on a phone only one
+     shows at a time, switched by data-view on .notes-layout (see static/js/notes/notes_app.js). */
+  .notes-layout { @apply grid grid-cols-1 items-start gap-4; }
+  @media (min-width: 768px) {
+    .notes-layout { grid-template-columns: 300px 1fr; }
+  }
+  @media (max-width: 767px) {
+    .notes-layout[data-view="list"] .notes-pane-editor { display: none; }
+    .notes-layout[data-view="editor"] .notes-pane-list { display: none; }
+  }
+
+  .notes-pane-list, .notes-pane-editor { @apply flex min-h-[28rem] flex-col sm:min-h-[32rem]; }
+
+  .notes-list { @apply flex-1 overflow-y-auto; }
+  .notes-item {
+    @apply flex w-full flex-col items-start gap-1 border-b border-line px-4 py-3 text-start;
+    transition: background-color 0.2s ease;
+  }
+  .notes-item:hover { @apply bg-card; }
+  .notes-item.is-active { @apply bg-card; }
+  .notes-item.is-active .notes-item-title { @apply text-accent; }
+  .notes-item-title { @apply w-full truncate text-[14px] font-medium text-fg; }
+  .notes-item-preview { @apply w-full truncate text-[12px] text-muted; }
+  .notes-item-date { @apply text-[11px] text-faint; }
+  [dir="rtl"] .notes-item-title { font-size: 16px; }
+  [dir="rtl"] .notes-item-preview { font-size: 14px; }
+  [dir="rtl"] .notes-item-date { font-size: 13px; }
+
+  .notes-textarea { line-height: 1.75; }
+  [dir="rtl"] .notes-textarea { font-size: 17px; }
 }
 
 /* ---------- Animations ---------- */

@@ -1,6 +1,7 @@
 {# Dashboard navigation. Laptop/tablet: sidebar on the side. Phone: top bar + bottom menu.
    Import with: {% from "partials/sidebar.html" import sidebar, mobile_top_bar, mobile_bottom_nav with context %}
-   Tools show "Soon" until they are built; each tool phase turns its entry into a link. #}
+   Tools show "Soon" until they are built; each tool phase turns its entry into a real link.
+   `user` is None for a guest (tools allow guests; the dashboard home page does not). #}
 {% from "partials/icons.html" import icon %}
 {% from "partials/language_switch.html" import language_switch with context %}
 {% from "partials/logout_form.html" import logout_form %}
@@ -9,6 +10,22 @@
   <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong bg-card text-[13px] font-semibold uppercase text-fg" aria-hidden="true">
     {{- user.display_name[:1] -}}
   </span>
+{%- endmacro %}
+
+{% macro _tool_link(tool, active) -%}
+  {% if tool.is_live %}
+    <a href="{{ url_for(tool.app_endpoint) }}" class="side-link{{ ' is-active' if active == tool.slug }}"
+       {% if active == tool.slug %}aria-current="page"{% endif %}>
+      {{ icon(tool.icon, "h-4 w-4") }}
+      <span class="min-w-0 flex-1 truncate">{{ tool.name }}</span>
+    </a>
+  {% else %}
+    <span class="side-link is-disabled" aria-disabled="true">
+      {{ icon(tool.icon, "h-4 w-4") }}
+      <span class="min-w-0 flex-1 truncate">{{ tool.name }}</span>
+      <span class="soon-badge">{{ _('Soon') }}</span>
+    </span>
+  {% endif %}
 {%- endmacro %}
 
 {% macro sidebar(user, active="home") -%}
@@ -28,29 +45,33 @@
       <p class="label-mono mt-7 px-3">{{ _('Tools') }}</p>
       <ul class="mt-2 space-y-0.5">
         {% for tool in nav_tools %}
-          <li>
-            <span class="side-link is-disabled" aria-disabled="true">
-              {{ icon(tool.icon, "h-4 w-4") }}
-              <span class="min-w-0 flex-1 truncate">{{ tool.name }}</span>
-              <span class="soon-badge">{{ _('Soon') }}</span>
-            </span>
-          </li>
+          <li>{{ _tool_link(tool, active) }}</li>
         {% endfor %}
       </ul>
     </nav>
 
     <div class="border-t border-line pt-4">
-      <div class="flex items-center gap-3 px-2">
-        {{ _avatar(user) }}
-        <div class="min-w-0">
-          <p class="truncate text-[13px] font-medium text-fg">{{ user.display_name }}</p>
-          <p class="truncate text-[12px] text-faint" dir="ltr">{{ user.email }}</p>
+      {% if user %}
+        <div class="flex items-center gap-3 px-2">
+          {{ _avatar(user) }}
+          <div class="min-w-0">
+            <p class="truncate text-[13px] font-medium text-fg">{{ user.display_name }}</p>
+            <p class="truncate text-[12px] text-faint" dir="ltr">{{ user.email }}</p>
+          </div>
         </div>
-      </div>
-      <div class="mt-4 flex items-center justify-between gap-3 px-2 text-[13px]">
-        {{ language_switch() }}
-        {{ logout_form("inline-flex items-center gap-2 text-muted transition-colors hover:text-fg", with_icon=true) }}
-      </div>
+        <div class="mt-4 flex items-center justify-between gap-3 px-2 text-[13px]">
+          {{ language_switch() }}
+          {{ logout_form("inline-flex items-center gap-2 text-muted transition-colors hover:text-fg", with_icon=true) }}
+        </div>
+      {% else %}
+        <div class="flex items-center justify-between gap-3 px-2 text-[13px]">
+          {{ language_switch() }}
+          <a href="{{ url_for('auth.login', next=request.path) }}" class="text-muted transition-colors hover:text-fg">{{ _('Log in') }}</a>
+        </div>
+        <a href="{{ url_for('auth.signup', next=request.path) }}" class="btn-primary btn-sm mt-4 w-full justify-center">
+          {{ _('Sign up free') }}
+        </a>
+      {% endif %}
     </div>
   </aside>
 {%- endmacro %}
@@ -64,7 +85,14 @@
       </a>
       <div class="flex items-center gap-4 text-[13px]">
         {{ language_switch() }}
-        {{ logout_form("-me-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:text-fg", icon_only=true) }}
+        {% if user %}
+          {{ logout_form("-me-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:text-fg", icon_only=true) }}
+        {% else %}
+          <a href="{{ url_for('auth.login', next=request.path) }}"
+             class="-me-2 inline-flex h-10 items-center rounded-full px-3 text-muted transition-colors hover:text-fg">
+            {{ _('Log in') }}
+          </a>
+        {% endif %}
       </div>
     </div>
   </header>
@@ -78,11 +106,19 @@
       <span class="max-w-full truncate">{{ _('Home') }}</span>
     </a>
     {% for tool in nav_tools %}
-      <span class="mobile-nav-item is-disabled" aria-disabled="true"
-            title="{{ tool.name }} · {{ _('Coming soon') }}">
-        {{ icon(tool.icon, "h-5 w-5") }}
-        <span class="max-w-full truncate">{{ tool.name }}</span>
-      </span>
+      {% if tool.is_live %}
+        <a href="{{ url_for(tool.app_endpoint) }}" class="mobile-nav-item{{ ' is-active' if active == tool.slug }}"
+           {% if active == tool.slug %}aria-current="page"{% endif %}>
+          {{ icon(tool.icon, "h-5 w-5") }}
+          <span class="max-w-full truncate">{{ tool.name }}</span>
+        </a>
+      {% else %}
+        <span class="mobile-nav-item is-disabled" aria-disabled="true"
+              title="{{ tool.name }} · {{ _('Coming soon') }}">
+          {{ icon(tool.icon, "h-5 w-5") }}
+          <span class="max-w-full truncate">{{ tool.name }}</span>
+        </span>
+      {% endif %}
     {% endfor %}
   </nav>
 {%- endmacro %}

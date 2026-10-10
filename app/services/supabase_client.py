@@ -45,6 +45,16 @@ def create_supabase_client() -> Client:
     return create_client(supabase_url(), current_app.config["SUPABASE_PUBLISHABLE_KEY"], options)
 
 
+def create_user_client(access_token) -> Client:
+    """A fresh client that acts as one signed-in user: every table query carries their access
+    token, so the database sees them as `auth.uid()` and Row Level Security keeps everyone's
+    rows private automatically. Used for Notes (and later tools) once a user is logged in.
+    """
+    client = create_supabase_client()
+    client.postgrest.auth(access_token)
+    return client
+
+
 def _shared_http_client():
     global _http_client
     if _http_client is None:

@@ -8,8 +8,9 @@
 {% block description %}{{ tool.meta_description }}{% endblock %}
 
 {% block content %}
-  {# Until guest mode exists, "Try it free" goes to the sign-up page. #}
-  {% set try_url = url_for('auth.signup') %}
+  {# A live tool's "Try it free" opens the tool itself (guests can use it there);
+     a tool not built yet goes to sign-up, until its own guest mode exists. #}
+  {% set try_url = url_for(tool.app_endpoint) if tool.is_live else url_for('auth.signup') %}
 
   {# Hero #}
   <section class="relative overflow-hidden">

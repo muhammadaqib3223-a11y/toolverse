@@ -35,9 +35,10 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/aos/aos.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  {% block head_extra %}{% endblock %}
   <script>document.documentElement.classList.replace("no-js", "js");</script>
 </head>
-<body class="min-h-screen bg-bg font-sans text-fg antialiased">
+<body class="min-h-screen bg-bg font-sans text-fg antialiased" data-logged-in="{{ 'true' if current_user else 'false' }}">
   <a href="#main" class="skip-link">{{ _('Skip to content') }}</a>
 
   {% include "partials/flash_messages.html" %}

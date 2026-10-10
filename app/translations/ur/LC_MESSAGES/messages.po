@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-10 15:35+0500\n"
+"POT-Creation-Date: 2026-10-10 18:15+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ur\n"
@@ -121,7 +121,7 @@ msgstr "آپ کا سیشن ختم ہو گیا ہے۔ براہ کرم دوبار�
 msgid "Login isn't available right now. Please try again in a few minutes."
 msgstr "لاگ ان ابھی دستیاب نہیں۔ براہ کرم چند منٹ بعد کوشش کریں۔"
 
-#: app/blueprints/auth/messages.py:17
+#: app/blueprints/auth/messages.py:17 app/blueprints/tools/notes/messages.py:11
 msgid "Something went wrong. Please try again."
 msgstr "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
 
@@ -146,32 +146,36 @@ msgid "You're logged out. See you soon!"
 msgstr "آپ لاگ آؤٹ ہو گئے ہیں۔ جلد ملیں گے!"
 
 #: app/blueprints/marketing/content.py:28
-#: app/blueprints/marketing/tools_catalog.py:171
+#: app/blueprints/marketing/tools_catalog.py:172
 msgid "CV Checker"
 msgstr "سی وی چیکر"
 
 #: app/blueprints/marketing/content.py:29
-#: app/blueprints/marketing/tools_catalog.py:112
+#: app/blueprints/marketing/tools_catalog.py:113
 msgid "CV Generator"
 msgstr "سی وی جنریٹر"
 
 #: app/blueprints/marketing/content.py:30
-#: app/blueprints/marketing/tools_catalog.py:232
+#: app/blueprints/marketing/tools_catalog.py:233
 msgid "Captions"
 msgstr "کیپشنز"
 
 #: app/blueprints/marketing/content.py:31
-#: app/blueprints/marketing/tools_catalog.py:289
+#: app/blueprints/marketing/tools_catalog.py:290
+#: app/templates/tools/notes/index.html:9
+#: app/templates/tools/notes/index.html:33
 msgid "Notes"
 msgstr "نوٹس"
 
 #: app/blueprints/marketing/content.py:32
-#: app/blueprints/marketing/tools_catalog.py:344
+#: app/blueprints/marketing/tools_catalog.py:347
 msgid "Expenses"
 msgstr "اخراجات"
 
 #: app/blueprints/marketing/content.py:36 app/templates/auth/login.html:29
 #: app/templates/partials/navbar.html:36 app/templates/partials/navbar.html:61
+#: app/templates/partials/sidebar.html:72
+#: app/templates/tools/notes/index.html:46
 msgid "Sign up free"
 msgstr "مفت سائن اپ کریں"
 
@@ -1835,9 +1839,9 @@ msgstr ""
 "ہے۔"
 
 #: app/blueprints/marketing/tool_articles.py:145
-#: app/blueprints/marketing/tools_catalog.py:202
-#: app/blueprints/marketing/tools_catalog.py:317
-#: app/blueprints/marketing/tools_catalog.py:372
+#: app/blueprints/marketing/tools_catalog.py:203
+#: app/blueprints/marketing/tools_catalog.py:318
+#: app/blueprints/marketing/tools_catalog.py:375
 msgid "Private to you"
 msgstr "صرف آپ کے لیے"
 
@@ -2302,11 +2306,11 @@ msgstr "تحریر"
 msgid "Productivity"
 msgstr "پروڈکٹیویٹی"
 
-#: app/blueprints/marketing/tools_catalog.py:115
+#: app/blueprints/marketing/tools_catalog.py:116
 msgid "Free CV Generator – Build a CV and Download a PDF"
 msgstr "مفت سی وی جنریٹر – سی وی بنائیں اور پی ڈی ایف ڈاؤن لوڈ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:116
+#: app/blueprints/marketing/tools_catalog.py:117
 msgid ""
 "Fill a simple form, pick a clean template and download your CV as a PDF. "
 "Optional AI help for your summary and experience."
@@ -2314,11 +2318,11 @@ msgstr ""
 "ایک سادہ فارم بھریں، صاف ستھرا ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں "
 "ڈاؤن لوڈ کریں۔ خلاصے اور تجربے کے لیے اے آئی کی اختیاری مدد۔"
 
-#: app/blueprints/marketing/tools_catalog.py:118
+#: app/blueprints/marketing/tools_catalog.py:119
 msgid "Fill a form, pick a template, download a polished PDF."
 msgstr "فارم بھریں، ٹیمپلیٹ چنیں اور ایک شاندار پی ڈی ایف ڈاؤن لوڈ کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:119
+#: app/blueprints/marketing/tools_catalog.py:120
 msgid ""
 "Fill in a simple form, choose a template and download your CV as a PDF. "
 "AI can help you write your summary and experience."
@@ -2326,152 +2330,152 @@ msgstr ""
 "ایک سادہ فارم بھریں، ٹیمپلیٹ چنیں اور اپنی سی وی پی ڈی ایف میں ڈاؤن لوڈ "
 "کریں۔ خلاصہ اور تجربہ لکھنے میں اے آئی آپ کی مدد کر سکتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:123
+#: app/blueprints/marketing/tools_catalog.py:124
 msgid "1 · Fill the form"
 msgstr "۱ · فارم بھریں"
 
-#: app/blueprints/marketing/tools_catalog.py:123
+#: app/blueprints/marketing/tools_catalog.py:124
 msgid "2 · Pick a template"
 msgstr "۲ · ٹیمپلیٹ چنیں"
 
-#: app/blueprints/marketing/tools_catalog.py:123
+#: app/blueprints/marketing/tools_catalog.py:124
 msgid "3 · Download PDF"
 msgstr "۳ · پی ڈی ایف"
 
-#: app/blueprints/marketing/tools_catalog.py:125
+#: app/blueprints/marketing/tools_catalog.py:126
 #: app/templates/marketing/sections/tools.html:45
 msgid "[Your Name]"
 msgstr "[آپ کا نام]"
 
-#: app/blueprints/marketing/tools_catalog.py:126
+#: app/blueprints/marketing/tools_catalog.py:127
 #: app/templates/marketing/sections/tools.html:46
 msgid "[Job title] · [City]"
 msgstr "[عہدہ] · [شہر]"
 
-#: app/blueprints/marketing/tools_catalog.py:127
+#: app/blueprints/marketing/tools_catalog.py:128
 msgid "[Experience]"
 msgstr "[تجربہ]"
 
-#: app/blueprints/marketing/tools_catalog.py:129
+#: app/blueprints/marketing/tools_catalog.py:130
 msgid "Applying your template…"
 msgstr "آپ کا ٹیمپلیٹ لگایا جا رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:130
+#: app/blueprints/marketing/tools_catalog.py:131
 msgid "Adding your details"
 msgstr "آپ کی معلومات شامل ہو رہی ہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:130
+#: app/blueprints/marketing/tools_catalog.py:131
 msgid "Laying out sections"
 msgstr "سیکشنز ترتیب دیے جا رہے ہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:130
+#: app/blueprints/marketing/tools_catalog.py:131
 msgid "Preparing your PDF"
 msgstr "آپ کی پی ڈی ایف تیار ہو رہی ہے"
 
-#: app/blueprints/marketing/tools_catalog.py:132
+#: app/blueprints/marketing/tools_catalog.py:133
 msgid "Ready to download"
 msgstr "ڈاؤن لوڈ کے لیے تیار"
 
-#: app/blueprints/marketing/tools_catalog.py:133
-#: app/blueprints/marketing/tools_catalog.py:305
+#: app/blueprints/marketing/tools_catalog.py:134
+#: app/blueprints/marketing/tools_catalog.py:306
 msgid "Saved to your account"
 msgstr "آپ کے اکاؤنٹ میں محفوظ"
 
-#: app/blueprints/marketing/tools_catalog.py:137
+#: app/blueprints/marketing/tools_catalog.py:138
 msgid "Simple form"
 msgstr "سادہ فارم"
 
-#: app/blueprints/marketing/tools_catalog.py:137
+#: app/blueprints/marketing/tools_catalog.py:138
 msgid "Add your details step by step, no design skills needed."
 msgstr "اپنی معلومات قدم بہ قدم شامل کریں، ڈیزائن کی مہارت کی ضرورت نہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:138
+#: app/blueprints/marketing/tools_catalog.py:139
 msgid "Clean templates"
 msgstr "صاف ستھرے ٹیمپلیٹس"
 
-#: app/blueprints/marketing/tools_catalog.py:138
+#: app/blueprints/marketing/tools_catalog.py:139
 msgid "Pick a clean template for your CV."
 msgstr "اپنی سی وی کے لیے ایک صاف ٹیمپلیٹ چنیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:139
+#: app/blueprints/marketing/tools_catalog.py:140
 msgid "PDF download"
 msgstr "پی ڈی ایف ڈاؤن لوڈ"
 
-#: app/blueprints/marketing/tools_catalog.py:139
+#: app/blueprints/marketing/tools_catalog.py:140
 msgid "Download a ready-to-send PDF."
 msgstr "بھیجنے کے لیے تیار پی ڈی ایف ڈاؤن لوڈ کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:140
+#: app/blueprints/marketing/tools_catalog.py:141
 msgid "AI writing help"
 msgstr "اے آئی سے لکھنے میں مدد"
 
-#: app/blueprints/marketing/tools_catalog.py:140
+#: app/blueprints/marketing/tools_catalog.py:141
 msgid "Get help writing your summary and experience."
 msgstr "اپنا خلاصہ اور تجربہ لکھنے میں مدد لیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:141
+#: app/blueprints/marketing/tools_catalog.py:142
 msgid "Saved and editable"
 msgstr "محفوظ اور قابلِ ترمیم"
 
-#: app/blueprints/marketing/tools_catalog.py:141
+#: app/blueprints/marketing/tools_catalog.py:142
 msgid "Your CVs are saved, so you can edit them anytime."
 msgstr "آپ کی سی ویز محفوظ رہتی ہیں، جب چاہیں ان میں تبدیلی کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:142
+#: app/blueprints/marketing/tools_catalog.py:143
 msgid "Check it next"
 msgstr "اگلا قدم: چیک کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:142
+#: app/blueprints/marketing/tools_catalog.py:143
 msgid "Check your new CV with the CV Checker."
 msgstr "نئی سی وی کو سی وی چیکر سے چیک کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:145
+#: app/blueprints/marketing/tools_catalog.py:146
 msgid "Fill the form"
 msgstr "فارم بھریں"
 
-#: app/blueprints/marketing/tools_catalog.py:145
+#: app/blueprints/marketing/tools_catalog.py:146
 msgid "Add your details, experience and skills."
 msgstr "اپنی معلومات، تجربہ اور مہارتیں شامل کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:146
+#: app/blueprints/marketing/tools_catalog.py:147
 msgid "Choose a template"
 msgstr "ٹیمپلیٹ چنیں"
 
-#: app/blueprints/marketing/tools_catalog.py:146
+#: app/blueprints/marketing/tools_catalog.py:147
 msgid "Pick the design you like."
 msgstr "وہ ڈیزائن چنیں جو آپ کو پسند ہو۔"
 
-#: app/blueprints/marketing/tools_catalog.py:147
+#: app/blueprints/marketing/tools_catalog.py:148
 msgid "Download your PDF"
 msgstr "پی ڈی ایف ڈاؤن لوڈ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:147
+#: app/blueprints/marketing/tools_catalog.py:148
 msgid "Your CV is ready to send."
 msgstr "آپ کی سی وی بھیجنے کے لیے تیار ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:150
+#: app/blueprints/marketing/tools_catalog.py:151
 msgid "Do I need design skills?"
 msgstr "کیا مجھے ڈیزائن آنا چاہیے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:151
+#: app/blueprints/marketing/tools_catalog.py:152
 msgid "No. You fill the form and the template handles the design."
 msgstr "نہیں۔ آپ صرف فارم بھریں، ڈیزائن ٹیمپلیٹ سنبھال لیتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:152
+#: app/blueprints/marketing/tools_catalog.py:153
 msgid "Can I edit my CV later?"
 msgstr "کیا بعد میں تبدیلی ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:153
+#: app/blueprints/marketing/tools_catalog.py:154
 msgid "Yes. Your CVs are saved in your account and you can edit them anytime."
 msgstr ""
 "جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں اور آپ کبھی بھی ان "
 "میں تبدیلی کر سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:154
+#: app/blueprints/marketing/tools_catalog.py:155
 msgid "Does AI write the whole CV?"
 msgstr "کیا اے آئی پوری سی وی لکھتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:155
+#: app/blueprints/marketing/tools_catalog.py:156
 msgid ""
 "No. AI helps with your summary and experience, but you stay in control "
 "and can change everything."
@@ -2479,11 +2483,11 @@ msgstr ""
 "نہیں۔ اے آئی خلاصہ اور تجربہ لکھنے میں مدد کرتا ہے، لیکن فیصلہ آپ کا ہے "
 "اور آپ سب کچھ بدل سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:156
+#: app/blueprints/marketing/tools_catalog.py:157
 msgid "Is the CV Generator free?"
 msgstr "کیا سی وی جنریٹر مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:157
+#: app/blueprints/marketing/tools_catalog.py:158
 msgid ""
 "Yes. Building and downloading your CV is free. AI writing help has a fair"
 " daily limit so it stays free for everyone."
@@ -2491,11 +2495,11 @@ msgstr ""
 "جی ہاں۔ سی وی بنانا اور ڈاؤن لوڈ کرنا مفت ہے۔ اے آئی سے لکھنے کی مدد کی "
 "روزانہ ایک مناسب حد ہے تاکہ یہ سب کے لیے مفت رہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:158
+#: app/blueprints/marketing/tools_catalog.py:159
 msgid "Can I download my CV without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر سی وی ڈاؤن لوڈ ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:159
+#: app/blueprints/marketing/tools_catalog.py:160
 msgid ""
 "Yes. You can build your CV and download the PDF without logging in. To "
 "save your CV and edit it later, create a free account."
@@ -2503,11 +2507,11 @@ msgstr ""
 "جی ہاں۔ لاگ ان کیے بغیر آپ سی وی بنا کر پی ڈی ایف ڈاؤن لوڈ کر سکتے ہیں۔ "
 "سی وی محفوظ کرنے اور بعد میں بدلنے کے لیے مفت اکاؤنٹ بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:160
+#: app/blueprints/marketing/tools_catalog.py:161
 msgid "What format is the download?"
 msgstr "ڈاؤن لوڈ کس فارمیٹ میں ہوتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:161
+#: app/blueprints/marketing/tools_catalog.py:162
 msgid ""
 "PDF. It keeps your layout the same on any device and is a common format "
 "for job applications."
@@ -2515,11 +2519,11 @@ msgstr ""
 "پی ڈی ایف میں۔ یہ ہر ڈیوائس پر آپ کی ترتیب ایک جیسی رکھتی ہے اور نوکری کی"
 " درخواستوں کے لیے عام فارمیٹ ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:162
+#: app/blueprints/marketing/tools_catalog.py:163
 msgid "Can I make more than one CV?"
 msgstr "کیا ایک سے زیادہ سی ویز بن سکتی ہیں؟"
 
-#: app/blueprints/marketing/tools_catalog.py:163
+#: app/blueprints/marketing/tools_catalog.py:164
 msgid ""
 "Yes. Your CVs are saved in your account, so you can keep different "
 "versions, for example for different kinds of jobs."
@@ -2527,19 +2531,19 @@ msgstr ""
 "جی ہاں۔ آپ کی سی ویز آپ کے اکاؤنٹ میں محفوظ رہتی ہیں، اس لیے آپ مختلف "
 "ورژن رکھ سکتے ہیں، مثلاً مختلف قسم کی نوکریوں کے لیے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:164
+#: app/blueprints/marketing/tools_catalog.py:165
 msgid "Can I check my CV after building it?"
 msgstr "کیا بنانے کے بعد سی وی چیک ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:165
+#: app/blueprints/marketing/tools_catalog.py:166
 msgid "Yes. Use the CV Checker to get a score and tips for your new CV."
 msgstr "جی ہاں۔ نئی سی وی کا اسکور اور مشورے لینے کے لیے سی وی چیکر استعمال کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:174
+#: app/blueprints/marketing/tools_catalog.py:175
 msgid "Free AI CV Checker – Get a Score and Clear Tips"
 msgstr "مفت اے آئی سی وی چیکر – اسکور اور واضح مشورے حاصل کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:175
+#: app/blueprints/marketing/tools_catalog.py:176
 msgid ""
 "Upload your CV as a PDF and get a score with clear, practical tips from "
 "AI. Free to use and private to you."
@@ -2547,11 +2551,11 @@ msgstr ""
 "اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں اور اے آئی سے اسکور اور واضح، عملی "
 "مشورے حاصل کریں۔ استعمال مفت اور صرف آپ کے لیے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:177
+#: app/blueprints/marketing/tools_catalog.py:178
 msgid "Upload your CV and get a score with clear tips from AI."
 msgstr "اپنی سی وی اپ لوڈ کریں اور اے آئی سے اسکور اور واضح مشورے حاصل کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:178
+#: app/blueprints/marketing/tools_catalog.py:179
 msgid ""
 "Upload your CV as a PDF. AI reads it and gives you a score and clear "
 "suggestions to make it stronger."
@@ -2559,153 +2563,153 @@ msgstr ""
 "اپنی سی وی پی ڈی ایف میں اپ لوڈ کریں۔ اے آئی اسے پڑھ کر آپ کو اسکور اور "
 "واضح مشورے دیتا ہے تاکہ آپ کی سی وی مزید مضبوط بنے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:182
+#: app/blueprints/marketing/tools_catalog.py:183
 #: app/templates/marketing/sections/demo.html:3
 msgid "1 · Upload"
 msgstr "۱ · اپ لوڈ"
 
-#: app/blueprints/marketing/tools_catalog.py:182
+#: app/blueprints/marketing/tools_catalog.py:183
 #: app/templates/marketing/sections/demo.html:3
 msgid "2 · AI checks"
 msgstr "۲ · اے آئی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:182
+#: app/blueprints/marketing/tools_catalog.py:183
 #: app/templates/marketing/sections/demo.html:3
 msgid "3 · Get results"
 msgstr "۳ · نتائج"
 
-#: app/blueprints/marketing/tools_catalog.py:184
+#: app/blueprints/marketing/tools_catalog.py:185
 #: app/templates/marketing/sections/demo.html:25
 #: app/templates/marketing/sections/tools.html:21
 msgid "Drop your CV here"
 msgstr "اپنی سی وی یہاں ڈالیں"
 
-#: app/blueprints/marketing/tools_catalog.py:184
+#: app/blueprints/marketing/tools_catalog.py:185
 #: app/templates/marketing/sections/demo.html:26
 #: app/templates/marketing/sections/tools.html:22
 msgid "PDF, up to 4 MB"
 msgstr "پی ڈی ایف، زیادہ سے زیادہ ۴ ایم بی"
 
-#: app/blueprints/marketing/tools_catalog.py:188
+#: app/blueprints/marketing/tools_catalog.py:189
 #: app/templates/marketing/sections/demo.html:44
 msgid "AI is reading your CV…"
 msgstr "اے آئی آپ کی سی وی پڑھ رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:189
+#: app/blueprints/marketing/tools_catalog.py:190
 #: app/templates/marketing/sections/demo.html:50
 msgid "Checking structure"
 msgstr "ساخت کی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:189
+#: app/blueprints/marketing/tools_catalog.py:190
 #: app/templates/marketing/sections/demo.html:51
 msgid "Checking skills"
 msgstr "مہارتوں کی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:189
+#: app/blueprints/marketing/tools_catalog.py:190
 #: app/templates/marketing/sections/demo.html:52
 msgid "Checking wording"
 msgstr "الفاظ کی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:190
+#: app/blueprints/marketing/tools_catalog.py:191
 #: app/templates/marketing/sections/demo.html:61
 #: app/templates/marketing/sections/tools.html:27
 msgid "Score"
 msgstr "اسکور"
 
-#: app/blueprints/marketing/tools_catalog.py:192
+#: app/blueprints/marketing/tools_catalog.py:193
 msgid "[Tip 1 from AI]"
 msgstr "[اے آئی کی تجویز ۱]"
 
-#: app/blueprints/marketing/tools_catalog.py:193
+#: app/blueprints/marketing/tools_catalog.py:194
 msgid "[Tip 2 from AI]"
 msgstr "[اے آئی کی تجویز ۲]"
 
-#: app/blueprints/marketing/tools_catalog.py:194
+#: app/blueprints/marketing/tools_catalog.py:195
 msgid "[Tip 3 from AI]"
 msgstr "[اے آئی کی تجویز ۳]"
 
-#: app/blueprints/marketing/tools_catalog.py:198
+#: app/blueprints/marketing/tools_catalog.py:199
 #: app/templates/marketing/sections/preview.html:33
 msgid "Overall score"
 msgstr "مجموعی اسکور"
 
-#: app/blueprints/marketing/tools_catalog.py:198
+#: app/blueprints/marketing/tools_catalog.py:199
 msgid "One clear score shows where your CV stands."
 msgstr "ایک واضح اسکور بتاتا ہے کہ آپ کی سی وی کہاں کھڑی ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:199
+#: app/blueprints/marketing/tools_catalog.py:200
 msgid "Practical tips"
 msgstr "عملی مشورے"
 
-#: app/blueprints/marketing/tools_catalog.py:199
+#: app/blueprints/marketing/tools_catalog.py:200
 msgid "Specific tips you can act on right away."
 msgstr "واضح مشورے جن پر آپ فوراً عمل کر سکیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:200
+#: app/blueprints/marketing/tools_catalog.py:201
 msgid "Structure check"
 msgstr "ساخت کی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:200
+#: app/blueprints/marketing/tools_catalog.py:201
 msgid "Checks that your sections are clear and in order."
 msgstr "دیکھتا ہے کہ آپ کے سیکشنز واضح اور ترتیب سے ہوں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:201
+#: app/blueprints/marketing/tools_catalog.py:202
 msgid "Wording check"
 msgstr "الفاظ کی جانچ"
 
-#: app/blueprints/marketing/tools_catalog.py:201
+#: app/blueprints/marketing/tools_catalog.py:202
 msgid "Points out weak or unclear wording."
 msgstr "کمزور یا غیر واضح الفاظ کی نشاندہی کرتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:202
+#: app/blueprints/marketing/tools_catalog.py:203
 msgid "Your CV is saved in your account and only you can see it."
 msgstr "آپ کی سی وی آپ کے اکاؤنٹ میں محفوظ رہتی ہے اور صرف آپ اسے دیکھ سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:203
+#: app/blueprints/marketing/tools_catalog.py:204
 msgid "Works with the CV Generator"
 msgstr "سی وی جنریٹر کے ساتھ"
 
-#: app/blueprints/marketing/tools_catalog.py:203
+#: app/blueprints/marketing/tools_catalog.py:204
 msgid "Build, check and improve your CV in one place."
 msgstr "ایک ہی جگہ سی وی بنائیں، چیک کریں اور بہتر کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:206
+#: app/blueprints/marketing/tools_catalog.py:207
 msgid "Upload your CV"
 msgstr "اپنی سی وی اپ لوڈ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:206
+#: app/blueprints/marketing/tools_catalog.py:207
 msgid "Choose a PDF file up to 4 MB."
 msgstr "زیادہ سے زیادہ ۴ ایم بی کی پی ڈی ایف فائل چنیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:207
+#: app/blueprints/marketing/tools_catalog.py:208
 msgid "Let AI check it"
 msgstr "اے آئی کو چیک کرنے دیں"
 
-#: app/blueprints/marketing/tools_catalog.py:207
+#: app/blueprints/marketing/tools_catalog.py:208
 msgid "It reads your CV and looks at structure, skills and wording."
 msgstr "یہ آپ کی سی وی پڑھ کر ساخت، مہارتیں اور الفاظ دیکھتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:208
+#: app/blueprints/marketing/tools_catalog.py:209
 msgid "Improve it"
 msgstr "اسے بہتر بنائیں"
 
-#: app/blueprints/marketing/tools_catalog.py:208
+#: app/blueprints/marketing/tools_catalog.py:209
 msgid "Use the score and tips to update your CV."
 msgstr "اسکور اور مشوروں کی مدد سے اپنی سی وی اپ ڈیٹ کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:211
+#: app/blueprints/marketing/tools_catalog.py:212
 msgid "Which files can I upload?"
 msgstr "کون سی فائلیں اپ لوڈ ہو سکتی ہیں؟"
 
-#: app/blueprints/marketing/tools_catalog.py:212
+#: app/blueprints/marketing/tools_catalog.py:213
 msgid "PDF files up to 4 MB."
 msgstr "پی ڈی ایف فائلیں، زیادہ سے زیادہ ۴ ایم بی تک۔"
 
-#: app/blueprints/marketing/tools_catalog.py:213
+#: app/blueprints/marketing/tools_catalog.py:214
 msgid "Who can see my CV?"
 msgstr "میری سی وی کون دیکھ سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:214
+#: app/blueprints/marketing/tools_catalog.py:215
 msgid ""
 "Only you. If you are logged in, your CV is saved privately in your "
 "account. As a guest, your file is only checked and not saved."
@@ -2714,11 +2718,11 @@ msgstr ""
 "محفوظ ہوتی ہے۔ مہمان کے طور پر آپ کی فائل صرف چیک ہوتی ہے، محفوظ نہیں کی "
 "جاتی۔"
 
-#: app/blueprints/marketing/tools_catalog.py:215
+#: app/blueprints/marketing/tools_catalog.py:216
 msgid "Is the CV Checker free?"
 msgstr "کیا سی وی چیکر مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:216
+#: app/blueprints/marketing/tools_catalog.py:217
 msgid ""
 "Yes. It is free to use. There is a fair daily limit on checks so the tool"
 " stays free for everyone."
@@ -2726,11 +2730,11 @@ msgstr ""
 "جی ہاں، یہ استعمال کے لیے مفت ہے۔ روزانہ چیکس کی ایک مناسب حد ہے تاکہ یہ "
 "ٹول سب کے لیے مفت رہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:217
+#: app/blueprints/marketing/tools_catalog.py:218
 msgid "Can I check my CV without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر سی وی چیک ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:218
+#: app/blueprints/marketing/tools_catalog.py:219
 msgid ""
 "Yes. You can try one check without logging in. Your file is checked and "
 "not saved. Create a free account for more checks."
@@ -2738,11 +2742,11 @@ msgstr ""
 "جی ہاں۔ لاگ ان کیے بغیر آپ ایک بار چیک کر سکتے ہیں۔ آپ کی فائل صرف چیک "
 "ہوتی ہے، محفوظ نہیں کی جاتی۔ مزید چیکس کے لیے مفت اکاؤنٹ بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:219
+#: app/blueprints/marketing/tools_catalog.py:220
 msgid "What does the score mean?"
 msgstr "اسکور کا کیا مطلب ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:220
+#: app/blueprints/marketing/tools_catalog.py:221
 msgid ""
 "It is a quick summary of how clear and complete your CV looks. It is a "
 "guide, not a decision from an employer. Use the tips to see what to "
@@ -2751,11 +2755,11 @@ msgstr ""
 "یہ ایک فوری خلاصہ ہے کہ آپ کی سی وی کتنی واضح اور مکمل لگتی ہے۔ یہ "
 "رہنمائی ہے، کسی آجر کا فیصلہ نہیں۔ مشوروں سے دیکھیں کہ کیا بہتر کرنا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:221
+#: app/blueprints/marketing/tools_catalog.py:222
 msgid "How long does a check take?"
 msgstr "چیک میں کتنا وقت لگتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:222
+#: app/blueprints/marketing/tools_catalog.py:223
 msgid ""
 "The AI needs a moment to read your CV. A progress bar shows while it "
 "works."
@@ -2763,11 +2767,11 @@ msgstr ""
 "اے آئی کو آپ کی سی وی پڑھنے کے لیے تھوڑا وقت چاہیے۔ اس دوران ایک پراگریس "
 "بار نظر آتی ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:223
+#: app/blueprints/marketing/tools_catalog.py:224
 msgid "Will it rewrite my CV?"
 msgstr "کیا یہ میری سی وی دوبارہ لکھے گا؟"
 
-#: app/blueprints/marketing/tools_catalog.py:224
+#: app/blueprints/marketing/tools_catalog.py:225
 msgid ""
 "No. It gives you a score and tips, and you decide what to change. To "
 "build a new CV, use the CV Generator."
@@ -2775,11 +2779,11 @@ msgstr ""
 "نہیں۔ یہ اسکور اور مشورے دیتا ہے، بدلنا کیا ہے یہ آپ طے کرتے ہیں۔ نئی سی "
 "وی بنانے کے لیے سی وی جنریٹر استعمال کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:225
+#: app/blueprints/marketing/tools_catalog.py:226
 msgid "Is the AI always right?"
 msgstr "کیا اے آئی ہمیشہ درست ہوتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:226
+#: app/blueprints/marketing/tools_catalog.py:227
 msgid ""
 "AI gives helpful suggestions, but it can make mistakes. Use your own "
 "judgment too."
@@ -2787,11 +2791,11 @@ msgstr ""
 "اے آئی مفید مشورے دیتا ہے لیکن غلطی بھی کر سکتا ہے۔ اپنی سمجھ بوجھ بھی "
 "استعمال کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:235
+#: app/blueprints/marketing/tools_catalog.py:236
 msgid "Free Caption Generator for Instagram and LinkedIn"
 msgstr "انسٹاگرام اور لنکڈ اِن کے لیے مفت کیپشن جنریٹر"
 
-#: app/blueprints/marketing/tools_catalog.py:236
+#: app/blueprints/marketing/tools_catalog.py:237
 msgid ""
 "Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
 "Copy in one tap and edit before you post."
@@ -2799,13 +2803,13 @@ msgstr ""
 "موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن "
 "حاصل کریں۔ ایک ٹیپ میں کاپی کریں اور پوسٹ سے پہلے بدلیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:238
+#: app/blueprints/marketing/tools_catalog.py:239
 msgid "Turn a topic into ready-to-post Instagram and LinkedIn captions."
 msgstr ""
 "کسی بھی موضوع کو انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشنز "
 "میں بدلیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:239
+#: app/blueprints/marketing/tools_catalog.py:240
 msgid ""
 "Type a topic and get ready-to-post captions for Instagram and LinkedIn. "
 "Pick the one you like, copy it and post."
@@ -2813,159 +2817,159 @@ msgstr ""
 "موضوع لکھیں اور انسٹاگرام اور لنکڈ اِن کے لیے پوسٹ کرنے کو تیار کیپشن "
 "حاصل کریں۔ جو پسند آئے، کاپی کریں اور پوسٹ کر دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:242
+#: app/blueprints/marketing/tools_catalog.py:243
 msgid "1 · Type a topic"
 msgstr "۱ · موضوع"
 
-#: app/blueprints/marketing/tools_catalog.py:242
+#: app/blueprints/marketing/tools_catalog.py:243
 msgid "2 · AI writes"
 msgstr "۲ · اے آئی لکھتا ہے"
 
-#: app/blueprints/marketing/tools_catalog.py:242
+#: app/blueprints/marketing/tools_catalog.py:243
 msgid "3 · Pick one"
 msgstr "۳ · ایک چنیں"
 
-#: app/blueprints/marketing/tools_catalog.py:244
+#: app/blueprints/marketing/tools_catalog.py:245
 #: app/templates/marketing/sections/tools.html:70
 msgid "[Your topic, e.g. new job]"
 msgstr "[آپ کا موضوع، مثلاً نئی نوکری]"
 
-#: app/blueprints/marketing/tools_catalog.py:244
+#: app/blueprints/marketing/tools_catalog.py:245
 #: app/templates/marketing/sections/tools.html:71
 msgid "Generate"
 msgstr "بنائیں"
 
-#: app/blueprints/marketing/tools_catalog.py:245
+#: app/blueprints/marketing/tools_catalog.py:246
 msgid "Instagram · LinkedIn"
 msgstr "انسٹاگرام · لنکڈ اِن"
 
-#: app/blueprints/marketing/tools_catalog.py:247
+#: app/blueprints/marketing/tools_catalog.py:248
 msgid "Writing your captions…"
 msgstr "آپ کے کیپشن لکھے جا رہے ہیں…"
 
-#: app/blueprints/marketing/tools_catalog.py:248
+#: app/blueprints/marketing/tools_catalog.py:249
 msgid "Reading your topic"
 msgstr "آپ کا موضوع پڑھا جا رہا ہے"
 
-#: app/blueprints/marketing/tools_catalog.py:248
+#: app/blueprints/marketing/tools_catalog.py:249
 msgid "Matching the platform"
 msgstr "پلیٹ فارم کے مطابق"
 
-#: app/blueprints/marketing/tools_catalog.py:248
+#: app/blueprints/marketing/tools_catalog.py:249
 msgid "Writing options"
 msgstr "آپشنز لکھے جا رہے ہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:250
+#: app/blueprints/marketing/tools_catalog.py:251
 msgid "[Caption 1 from AI]"
 msgstr "[اے آئی کا کیپشن ۱]"
 
-#: app/blueprints/marketing/tools_catalog.py:250
 #: app/blueprints/marketing/tools_catalog.py:251
 #: app/blueprints/marketing/tools_catalog.py:252
+#: app/blueprints/marketing/tools_catalog.py:253
 msgid "Copy"
 msgstr "کاپی"
 
-#: app/blueprints/marketing/tools_catalog.py:251
+#: app/blueprints/marketing/tools_catalog.py:252
 msgid "[Caption 2 from AI]"
 msgstr "[اے آئی کا کیپشن ۲]"
 
-#: app/blueprints/marketing/tools_catalog.py:252
+#: app/blueprints/marketing/tools_catalog.py:253
 msgid "[Caption 3 from AI]"
 msgstr "[اے آئی کا کیپشن ۳]"
 
-#: app/blueprints/marketing/tools_catalog.py:256
+#: app/blueprints/marketing/tools_catalog.py:257
 msgid "Instagram and LinkedIn"
 msgstr "انسٹاگرام اور لنکڈ اِن"
 
-#: app/blueprints/marketing/tools_catalog.py:256
+#: app/blueprints/marketing/tools_catalog.py:257
 msgid "Captions written for the platform you choose."
 msgstr "آپ کے چنے ہوئے پلیٹ فارم کے مطابق لکھے گئے کیپشن۔"
 
-#: app/blueprints/marketing/tools_catalog.py:257
+#: app/blueprints/marketing/tools_catalog.py:258
 msgid "Several options"
 msgstr "کئی آپشنز"
 
-#: app/blueprints/marketing/tools_catalog.py:257
+#: app/blueprints/marketing/tools_catalog.py:258
 msgid "Get more than one caption to choose from."
 msgstr "چننے کے لیے ایک سے زیادہ کیپشن۔"
 
-#: app/blueprints/marketing/tools_catalog.py:258
+#: app/blueprints/marketing/tools_catalog.py:259
 msgid "Any topic"
 msgstr "کوئی بھی موضوع"
 
-#: app/blueprints/marketing/tools_catalog.py:258
+#: app/blueprints/marketing/tools_catalog.py:259
 msgid "A new job, a product, an event: just type it."
 msgstr "نئی نوکری، کوئی پروڈکٹ یا ایونٹ، بس لکھ دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:259
+#: app/blueprints/marketing/tools_catalog.py:260
 msgid "Copy in one tap"
 msgstr "ایک ٹیپ میں کاپی"
 
-#: app/blueprints/marketing/tools_catalog.py:259
+#: app/blueprints/marketing/tools_catalog.py:260
 msgid "Copy a caption and paste it straight into your post."
 msgstr "کیپشن کاپی کریں اور سیدھا اپنی پوسٹ میں لگا دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:260
+#: app/blueprints/marketing/tools_catalog.py:261
 msgid "Edit before posting"
 msgstr "پوسٹ سے پہلے بدلیں"
 
-#: app/blueprints/marketing/tools_catalog.py:260
+#: app/blueprints/marketing/tools_catalog.py:261
 msgid "Captions are a starting point; change any word you like."
 msgstr "کیپشن ایک آغاز ہیں، جو لفظ چاہیں بدل دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:261
+#: app/blueprints/marketing/tools_catalog.py:262
 msgid "Fair daily limit"
 msgstr "مناسب روزانہ حد"
 
-#: app/blueprints/marketing/tools_catalog.py:262
+#: app/blueprints/marketing/tools_catalog.py:263
 msgid "Free to use, with a daily limit so it stays free for everyone."
 msgstr "استعمال مفت ہے، روزانہ کی حد کے ساتھ تاکہ سب کے لیے مفت رہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:265
+#: app/blueprints/marketing/tools_catalog.py:266
 msgid "Type a topic"
 msgstr "موضوع لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:265
+#: app/blueprints/marketing/tools_catalog.py:266
 msgid "Say what you want to post about."
 msgstr "بتائیں کہ آپ کس بارے میں پوسٹ کرنا چاہتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:266
+#: app/blueprints/marketing/tools_catalog.py:267
 msgid "Choose a platform"
 msgstr "پلیٹ فارم چنیں"
 
-#: app/blueprints/marketing/tools_catalog.py:266
+#: app/blueprints/marketing/tools_catalog.py:267
 msgid "Instagram or LinkedIn."
 msgstr "انسٹاگرام یا لنکڈ اِن۔"
 
-#: app/blueprints/marketing/tools_catalog.py:267
+#: app/blueprints/marketing/tools_catalog.py:268
 msgid "Copy and post"
 msgstr "کاپی کریں اور پوسٹ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:267
+#: app/blueprints/marketing/tools_catalog.py:268
 msgid "Pick your favourite caption and share it."
 msgstr "پسندیدہ کیپشن چنیں اور شیئر کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:270
+#: app/blueprints/marketing/tools_catalog.py:271
 msgid "Which platforms does it write for?"
 msgstr "کون سے پلیٹ فارمز کے لیے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:271
+#: app/blueprints/marketing/tools_catalog.py:272
 msgid "Instagram and LinkedIn."
 msgstr "انسٹاگرام اور لنکڈ اِن۔"
 
-#: app/blueprints/marketing/tools_catalog.py:272
+#: app/blueprints/marketing/tools_catalog.py:273
 msgid "Is the Captions tool free?"
 msgstr "کیا کیپشنز ٹول مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:273
+#: app/blueprints/marketing/tools_catalog.py:274
 msgid "Yes. It is free, with a fair daily limit so it stays free for everyone."
 msgstr "جی ہاں۔ یہ مفت ہے، روزانہ کی ایک مناسب حد کے ساتھ تاکہ سب کے لیے مفت رہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:274
+#: app/blueprints/marketing/tools_catalog.py:275
 msgid "Can I try it without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر آزما سکتے ہیں؟"
 
-#: app/blueprints/marketing/tools_catalog.py:275
+#: app/blueprints/marketing/tools_catalog.py:276
 msgid ""
 "Yes. You can try it up to 3 times without logging in. Create a free "
 "account to keep using it."
@@ -2973,11 +2977,11 @@ msgstr ""
 "جی ہاں۔ لاگ ان کیے بغیر آپ اسے ۳ بار تک آزما سکتے ہیں۔ استعمال جاری رکھنے"
 " کے لیے مفت اکاؤنٹ بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:276
+#: app/blueprints/marketing/tools_catalog.py:277
 msgid "How many captions do I get?"
 msgstr "مجھے کتنے کیپشن ملتے ہیں؟"
 
-#: app/blueprints/marketing/tools_catalog.py:277
+#: app/blueprints/marketing/tools_catalog.py:278
 msgid ""
 "You get more than one caption for each topic, so you can pick the one you"
 " like best."
@@ -2985,19 +2989,19 @@ msgstr ""
 "ہر موضوع کے لیے آپ کو ایک سے زیادہ کیپشن ملتے ہیں تاکہ آپ اپنا پسندیدہ چن"
 " سکیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:278
+#: app/blueprints/marketing/tools_catalog.py:279
 msgid "Can I change a caption?"
 msgstr "کیا کیپشن میں تبدیلی ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:279
+#: app/blueprints/marketing/tools_catalog.py:280
 msgid "Yes. Captions are a starting point, so edit them before you post."
 msgstr "جی ہاں۔ کیپشن ایک آغاز ہیں، پوسٹ کرنے سے پہلے جو چاہیں بدل لیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:280
+#: app/blueprints/marketing/tools_catalog.py:281
 msgid "Can I use the captions for my business?"
 msgstr "کیا یہ کیپشن کاروبار کے لیے استعمال ہو سکتے ہیں؟"
 
-#: app/blueprints/marketing/tools_catalog.py:281
+#: app/blueprints/marketing/tools_catalog.py:282
 msgid ""
 "Yes. You can use them for personal or business posts. Read and edit each "
 "caption before you post it."
@@ -3005,11 +3009,11 @@ msgstr ""
 "جی ہاں۔ آپ انہیں ذاتی یا کاروباری پوسٹس کے لیے استعمال کر سکتے ہیں۔ پوسٹ "
 "کرنے سے پہلے ہر کیپشن پڑھیں اور ضرورت ہو تو بدلیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:282
+#: app/blueprints/marketing/tools_catalog.py:283
 msgid "Does it post for me?"
 msgstr "کیا یہ خود پوسٹ کرتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:283
+#: app/blueprints/marketing/tools_catalog.py:284
 msgid ""
 "No. You copy the caption and paste it into Instagram or LinkedIn "
 "yourself. Toolverse does not connect to your social media accounts."
@@ -3017,11 +3021,11 @@ msgstr ""
 "نہیں۔ آپ کیپشن کاپی کر کے خود انسٹاگرام یا لنکڈ اِن پر لگاتے ہیں۔ ٹول ورس"
 " آپ کے سوشل میڈیا اکاؤنٹس سے نہیں جڑتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:292
+#: app/blueprints/marketing/tools_catalog.py:293
 msgid "Free Online Notes – Write, Edit and Search"
 msgstr "مفت آن لائن نوٹس – لکھیں، بدلیں اور تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:293
+#: app/blueprints/marketing/tools_catalog.py:294
 msgid ""
 "Write notes, edit them anytime and find any note with search. Saved in "
 "your account and on every device."
@@ -3029,11 +3033,11 @@ msgstr ""
 "نوٹس لکھیں، جب چاہیں بدلیں اور سرچ سے کوئی بھی نوٹ ڈھونڈیں۔ آپ کے اکاؤنٹ "
 "میں محفوظ اور ہر ڈیوائس پر۔"
 
-#: app/blueprints/marketing/tools_catalog.py:295
+#: app/blueprints/marketing/tools_catalog.py:296
 msgid "Write, edit and search your notes from any device."
 msgstr "کسی بھی ڈیوائس سے اپنے نوٹس لکھیں، بدلیں اور تلاش کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:296
+#: app/blueprints/marketing/tools_catalog.py:297
 msgid ""
 "Write notes, edit them anytime and find any note fast with search. Your "
 "notes are saved in your account, so they are on every device you use."
@@ -3042,149 +3046,150 @@ msgstr ""
 "ڈھونڈیں۔ آپ کے نوٹس آپ کے اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے ہر ڈیوائس پر "
 "موجود ہوتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:299
+#: app/blueprints/marketing/tools_catalog.py:300
 msgid "1 · Write"
 msgstr "۱ · لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:299
+#: app/blueprints/marketing/tools_catalog.py:300
 msgid "2 · Save"
 msgstr "۲ · محفوظ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:299
+#: app/blueprints/marketing/tools_catalog.py:300
 msgid "3 · Search"
 msgstr "۳ · تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:301
-#: app/blueprints/marketing/tools_catalog.py:308
+#: app/blueprints/marketing/tools_catalog.py:302
+#: app/blueprints/marketing/tools_catalog.py:309
 msgid "[Meeting notes]"
 msgstr "[میٹنگ نوٹس]"
 
-#: app/blueprints/marketing/tools_catalog.py:302
+#: app/blueprints/marketing/tools_catalog.py:303
 msgid "[Your note text…]"
 msgstr "[آپ کے نوٹ کا متن…]"
 
-#: app/blueprints/marketing/tools_catalog.py:304
+#: app/blueprints/marketing/tools_catalog.py:305
 msgid "Saving your note…"
 msgstr "آپ کا نوٹ محفوظ ہو رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:305
+#: app/blueprints/marketing/tools_catalog.py:306
 msgid "Ready on all your devices"
 msgstr "آپ کی ہر ڈیوائس پر دستیاب"
 
-#: app/blueprints/marketing/tools_catalog.py:307
+#: app/blueprints/marketing/tools_catalog.py:308
 msgid "[meeting]"
 msgstr "[میٹنگ]"
 
-#: app/blueprints/marketing/tools_catalog.py:312
+#: app/blueprints/marketing/tools_catalog.py:313
 msgid "Write fast"
 msgstr "فوراً لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:312
+#: app/blueprints/marketing/tools_catalog.py:313
 msgid "Open a new note and start typing."
 msgstr "نیا نوٹ کھولیں اور لکھنا شروع کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:313
+#: app/blueprints/marketing/tools_catalog.py:314
 msgid "Edit anytime"
 msgstr "کبھی بھی ترمیم"
 
-#: app/blueprints/marketing/tools_catalog.py:313
+#: app/blueprints/marketing/tools_catalog.py:314
 msgid "Change your notes whenever you need."
 msgstr "اپنے نوٹس جب چاہیں بدلیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:314
+#: app/blueprints/marketing/tools_catalog.py:315
 msgid "Quick search"
 msgstr "تیز تلاش"
 
-#: app/blueprints/marketing/tools_catalog.py:314
+#: app/blueprints/marketing/tools_catalog.py:315
 msgid "Find any note in seconds with search."
 msgstr "سرچ سے کوئی بھی نوٹ جلدی ڈھونڈیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:315
+#: app/blueprints/marketing/tools_catalog.py:316
+#: app/templates/tools/notes/index.html:102
 msgid "Delete"
 msgstr "ڈیلیٹ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:315
+#: app/blueprints/marketing/tools_catalog.py:316
 msgid "Remove notes you no longer need."
 msgstr "جن نوٹس کی ضرورت نہ ہو انہیں ہٹا دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:316
-#: app/blueprints/marketing/tools_catalog.py:373
+#: app/blueprints/marketing/tools_catalog.py:317
+#: app/blueprints/marketing/tools_catalog.py:376
 msgid "On every device"
 msgstr "ہر ڈیوائس پر"
 
-#: app/blueprints/marketing/tools_catalog.py:316
+#: app/blueprints/marketing/tools_catalog.py:317
 msgid "Log in anywhere and your notes are there."
 msgstr "کہیں بھی لاگ ان کریں، آپ کے نوٹس وہاں ہوں گے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:317
+#: app/blueprints/marketing/tools_catalog.py:318
 msgid "Only you can see your notes."
 msgstr "آپ کے نوٹس صرف آپ دیکھ سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:320
+#: app/blueprints/marketing/tools_catalog.py:321
 msgid "Create a note"
 msgstr "نوٹ بنائیں"
 
-#: app/blueprints/marketing/tools_catalog.py:320
+#: app/blueprints/marketing/tools_catalog.py:321
 msgid "Write a title and your text."
 msgstr "عنوان اور اپنا متن لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:321
+#: app/blueprints/marketing/tools_catalog.py:322
 msgid "Edit or delete it"
 msgstr "ترمیم یا ڈیلیٹ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:321
+#: app/blueprints/marketing/tools_catalog.py:322
 msgid "Change it or remove it when you need to."
 msgstr "جب ضرورت ہو اسے بدلیں یا ہٹا دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:322
+#: app/blueprints/marketing/tools_catalog.py:323
 msgid "Search when you need it"
 msgstr "ضرورت پر تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:322
+#: app/blueprints/marketing/tools_catalog.py:323
 msgid "Type a word to find a note."
 msgstr "کوئی لفظ لکھیں اور نوٹ ڈھونڈیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:325
+#: app/blueprints/marketing/tools_catalog.py:326
 msgid "Who can see my notes?"
 msgstr "میرے نوٹس کون دیکھ سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:326
-#: app/blueprints/marketing/tools_catalog.py:385
+#: app/blueprints/marketing/tools_catalog.py:327
+#: app/blueprints/marketing/tools_catalog.py:388
 msgid "Only you."
 msgstr "صرف آپ۔"
 
-#: app/blueprints/marketing/tools_catalog.py:327
-#: app/blueprints/marketing/tools_catalog.py:394
+#: app/blueprints/marketing/tools_catalog.py:328
+#: app/blueprints/marketing/tools_catalog.py:397
 msgid "Does it work on my phone?"
 msgstr "کیا یہ فون پر چلتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:328
-#: app/blueprints/marketing/tools_catalog.py:395
+#: app/blueprints/marketing/tools_catalog.py:329
+#: app/blueprints/marketing/tools_catalog.py:398
 msgid "Yes. It works in the browser on phone, tablet and laptop."
 msgstr "جی ہاں۔ یہ فون، ٹیبلٹ اور لیپ ٹاپ کے براؤزر میں چلتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:329
+#: app/blueprints/marketing/tools_catalog.py:330
 msgid "Do I need to install an app?"
 msgstr "کیا کوئی ایپ انسٹال کرنی ہوگی؟"
 
-#: app/blueprints/marketing/tools_catalog.py:330
+#: app/blueprints/marketing/tools_catalog.py:331
 msgid "No. Toolverse works in your web browser."
 msgstr "نہیں۔ ٹول ورس آپ کے ویب براؤزر میں چلتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:331
+#: app/blueprints/marketing/tools_catalog.py:332
 msgid "Is Notes free?"
 msgstr "کیا نوٹس مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:332
-#: app/blueprints/marketing/tools_catalog.py:387
+#: app/blueprints/marketing/tools_catalog.py:333
+#: app/blueprints/marketing/tools_catalog.py:390
 msgid "Yes, completely free."
 msgstr "جی ہاں، مکمل طور پر مفت۔"
 
-#: app/blueprints/marketing/tools_catalog.py:333
+#: app/blueprints/marketing/tools_catalog.py:334
 msgid "Can I use Notes without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر نوٹس استعمال ہو سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:334
+#: app/blueprints/marketing/tools_catalog.py:335
 msgid ""
 "Yes. Notes you write as a guest are kept in this browser only. Create a "
 "free account to move them to your account and open them on other devices."
@@ -3193,19 +3198,19 @@ msgstr ""
 "اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر کھولنے کے لیے مفت اکاؤنٹ "
 "بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:335
+#: app/blueprints/marketing/tools_catalog.py:336
 msgid "Can I search inside my notes?"
 msgstr "کیا نوٹس کے اندر تلاش ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:336
+#: app/blueprints/marketing/tools_catalog.py:337
 msgid "Yes. Type any word and Notes shows the notes that contain it."
 msgstr "جی ہاں۔ کوئی بھی لفظ لکھیں اور نوٹس وہ نوٹ دکھا دیتا ہے جن میں وہ لفظ ہو۔"
 
-#: app/blueprints/marketing/tools_catalog.py:337
+#: app/blueprints/marketing/tools_catalog.py:338
 msgid "Can I get back a deleted note?"
 msgstr "کیا ڈیلیٹ کیا ہوا نوٹ واپس مل سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:338
+#: app/blueprints/marketing/tools_catalog.py:339
 msgid ""
 "No. When you delete a note it is removed, so only delete notes you no "
 "longer need."
@@ -3213,11 +3218,11 @@ msgstr ""
 "نہیں۔ ڈیلیٹ کرنے پر نوٹ ختم ہو جاتا ہے، اس لیے صرف وہی نوٹس ڈیلیٹ کریں جن"
 " کی ضرورت نہ ہو۔"
 
-#: app/blueprints/marketing/tools_catalog.py:347
+#: app/blueprints/marketing/tools_catalog.py:350
 msgid "Free Expense Tracker – Daily List and Monthly Total"
 msgstr "مفت خرچ ٹریکر – روزانہ فہرست اور ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:348
+#: app/blueprints/marketing/tools_catalog.py:351
 msgid ""
 "Log what you spend each day and see your monthly total. Simple, private "
 "and with no bank connection."
@@ -3225,11 +3230,11 @@ msgstr ""
 "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔ سادہ، نجی اور بینک سے "
 "جوڑے بغیر۔"
 
-#: app/blueprints/marketing/tools_catalog.py:350
+#: app/blueprints/marketing/tools_catalog.py:353
 msgid "Log daily spending and see your monthly total."
 msgstr "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:351
+#: app/blueprints/marketing/tools_catalog.py:354
 msgid ""
 "Add what you spend each day and see your total for the month. Simple "
 "tracking, saved in your account."
@@ -3237,147 +3242,147 @@ msgstr ""
 "روزانہ کا خرچ لکھیں اور مہینے کا کُل دیکھیں۔ سادہ حساب، آپ کے اکاؤنٹ میں "
 "محفوظ۔"
 
-#: app/blueprints/marketing/tools_catalog.py:354
+#: app/blueprints/marketing/tools_catalog.py:357
 msgid "1 · Add an expense"
 msgstr "۱ · خرچ لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:354
+#: app/blueprints/marketing/tools_catalog.py:357
 msgid "2 · Saved"
 msgstr "۲ · محفوظ"
 
-#: app/blueprints/marketing/tools_catalog.py:354
+#: app/blueprints/marketing/tools_catalog.py:357
 msgid "3 · Monthly total"
 msgstr "۳ · ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:356
+#: app/blueprints/marketing/tools_catalog.py:359
 msgid "[Groceries]"
 msgstr "[سودا سلف]"
 
-#: app/blueprints/marketing/tools_catalog.py:357
+#: app/blueprints/marketing/tools_catalog.py:360
 msgid "[Amount]"
 msgstr "[رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:357
+#: app/blueprints/marketing/tools_catalog.py:360
 msgid "Add"
 msgstr "شامل کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:359
+#: app/blueprints/marketing/tools_catalog.py:362
 msgid "Adding your expense…"
 msgstr "آپ کا خرچ شامل ہو رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:360
+#: app/blueprints/marketing/tools_catalog.py:363
 msgid "Saved to this month"
 msgstr "اس مہینے میں محفوظ"
 
-#: app/blueprints/marketing/tools_catalog.py:360
+#: app/blueprints/marketing/tools_catalog.py:363
 msgid "Updating your total"
 msgstr "آپ کا کُل اپ ڈیٹ ہو رہا ہے"
 
-#: app/blueprints/marketing/tools_catalog.py:361
+#: app/blueprints/marketing/tools_catalog.py:364
 msgid "This month"
 msgstr "اس مہینے"
 
-#: app/blueprints/marketing/tools_catalog.py:361
+#: app/blueprints/marketing/tools_catalog.py:364
 msgid "[Total]"
 msgstr "[کُل]"
 
-#: app/blueprints/marketing/tools_catalog.py:363
+#: app/blueprints/marketing/tools_catalog.py:366
 msgid "[Groceries] · [Amount]"
 msgstr "[سودا سلف] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:364
+#: app/blueprints/marketing/tools_catalog.py:367
 msgid "[Transport] · [Amount]"
 msgstr "[سفر] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:365
+#: app/blueprints/marketing/tools_catalog.py:368
 msgid "[Bills] · [Amount]"
 msgstr "[بل] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:369
+#: app/blueprints/marketing/tools_catalog.py:372
 msgid "Quick entry"
 msgstr "جلدی اندراج"
 
-#: app/blueprints/marketing/tools_catalog.py:369
+#: app/blueprints/marketing/tools_catalog.py:372
 msgid "Add an expense in a few seconds."
 msgstr "چند سیکنڈز میں خرچ شامل کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:370
+#: app/blueprints/marketing/tools_catalog.py:373
 msgid "Monthly total"
 msgstr "ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:370
+#: app/blueprints/marketing/tools_catalog.py:373
 msgid "See how much you spent this month."
 msgstr "دیکھیں کہ اس مہینے کتنا خرچ ہوا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:371
+#: app/blueprints/marketing/tools_catalog.py:374
 msgid "Daily list"
 msgstr "روزانہ فہرست"
 
-#: app/blueprints/marketing/tools_catalog.py:371
+#: app/blueprints/marketing/tools_catalog.py:374
 msgid "See your expenses listed by day."
 msgstr "اپنے اخراجات دن کے حساب سے دیکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:372
+#: app/blueprints/marketing/tools_catalog.py:375
 msgid "Only you can see your spending."
 msgstr "آپ کا حساب صرف آپ دیکھ سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:373
+#: app/blueprints/marketing/tools_catalog.py:376
 msgid "Add expenses from your phone or laptop."
 msgstr "فون یا لیپ ٹاپ، کہیں سے بھی خرچ لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:374
+#: app/blueprints/marketing/tools_catalog.py:377
 msgid "No bank link"
 msgstr "بینک سے کوئی تعلق نہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:374
+#: app/blueprints/marketing/tools_catalog.py:377
 msgid "You add expenses yourself; no bank account is connected."
 msgstr "آپ خود خرچ لکھتے ہیں، کوئی بینک اکاؤنٹ نہیں جوڑا جاتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:377
+#: app/blueprints/marketing/tools_catalog.py:380
 msgid "Add an expense"
 msgstr "خرچ شامل کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:377
+#: app/blueprints/marketing/tools_catalog.py:380
 msgid "Enter the amount and what it was for."
 msgstr "رقم اور یہ کہ کس چیز پر خرچ ہوا لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:378
+#: app/blueprints/marketing/tools_catalog.py:381
 msgid "Keep adding daily"
 msgstr "روزانہ لکھتے رہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:378
+#: app/blueprints/marketing/tools_catalog.py:381
 msgid "It takes a minute a day."
 msgstr "ہر دن کا خرچ ایک منٹ میں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:379
+#: app/blueprints/marketing/tools_catalog.py:382
 msgid "Check your monthly total"
 msgstr "ماہانہ کُل دیکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:379
+#: app/blueprints/marketing/tools_catalog.py:382
 msgid "See where your money went."
 msgstr "جانیں آپ کا پیسہ کہاں گیا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:382
+#: app/blueprints/marketing/tools_catalog.py:385
 msgid "Does it connect to my bank?"
 msgstr "کیا یہ میرے بینک سے جڑتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:383
+#: app/blueprints/marketing/tools_catalog.py:386
 msgid "No. You add expenses yourself, so nothing is linked to your bank."
 msgstr "نہیں۔ آپ خود خرچ لکھتے ہیں، اس لیے کچھ بھی آپ کے بینک سے نہیں جڑا ہوتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:384
+#: app/blueprints/marketing/tools_catalog.py:387
 msgid "Who can see my expenses?"
 msgstr "میرا حساب کون دیکھ سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:386
+#: app/blueprints/marketing/tools_catalog.py:389
 msgid "Is it free?"
 msgstr "کیا یہ مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:388
+#: app/blueprints/marketing/tools_catalog.py:391
 msgid "Can I use it without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر استعمال ہو سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:389
+#: app/blueprints/marketing/tools_catalog.py:392
 msgid ""
 "Yes. Expenses you add as a guest are kept in this browser only. Create a "
 "free account to move them to your account and see them on other devices."
@@ -3386,21 +3391,46 @@ msgstr ""
 "انہیں اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر دیکھنے کے لیے مفت "
 "اکاؤنٹ بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:390
+#: app/blueprints/marketing/tools_catalog.py:393
 msgid "Can I edit or delete an expense?"
 msgstr "کیا خرچ میں تبدیلی یا اسے ڈیلیٹ کیا جا سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:391
+#: app/blueprints/marketing/tools_catalog.py:394
 msgid "Yes. If you make a mistake, you can change or remove an expense."
 msgstr "جی ہاں۔ غلطی ہو جائے تو آپ خرچ بدل یا ہٹا سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:392
+#: app/blueprints/marketing/tools_catalog.py:395
 msgid "How is the monthly total calculated?"
 msgstr "ماہانہ کُل کیسے بنتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:393
+#: app/blueprints/marketing/tools_catalog.py:396
 msgid "It adds up all the expenses you entered for that month."
 msgstr "یہ اُس مہینے میں لکھے گئے تمام اخراجات کو جمع کرتا ہے۔"
+
+#: app/blueprints/tools/notes/messages.py:5
+msgid "Please log in to use this."
+msgstr "اسے استعمال کرنے کے لیے لاگ ان کریں۔"
+
+#: app/blueprints/tools/notes/messages.py:6
+msgid "That note no longer exists."
+msgstr "یہ نوٹ اب موجود نہیں ہے۔"
+
+#: app/blueprints/tools/notes/messages.py:7
+#: app/templates/tools/notes/index.html:25
+msgid "Please add a title."
+msgstr "براہ کرم عنوان شامل کریں۔"
+
+#: app/blueprints/tools/notes/messages.py:8
+msgid "The title is too long (200 characters max)."
+msgstr "عنوان بہت طویل ہے (زیادہ سے زیادہ 200 حروف)۔"
+
+#: app/blueprints/tools/notes/messages.py:9
+msgid "The note is too long (20,000 characters max)."
+msgstr "نوٹ بہت طویل ہے (زیادہ سے زیادہ 20,000 حروف)۔"
+
+#: app/blueprints/tools/notes/messages.py:10
+msgid "Notes aren't available right now. Please try again in a moment."
+msgstr "نوٹس ابھی دستیاب نہیں ہیں۔ براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
 #: app/templates/base.html:7
 msgid ""
@@ -3410,7 +3440,7 @@ msgstr ""
 "کام اور زندگی کے لیے مفت ٹولز: سی وی چیکر، سی وی جنریٹر، کیپشنز، نوٹس اور"
 " اخراجات۔ ایک اکاؤنٹ، سب کچھ محفوظ۔"
 
-#: app/templates/base.html:41
+#: app/templates/base.html:42
 msgid "Skip to content"
 msgstr "مواد پر جائیں"
 
@@ -3554,7 +3584,9 @@ msgstr "یاد آ گیا؟"
 #: app/templates/auth/forgot_password.html:22 app/templates/auth/login.html:4
 #: app/templates/auth/login.html:10 app/templates/auth/login.html:23
 #: app/templates/auth/signup.html:34 app/templates/partials/navbar.html:35
-#: app/templates/partials/navbar.html:60
+#: app/templates/partials/navbar.html:60 app/templates/partials/sidebar.html:69
+#: app/templates/partials/sidebar.html:93
+#: app/templates/tools/notes/index.html:45
 msgid "Log in"
 msgstr "لاگ ان"
 
@@ -3654,8 +3686,9 @@ msgstr "پہلے سے اکاؤنٹ ہے؟"
 
 #: app/templates/dashboard/home.html:5 app/templates/dashboard/home.html:9
 #: app/templates/partials/navbar.html:33 app/templates/partials/navbar.html:58
-#: app/templates/partials/sidebar.html:21
-#: app/templates/partials/sidebar.html:25
+#: app/templates/partials/sidebar.html:38
+#: app/templates/partials/sidebar.html:42
+#: app/templates/tools/notes/index.html:32
 msgid "Dashboard"
 msgstr "ڈیش بورڈ"
 
@@ -3675,6 +3708,10 @@ msgstr ""
 #: app/templates/dashboard/home.html:16
 msgid "Your tools"
 msgstr "آپ کے ٹولز"
+
+#: app/templates/dashboard/home.html:28
+msgid "Open"
+msgstr "کھولیں"
 
 #: app/templates/dashboard/home.html:28
 #: app/templates/marketing/tools/_macros.html:115
@@ -3712,7 +3749,7 @@ msgstr "غلطی آپ کی نہیں، ہماری ہے۔ براہِ کرم تھو
 
 #: app/templates/marketing/coming_soon.html:14
 #: app/templates/marketing/tools/_macros.html:8
-#: app/templates/partials/sidebar.html:82
+#: app/templates/partials/sidebar.html:117
 msgid "Coming soon"
 msgstr "جلد آ رہا ہے"
 
@@ -3747,13 +3784,13 @@ msgid "Create free account"
 msgstr "مفت اکاؤنٹ بنائیں"
 
 #: app/templates/marketing/sections/demo.html:6
-#: app/templates/marketing/tools/detail.html:34
+#: app/templates/marketing/tools/detail.html:35
 msgid "See it in action"
 msgstr "عمل میں دیکھیں"
 
 #: app/templates/marketing/sections/demo.html:8
 #: app/templates/marketing/tools/_macros.html:41
-#: app/templates/marketing/tools/detail.html:35
+#: app/templates/marketing/tools/detail.html:36
 #: app/templates/partials/navbar.html:9
 msgid "How it works"
 msgstr "یہ کیسے کام کرتا ہے"
@@ -3785,6 +3822,7 @@ msgid "work"
 msgstr "کام"
 
 #: app/templates/marketing/sections/hero.html:7
+#: app/templates/tools/notes/index.html:61
 msgid "New"
 msgstr "نیا"
 
@@ -3819,7 +3857,7 @@ msgstr "ٹول ورس · ڈیش بورڈ"
 
 #: app/templates/marketing/sections/preview.html:16
 #: app/templates/marketing/tools/index.html:14
-#: app/templates/partials/navbar.html:8 app/templates/partials/sidebar.html:28
+#: app/templates/partials/navbar.html:8 app/templates/partials/sidebar.html:45
 msgid "Tools"
 msgstr "ٹولز"
 
@@ -3958,24 +3996,24 @@ msgstr "اخراجات کھولیں"
 msgid "Live"
 msgstr "لائیو"
 
-#: app/templates/marketing/tools/detail.html:26
+#: app/templates/marketing/tools/detail.html:27
 msgid "Try it free"
 msgstr "مفت آزمائیں"
 
-#: app/templates/marketing/tools/detail.html:27
-#: app/templates/marketing/tools/detail.html:83
+#: app/templates/marketing/tools/detail.html:28
+#: app/templates/marketing/tools/detail.html:84
 msgid "All tools"
 msgstr "تمام ٹولز"
 
-#: app/templates/marketing/tools/detail.html:41
+#: app/templates/marketing/tools/detail.html:42
 msgid "Features"
 msgstr "خصوصیات"
 
-#: app/templates/marketing/tools/detail.html:69
+#: app/templates/marketing/tools/detail.html:70
 msgid "How to use"
 msgstr "استعمال کا طریقہ"
 
-#: app/templates/marketing/tools/detail.html:81
+#: app/templates/marketing/tools/detail.html:82
 msgid "Other tools"
 msgstr "دوسرے ٹولز"
 
@@ -4031,6 +4069,7 @@ msgid "No tools in this category yet."
 msgstr "اس کیٹیگری میں ابھی کوئی ٹول نہیں۔"
 
 #: app/templates/partials/flash_messages.html:12
+#: app/templates/tools/notes/index.html:30
 msgid "Close"
 msgstr "بند کریں"
 
@@ -4042,6 +4081,30 @@ msgstr "پرائیویسی"
 #, python-format
 msgid "© %(year)s Toolverse"
 msgstr "© %(year)s ٹول ورس"
+
+#: app/templates/partials/guest_import_prompt.html:5
+msgid "You have notes saved only in this browser. Move them to your account?"
+msgstr "آپ کے نوٹس صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
+
+#: app/templates/partials/guest_import_prompt.html:6
+msgid "Moving your notes…"
+msgstr "آپ کے نوٹس منتقل ہو رہے ہیں…"
+
+#: app/templates/partials/guest_import_prompt.html:7
+msgid "Your notes are now in your account."
+msgstr "آپ کے نوٹس اب آپ کے اکاؤنٹ میں محفوظ ہیں۔"
+
+#: app/templates/partials/guest_import_prompt.html:8
+msgid "Could not move your notes. Please try again."
+msgstr "آپ کے نوٹس منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/partials/guest_import_prompt.html:11
+msgid "Not now"
+msgstr "ابھی نہیں"
+
+#: app/templates/partials/guest_import_prompt.html:12
+msgid "Move to my account"
+msgstr "اپنے اکاؤنٹ میں منتقل کریں"
 
 #: app/templates/partials/language_switch.html:3
 msgid "Language"
@@ -4064,16 +4127,93 @@ msgstr "مرکزی"
 msgid "Open menu"
 msgstr "مینو کھولیں"
 
-#: app/templates/partials/sidebar.html:15
-#: app/templates/partials/sidebar.html:74
-msgid "Dashboard menu"
-msgstr "ڈیش بورڈ مینو"
-
-#: app/templates/partials/sidebar.html:35
+#: app/templates/partials/sidebar.html:26
 msgid "Soon"
 msgstr "جلد"
 
-#: app/templates/partials/sidebar.html:78
+#: app/templates/partials/sidebar.html:32
+#: app/templates/partials/sidebar.html:102
+msgid "Dashboard menu"
+msgstr "ڈیش بورڈ مینو"
+
+#: app/templates/partials/sidebar.html:106
 msgid "Home"
 msgstr "ہوم"
+
+#: app/templates/tools/notes/index.html:10
+#: app/templates/tools/notes/index.html:35
+msgid "Write notes, edit them anytime and find any note fast with search."
+msgstr "نوٹس لکھیں، کبھی بھی ترمیم کریں اور سرچ سے فوراً کوئی بھی نوٹ تلاش کریں۔"
+
+#: app/templates/tools/notes/index.html:20
+msgid "No notes yet. Create your first note."
+msgstr "ابھی کوئی نوٹ نہیں۔ اپنا پہلا نوٹ بنائیں۔"
+
+#: app/templates/tools/notes/index.html:21
+msgid "No notes match your search."
+msgstr "آپ کی تلاش سے کوئی نوٹ نہیں ملا۔"
+
+#: app/templates/tools/notes/index.html:22
+msgid "Saved"
+msgstr "محفوظ ہو گیا"
+
+#: app/templates/tools/notes/index.html:23
+msgid "Saving…"
+msgstr "محفوظ ہو رہا ہے…"
+
+#: app/templates/tools/notes/index.html:24
+msgid "Could not save. Please try again."
+msgstr "محفوظ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/notes/index.html:26
+msgid "Delete this note? This cannot be undone."
+msgstr "یہ نوٹ ڈیلیٹ کریں؟ یہ واپس نہیں ہو سکتا۔"
+
+#: app/templates/tools/notes/index.html:27
+msgid "Could not delete this note. Please try again."
+msgstr "یہ نوٹ ڈیلیٹ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/notes/index.html:28
+msgid "Discard your unsaved changes?"
+msgstr "غیر محفوظ تبدیلیاں ضائع کریں؟"
+
+#: app/templates/tools/notes/index.html:29
+msgid "Could not load your notes. Please try again."
+msgstr "آپ کے نوٹس لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/notes/index.html:42
+msgid "You are not logged in. Your notes are kept in this browser only."
+msgstr "آپ لاگ ان نہیں ہیں۔ آپ کے نوٹس صرف اس براؤزر میں محفوظ ہیں۔"
+
+#: app/templates/tools/notes/index.html:57
+msgid "Search notes"
+msgstr "نوٹس تلاش کریں"
+
+#: app/templates/tools/notes/index.html:65
+msgid "Your notes"
+msgstr "آپ کے نوٹس"
+
+#: app/templates/tools/notes/index.html:72
+msgid "Load more"
+msgstr "مزید لوڈ کریں"
+
+#: app/templates/tools/notes/index.html:81
+msgid "Back"
+msgstr "واپس"
+
+#: app/templates/tools/notes/index.html:88
+msgid "Select a note, or create a new one."
+msgstr "کوئی نوٹ منتخب کریں، یا نیا بنائیں۔"
+
+#: app/templates/tools/notes/index.html:95
+msgid "Title"
+msgstr "عنوان"
+
+#: app/templates/tools/notes/index.html:97
+msgid "Write something…"
+msgstr "کچھ لکھیں…"
+
+#: app/templates/tools/notes/index.html:106
+msgid "Save"
+msgstr "محفوظ کریں"
 
