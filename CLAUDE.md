@@ -185,6 +185,13 @@ The text for these lives in `app/blueprints/marketing/tools_catalog.py` and `too
 - No bank connection — the user adds expenses themselves
 - Currency: default **PKR (Rs)**; the user can change the currency in their settings
 
+### Account requirements (promised on the Privacy Policy and Terms pages)
+
+The text lives in `app/blueprints/marketing/legal.py`. If the app's behaviour changes (new cookie, new service, new data), update that file and its "updated" date.
+
+- **"Delete account" button (to build later):** dashboard settings mein "Delete account" button banana hai jo user ka account aur saara data (CVs, notes, expenses, captions, CV files in Storage) delete kare, pehle confirm karwa kar. Tab tak account delete email se hota hai (muhammadaqib3223@gmail.com, 30 din ke andar). Button banne ke baad Privacy Policy ka "Deleting your account" section update karna hai.
+- Minimum age: **18 years** (Gemini API terms ki wajah se).
+
 ## 6. Design (applies to the WHOLE software: homepage, auth pages, dashboard, every tool)
 
 Style reference: the approved "Version 3 — Framer style" landing page (premium, minimal, like framer.com / vercel.com).

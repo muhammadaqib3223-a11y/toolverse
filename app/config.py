@@ -12,6 +12,9 @@ class BaseConfig:
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
     BEHIND_PROXY = False
 
+    # Shown on the Privacy and Terms pages for questions and account deletion requests.
+    CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "muhammadaqib3223@gmail.com")
+
     # Languages: code -> name shown in the language switcher.
     LANGUAGES = {"en": "English", "ur": "اردو"}
     RTL_LANGUAGES = frozenset({"ur"})

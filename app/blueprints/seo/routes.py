@@ -8,7 +8,8 @@ from app.i18n import localized_url
 
 def _public_pages():
     """(endpoint, arguments) of every page we want search engines to index."""
-    pages = [("marketing.index", {}), ("marketing.tools_index", {})]
+    pages = [("marketing.index", {}), ("marketing.tools_index", {}),
+             ("marketing.privacy", {}), ("marketing.terms", {})]
     pages += [("marketing.tool_detail", {"slug": tool.slug}) for tool in tools_catalog.TOOLS]
     return pages
 

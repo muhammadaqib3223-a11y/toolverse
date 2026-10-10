@@ -2,8 +2,8 @@
   <div class="container-page flex flex-col items-center gap-5 py-8 text-[12px] sm:flex-row sm:justify-between">
     <a href="{{ url_for('marketing.index') }}" class="text-[13px] font-semibold tracking-tight">Toolverse</a>
     <ul class="flex items-center gap-6 text-muted">
-      <li><a href="{{ url_for('marketing.coming_soon', page='privacy') }}" class="transition-colors hover:text-fg">{{ _('Privacy') }}</a></li>
-      <li><a href="{{ url_for('marketing.coming_soon', page='terms') }}" class="transition-colors hover:text-fg">{{ _('Terms') }}</a></li>
+      <li><a href="{{ url_for('marketing.privacy') }}" class="transition-colors hover:text-fg">{{ _('Privacy') }}</a></li>
+      <li><a href="{{ url_for('marketing.terms') }}" class="transition-colors hover:text-fg">{{ _('Terms') }}</a></li>
       <li><a href="{{ url_for('marketing.coming_soon', page='contact') }}" class="transition-colors hover:text-fg">{{ _('Contact') }}</a></li>
     </ul>
     <p class="text-faint">{{ _('© %(year)s Toolverse', year=current_year) }}</p>

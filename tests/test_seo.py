@@ -7,7 +7,7 @@ from app.blueprints.marketing.content import FAQS as LANDING_FAQS
 from app.blueprints.marketing.tools_catalog import TOOLS
 
 SLUGS = [tool.slug for tool in TOOLS]
-PAGES = ["/", "/tools", *(f"/tools/{slug}" for slug in SLUGS)]
+PAGES = ["/", "/tools", "/privacy", "/terms", *(f"/tools/{slug}" for slug in SLUGS)]
 
 
 def _html(client, path, lang="en"):
@@ -41,7 +41,7 @@ def test_canonical_link_uses_the_request_host(client):
     assert '<link rel="canonical" href="https://example.test/tools/notes">' in html
 
 
-@pytest.mark.parametrize("path", ["/coming-soon/privacy", "/does-not-exist"])
+@pytest.mark.parametrize("path", ["/coming-soon/contact", "/does-not-exist"])
 def test_placeholder_and_error_pages_are_noindex(client, path):
     assert '<meta name="robots" content="noindex">' in _html(client, path)
 

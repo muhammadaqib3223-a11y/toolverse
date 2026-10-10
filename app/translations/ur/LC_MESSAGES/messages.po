@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-10 13:04+0500\n"
+"POT-Creation-Date: 2026-10-10 15:35+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ur\n"
@@ -253,30 +253,745 @@ msgid ""
 "to Urdu."
 msgstr "جی ہاں۔ اوپر والے مینو سے اردو چنیں اور پوری سائٹ اردو میں بدل جائے گی۔"
 
-#: app/blueprints/marketing/content.py:70 app/templates/partials/footer.html:5
-msgid "Privacy"
-msgstr "پرائیویسی"
-
-#: app/blueprints/marketing/content.py:71
-msgid "We are writing a clear, simple privacy policy. It will be here soon."
-msgstr "ہم ایک واضح اور سادہ پرائیویسی پالیسی لکھ رہے ہیں۔ یہ جلد یہاں ہوگی۔"
-
-#: app/blueprints/marketing/content.py:74 app/templates/auth/signup.html:26
-#: app/templates/partials/footer.html:6
-msgid "Terms"
-msgstr "شرائط"
-
-#: app/blueprints/marketing/content.py:75
-msgid "We are writing simple, fair terms of use. They will be here soon."
-msgstr "ہم استعمال کی سادہ اور منصفانہ شرائط لکھ رہے ہیں۔ یہ جلد یہاں ہوں گی۔"
-
-#: app/blueprints/marketing/content.py:78 app/templates/partials/footer.html:7
+#: app/blueprints/marketing/content.py:70 app/blueprints/marketing/legal.py:204
+#: app/templates/partials/footer.html:7
 msgid "Contact"
 msgstr "رابطہ"
 
-#: app/blueprints/marketing/content.py:79
+#: app/blueprints/marketing/content.py:71
 msgid "A contact page is on its way. It will be here soon."
 msgstr "رابطے کا صفحہ تیار ہو رہا ہے۔ یہ جلد یہاں ہوگا۔"
+
+#: app/blueprints/marketing/legal.py:55 app/templates/auth/signup.html:27
+msgid "Privacy Policy"
+msgstr "پرائیویسی پالیسی"
+
+#: app/blueprints/marketing/legal.py:56
+msgid ""
+"How Toolverse collects, uses and protects your data, in plain words: what"
+" we save, the AI we use, cookies, and how to delete your account."
+msgstr ""
+"ٹول ورس آپ کا ڈیٹا کیسے لیتا، استعمال کرتا اور محفوظ رکھتا ہے، آسان الفاظ"
+" میں: ہم کیا محفوظ کرتے ہیں، کون سا AI استعمال کرتے ہیں، کوکیز، اور "
+"اکاؤنٹ ڈیلیٹ کرنے کا طریقہ۔"
+
+#: app/blueprints/marketing/legal.py:60
+msgid "The short version"
+msgstr "مختصر بات"
+
+#: app/blueprints/marketing/legal.py:62
+msgid "We only collect what we need to run the five tools."
+msgstr "ہم صرف وہی معلومات لیتے ہیں جو پانچوں ٹولز چلانے کے لیے ضروری ہیں۔"
+
+#: app/blueprints/marketing/legal.py:63
+msgid ""
+"Your CVs, notes and expenses are private to your account. Only you can "
+"see them."
+msgstr ""
+"آپ کی سی وی، نوٹس اور اخراجات صرف آپ کے اکاؤنٹ تک محدود ہیں۔ انہیں صرف آپ"
+" دیکھ سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:64
+msgid ""
+"If you check a CV as a guest (without logging in), the file is checked "
+"and then thrown away. It is never saved."
+msgstr ""
+"اگر آپ بغیر لاگ ان (بطور مہمان) سی وی چیک کریں تو فائل صرف چیک ہوتی ہے "
+"اور پھر ختم کر دی جاتی ہے۔ وہ کبھی محفوظ نہیں ہوتی۔"
+
+#: app/blueprints/marketing/legal.py:66
+msgid ""
+"We do not sell your data, we do not show ads, and we do not use tracking "
+"or advertising cookies."
+msgstr ""
+"ہم آپ کا ڈیٹا نہیں بیچتے، اشتہار نہیں دکھاتے، اور ٹریکنگ یا اشتہاری کوکیز"
+" استعمال نہیں کرتے۔"
+
+#: app/blueprints/marketing/legal.py:67
+msgid ""
+"To check CVs and write captions, we send text to Google's Gemini AI. "
+"Please read the \"AI\" section below."
+msgstr ""
+"سی وی چیک کرنے اور کیپشن لکھنے کے لیے ہم ٹیکسٹ گوگل کے Gemini AI کو "
+"بھیجتے ہیں۔ براہ کرم نیچے \"AI\" والا حصہ پڑھیں۔"
+
+#: app/blueprints/marketing/legal.py:69
+msgid "You can ask us to delete your account and all your data at any time."
+msgstr "آپ کسی بھی وقت ہم سے اپنا اکاؤنٹ اور سارا ڈیٹا ڈیلیٹ کروا سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:72
+msgid "Who we are"
+msgstr "ہم کون ہیں"
+
+#: app/blueprints/marketing/legal.py:73
+#, python-format
+msgid ""
+"Toolverse is a free web app with five tools: CV Checker, CV Generator, "
+"Captions, Notes and Expenses. It is run by a small independent team. You "
+"can reach us at %(email)s."
+msgstr ""
+"ٹول ورس ایک مفت ویب ایپ ہے جس میں پانچ ٹولز ہیں: سی وی چیکر، سی وی "
+"جنریٹر، کیپشنز، نوٹس اور اخراجات۔ اسے ایک چھوٹی آزاد ٹیم چلاتی ہے۔ ہم سے "
+"رابطہ: %(email)s"
+
+#: app/blueprints/marketing/legal.py:76
+msgid "What we collect"
+msgstr "ہم کیا معلومات لیتے ہیں"
+
+#: app/blueprints/marketing/legal.py:77
+msgid "Your account"
+msgstr "آپ کا اکاؤنٹ"
+
+#: app/blueprints/marketing/legal.py:79
+msgid ""
+"Your email address and your password. Your password is stored in "
+"scrambled (hashed) form by our login provider, Supabase. Nobody at "
+"Toolverse can read it."
+msgstr ""
+"آپ کا ای میل اور پاس ورڈ۔ پاس ورڈ ہمارا لاگ ان سسٹم Supabase بدلی ہوئی "
+"(hashed) شکل میں رکھتا ہے۔ ٹول ورس میں کوئی بھی اسے پڑھ نہیں سکتا۔"
+
+#: app/blueprints/marketing/legal.py:81
+msgid ""
+"If you log in with Google: your name, email address and profile picture "
+"link from Google. We do not get your Google password, and we cannot see "
+"your Gmail, Drive or anything else in your Google account."
+msgstr ""
+"اگر آپ گوگل سے لاگ ان کریں: گوگل سے آپ کا نام، ای میل اور پروفائل تصویر "
+"کا لنک۔ ہمیں آپ کا گوگل پاس ورڈ نہیں ملتا، اور ہم آپ کا جی میل، ڈرائیو یا"
+" گوگل اکاؤنٹ کی کوئی اور چیز نہیں دیکھ سکتے۔"
+
+#: app/blueprints/marketing/legal.py:85
+msgid "What you put into the tools"
+msgstr "جو آپ ٹولز میں ڈالتے ہیں"
+
+#: app/blueprints/marketing/legal.py:87
+msgid ""
+"CV Checker: the PDF you upload, the text inside it, and your score and "
+"tips."
+msgstr ""
+"سی وی چیکر: آپ کی اپ لوڈ کی ہوئی PDF، اس کا ٹیکسٹ، اور آپ کا اسکور اور "
+"مشورے۔"
+
+#: app/blueprints/marketing/legal.py:88
+msgid ""
+"CV Generator: the details you type in (name, contact details, summary, "
+"work experience, education, skills) and the CVs you create."
+msgstr ""
+"سی وی جنریٹر: آپ کی لکھی ہوئی تفصیلات (نام، رابطے کی معلومات، خلاصہ، کام "
+"کا تجربہ، تعلیم، اسکلز) اور آپ کی بنائی ہوئی سی ویز۔"
+
+#: app/blueprints/marketing/legal.py:90
+msgid "Captions: the topic you type and the captions you get."
+msgstr "کیپشنز: آپ کا لکھا ہوا موضوع اور ملنے والے کیپشن۔"
+
+#: app/blueprints/marketing/legal.py:91
+msgid "Notes: your notes."
+msgstr "نوٹس: آپ کے نوٹس۔"
+
+#: app/blueprints/marketing/legal.py:92
+msgid ""
+"Expenses: the amounts and descriptions you enter, and your currency "
+"setting."
+msgstr "اخراجات: آپ کی لکھی ہوئی رقم، تفصیل، اور کرنسی کی سیٹنگ۔"
+
+#: app/blueprints/marketing/legal.py:94
+msgid "When you use the tools as a guest (without an account)"
+msgstr "جب آپ بغیر اکاؤنٹ (بطور مہمان) ٹولز استعمال کریں"
+
+#: app/blueprints/marketing/legal.py:96
+msgid ""
+"To keep the free AI tries fair, we count how many tries each internet "
+"address (IP address) has used. We store this count, not your content."
+msgstr ""
+"مفت AI کوششوں کو منصفانہ رکھنے کے لیے ہم گنتے ہیں کہ ہر انٹرنیٹ ایڈریس "
+"(IP ایڈریس) نے کتنی کوششیں کیں۔ ہم صرف یہ گنتی رکھتے ہیں، آپ کا مواد "
+"نہیں۔"
+
+#: app/blueprints/marketing/legal.py:98
+msgid ""
+"Guest notes and expenses are saved only in your own browser, not on our "
+"servers. When you log in, you can move them into your account."
+msgstr ""
+"مہمان کے نوٹس اور اخراجات صرف آپ کے اپنے براؤزر میں محفوظ ہوتے ہیں، ہمارے"
+" سرور پر نہیں۔ لاگ ان کرنے پر آپ انہیں اپنے اکاؤنٹ میں لے جا سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:100
+msgid "A CV checked as a guest is never saved."
+msgstr "مہمان کے طور پر چیک کی گئی سی وی کبھی محفوظ نہیں ہوتی۔"
+
+#: app/blueprints/marketing/legal.py:102
+msgid "Technical information"
+msgstr "تکنیکی معلومات"
+
+#: app/blueprints/marketing/legal.py:103
+msgid ""
+"Like almost every website, our hosting (Vercel) and our database "
+"(Supabase) keep short-term technical logs: IP address, browser type, "
+"pages visited, time, and errors. We use these only to keep the site "
+"working and safe."
+msgstr ""
+"تقریباً ہر ویب سائٹ کی طرح ہماری ہوسٹنگ (Vercel) اور ڈیٹا بیس (Supabase) "
+"کچھ عرصے کے لیے تکنیکی ریکارڈ رکھتے ہیں: IP ایڈریس، براؤزر کی قسم، کھولے "
+"گئے صفحات، وقت اور خرابیاں۔ ہم انہیں صرف سائٹ کو چلانے اور محفوظ رکھنے کے"
+" لیے استعمال کرتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:107
+msgid "How we use your information"
+msgstr "ہم یہ معلومات کیسے استعمال کرتے ہیں"
+
+#: app/blueprints/marketing/legal.py:109
+msgid "To run the tools and save your work in your account."
+msgstr "ٹولز چلانے اور آپ کا کام آپ کے اکاؤنٹ میں محفوظ کرنے کے لیے۔"
+
+#: app/blueprints/marketing/legal.py:110
+msgid "To log you in and keep your account safe."
+msgstr "آپ کو لاگ ان کرنے اور آپ کا اکاؤنٹ محفوظ رکھنے کے لیے۔"
+
+#: app/blueprints/marketing/legal.py:111
+msgid ""
+"To send you emails you need: confirming your email and resetting your "
+"password. We do not send marketing emails."
+msgstr ""
+"ضروری ای میلز بھیجنے کے لیے: ای میل کنفرم کرنا اور پاس ورڈ ری سیٹ کرنا۔ "
+"ہم مارکیٹنگ ای میلز نہیں بھیجتے۔"
+
+#: app/blueprints/marketing/legal.py:113
+msgid "To keep the daily limits fair and stop abuse."
+msgstr "روزانہ حد کو منصفانہ رکھنے اور غلط استعمال روکنے کے لیے۔"
+
+#: app/blueprints/marketing/legal.py:114
+msgid "To fix errors."
+msgstr "خرابیاں ٹھیک کرنے کے لیے۔"
+
+#: app/blueprints/marketing/legal.py:117
+msgid "AI (Google Gemini)"
+msgstr "AI (گوگل Gemini)"
+
+#: app/blueprints/marketing/legal.py:119
+msgid ""
+"When you check a CV, the text of your CV is sent to Google's Gemini AI so"
+" it can give a score and tips."
+msgstr ""
+"جب آپ سی وی چیک کرتے ہیں تو آپ کی سی وی کا ٹیکسٹ گوگل کے Gemini AI کو "
+"بھیجا جاتا ہے تاکہ وہ اسکور اور مشورے دے سکے۔"
+
+#: app/blueprints/marketing/legal.py:121
+msgid "When you write captions, your topic is sent to Gemini."
+msgstr "جب آپ کیپشن لکھواتے ہیں تو آپ کا موضوع Gemini کو بھیجا جاتا ہے۔"
+
+#: app/blueprints/marketing/legal.py:122
+msgid ""
+"When you ask for AI help in the CV Generator, the details you typed for "
+"that part are sent to Gemini."
+msgstr ""
+"جب آپ سی وی جنریٹر میں AI سے مدد لیتے ہیں تو اس حصے کے لیے آپ کی لکھی "
+"ہوئی تفصیلات Gemini کو بھیجی جاتی ہیں۔"
+
+#: app/blueprints/marketing/legal.py:125
+msgid ""
+"We use the free version of Gemini. Under Google's terms for the free "
+"version, Google may use what we send to improve its products, and people "
+"at Google may read it. Because of this, please do not put very sensitive "
+"information (for example ID card numbers or bank details) into a CV you "
+"check with AI."
+msgstr ""
+"ہم Gemini کا مفت ورژن استعمال کرتے ہیں۔ مفت ورژن کے لیے گوگل کی شرائط کے "
+"مطابق گوگل ہماری بھیجی ہوئی چیزیں اپنی سروسز بہتر بنانے کے لیے استعمال کر"
+" سکتا ہے، اور گوگل کے لوگ انہیں پڑھ سکتے ہیں۔ اس لیے AI سے چیک کی جانے "
+"والی سی وی میں بہت حساس معلومات (مثلاً شناختی کارڈ نمبر یا بینک کی "
+"تفصیلات) نہ ڈالیں۔"
+
+#: app/blueprints/marketing/legal.py:129
+msgid "AI can make mistakes. Always read the results yourself."
+msgstr "AI غلطی کر سکتا ہے۔ نتائج ہمیشہ خود بھی پڑھیں۔"
+
+#: app/blueprints/marketing/legal.py:131
+msgid "Where your data is stored"
+msgstr "آپ کا ڈیٹا کہاں رکھا جاتا ہے"
+
+#: app/blueprints/marketing/legal.py:133
+msgid ""
+"Your account and data are stored with Supabase (database, file storage "
+"and login). Every table is protected with Row Level Security, so each "
+"account can only read its own data."
+msgstr ""
+"آپ کا اکاؤنٹ اور ڈیٹا Supabase کے پاس رکھا جاتا ہے (ڈیٹا بیس، فائلیں اور "
+"لاگ ان)۔ ہر ٹیبل Row Level Security سے محفوظ ہے، اس لیے ہر اکاؤنٹ صرف "
+"اپنا ڈیٹا پڑھ سکتا ہے۔"
+
+#: app/blueprints/marketing/legal.py:135
+msgid "The website runs on Vercel."
+msgstr "ویب سائٹ Vercel پر چلتی ہے۔"
+
+#: app/blueprints/marketing/legal.py:136
+msgid "These companies may store data on servers outside Pakistan."
+msgstr "یہ کمپنیاں ڈیٹا پاکستان سے باہر کے سرورز پر بھی رکھ سکتی ہیں۔"
+
+#: app/blueprints/marketing/legal.py:139
+msgid "Who we share it with"
+msgstr "ہم ڈیٹا کس کے ساتھ شیئر کرتے ہیں"
+
+#: app/blueprints/marketing/legal.py:140
+msgid "We only share data with the services we need to run Toolverse:"
+msgstr ""
+"ہم ڈیٹا صرف ان سروسز کے ساتھ شیئر کرتے ہیں جن کے بغیر ٹول ورس نہیں چل "
+"سکتا:"
+
+#: app/blueprints/marketing/legal.py:143
+msgid "Service"
+msgstr "سروس"
+
+#: app/blueprints/marketing/legal.py:143
+msgid "What for"
+msgstr "کس لیے"
+
+#: app/blueprints/marketing/legal.py:145
+msgid "Login, database, CV files, sending account emails"
+msgstr "لاگ ان، ڈیٹا بیس، سی وی فائلیں، اکاؤنٹ کی ای میلز بھیجنا"
+
+#: app/blueprints/marketing/legal.py:146
+msgid "Hosting the website"
+msgstr "ویب سائٹ کی ہوسٹنگ"
+
+#: app/blueprints/marketing/legal.py:147
+msgid "\"Continue with Google\" login, Gemini AI, and the website's fonts"
+msgstr "\"گوگل کے ساتھ جاری رکھیں\" لاگ ان، Gemini AI، اور ویب سائٹ کے فونٹس"
+
+#: app/blueprints/marketing/legal.py:150
+msgid ""
+"We do not sell your data and we do not share it with advertisers. We only"
+" give data to anyone else if the law requires it."
+msgstr ""
+"ہم آپ کا ڈیٹا نہیں بیچتے اور اشتہار دینے والوں کو نہیں دیتے۔ کسی اور کو "
+"ڈیٹا صرف تب دیتے ہیں جب قانون اس کا تقاضا کرے۔"
+
+#: app/blueprints/marketing/legal.py:153
+msgid "Cookies"
+msgstr "کوکیز"
+
+#: app/blueprints/marketing/legal.py:155
+#, python-format
+msgid ""
+"We use one cookie, called %(cookie)s. It keeps you logged in and protects"
+" our forms against misuse. It is needed for the site to work. It lasts up"
+" to 30 days and is renewed each time you visit."
+msgstr ""
+"ہم صرف ایک کوکی استعمال کرتے ہیں جس کا نام %(cookie)s ہے۔ یہ آپ کو لاگ ان"
+" رکھتی ہے اور ہمارے فارمز کو غلط استعمال سے بچاتی ہے۔ سائٹ چلنے کے لیے یہ"
+" ضروری ہے۔ یہ زیادہ سے زیادہ 30 دن رہتی ہے اور ہر بار آنے پر نئی ہو جاتی "
+"ہے۔"
+
+#: app/blueprints/marketing/legal.py:158
+msgid "We do not use analytics, advertising or tracking cookies."
+msgstr "ہم اینالیٹکس، اشتہاری یا ٹریکنگ کوکیز استعمال نہیں کرتے۔"
+
+#: app/blueprints/marketing/legal.py:159
+msgid ""
+"Guest notes and expenses use your browser's own storage (not a cookie), "
+"and stay on your device."
+msgstr ""
+"مہمان کے نوٹس اور اخراجات براؤزر کی اپنی اسٹوریج میں رہتے ہیں (کوکی میں "
+"نہیں) اور آپ کے ڈیوائس پر ہی رہتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:160
+msgid ""
+"Our fonts are loaded from Google Fonts, so your browser connects to "
+"Google when a page opens."
+msgstr ""
+"ہمارے فونٹس Google Fonts سے لوڈ ہوتے ہیں، اس لیے صفحہ کھلنے پر آپ کا "
+"براؤزر گوگل سے جڑتا ہے۔"
+
+#: app/blueprints/marketing/legal.py:163
+msgid "How long we keep your data"
+msgstr "ہم ڈیٹا کتنی دیر رکھتے ہیں"
+
+#: app/blueprints/marketing/legal.py:165
+msgid "Your account data is kept while your account exists."
+msgstr "جب تک آپ کا اکاؤنٹ موجود ہے، آپ کا ڈیٹا رکھا جاتا ہے۔"
+
+#: app/blueprints/marketing/legal.py:166
+msgid ""
+"If you delete something (for example a note or a saved CV), it is deleted"
+" right away and cannot be recovered."
+msgstr ""
+"اگر آپ کوئی چیز ڈیلیٹ کریں (مثلاً نوٹ یا محفوظ سی وی) تو وہ فوراً ڈیلیٹ "
+"ہو جاتی ہے اور واپس نہیں آ سکتی۔"
+
+#: app/blueprints/marketing/legal.py:168
+msgid ""
+"If you ask us to delete your account, we delete your account and all its "
+"data within 30 days. Copies may stay in our providers' backups for a "
+"short time after that, and are then removed."
+msgstr ""
+"اگر آپ اکاؤنٹ ڈیلیٹ کرنے کا کہیں تو ہم 30 دن کے اندر آپ کا اکاؤنٹ اور اس "
+"کا سارا ڈیٹا ڈیلیٹ کر دیتے ہیں۔ اس کے بعد کچھ عرصے تک کاپیاں ہماری سروسز "
+"کے بیک اپ میں رہ سکتی ہیں، پھر وہ بھی ختم ہو جاتی ہیں۔"
+
+#: app/blueprints/marketing/legal.py:170
+msgid ""
+"Guest CVs are never stored. Guest try counts are kept only as long as "
+"needed for the daily limits."
+msgstr ""
+"مہمان کی سی وی کبھی محفوظ نہیں ہوتی۔ مہمان کی کوششوں کی گنتی صرف اتنی دیر"
+" رکھی جاتی ہے جتنی روزانہ حد کے لیے ضروری ہو۔"
+
+#: app/blueprints/marketing/legal.py:174
+msgid "Deleting your account"
+msgstr "اپنا اکاؤنٹ ڈیلیٹ کرنا"
+
+#: app/blueprints/marketing/legal.py:175
+msgid "There is no \"Delete account\" button yet. Until there is one:"
+msgstr "ابھی \"اکاؤنٹ ڈیلیٹ کریں\" کا بٹن موجود نہیں۔ جب تک یہ نہیں آتا:"
+
+#: app/blueprints/marketing/legal.py:177
+#, python-format
+msgid "Send an email to %(email)s from the email address of your account."
+msgstr "اپنے اکاؤنٹ والے ای میل سے %(email)s پر ای میل بھیجیں۔"
+
+#: app/blueprints/marketing/legal.py:178
+msgid "Write \"Delete my account\" in the subject."
+msgstr "سبجیکٹ میں \"Delete my account\" لکھیں۔"
+
+#: app/blueprints/marketing/legal.py:179
+msgid ""
+"We will delete your account and all your data (CVs, notes, expenses, "
+"captions) within 30 days, and reply to confirm."
+msgstr ""
+"ہم 30 دن کے اندر آپ کا اکاؤنٹ اور سارا ڈیٹا (سی ویز، نوٹس، اخراجات، "
+"کیپشنز) ڈیلیٹ کر کے آپ کو جواب میں تصدیق کریں گے۔"
+
+#: app/blueprints/marketing/legal.py:182
+msgid ""
+"You can also delete your notes, expenses and CVs yourself at any time "
+"inside the tools."
+msgstr ""
+"آپ اپنے نوٹس، اخراجات اور سی ویز کسی بھی وقت خود بھی ٹولز کے اندر ڈیلیٹ "
+"کر سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:184
+msgid "Your choices"
+msgstr "آپ کے اختیارات"
+
+#: app/blueprints/marketing/legal.py:186
+msgid "You can see, edit and delete your own data inside the tools."
+msgstr "آپ ٹولز کے اندر اپنا ڈیٹا دیکھ، بدل اور ڈیلیٹ کر سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:187
+msgid ""
+"You can ask us for a copy of your data, or ask us to correct or delete "
+"it, by emailing us."
+msgstr ""
+"آپ ہمیں ای میل کر کے اپنے ڈیٹا کی کاپی مانگ سکتے ہیں، یا اسے درست یا "
+"ڈیلیٹ کروا سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:188
+msgid "You can clear guest data by clearing your browser's site data."
+msgstr "مہمان کا ڈیٹا ختم کرنے کے لیے اپنے براؤزر میں اس سائٹ کا ڈیٹا صاف کر دیں۔"
+
+#: app/blueprints/marketing/legal.py:191
+msgid "Keeping your data safe"
+msgstr "آپ کے ڈیٹا کی حفاظت"
+
+#: app/blueprints/marketing/legal.py:192
+msgid ""
+"We use HTTPS on every page, private storage for CVs, and Row Level "
+"Security on every table. No website can promise perfect security, but we "
+"work hard to protect your data. If something goes wrong that affects your"
+" data, we will tell you."
+msgstr ""
+"ہر صفحے پر HTTPS، سی ویز کے لیے پرائیویٹ اسٹوریج، اور ہر ٹیبل پر Row "
+"Level Security استعمال ہوتی ہے۔ کوئی ویب سائٹ مکمل حفاظت کا وعدہ نہیں کر "
+"سکتی، لیکن ہم آپ کے ڈیٹا کی حفاظت کی پوری کوشش کرتے ہیں۔ اگر کوئی ایسی "
+"خرابی ہو جس سے آپ کا ڈیٹا متاثر ہو تو ہم آپ کو بتائیں گے۔"
+
+#: app/blueprints/marketing/legal.py:196
+msgid "Age limit"
+msgstr "عمر کی حد"
+
+#: app/blueprints/marketing/legal.py:197
+msgid ""
+"Toolverse is only for people aged 18 or older. If you think someone under"
+" 18 has made an account, email us and we will delete it."
+msgstr ""
+"ٹول ورس صرف 18 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔ اگر آپ کو لگے "
+"کہ 18 سال سے کم عمر کسی شخص نے اکاؤنٹ بنایا ہے تو ہمیں ای میل کریں، ہم "
+"اسے ڈیلیٹ کر دیں گے۔"
+
+#: app/blueprints/marketing/legal.py:200
+msgid "Changes to this policy"
+msgstr "اس پالیسی میں تبدیلی"
+
+#: app/blueprints/marketing/legal.py:201
+msgid ""
+"If we change this policy, we will update the date at the top. If the "
+"change is important, we will also show a notice on the site."
+msgstr ""
+"اگر ہم یہ پالیسی بدلیں تو اوپر کی تاریخ بدل دیں گے۔ اگر تبدیلی اہم ہو تو "
+"سائٹ پر اطلاع بھی دکھائیں گے۔"
+
+#: app/blueprints/marketing/legal.py:205
+#, python-format
+msgid "Questions about your privacy? Email %(email)s."
+msgstr "پرائیویسی کے بارے میں سوال؟ %(email)s پر ای میل کریں۔"
+
+#: app/blueprints/marketing/legal.py:212
+msgid "Terms of Service"
+msgstr "استعمال کی شرائط"
+
+#: app/blueprints/marketing/legal.py:213
+msgid ""
+"The simple rules for using Toolverse: free tools, fair daily limits, your"
+" content stays yours, and AI can make mistakes."
+msgstr ""
+"ٹول ورس استعمال کرنے کے آسان اصول: مفت ٹولز، مناسب روزانہ حد، آپ کا مواد "
+"آپ کا ہی رہتا ہے، اور AI غلطی کر سکتا ہے۔"
+
+#: app/blueprints/marketing/legal.py:217
+msgid "1. Agreeing to these terms"
+msgstr "1. شرائط سے اتفاق"
+
+#: app/blueprints/marketing/legal.py:218
+msgid ""
+"By using Toolverse, with or without an account, you agree to these terms."
+" If you do not agree, please do not use Toolverse."
+msgstr ""
+"ٹول ورس استعمال کر کے، اکاؤنٹ کے ساتھ یا اس کے بغیر، آپ ان شرائط سے اتفاق"
+" کرتے ہیں۔ اگر آپ متفق نہیں تو براہ کرم ٹول ورس استعمال نہ کریں۔"
+
+#: app/blueprints/marketing/legal.py:221
+msgid "2. What Toolverse is"
+msgstr "2. ٹول ورس کیا ہے"
+
+#: app/blueprints/marketing/legal.py:222
+msgid ""
+"Toolverse is a free web app with five tools: CV Checker, CV Generator, "
+"Captions, Notes and Expenses. Some tools may still be \"coming soon\". We"
+" may add, change or remove features over time."
+msgstr ""
+"ٹول ورس ایک مفت ویب ایپ ہے جس میں پانچ ٹولز ہیں: سی وی چیکر، سی وی "
+"جنریٹر، کیپشنز، نوٹس اور اخراجات۔ کچھ ٹولز ابھی \"جلد آ رہا ہے\" ہو سکتے "
+"ہیں۔ ہم وقت کے ساتھ فیچرز شامل کر سکتے ہیں، بدل سکتے ہیں یا ہٹا سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:226
+msgid "3. Free to use"
+msgstr "3. مفت استعمال"
+
+#: app/blueprints/marketing/legal.py:228
+msgid ""
+"Toolverse is free. There are no paid plans and we never ask for a credit "
+"card."
+msgstr "ٹول ورس مفت ہے۔ کوئی پیڈ پلان نہیں اور ہم کبھی کریڈٹ کارڈ نہیں مانگتے۔"
+
+#: app/blueprints/marketing/legal.py:229
+msgid ""
+"AI tools have a fair daily limit, and guests get a small number of free "
+"tries, so the service can stay free for everyone. We may change these "
+"limits."
+msgstr ""
+"AI ٹولز کی ایک مناسب روزانہ حد ہے، اور مہمانوں کو چند مفت کوششیں ملتی "
+"ہیں، تاکہ سروس سب کے لیے مفت رہ سکے۔ ہم یہ حدیں بدل سکتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:231
+msgid ""
+"If we ever offer paid features, we will tell you first. We will never "
+"charge you without your clear permission."
+msgstr ""
+"اگر کبھی پیڈ فیچرز آئے تو ہم پہلے بتائیں گے۔ آپ کی واضح اجازت کے بغیر "
+"کبھی پیسے نہیں لیں گے۔"
+
+#: app/blueprints/marketing/legal.py:235
+msgid "4. Your account"
+msgstr "4. آپ کا اکاؤنٹ"
+
+#: app/blueprints/marketing/legal.py:237
+msgid "You must be at least 18 years old."
+msgstr "آپ کی عمر کم از کم 18 سال ہونی چاہیے۔"
+
+#: app/blueprints/marketing/legal.py:238
+msgid "Use a real email address that belongs to you."
+msgstr "اپنا اصلی ای میل استعمال کریں۔"
+
+#: app/blueprints/marketing/legal.py:239
+msgid ""
+"Keep your password safe. You are responsible for what happens in your "
+"account."
+msgstr "اپنا پاس ورڈ محفوظ رکھیں۔ آپ کے اکاؤنٹ میں جو کچھ ہو اس کے ذمہ دار آپ ہیں۔"
+
+#: app/blueprints/marketing/legal.py:240
+msgid "One account is for one person."
+msgstr "ایک اکاؤنٹ ایک شخص کے لیے ہے۔"
+
+#: app/blueprints/marketing/legal.py:243
+msgid "5. Your content"
+msgstr "5. آپ کا مواد"
+
+#: app/blueprints/marketing/legal.py:245
+msgid "What you create or upload (CVs, notes, expenses, captions) belongs to you."
+msgstr ""
+"جو کچھ آپ بناتے یا اپ لوڈ کرتے ہیں (سی ویز، نوٹس، اخراجات، کیپشنز) وہ آپ "
+"کا ہے۔"
+
+#: app/blueprints/marketing/legal.py:246
+msgid ""
+"You give us permission only to store and process it so the tools can work"
+" for you, including sending it to Gemini AI where needed (see the Privacy"
+" Policy)."
+msgstr ""
+"آپ ہمیں صرف اسے محفوظ رکھنے اور استعمال کرنے کی اجازت دیتے ہیں تاکہ ٹولز "
+"آپ کے لیے کام کر سکیں، جس میں ضرورت پڑنے پر اسے Gemini AI کو بھیجنا بھی "
+"شامل ہے (پرائیویسی پالیسی دیکھیں)۔"
+
+#: app/blueprints/marketing/legal.py:248
+msgid ""
+"Only upload content you have the right to use. Do not upload other "
+"people's personal data without their permission."
+msgstr ""
+"صرف وہ مواد اپ لوڈ کریں جس کے استعمال کا آپ کو حق ہو۔ دوسروں کا ذاتی ڈیٹا"
+" ان کی اجازت کے بغیر اپ لوڈ نہ کریں۔"
+
+#: app/blueprints/marketing/legal.py:252
+msgid "6. AI results"
+msgstr "6. AI کے نتائج"
+
+#: app/blueprints/marketing/legal.py:254
+msgid ""
+"The CV score, tips, captions and writing help come from AI. AI can make "
+"mistakes. Check everything before you use it."
+msgstr ""
+"سی وی اسکور، مشورے، کیپشنز اور لکھنے میں مدد AI سے آتی ہے۔ AI غلطی کر "
+"سکتا ہے۔ استعمال سے پہلے ہر چیز خود چیک کریں۔"
+
+#: app/blueprints/marketing/legal.py:256
+msgid ""
+"The CV Checker gives a score and tips. It does not rewrite your CV, and "
+"it cannot promise you a job or an interview."
+msgstr ""
+"سی وی چیکر اسکور اور مشورے دیتا ہے۔ یہ آپ کی سی وی دوبارہ نہیں لکھتا، اور"
+" نوکری یا انٹرویو کا وعدہ نہیں کر سکتا۔"
+
+#: app/blueprints/marketing/legal.py:258
+msgid ""
+"Toolverse never posts on social media for you and does not connect to "
+"your social media accounts. You choose what to post."
+msgstr ""
+"ٹول ورس کبھی آپ کی طرف سے سوشل میڈیا پر پوسٹ نہیں کرتا اور آپ کے سوشل "
+"میڈیا اکاؤنٹس سے نہیں جڑتا۔ کیا پوسٹ کرنا ہے، یہ آپ خود چنتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:262
+msgid "7. Fair use"
+msgstr "7. مناسب استعمال"
+
+#: app/blueprints/marketing/legal.py:263
+msgid "Please do not:"
+msgstr "براہ کرم یہ نہ کریں:"
+
+#: app/blueprints/marketing/legal.py:265
+msgid "break the law, or use Toolverse to harm, cheat or harass anyone;"
+msgstr ""
+"قانون توڑنا، یا ٹول ورس کو کسی کو نقصان پہنچانے، دھوکا دینے یا تنگ کرنے "
+"کے لیے استعمال کرنا؛"
+
+#: app/blueprints/marketing/legal.py:266
+msgid ""
+"try to get around the daily limits, for example with many accounts or "
+"automated scripts;"
+msgstr "روزانہ حد سے بچنے کی کوشش، مثلاً بہت سے اکاؤنٹس یا خودکار اسکرپٹس سے؛"
+
+#: app/blueprints/marketing/legal.py:267
+msgid ""
+"try to break into Toolverse, other people's accounts, or our providers' "
+"systems;"
+msgstr "ٹول ورس، دوسروں کے اکاؤنٹس یا ہماری سروسز کے سسٹمز میں گھسنے کی کوشش؛"
+
+#: app/blueprints/marketing/legal.py:268
+msgid "upload viruses or harmful files;"
+msgstr "وائرس یا نقصان دہ فائلیں اپ لوڈ کرنا؛"
+
+#: app/blueprints/marketing/legal.py:269
+msgid "use Toolverse to send spam."
+msgstr "ٹول ورس سے اسپیم بھیجنا۔"
+
+#: app/blueprints/marketing/legal.py:272
+msgid "8. Availability and backups"
+msgstr "8. دستیابی اور بیک اپ"
+
+#: app/blueprints/marketing/legal.py:273
+msgid ""
+"We try to keep Toolverse working well, but because it is a free service "
+"we cannot promise it will always be available or free of errors. "
+"Toolverse is provided \"as is\". Please keep your own copy of important "
+"files, such as your final CV PDF."
+msgstr ""
+"ہم کوشش کرتے ہیں کہ ٹول ورس ٹھیک چلتا رہے، لیکن چونکہ یہ مفت سروس ہے، ہم "
+"وعدہ نہیں کر سکتے کہ یہ ہمیشہ دستیاب اور بغیر خرابی کے ہو گی۔ ٹول ورس "
+"\"جیسا ہے\" کی بنیاد پر دیا جاتا ہے۔ اہم فائلوں کی اپنی کاپی ضرور رکھیں، "
+"جیسے اپنی سی وی کی آخری PDF۔"
+
+#: app/blueprints/marketing/legal.py:277
+msgid "9. Limits on our responsibility"
+msgstr "9. ہماری ذمہ داری کی حد"
+
+#: app/blueprints/marketing/legal.py:278
+msgid ""
+"As far as the law allows, Toolverse is not responsible for indirect "
+"losses, such as a missed job opportunity or lost data, that come from "
+"using or not being able to use the service."
+msgstr ""
+"جہاں تک قانون اجازت دے، ٹول ورس سروس کے استعمال یا استعمال نہ کر سکنے سے "
+"ہونے والے بالواسطہ نقصان کا ذمہ دار نہیں، جیسے نوکری کا موقع ہاتھ سے جانا"
+" یا ڈیٹا ضائع ہونا۔"
+
+#: app/blueprints/marketing/legal.py:281
+msgid "10. Ending your use"
+msgstr "10. استعمال ختم کرنا"
+
+#: app/blueprints/marketing/legal.py:283
+msgid ""
+"You can stop using Toolverse at any time and ask us to delete your "
+"account (see the Privacy Policy)."
+msgstr ""
+"آپ کسی بھی وقت ٹول ورس کا استعمال چھوڑ سکتے ہیں اور اپنا اکاؤنٹ ڈیلیٹ "
+"کروا سکتے ہیں (پرائیویسی پالیسی دیکھیں)۔"
+
+#: app/blueprints/marketing/legal.py:285
+msgid ""
+"We may suspend or close an account that breaks these terms. Where "
+"possible, we will tell you why."
+msgstr ""
+"جو اکاؤنٹ ان شرائط کو توڑے، ہم اسے روک یا بند کر سکتے ہیں۔ جہاں ممکن ہو، "
+"ہم وجہ بتائیں گے۔"
+
+#: app/blueprints/marketing/legal.py:289
+msgid "11. Changes to these terms"
+msgstr "11. شرائط میں تبدیلی"
+
+#: app/blueprints/marketing/legal.py:290
+msgid ""
+"If we change these terms, we will update the date at the top. If the "
+"change is important, we will show a notice on the site. If you keep using"
+" Toolverse after a change, it means you accept the new terms."
+msgstr ""
+"اگر ہم یہ شرائط بدلیں تو اوپر کی تاریخ بدل دیں گے۔ اگر تبدیلی اہم ہو تو "
+"سائٹ پر اطلاع دکھائیں گے۔ تبدیلی کے بعد ٹول ورس استعمال کرتے رہنے کا مطلب"
+" ہے کہ آپ نئی شرائط مانتے ہیں۔"
+
+#: app/blueprints/marketing/legal.py:294
+msgid "12. Law"
+msgstr "12. قانون"
+
+#: app/blueprints/marketing/legal.py:295
+msgid "These terms follow the laws of Pakistan."
+msgstr "یہ شرائط پاکستان کے قوانین کے تحت ہیں۔"
+
+#: app/blueprints/marketing/legal.py:297
+msgid "13. Contact"
+msgstr "13. رابطہ"
+
+#: app/blueprints/marketing/legal.py:298
+#, python-format
+msgid "Questions? Email %(email)s."
+msgstr "سوال؟ %(email)s پر ای میل کریں۔"
 
 #: app/blueprints/marketing/tool_articles.py:19
 msgid "What is the CV Checker?"
@@ -2924,9 +3639,9 @@ msgstr ""
 msgid "Create account"
 msgstr "اکاؤنٹ بنائیں"
 
-#: app/templates/auth/signup.html:27
-msgid "Privacy Policy"
-msgstr "پرائیویسی پالیسی"
+#: app/templates/auth/signup.html:26 app/templates/partials/footer.html:6
+msgid "Terms"
+msgstr "شرائط"
 
 #: app/templates/auth/signup.html:28
 #, python-format
@@ -3009,6 +3724,15 @@ msgstr "ٹولز دیکھیں"
 #: app/templates/marketing/index.html:3
 msgid "Toolverse — Free tools for work and life"
 msgstr "ٹول ورس — کام اور زندگی کے لیے مفت ٹولز"
+
+#: app/templates/marketing/legal.html:15
+msgid "Legal"
+msgstr "قانونی"
+
+#: app/templates/marketing/legal.html:17
+#, python-format
+msgid "Last updated: %(date)s"
+msgstr "آخری تبدیلی: %(date)s"
 
 #: app/templates/marketing/sections/cta.html:3
 msgid "Start free"
@@ -3309,6 +4033,10 @@ msgstr "اس کیٹیگری میں ابھی کوئی ٹول نہیں۔"
 #: app/templates/partials/flash_messages.html:12
 msgid "Close"
 msgstr "بند کریں"
+
+#: app/templates/partials/footer.html:5
+msgid "Privacy"
+msgstr "پرائیویسی"
 
 #: app/templates/partials/footer.html:9
 #, python-format

@@ -23,8 +23,8 @@
     {{ submit_button(_('Create account')) }}
   </form>
   <p class="mt-5 text-center text-[12px] text-faint">
-    {% set terms %}<a href="{{ url_for('marketing.coming_soon', page='terms') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Terms') }}</a>{% endset %}
-    {% set privacy %}<a href="{{ url_for('marketing.coming_soon', page='privacy') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Privacy Policy') }}</a>{% endset %}
+    {% set terms %}<a href="{{ url_for('marketing.terms') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Terms') }}</a>{% endset %}
+    {% set privacy %}<a href="{{ url_for('marketing.privacy') }}" class="underline underline-offset-2 hover:text-fg">{{ _('Privacy Policy') }}</a>{% endset %}
     {{ _('By signing up you agree to our %(terms)s and %(privacy)s.', terms=terms, privacy=privacy) }}
   </p>
 {% endblock %}

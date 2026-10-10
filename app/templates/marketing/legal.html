@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{# Privacy Policy and Terms of Service. The text lives in blueprints/marketing/legal.py. #}
+
+{% block title %}{{ page.title }} | Toolverse{% endblock %}
+{% block description %}{{ page.meta_description }}{% endblock %}
+
+{% block content %}
+  {# Placeholders in the text: %(email)s -> contact email link, %(cookie)s -> our cookie's name. #}
+  {% set email_link %}<a href="mailto:{{ config.CONTACT_EMAIL }}" dir="ltr">{{ config.CONTACT_EMAIL }}</a>{% endset %}
+  {% set cookie_name %}<code dir="ltr">{{ config.SESSION_COOKIE_NAME }}</code>{% endset %}
+
+  <section class="relative overflow-hidden">
+    <div class="page-glow" aria-hidden="true"></div>
+    <div class="container-page relative pt-16 text-center sm:pt-24 animate-fade-in">
+      <p class="label-mono">{{ _('Legal') }}</p>
+      <h1 class="heading mt-4 text-[44px] sm:text-6xl lg:text-7xl">{{ page.title }}</h1>
+      <p class="mt-5 text-[13px] text-faint">{{ _('Last updated: %(date)s', date=page.updated | dateformat('long')) }}</p>
+    </div>
+  </section>
+
+  <section class="container-page mt-14 sm:mt-20">
+    <article class="guide mx-auto max-w-[720px] text-start">
+      {% for block in page.blocks %}
+        {% if block.kind == "table" %}
+          <table class="guide-table">
+            <thead><tr>{% for cell in block.header %}<th scope="col">{{ cell }}</th>{% endfor %}</tr></thead>
+            <tbody>
+              {% for name, purpose in block.items %}
+                <tr><td>{{ name }}</td><td>{{ purpose }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% elif block.kind in ("ul", "ol") %}
+          <{{ block.kind }}>
+            {% for item in block.items %}
+              <li>{{ (item | string | e) | replace("%(email)s", email_link) | replace("%(cookie)s", cookie_name) }}</li>
+            {% endfor %}
+          </{{ block.kind }}>
+        {% else %}
+          {% set html = (block.text | string | e) | replace("%(email)s", email_link) | replace("%(cookie)s", cookie_name) %}
+          {% if block.kind == "note" %}
+            <p class="guide-note" role="note">{{ html }}</p>
+          {% else %}
+            <{{ block.kind }}>{{ html }}</{{ block.kind }}>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="mt-14 border-t border-line pt-8">
+        <a href="{{ url_for(other_page.endpoint) }}" class="btn-secondary no-underline">{{ other_page.title }}</a>
+      </div>
+    </article>
+  </section>
+{% endblock %}

@@ -66,14 +66,6 @@ FAQS = (
 )
 
 COMING_SOON_PAGES = {
-    "privacy": ComingSoonPage(
-        _l("Privacy"),
-        _l("We are writing a clear, simple privacy policy. It will be here soon."),
-    ),
-    "terms": ComingSoonPage(
-        _l("Terms"),
-        _l("We are writing simple, fair terms of use. They will be here soon."),
-    ),
     "contact": ComingSoonPage(
         _l("Contact"),
         _l("A contact page is on its way. It will be here soon."),
