@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-10 18:15+0500\n"
+"POT-Creation-Date: 2026-10-10 19:39+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ur\n"
@@ -121,7 +121,11 @@ msgstr "آپ کا سیشن ختم ہو گیا ہے۔ براہ کرم دوبار�
 msgid "Login isn't available right now. Please try again in a few minutes."
 msgstr "لاگ ان ابھی دستیاب نہیں۔ براہ کرم چند منٹ بعد کوشش کریں۔"
 
-#: app/blueprints/auth/messages.py:17 app/blueprints/tools/notes/messages.py:11
+#: app/blueprints/auth/messages.py:17
+#: app/blueprints/tools/captions/messages.py:16
+#: app/blueprints/tools/expenses/messages.py:13
+#: app/blueprints/tools/notes/messages.py:11
+#: app/templates/tools/captions/index.html:24
 msgid "Something went wrong. Please try again."
 msgstr "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
 
@@ -157,24 +161,30 @@ msgstr "سی وی جنریٹر"
 
 #: app/blueprints/marketing/content.py:30
 #: app/blueprints/marketing/tools_catalog.py:233
+#: app/templates/tools/captions/index.html:8
+#: app/templates/tools/captions/index.html:42
 msgid "Captions"
 msgstr "کیپشنز"
 
 #: app/blueprints/marketing/content.py:31
-#: app/blueprints/marketing/tools_catalog.py:290
+#: app/blueprints/marketing/tools_catalog.py:292
 #: app/templates/tools/notes/index.html:9
 #: app/templates/tools/notes/index.html:33
 msgid "Notes"
 msgstr "نوٹس"
 
 #: app/blueprints/marketing/content.py:32
-#: app/blueprints/marketing/tools_catalog.py:347
+#: app/blueprints/marketing/tools_catalog.py:349
+#: app/templates/tools/expenses/index.html:8
+#: app/templates/tools/expenses/index.html:37
 msgid "Expenses"
 msgstr "اخراجات"
 
 #: app/blueprints/marketing/content.py:36 app/templates/auth/login.html:29
 #: app/templates/partials/navbar.html:36 app/templates/partials/navbar.html:61
-#: app/templates/partials/sidebar.html:72
+#: app/templates/partials/sidebar.html:75
+#: app/templates/tools/captions/index.html:55
+#: app/templates/tools/expenses/index.html:50
 #: app/templates/tools/notes/index.html:46
 msgid "Sign up free"
 msgstr "مفت سائن اپ کریں"
@@ -224,16 +234,17 @@ msgstr ""
 " اے آئی ٹولز کی ایک مناسب روزانہ حد ہے تاکہ یہ سب کے لیے مفت رہیں۔"
 
 #: app/blueprints/marketing/content.py:54
-msgid "Why do I need to log in?"
-msgstr "مجھے لاگ ان کیوں کرنا ہوگا؟"
+msgid "Do I need to log in?"
+msgstr "کیا لاگ اِن کرنا ضروری ہے؟"
 
 #: app/blueprints/marketing/content.py:55
 msgid ""
-"So your CVs, notes and expenses are saved to your own account and stay "
-"private to you, on any device."
+"No. You can try the tools without an account. Log in when you want your "
+"work saved to your own account, private to you and on any device."
 msgstr ""
-"تاکہ آپ کی سی وی، نوٹس اور اخراجات آپ کے اپنے اکاؤنٹ میں محفوظ رہیں اور "
-"صرف آپ تک محدود رہیں، کسی بھی ڈیوائس پر۔"
+"نہیں۔ آپ اکاؤنٹ کے بغیر بھی ٹولز آزما سکتے ہیں۔ جب آپ چاہیں کہ آپ کا کام "
+"آپ کے اپنے اکاؤنٹ میں محفوظ ہو، صرف آپ کے لیے اور ہر ڈیوائس پر، تو لاگ "
+"اِن کر لیں۔"
 
 #: app/blueprints/marketing/content.py:59
 msgid "Is my CV safe?"
@@ -1840,8 +1851,8 @@ msgstr ""
 
 #: app/blueprints/marketing/tool_articles.py:145
 #: app/blueprints/marketing/tools_catalog.py:203
-#: app/blueprints/marketing/tools_catalog.py:318
-#: app/blueprints/marketing/tools_catalog.py:375
+#: app/blueprints/marketing/tools_catalog.py:320
+#: app/blueprints/marketing/tools_catalog.py:377
 msgid "Private to you"
 msgstr "صرف آپ کے لیے"
 
@@ -2377,7 +2388,7 @@ msgid "Ready to download"
 msgstr "ڈاؤن لوڈ کے لیے تیار"
 
 #: app/blueprints/marketing/tools_catalog.py:134
-#: app/blueprints/marketing/tools_catalog.py:306
+#: app/blueprints/marketing/tools_catalog.py:308
 msgid "Saved to your account"
 msgstr "آپ کے اکاؤنٹ میں محفوظ"
 
@@ -2844,6 +2855,7 @@ msgid "Instagram · LinkedIn"
 msgstr "انسٹاگرام · لنکڈ اِن"
 
 #: app/blueprints/marketing/tools_catalog.py:248
+#: app/templates/tools/captions/index.html:101
 msgid "Writing your captions…"
 msgstr "آپ کے کیپشن لکھے جا رہے ہیں…"
 
@@ -2866,6 +2878,7 @@ msgstr "[اے آئی کا کیپشن ۱]"
 #: app/blueprints/marketing/tools_catalog.py:251
 #: app/blueprints/marketing/tools_catalog.py:252
 #: app/blueprints/marketing/tools_catalog.py:253
+#: app/templates/tools/captions/index.html:26
 msgid "Copy"
 msgstr "کاپی"
 
@@ -3021,11 +3034,11 @@ msgstr ""
 "نہیں۔ آپ کیپشن کاپی کر کے خود انسٹاگرام یا لنکڈ اِن پر لگاتے ہیں۔ ٹول ورس"
 " آپ کے سوشل میڈیا اکاؤنٹس سے نہیں جڑتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:293
+#: app/blueprints/marketing/tools_catalog.py:295
 msgid "Free Online Notes – Write, Edit and Search"
 msgstr "مفت آن لائن نوٹس – لکھیں، بدلیں اور تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:294
+#: app/blueprints/marketing/tools_catalog.py:296
 msgid ""
 "Write notes, edit them anytime and find any note with search. Saved in "
 "your account and on every device."
@@ -3033,11 +3046,11 @@ msgstr ""
 "نوٹس لکھیں، جب چاہیں بدلیں اور سرچ سے کوئی بھی نوٹ ڈھونڈیں۔ آپ کے اکاؤنٹ "
 "میں محفوظ اور ہر ڈیوائس پر۔"
 
-#: app/blueprints/marketing/tools_catalog.py:296
+#: app/blueprints/marketing/tools_catalog.py:298
 msgid "Write, edit and search your notes from any device."
 msgstr "کسی بھی ڈیوائس سے اپنے نوٹس لکھیں، بدلیں اور تلاش کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:297
+#: app/blueprints/marketing/tools_catalog.py:299
 msgid ""
 "Write notes, edit them anytime and find any note fast with search. Your "
 "notes are saved in your account, so they are on every device you use."
@@ -3046,150 +3059,152 @@ msgstr ""
 "ڈھونڈیں۔ آپ کے نوٹس آپ کے اکاؤنٹ میں محفوظ رہتے ہیں، اس لیے ہر ڈیوائس پر "
 "موجود ہوتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:300
+#: app/blueprints/marketing/tools_catalog.py:302
 msgid "1 · Write"
 msgstr "۱ · لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:300
+#: app/blueprints/marketing/tools_catalog.py:302
 msgid "2 · Save"
 msgstr "۲ · محفوظ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:300
+#: app/blueprints/marketing/tools_catalog.py:302
 msgid "3 · Search"
 msgstr "۳ · تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:302
-#: app/blueprints/marketing/tools_catalog.py:309
+#: app/blueprints/marketing/tools_catalog.py:304
+#: app/blueprints/marketing/tools_catalog.py:311
 msgid "[Meeting notes]"
 msgstr "[میٹنگ نوٹس]"
 
-#: app/blueprints/marketing/tools_catalog.py:303
+#: app/blueprints/marketing/tools_catalog.py:305
 msgid "[Your note text…]"
 msgstr "[آپ کے نوٹ کا متن…]"
 
-#: app/blueprints/marketing/tools_catalog.py:305
+#: app/blueprints/marketing/tools_catalog.py:307
 msgid "Saving your note…"
 msgstr "آپ کا نوٹ محفوظ ہو رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:306
+#: app/blueprints/marketing/tools_catalog.py:308
 msgid "Ready on all your devices"
 msgstr "آپ کی ہر ڈیوائس پر دستیاب"
 
-#: app/blueprints/marketing/tools_catalog.py:308
+#: app/blueprints/marketing/tools_catalog.py:310
 msgid "[meeting]"
 msgstr "[میٹنگ]"
 
-#: app/blueprints/marketing/tools_catalog.py:313
+#: app/blueprints/marketing/tools_catalog.py:315
 msgid "Write fast"
 msgstr "فوراً لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:313
+#: app/blueprints/marketing/tools_catalog.py:315
 msgid "Open a new note and start typing."
 msgstr "نیا نوٹ کھولیں اور لکھنا شروع کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:314
+#: app/blueprints/marketing/tools_catalog.py:316
 msgid "Edit anytime"
 msgstr "کبھی بھی ترمیم"
 
-#: app/blueprints/marketing/tools_catalog.py:314
+#: app/blueprints/marketing/tools_catalog.py:316
 msgid "Change your notes whenever you need."
 msgstr "اپنے نوٹس جب چاہیں بدلیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:315
+#: app/blueprints/marketing/tools_catalog.py:317
 msgid "Quick search"
 msgstr "تیز تلاش"
 
-#: app/blueprints/marketing/tools_catalog.py:315
+#: app/blueprints/marketing/tools_catalog.py:317
 msgid "Find any note in seconds with search."
 msgstr "سرچ سے کوئی بھی نوٹ جلدی ڈھونڈیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:316
+#: app/blueprints/marketing/tools_catalog.py:318
+#: app/templates/tools/captions/index.html:37
+#: app/templates/tools/expenses/index.html:222
 #: app/templates/tools/notes/index.html:102
 msgid "Delete"
 msgstr "ڈیلیٹ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:316
+#: app/blueprints/marketing/tools_catalog.py:318
 msgid "Remove notes you no longer need."
 msgstr "جن نوٹس کی ضرورت نہ ہو انہیں ہٹا دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:317
-#: app/blueprints/marketing/tools_catalog.py:376
+#: app/blueprints/marketing/tools_catalog.py:319
+#: app/blueprints/marketing/tools_catalog.py:378
 msgid "On every device"
 msgstr "ہر ڈیوائس پر"
 
-#: app/blueprints/marketing/tools_catalog.py:317
+#: app/blueprints/marketing/tools_catalog.py:319
 msgid "Log in anywhere and your notes are there."
 msgstr "کہیں بھی لاگ ان کریں، آپ کے نوٹس وہاں ہوں گے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:318
+#: app/blueprints/marketing/tools_catalog.py:320
 msgid "Only you can see your notes."
 msgstr "آپ کے نوٹس صرف آپ دیکھ سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:321
+#: app/blueprints/marketing/tools_catalog.py:323
 msgid "Create a note"
 msgstr "نوٹ بنائیں"
 
-#: app/blueprints/marketing/tools_catalog.py:321
+#: app/blueprints/marketing/tools_catalog.py:323
 msgid "Write a title and your text."
 msgstr "عنوان اور اپنا متن لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:322
+#: app/blueprints/marketing/tools_catalog.py:324
 msgid "Edit or delete it"
 msgstr "ترمیم یا ڈیلیٹ کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:322
+#: app/blueprints/marketing/tools_catalog.py:324
 msgid "Change it or remove it when you need to."
 msgstr "جب ضرورت ہو اسے بدلیں یا ہٹا دیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:323
+#: app/blueprints/marketing/tools_catalog.py:325
 msgid "Search when you need it"
 msgstr "ضرورت پر تلاش کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:323
+#: app/blueprints/marketing/tools_catalog.py:325
 msgid "Type a word to find a note."
 msgstr "کوئی لفظ لکھیں اور نوٹ ڈھونڈیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:326
+#: app/blueprints/marketing/tools_catalog.py:328
 msgid "Who can see my notes?"
 msgstr "میرے نوٹس کون دیکھ سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:327
-#: app/blueprints/marketing/tools_catalog.py:388
+#: app/blueprints/marketing/tools_catalog.py:329
+#: app/blueprints/marketing/tools_catalog.py:390
 msgid "Only you."
 msgstr "صرف آپ۔"
 
-#: app/blueprints/marketing/tools_catalog.py:328
-#: app/blueprints/marketing/tools_catalog.py:397
+#: app/blueprints/marketing/tools_catalog.py:330
+#: app/blueprints/marketing/tools_catalog.py:399
 msgid "Does it work on my phone?"
 msgstr "کیا یہ فون پر چلتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:329
-#: app/blueprints/marketing/tools_catalog.py:398
+#: app/blueprints/marketing/tools_catalog.py:331
+#: app/blueprints/marketing/tools_catalog.py:400
 msgid "Yes. It works in the browser on phone, tablet and laptop."
 msgstr "جی ہاں۔ یہ فون، ٹیبلٹ اور لیپ ٹاپ کے براؤزر میں چلتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:330
+#: app/blueprints/marketing/tools_catalog.py:332
 msgid "Do I need to install an app?"
 msgstr "کیا کوئی ایپ انسٹال کرنی ہوگی؟"
 
-#: app/blueprints/marketing/tools_catalog.py:331
+#: app/blueprints/marketing/tools_catalog.py:333
 msgid "No. Toolverse works in your web browser."
 msgstr "نہیں۔ ٹول ورس آپ کے ویب براؤزر میں چلتا ہے۔"
 
-#: app/blueprints/marketing/tools_catalog.py:332
+#: app/blueprints/marketing/tools_catalog.py:334
 msgid "Is Notes free?"
 msgstr "کیا نوٹس مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:333
-#: app/blueprints/marketing/tools_catalog.py:390
+#: app/blueprints/marketing/tools_catalog.py:335
+#: app/blueprints/marketing/tools_catalog.py:392
 msgid "Yes, completely free."
 msgstr "جی ہاں، مکمل طور پر مفت۔"
 
-#: app/blueprints/marketing/tools_catalog.py:334
+#: app/blueprints/marketing/tools_catalog.py:336
 msgid "Can I use Notes without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر نوٹس استعمال ہو سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:335
+#: app/blueprints/marketing/tools_catalog.py:337
 msgid ""
 "Yes. Notes you write as a guest are kept in this browser only. Create a "
 "free account to move them to your account and open them on other devices."
@@ -3198,19 +3213,19 @@ msgstr ""
 "اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر کھولنے کے لیے مفت اکاؤنٹ "
 "بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:336
+#: app/blueprints/marketing/tools_catalog.py:338
 msgid "Can I search inside my notes?"
 msgstr "کیا نوٹس کے اندر تلاش ہو سکتی ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:337
+#: app/blueprints/marketing/tools_catalog.py:339
 msgid "Yes. Type any word and Notes shows the notes that contain it."
 msgstr "جی ہاں۔ کوئی بھی لفظ لکھیں اور نوٹس وہ نوٹ دکھا دیتا ہے جن میں وہ لفظ ہو۔"
 
-#: app/blueprints/marketing/tools_catalog.py:338
+#: app/blueprints/marketing/tools_catalog.py:340
 msgid "Can I get back a deleted note?"
 msgstr "کیا ڈیلیٹ کیا ہوا نوٹ واپس مل سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:339
+#: app/blueprints/marketing/tools_catalog.py:341
 msgid ""
 "No. When you delete a note it is removed, so only delete notes you no "
 "longer need."
@@ -3218,11 +3233,11 @@ msgstr ""
 "نہیں۔ ڈیلیٹ کرنے پر نوٹ ختم ہو جاتا ہے، اس لیے صرف وہی نوٹس ڈیلیٹ کریں جن"
 " کی ضرورت نہ ہو۔"
 
-#: app/blueprints/marketing/tools_catalog.py:350
+#: app/blueprints/marketing/tools_catalog.py:352
 msgid "Free Expense Tracker – Daily List and Monthly Total"
 msgstr "مفت خرچ ٹریکر – روزانہ فہرست اور ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:351
+#: app/blueprints/marketing/tools_catalog.py:353
 msgid ""
 "Log what you spend each day and see your monthly total. Simple, private "
 "and with no bank connection."
@@ -3230,11 +3245,11 @@ msgstr ""
 "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔ سادہ، نجی اور بینک سے "
 "جوڑے بغیر۔"
 
-#: app/blueprints/marketing/tools_catalog.py:353
+#: app/blueprints/marketing/tools_catalog.py:355
 msgid "Log daily spending and see your monthly total."
 msgstr "روزانہ کا خرچ لکھیں اور اپنا ماہانہ کُل دیکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:354
+#: app/blueprints/marketing/tools_catalog.py:356
 msgid ""
 "Add what you spend each day and see your total for the month. Simple "
 "tracking, saved in your account."
@@ -3242,147 +3257,151 @@ msgstr ""
 "روزانہ کا خرچ لکھیں اور مہینے کا کُل دیکھیں۔ سادہ حساب، آپ کے اکاؤنٹ میں "
 "محفوظ۔"
 
-#: app/blueprints/marketing/tools_catalog.py:357
+#: app/blueprints/marketing/tools_catalog.py:359
 msgid "1 · Add an expense"
 msgstr "۱ · خرچ لکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:357
+#: app/blueprints/marketing/tools_catalog.py:359
 msgid "2 · Saved"
 msgstr "۲ · محفوظ"
 
-#: app/blueprints/marketing/tools_catalog.py:357
+#: app/blueprints/marketing/tools_catalog.py:359
 msgid "3 · Monthly total"
 msgstr "۳ · ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:359
+#: app/blueprints/marketing/tools_catalog.py:361
 msgid "[Groceries]"
 msgstr "[سودا سلف]"
 
-#: app/blueprints/marketing/tools_catalog.py:360
+#: app/blueprints/marketing/tools_catalog.py:362
 msgid "[Amount]"
 msgstr "[رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:360
+#: app/blueprints/marketing/tools_catalog.py:362
+#: app/templates/tools/expenses/index.html:155
 msgid "Add"
 msgstr "شامل کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:362
+#: app/blueprints/marketing/tools_catalog.py:364
 msgid "Adding your expense…"
 msgstr "آپ کا خرچ شامل ہو رہا ہے…"
 
-#: app/blueprints/marketing/tools_catalog.py:363
+#: app/blueprints/marketing/tools_catalog.py:365
 msgid "Saved to this month"
 msgstr "اس مہینے میں محفوظ"
 
-#: app/blueprints/marketing/tools_catalog.py:363
+#: app/blueprints/marketing/tools_catalog.py:365
 msgid "Updating your total"
 msgstr "آپ کا کُل اپ ڈیٹ ہو رہا ہے"
 
-#: app/blueprints/marketing/tools_catalog.py:364
+#: app/blueprints/marketing/tools_catalog.py:366
 msgid "This month"
 msgstr "اس مہینے"
 
-#: app/blueprints/marketing/tools_catalog.py:364
+#: app/blueprints/marketing/tools_catalog.py:366
 msgid "[Total]"
 msgstr "[کُل]"
 
-#: app/blueprints/marketing/tools_catalog.py:366
+#: app/blueprints/marketing/tools_catalog.py:368
 msgid "[Groceries] · [Amount]"
 msgstr "[سودا سلف] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:367
+#: app/blueprints/marketing/tools_catalog.py:369
 msgid "[Transport] · [Amount]"
 msgstr "[سفر] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:368
+#: app/blueprints/marketing/tools_catalog.py:370
 msgid "[Bills] · [Amount]"
 msgstr "[بل] · [رقم]"
 
-#: app/blueprints/marketing/tools_catalog.py:372
+#: app/blueprints/marketing/tools_catalog.py:374
 msgid "Quick entry"
 msgstr "جلدی اندراج"
 
-#: app/blueprints/marketing/tools_catalog.py:372
+#: app/blueprints/marketing/tools_catalog.py:374
 msgid "Add an expense in a few seconds."
 msgstr "چند سیکنڈز میں خرچ شامل کریں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:373
+#: app/blueprints/marketing/tools_catalog.py:375
+#: app/templates/tools/expenses/index.html:97
 msgid "Monthly total"
 msgstr "ماہانہ کُل"
 
-#: app/blueprints/marketing/tools_catalog.py:373
+#: app/blueprints/marketing/tools_catalog.py:375
 msgid "See how much you spent this month."
 msgstr "دیکھیں کہ اس مہینے کتنا خرچ ہوا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:374
+#: app/blueprints/marketing/tools_catalog.py:376
 msgid "Daily list"
 msgstr "روزانہ فہرست"
 
-#: app/blueprints/marketing/tools_catalog.py:374
+#: app/blueprints/marketing/tools_catalog.py:376
 msgid "See your expenses listed by day."
 msgstr "اپنے اخراجات دن کے حساب سے دیکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:375
+#: app/blueprints/marketing/tools_catalog.py:377
 msgid "Only you can see your spending."
 msgstr "آپ کا حساب صرف آپ دیکھ سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:376
+#: app/blueprints/marketing/tools_catalog.py:378
 msgid "Add expenses from your phone or laptop."
 msgstr "فون یا لیپ ٹاپ، کہیں سے بھی خرچ لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:377
+#: app/blueprints/marketing/tools_catalog.py:379
 msgid "No bank link"
 msgstr "بینک سے کوئی تعلق نہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:377
+#: app/blueprints/marketing/tools_catalog.py:379
 msgid "You add expenses yourself; no bank account is connected."
 msgstr "آپ خود خرچ لکھتے ہیں، کوئی بینک اکاؤنٹ نہیں جوڑا جاتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:380
+#: app/blueprints/marketing/tools_catalog.py:382
+#: app/templates/tools/expenses/index.html:107
+#: app/templates/tools/expenses/index.html:108
 msgid "Add an expense"
 msgstr "خرچ شامل کریں"
 
-#: app/blueprints/marketing/tools_catalog.py:380
+#: app/blueprints/marketing/tools_catalog.py:382
 msgid "Enter the amount and what it was for."
 msgstr "رقم اور یہ کہ کس چیز پر خرچ ہوا لکھیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:381
+#: app/blueprints/marketing/tools_catalog.py:383
 msgid "Keep adding daily"
 msgstr "روزانہ لکھتے رہیں"
 
-#: app/blueprints/marketing/tools_catalog.py:381
+#: app/blueprints/marketing/tools_catalog.py:383
 msgid "It takes a minute a day."
 msgstr "ہر دن کا خرچ ایک منٹ میں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:382
+#: app/blueprints/marketing/tools_catalog.py:384
 msgid "Check your monthly total"
 msgstr "ماہانہ کُل دیکھیں"
 
-#: app/blueprints/marketing/tools_catalog.py:382
+#: app/blueprints/marketing/tools_catalog.py:384
 msgid "See where your money went."
 msgstr "جانیں آپ کا پیسہ کہاں گیا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:385
+#: app/blueprints/marketing/tools_catalog.py:387
 msgid "Does it connect to my bank?"
 msgstr "کیا یہ میرے بینک سے جڑتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:386
+#: app/blueprints/marketing/tools_catalog.py:388
 msgid "No. You add expenses yourself, so nothing is linked to your bank."
 msgstr "نہیں۔ آپ خود خرچ لکھتے ہیں، اس لیے کچھ بھی آپ کے بینک سے نہیں جڑا ہوتا۔"
 
-#: app/blueprints/marketing/tools_catalog.py:387
+#: app/blueprints/marketing/tools_catalog.py:389
 msgid "Who can see my expenses?"
 msgstr "میرا حساب کون دیکھ سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:389
+#: app/blueprints/marketing/tools_catalog.py:391
 msgid "Is it free?"
 msgstr "کیا یہ مفت ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:391
+#: app/blueprints/marketing/tools_catalog.py:393
 msgid "Can I use it without an account?"
 msgstr "کیا اکاؤنٹ کے بغیر استعمال ہو سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:392
+#: app/blueprints/marketing/tools_catalog.py:394
 msgid ""
 "Yes. Expenses you add as a guest are kept in this browser only. Create a "
 "free account to move them to your account and see them on other devices."
@@ -3391,25 +3410,116 @@ msgstr ""
 "انہیں اپنے اکاؤنٹ میں منتقل کرنے اور دوسری ڈیوائسز پر دیکھنے کے لیے مفت "
 "اکاؤنٹ بنائیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:393
+#: app/blueprints/marketing/tools_catalog.py:395
 msgid "Can I edit or delete an expense?"
 msgstr "کیا خرچ میں تبدیلی یا اسے ڈیلیٹ کیا جا سکتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:394
+#: app/blueprints/marketing/tools_catalog.py:396
 msgid "Yes. If you make a mistake, you can change or remove an expense."
 msgstr "جی ہاں۔ غلطی ہو جائے تو آپ خرچ بدل یا ہٹا سکتے ہیں۔"
 
-#: app/blueprints/marketing/tools_catalog.py:395
+#: app/blueprints/marketing/tools_catalog.py:397
 msgid "How is the monthly total calculated?"
 msgstr "ماہانہ کُل کیسے بنتا ہے؟"
 
-#: app/blueprints/marketing/tools_catalog.py:396
+#: app/blueprints/marketing/tools_catalog.py:398
 msgid "It adds up all the expenses you entered for that month."
 msgstr "یہ اُس مہینے میں لکھے گئے تمام اخراجات کو جمع کرتا ہے۔"
 
+#: app/blueprints/tools/captions/messages.py:4
+#: app/blueprints/tools/expenses/messages.py:4
 #: app/blueprints/tools/notes/messages.py:5
 msgid "Please log in to use this."
 msgstr "اسے استعمال کرنے کے لیے لاگ ان کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:5
+msgid "That caption set no longer exists."
+msgstr "یہ کیپشنز اب موجود نہیں ہیں۔"
+
+#: app/blueprints/tools/captions/messages.py:6
+#: app/templates/tools/captions/index.html:22
+msgid "Please type a topic."
+msgstr "براہِ کرم کوئی موضوع لکھیں۔"
+
+#: app/blueprints/tools/captions/messages.py:7
+#: app/templates/tools/captions/index.html:23
+msgid "The topic is too long (500 characters max)."
+msgstr "موضوع بہت لمبا ہے (زیادہ سے زیادہ 500 حروف)۔"
+
+#: app/blueprints/tools/captions/messages.py:8
+msgid "Please choose Instagram or LinkedIn."
+msgstr "براہِ کرم انسٹاگرام یا لنکڈاِن منتخب کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:9
+msgid ""
+"You have used your free tries for today. Log in or sign up free to get "
+"more."
+msgstr ""
+"آج کی مفت کوششیں ختم ہو گئیں۔ مزید کے لیے لاگ اِن کریں یا مفت سائن اپ "
+"کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:10
+msgid "You have used all your captions for today. Come back tomorrow."
+msgstr "آج کے سارے کیپشنز استعمال ہو گئے۔ کل دوبارہ آئیں۔"
+
+#: app/blueprints/tools/captions/messages.py:11
+msgid "The Caption Generator is very busy today. Please try again tomorrow."
+msgstr "کیپشن جنریٹر آج بہت مصروف ہے۔ براہِ کرم کل دوبارہ کوشش کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:12
+msgid "The AI is busy right now. Please try again in a minute."
+msgstr "AI اس وقت مصروف ہے۔ براہِ کرم ایک منٹ بعد دوبارہ کوشش کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:13
+msgid ""
+"The AI couldn't write captions for this topic. Please try a different "
+"topic."
+msgstr "AI اس موضوع پر کیپشن نہیں لکھ سکا۔ براہِ کرم کوئی اور موضوع آزمائیں۔"
+
+#: app/blueprints/tools/captions/messages.py:14
+msgid "The AI isn't available right now. Please try again in a moment."
+msgstr "AI اس وقت دستیاب نہیں۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
+
+#: app/blueprints/tools/captions/messages.py:15
+msgid "Captions aren't available right now. Please try again in a moment."
+msgstr "کیپشنز اس وقت دستیاب نہیں۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
+
+# ── Expenses tool
+# ────────────────────────────────────────────────────────────
+#: app/blueprints/tools/expenses/messages.py:5
+msgid "That expense no longer exists."
+msgstr "وہ خرچہ اب موجود نہیں ہے۔"
+
+#: app/blueprints/tools/expenses/messages.py:6
+#: app/templates/tools/expenses/index.html:26
+msgid "Please enter an amount."
+msgstr "براہ کرم رقم درج کریں۔"
+
+#: app/blueprints/tools/expenses/messages.py:7
+#: app/templates/tools/expenses/index.html:27
+msgid "The amount must be a positive number."
+msgstr "رقم ایک مثبت نمبر ہونی چاہیے۔"
+
+#: app/blueprints/tools/expenses/messages.py:8
+#: app/templates/tools/expenses/index.html:28
+msgid "Please describe the expense."
+msgstr "براہ کرم خرچے کی تفصیل لکھیں۔"
+
+#: app/blueprints/tools/expenses/messages.py:9
+msgid "The description is too long (200 characters max)."
+msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ ۲۰۰ حروف)۔"
+
+#: app/blueprints/tools/expenses/messages.py:10
+msgid "Please enter a valid date."
+msgstr "براہ کرم درست تاریخ درج کریں۔"
+
+#: app/blueprints/tools/expenses/messages.py:11
+msgid "Please select a valid currency."
+msgstr "براہ کرم ایک درست کرنسی منتخب کریں۔"
+
+#: app/blueprints/tools/expenses/messages.py:12
+msgid "Expenses aren't available right now. Please try again in a moment."
+msgstr "ابھی اخراجات دستیاب نہیں ہیں۔ کچھ دیر بعد دوبارہ کوشش کریں۔"
 
 #: app/blueprints/tools/notes/messages.py:6
 msgid "That note no longer exists."
@@ -3584,8 +3694,10 @@ msgstr "یاد آ گیا؟"
 #: app/templates/auth/forgot_password.html:22 app/templates/auth/login.html:4
 #: app/templates/auth/login.html:10 app/templates/auth/login.html:23
 #: app/templates/auth/signup.html:34 app/templates/partials/navbar.html:35
-#: app/templates/partials/navbar.html:60 app/templates/partials/sidebar.html:69
-#: app/templates/partials/sidebar.html:93
+#: app/templates/partials/navbar.html:60 app/templates/partials/sidebar.html:72
+#: app/templates/partials/sidebar.html:96
+#: app/templates/tools/captions/index.html:54
+#: app/templates/tools/expenses/index.html:49
 #: app/templates/tools/notes/index.html:45
 msgid "Log in"
 msgstr "لاگ ان"
@@ -3684,10 +3796,44 @@ msgstr "سائن اپ کر کے آپ ہماری %(terms)s اور %(privacy)s س�
 msgid "Already have an account?"
 msgstr "پہلے سے اکاؤنٹ ہے؟"
 
+#: app/templates/dashboard/app_layout.html:22
+msgid "You have notes saved only in this browser. Move them to your account?"
+msgstr "آپ کے نوٹس صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
+
+#: app/templates/dashboard/app_layout.html:23
+msgid "Moving your notes…"
+msgstr "آپ کے نوٹس منتقل ہو رہے ہیں…"
+
+#: app/templates/dashboard/app_layout.html:24
+msgid "Your notes are now in your account."
+msgstr "آپ کے نوٹس اب آپ کے اکاؤنٹ میں محفوظ ہیں۔"
+
+#: app/templates/dashboard/app_layout.html:25
+msgid "Could not move your notes. Please try again."
+msgstr "آپ کے نوٹس منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/dashboard/app_layout.html:32
+msgid "You have expenses saved only in this browser. Move them to your account?"
+msgstr "آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
+
+#: app/templates/dashboard/app_layout.html:33
+msgid "Moving your expenses…"
+msgstr "آپ کے خرچے منتقل ہو رہے ہیں…"
+
+#: app/templates/dashboard/app_layout.html:34
+msgid "Your expenses are now in your account."
+msgstr "آپ کے خرچے آپ کے اکاؤنٹ میں آ گئے ہیں۔"
+
+#: app/templates/dashboard/app_layout.html:35
+msgid "Could not move your expenses. Please try again."
+msgstr "آپ کے خرچے منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
 #: app/templates/dashboard/home.html:5 app/templates/dashboard/home.html:9
 #: app/templates/partials/navbar.html:33 app/templates/partials/navbar.html:58
 #: app/templates/partials/sidebar.html:38
-#: app/templates/partials/sidebar.html:42
+#: app/templates/partials/sidebar.html:44
+#: app/templates/tools/captions/index.html:41
+#: app/templates/tools/expenses/index.html:36
 #: app/templates/tools/notes/index.html:32
 msgid "Dashboard"
 msgstr "ڈیش بورڈ"
@@ -3749,7 +3895,7 @@ msgstr "غلطی آپ کی نہیں، ہماری ہے۔ براہِ کرم تھو
 
 #: app/templates/marketing/coming_soon.html:14
 #: app/templates/marketing/tools/_macros.html:8
-#: app/templates/partials/sidebar.html:117
+#: app/templates/partials/sidebar.html:122
 msgid "Coming soon"
 msgstr "جلد آ رہا ہے"
 
@@ -3857,7 +4003,7 @@ msgstr "ٹول ورس · ڈیش بورڈ"
 
 #: app/templates/marketing/sections/preview.html:16
 #: app/templates/marketing/tools/index.html:14
-#: app/templates/partials/navbar.html:8 app/templates/partials/sidebar.html:45
+#: app/templates/partials/navbar.html:8 app/templates/partials/sidebar.html:48
 msgid "Tools"
 msgstr "ٹولز"
 
@@ -3951,6 +4097,8 @@ msgstr ""
 "کریں۔"
 
 #: app/templates/marketing/sections/tools.html:67
+#: app/templates/tools/captions/index.html:63
+#: app/templates/tools/captions/index.html:91
 msgid "Write captions"
 msgstr "کیپشن لکھیں"
 
@@ -4082,27 +4230,11 @@ msgstr "پرائیویسی"
 msgid "© %(year)s Toolverse"
 msgstr "© %(year)s ٹول ورس"
 
-#: app/templates/partials/guest_import_prompt.html:5
-msgid "You have notes saved only in this browser. Move them to your account?"
-msgstr "آپ کے نوٹس صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
-
-#: app/templates/partials/guest_import_prompt.html:6
-msgid "Moving your notes…"
-msgstr "آپ کے نوٹس منتقل ہو رہے ہیں…"
-
-#: app/templates/partials/guest_import_prompt.html:7
-msgid "Your notes are now in your account."
-msgstr "آپ کے نوٹس اب آپ کے اکاؤنٹ میں محفوظ ہیں۔"
-
-#: app/templates/partials/guest_import_prompt.html:8
-msgid "Could not move your notes. Please try again."
-msgstr "آپ کے نوٹس منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
-
-#: app/templates/partials/guest_import_prompt.html:11
+#: app/templates/partials/guest_import_prompt.html:17
 msgid "Not now"
 msgstr "ابھی نہیں"
 
-#: app/templates/partials/guest_import_prompt.html:12
+#: app/templates/partials/guest_import_prompt.html:18
 msgid "Move to my account"
 msgstr "اپنے اکاؤنٹ میں منتقل کریں"
 
@@ -4132,13 +4264,234 @@ msgid "Soon"
 msgstr "جلد"
 
 #: app/templates/partials/sidebar.html:32
-#: app/templates/partials/sidebar.html:102
+#: app/templates/partials/sidebar.html:105
 msgid "Dashboard menu"
 msgstr "ڈیش بورڈ مینو"
 
-#: app/templates/partials/sidebar.html:106
+#: app/templates/partials/sidebar.html:110
 msgid "Home"
 msgstr "ہوم"
+
+#: app/templates/tools/captions/index.html:9
+#: app/templates/tools/captions/index.html:44
+msgid "Type a topic and get ready-to-post captions for Instagram and LinkedIn."
+msgstr ""
+"موضوع لکھیں اور انسٹاگرام اور لنکڈاِن کے لیے پوسٹ کرنے کو تیار کیپشن حاصل"
+" کریں۔"
+
+#: app/templates/tools/captions/index.html:25
+msgid "Could not connect. Check your internet and try again."
+msgstr "رابطہ نہیں ہو سکا۔ اپنا انٹرنیٹ چیک کریں اور دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/captions/index.html:27
+msgid "Copied"
+msgstr "کاپی ہو گیا"
+
+#: app/templates/tools/captions/index.html:28
+msgid "Could not copy. Select the text and copy it yourself."
+msgstr "کاپی نہیں ہو سکا۔ متن منتخب کر کے خود کاپی کر لیں۔"
+
+#: app/templates/tools/captions/index.html:29
+msgid "Caption"
+msgstr "کیپشن"
+
+#: app/templates/tools/captions/index.html:30
+#, python-format
+msgid "%(remaining)s of %(limit)s tries left today"
+msgstr "آج %(limit)s میں سے %(remaining)s کوششیں باقی ہیں"
+
+#: app/templates/tools/captions/index.html:31
+msgid "No free tries left today. Log in or sign up free to get more."
+msgstr "آج کوئی مفت کوشش باقی نہیں۔ مزید کے لیے لاگ اِن کریں یا مفت سائن اپ کریں۔"
+
+#: app/templates/tools/captions/index.html:32
+msgid "No captions left today. Come back tomorrow."
+msgstr "آج کوئی کیپشن باقی نہیں۔ کل دوبارہ آئیں۔"
+
+#: app/templates/tools/captions/index.html:33
+msgid "Your captions will appear here."
+msgstr "آپ کے کیپشنز یہاں نظر آئیں گے۔"
+
+#: app/templates/tools/captions/index.html:34
+msgid "Could not load your history. Please try again."
+msgstr "آپ کی ہسٹری لوڈ نہیں ہو سکی۔ براہِ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/captions/index.html:35
+msgid "Delete these captions from your history?"
+msgstr "یہ کیپشنز اپنی ہسٹری سے ڈیلیٹ کریں؟"
+
+#: app/templates/tools/captions/index.html:36
+msgid "Could not delete. Please try again."
+msgstr "ڈیلیٹ نہیں ہو سکا۔ براہِ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/captions/index.html:38
+#: app/templates/tools/captions/index.html:82
+msgid "Instagram"
+msgstr "انسٹاگرام"
+
+#: app/templates/tools/captions/index.html:39
+#: app/templates/tools/captions/index.html:82
+msgid "LinkedIn"
+msgstr "لنکڈاِن"
+
+#: app/templates/tools/captions/index.html:51
+#, python-format
+msgid ""
+"You are not logged in. You can try it %(limit)s times a day; log in to "
+"get more and keep your history."
+msgstr ""
+"آپ لاگ اِن نہیں ہیں۔ آپ اسے دن میں %(limit)s بار آزما سکتے ہیں؛ مزید کے "
+"لیے اور اپنی ہسٹری محفوظ رکھنے کے لیے لاگ اِن کریں۔"
+
+#: app/templates/tools/captions/index.html:64
+msgid "What is your post about?"
+msgstr "آپ کی پوسٹ کس بارے میں ہے؟"
+
+#: app/templates/tools/captions/index.html:70
+msgid "e.g. Started a new job as a junior designer at a small agency"
+msgstr "مثلاً ایک چھوٹی ایجنسی میں جونیئر ڈیزائنر کے طور پر نئی نوکری شروع کی"
+
+#: app/templates/tools/captions/index.html:76
+msgid "Platform"
+msgstr "پلیٹ فارم"
+
+#: app/templates/tools/captions/index.html:105
+msgid ""
+"Edit any caption before you copy it. Check names and facts before you "
+"post."
+msgstr ""
+"کاپی کرنے سے پہلے کوئی بھی کیپشن بدل سکتے ہیں۔ پوسٹ کرنے سے پہلے نام اور "
+"حقائق چیک کر لیں۔"
+
+#: app/templates/tools/captions/index.html:115
+msgid "History"
+msgstr "ہسٹری"
+
+#: app/templates/tools/expenses/index.html:9
+#: app/templates/tools/expenses/index.html:39
+msgid "Log what you spend each day and see your monthly total."
+msgstr "روزانہ کے خرچے درج کریں اور ماہانہ کل دیکھیں۔"
+
+#: app/templates/tools/expenses/index.html:22
+msgid "No expenses this month."
+msgstr "اس مہینے کوئی خرچہ نہیں۔"
+
+#: app/templates/tools/expenses/index.html:23
+#: app/templates/tools/notes/index.html:22
+msgid "Saved"
+msgstr "محفوظ ہو گیا"
+
+#: app/templates/tools/expenses/index.html:24
+#: app/templates/tools/notes/index.html:23
+msgid "Saving…"
+msgstr "محفوظ ہو رہا ہے…"
+
+#: app/templates/tools/expenses/index.html:25
+#: app/templates/tools/notes/index.html:24
+msgid "Could not save. Please try again."
+msgstr "محفوظ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html:29
+msgid "Description is too long (200 characters max)."
+msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ 200 حروف)۔"
+
+#: app/templates/tools/expenses/index.html:30
+msgid "Delete this expense? This cannot be undone."
+msgstr "یہ خرچہ ڈیلیٹ کریں؟ یہ واپس نہیں ہو سکتا۔"
+
+#: app/templates/tools/expenses/index.html:31
+msgid "Could not delete this expense. Please try again."
+msgstr "یہ خرچہ ڈیلیٹ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html:32
+msgid "Could not load your expenses. Please try again."
+msgstr "آپ کے خرچے لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
+
+#: app/templates/tools/expenses/index.html:33
+msgid "Today"
+msgstr "آج"
+
+#: app/templates/tools/expenses/index.html:34
+msgid "Yesterday"
+msgstr "کل"
+
+#: app/templates/tools/expenses/index.html:46
+msgid "You are not logged in. Your expenses are kept in this browser only."
+msgstr "آپ لاگ ان نہیں ہیں۔ آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔"
+
+#: app/templates/tools/expenses/index.html:58
+#: app/templates/tools/expenses/index.html:63
+msgid "Currency"
+msgstr "کرنسی"
+
+#: app/templates/tools/expenses/index.html:64
+msgid "Pakistani Rupee"
+msgstr "پاکستانی روپیہ"
+
+#: app/templates/tools/expenses/index.html:65
+msgid "US Dollar"
+msgstr "امریکی ڈالر"
+
+#: app/templates/tools/expenses/index.html:66
+msgid "Euro"
+msgstr "یورو"
+
+#: app/templates/tools/expenses/index.html:67
+msgid "British Pound"
+msgstr "برطانوی پاؤنڈ"
+
+#: app/templates/tools/expenses/index.html:68
+msgid "UAE Dirham"
+msgstr "اماراتی درہم"
+
+#: app/templates/tools/expenses/index.html:69
+msgid "Saudi Riyal"
+msgstr "سعودی ریال"
+
+#: app/templates/tools/expenses/index.html:70
+msgid "Indian Rupee"
+msgstr "بھارتی روپیہ"
+
+#: app/templates/tools/expenses/index.html:79
+msgid "Previous month"
+msgstr "پچھلا مہینہ"
+
+#: app/templates/tools/expenses/index.html:86
+msgid "Next month"
+msgstr "اگلا مہینہ"
+
+#: app/templates/tools/expenses/index.html:123
+#: app/templates/tools/expenses/index.html:190
+msgid "Amount"
+msgstr "رقم"
+
+#: app/templates/tools/expenses/index.html:135
+#: app/templates/tools/expenses/index.html:201
+msgid "What was it for?"
+msgstr "کس کام کے لیے تھا؟"
+
+#: app/templates/tools/expenses/index.html:136
+#: app/templates/tools/expenses/index.html:202
+msgid "Description"
+msgstr "تفصیل"
+
+#: app/templates/tools/expenses/index.html:146
+#: app/templates/tools/expenses/index.html:211
+msgid "Date"
+msgstr "تاریخ"
+
+#: app/templates/tools/expenses/index.html:177
+msgid "Edit expense"
+msgstr "خرچہ تبدیل کریں"
+
+#: app/templates/tools/expenses/index.html:225
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+#: app/templates/tools/expenses/index.html:226
+#: app/templates/tools/notes/index.html:106
+msgid "Save"
+msgstr "محفوظ کریں"
 
 #: app/templates/tools/notes/index.html:10
 #: app/templates/tools/notes/index.html:35
@@ -4152,18 +4505,6 @@ msgstr "ابھی کوئی نوٹ نہیں۔ اپنا پہلا نوٹ بنائی�
 #: app/templates/tools/notes/index.html:21
 msgid "No notes match your search."
 msgstr "آپ کی تلاش سے کوئی نوٹ نہیں ملا۔"
-
-#: app/templates/tools/notes/index.html:22
-msgid "Saved"
-msgstr "محفوظ ہو گیا"
-
-#: app/templates/tools/notes/index.html:23
-msgid "Saving…"
-msgstr "محفوظ ہو رہا ہے…"
-
-#: app/templates/tools/notes/index.html:24
-msgid "Could not save. Please try again."
-msgstr "محفوظ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
 
 #: app/templates/tools/notes/index.html:26
 msgid "Delete this note? This cannot be undone."
@@ -4213,177 +4554,17 @@ msgstr "عنوان"
 msgid "Write something…"
 msgstr "کچھ لکھیں…"
 
-#: app/templates/tools/notes/index.html:106
-msgid "Save"
-msgstr "محفوظ کریں"
+#~ msgid "Why do I need to log in?"
+#~ msgstr "مجھے لاگ ان کیوں کرنا ہوگا؟"
 
-# ── Expenses tool ────────────────────────────────────────────────────────────
+#~ msgid ""
+#~ "So your CVs, notes and expenses "
+#~ "are saved to your own account and"
+#~ " stay private to you, on any "
+#~ "device."
+#~ msgstr ""
+#~ "تاکہ آپ کی سی وی، نوٹس اور "
+#~ "اخراجات آپ کے اپنے اکاؤنٹ میں "
+#~ "محفوظ رہیں اور صرف آپ تک محدود "
+#~ "رہیں، کسی بھی ڈیوائس پر۔"
 
-#: app/blueprints/tools/expenses/messages.py
-msgid "That expense no longer exists."
-msgstr "وہ خرچہ اب موجود نہیں ہے۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "Please enter an amount."
-msgstr "براہ کرم رقم درج کریں۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "The amount must be a positive number."
-msgstr "رقم ایک مثبت نمبر ہونی چاہیے۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "Please describe the expense."
-msgstr "براہ کرم خرچے کی تفصیل لکھیں۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "The description is too long (200 characters max)."
-msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ ۲۰۰ حروف)۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "Please enter a valid date."
-msgstr "براہ کرم درست تاریخ درج کریں۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "Expenses aren't available right now. Please try again in a moment."
-msgstr "ابھی اخراجات دستیاب نہیں ہیں۔ کچھ دیر بعد دوبارہ کوشش کریں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Log what you spend each day and see your monthly total."
-msgstr "روزانہ کے خرچے درج کریں اور ماہانہ کل دیکھیں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "You are not logged in. Your expenses are kept in this browser only."
-msgstr "آپ لاگ ان نہیں ہیں۔ آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Previous month"
-msgstr "پچھلا مہینہ"
-
-#: app/templates/tools/expenses/index.html
-msgid "Next month"
-msgstr "اگلا مہینہ"
-
-#: app/templates/tools/expenses/index.html
-msgid "Monthly total"
-msgstr "ماہانہ کل"
-
-#: app/templates/tools/expenses/index.html
-msgid "Add an expense"
-msgstr "خرچہ شامل کریں"
-
-#: app/templates/tools/expenses/index.html
-msgid "Amount"
-msgstr "رقم"
-
-#: app/templates/tools/expenses/index.html
-msgid "What was it for?"
-msgstr "کس کام کے لیے تھا؟"
-
-#: app/templates/tools/expenses/index.html
-msgid "Description"
-msgstr "تفصیل"
-
-#: app/templates/tools/expenses/index.html
-msgid "Date"
-msgstr "تاریخ"
-
-#: app/templates/tools/expenses/index.html
-msgid "Add"
-msgstr "شامل کریں"
-
-#: app/templates/tools/expenses/index.html
-msgid "No expenses this month."
-msgstr "اس مہینے کوئی خرچہ نہیں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Could not save. Please try again."
-msgstr "محفوظ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "The amount must be a positive number."
-msgstr "رقم ایک مثبت نمبر ہونی چاہیے۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Delete this expense? This cannot be undone."
-msgstr "یہ خرچہ ڈیلیٹ کریں؟ یہ واپس نہیں ہو سکتا۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Could not delete this expense. Please try again."
-msgstr "یہ خرچہ ڈیلیٹ نہیں ہو سکا۔ براہ کرم دوبارہ کوشش کریں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Could not load your expenses. Please try again."
-msgstr "آپ کے خرچے لوڈ نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
-
-#: app/templates/tools/expenses/index.html
-msgid "Today"
-msgstr "آج"
-
-#: app/templates/tools/expenses/index.html
-msgid "Yesterday"
-msgstr "کل"
-
-#: app/templates/tools/expenses/index.html
-msgid "Edit expense"
-msgstr "خرچہ تبدیل کریں"
-
-#: app/templates/tools/expenses/index.html
-msgid "Cancel"
-msgstr "منسوخ کریں"
-
-#: app/templates/dashboard/app_layout.html
-msgid "You have expenses saved only in this browser. Move them to your account?"
-msgstr "آپ کے خرچے صرف اس براؤزر میں محفوظ ہیں۔ انہیں اپنے اکاؤنٹ میں منتقل کریں؟"
-
-#: app/templates/dashboard/app_layout.html
-msgid "Moving your expenses…"
-msgstr "آپ کے خرچے منتقل ہو رہے ہیں…"
-
-#: app/templates/dashboard/app_layout.html
-msgid "Your expenses are now in your account."
-msgstr "آپ کے خرچے آپ کے اکاؤنٹ میں آ گئے ہیں۔"
-
-#: app/templates/dashboard/app_layout.html
-msgid "Could not move your expenses. Please try again."
-msgstr "آپ کے خرچے منتقل نہیں ہو سکے۔ براہ کرم دوبارہ کوشش کریں۔"
-
-
-#: app/templates/tools/expenses/index.html
-msgid "Currency"
-msgstr "کرنسی"
-
-#: app/templates/tools/expenses/index.html
-msgid "Pakistani Rupee"
-msgstr "پاکستانی روپیہ"
-
-#: app/templates/tools/expenses/index.html
-msgid "US Dollar"
-msgstr "امریکی ڈالر"
-
-#: app/templates/tools/expenses/index.html
-msgid "Euro"
-msgstr "یورو"
-
-#: app/templates/tools/expenses/index.html
-msgid "British Pound"
-msgstr "برطانوی پاؤنڈ"
-
-#: app/templates/tools/expenses/index.html
-msgid "UAE Dirham"
-msgstr "اماراتی درہم"
-
-#: app/templates/tools/expenses/index.html
-msgid "Saudi Riyal"
-msgstr "سعودی ریال"
-
-#: app/templates/tools/expenses/index.html
-msgid "Indian Rupee"
-msgstr "بھارتی روپیہ"
-
-#: app/templates/tools/expenses/index.html
-msgid "Description is too long (200 characters max)."
-msgstr "تفصیل بہت لمبی ہے (زیادہ سے زیادہ 200 حروف)۔"
-
-#: app/blueprints/tools/expenses/messages.py
-msgid "Please select a valid currency."
-msgstr "براہ کرم ایک درست کرنسی منتخب کریں۔"

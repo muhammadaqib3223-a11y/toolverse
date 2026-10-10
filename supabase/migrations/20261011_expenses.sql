@@ -1,6 +1,6 @@
 create table expenses (
   id          uuid primary key default gen_random_uuid(),
-  user_id     uuid not null references auth.users(id) on delete cascade,
+  user_id     uuid not null default auth.uid() references auth.users(id) on delete cascade,
   client_id   text,
   amount      numeric(14,2) not null check (amount > 0),
   description text not null,

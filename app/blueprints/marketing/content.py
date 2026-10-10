@@ -51,9 +51,9 @@ FAQS = (
            "AI tools have a fair daily limit so they stay free for everyone."),
     ),
     FAQ(
-        _l("Why do I need to log in?"),
-        _l("So your CVs, notes and expenses are saved to your own account "
-           "and stay private to you, on any device."),
+        _l("Do I need to log in?"),
+        _l("No. You can try the tools without an account. Log in when you want your work saved "
+           "to your own account, private to you and on any device."),
     ),
     FAQ(
         _l("Is my CV safe?"),

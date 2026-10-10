@@ -39,6 +39,19 @@ class BaseConfig:
     # CSRF tokens stay valid as long as the session, so a login form left open for hours still works.
     WTF_CSRF_TIME_LIMIT = None
 
+    # AI (app/services/ai/). AI_PROVIDER picks the provider file; only that provider's key is needed.
+    AI_PROVIDER = os.environ.get("AI_PROVIDER", "gemini").strip().lower()
+    AI_TIMEOUT_SECONDS = 25
+    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+    # Stable, free-tier model (checked against ai.google.dev/gemini-api/docs/models, Oct 2026).
+    GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
+
+    # Caption Generator daily limits (reset at midnight UTC). The site limit covers everyone
+    # together, so the AI's free daily quota is never used up.
+    CAPTIONS_GUEST_DAILY_LIMIT = int(os.environ.get("CAPTIONS_GUEST_DAILY_LIMIT", "3"))
+    CAPTIONS_USER_DAILY_LIMIT = int(os.environ.get("CAPTIONS_USER_DAILY_LIMIT", "20"))
+    CAPTIONS_SITE_DAILY_LIMIT = int(os.environ.get("CAPTIONS_SITE_DAILY_LIMIT", "500"))
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
@@ -51,6 +64,10 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False  # tests that check CSRF turn it back on
     SUPABASE_URL = "https://test-project.supabase.co"
     SUPABASE_PUBLISHABLE_KEY = "sb_publishable_test"
+    GEMINI_API_KEY = ""  # tests use the fake provider in tests/fakes.py
+    CAPTIONS_GUEST_DAILY_LIMIT = 3
+    CAPTIONS_USER_DAILY_LIMIT = 20
+    CAPTIONS_SITE_DAILY_LIMIT = 500
 
 
 class ProductionConfig(BaseConfig):

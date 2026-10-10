@@ -366,6 +366,34 @@
 
   .notes-textarea { line-height: 1.75; }
   [dir="rtl"] .notes-textarea { font-size: 17px; }
+
+  /* Caption Generator: form + results, with the history beside them from lg up. */
+  .captions-layout { @apply grid grid-cols-1 items-start gap-4; }
+  @media (min-width: 1024px) {
+    .captions-layout.has-history { grid-template-columns: minmax(0, 1fr) 300px; }
+  }
+  .captions-topic { @apply h-auto resize-none py-3 leading-relaxed; }
+  .caption-card {
+    @apply rounded-[16px] border border-line bg-card p-4;
+    animation: fade-up 0.4s ease both;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .caption-card:hover { @apply border-line-strong; transform: translateY(-1px); }
+  .caption-text {
+    @apply mt-2 block w-full resize-none bg-transparent text-[15px] leading-relaxed text-fg focus:outline-none;
+    field-sizing: content;
+    min-height: 6rem;
+  }
+  .history-item {
+    @apply flex w-full items-start gap-2 border-b border-line px-4 py-3 text-start;
+    transition: background-color 0.2s ease;
+  }
+  .history-item:hover { @apply bg-card; }
+  .history-item-topic { @apply w-full truncate text-[14px] font-medium text-fg; }
+  .history-item-meta { @apply text-[11px] text-faint; }
+  [dir="rtl"] .caption-text { font-size: 17px; line-height: 2; }
+  [dir="rtl"] .history-item-topic { font-size: 16px; }
+  [dir="rtl"] .history-item-meta { font-size: 13px; }
 }
 
 /* ---------- Animations ---------- */

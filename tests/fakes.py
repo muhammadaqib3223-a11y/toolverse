@@ -1,4 +1,4 @@
-"""Fake services with the same methods as the real ones (auth, notes, expenses). No network."""
+"""Fake services with the same methods as the real ones (auth, notes, expenses, captions, AI). No network."""
 import itertools
 import time
 import uuid
@@ -7,8 +7,10 @@ from datetime import datetime, timezone
 
 from app.blueprints.auth.errors import AuthError, AuthUnavailable, SessionEnded, TokenExpired
 from app.blueprints.auth.services import EMAIL_LINK_TYPES, AuthSession, AuthUser, GoogleLogin
+from app.blueprints.tools.captions.errors import CaptionsUnavailable
 from app.blueprints.tools.expenses.errors import ExpensesUnavailable
 from app.blueprints.tools.notes.errors import NotesUnavailable
+from app.services.ai.base import AIProvider
 
 GOOGLE_URL = "https://test-project.supabase.co/auth/v1/authorize?provider=google"
 GOOGLE_VERIFIER = "test-code-verifier"
@@ -294,3 +296,95 @@ class FakeExpensesRepository:
                 exp.get("client_id"),
             ))
         return imported
+
+
+@dataclass
+class FakeCaptionsRepository:
+    """In-memory version of SupabaseCaptionsRepository, with the same daily-limit rules as the
+    Postgres functions in supabase/migrations/20261013_captions_limits.sql. No network."""
+    unavailable: bool = False
+    history_unavailable: bool = False   # only saving/reading history fails
+    tries: dict = field(default_factory=dict)    # try_id -> subject (all "today")
+    history: dict = field(default_factory=dict)  # access_token -> {id: row}
+    calls: list = field(default_factory=list)
+
+    def _check(self):
+        if self.unavailable:
+            raise CaptionsUnavailable()
+
+    @staticmethod
+    def subject(access_token, ip_hash):
+        return f"user:{access_token}" if access_token else f"ip:{ip_hash}"
+
+    def used(self, access_token=None, ip_hash=None):
+        subject = self.subject(access_token, ip_hash)
+        return sum(1 for s in self.tries.values() if s == subject)
+
+    def consume_try(self, access_token, ip_hash, limit, site_limit):
+        self._check()
+        self.calls.append(("consume_try", access_token, ip_hash, limit, site_limit))
+        used = self.used(access_token, ip_hash)
+        if used >= limit:
+            return {"status": "limit", "try_id": None, "used": used}
+        if len(self.tries) >= site_limit:
+            return {"status": "site_limit", "try_id": None, "used": used}
+        try_id = str(uuid.uuid4())
+        self.tries[try_id] = self.subject(access_token, ip_hash)
+        return {"status": "ok", "try_id": try_id, "used": used + 1}
+
+    def refund_try(self, access_token, try_id):
+        self._check()
+        self.calls.append(("refund_try", access_token, try_id))
+        self.tries.pop(try_id, None)
+
+    def tries_used(self, access_token, ip_hash):
+        self._check()
+        return self.used(access_token, ip_hash)
+
+    def _check_history(self):
+        self._check()
+        if self.history_unavailable:
+            raise CaptionsUnavailable()
+
+    def insert_history(self, access_token, topic, platform, captions):
+        self._check_history()
+        row = {
+            "id": str(uuid.uuid4()),
+            "topic": topic,
+            "platform": platform,
+            "captions": list(captions),
+            "created_at": _now_iso(),
+        }
+        self.history.setdefault(access_token, {})[row["id"]] = row
+        return dict(row)
+
+    def list_history(self, access_token, limit):
+        self._check_history()
+        rows = sorted(self.history.get(access_token, {}).values(), key=lambda r: r["created_at"], reverse=True)
+        return [dict(row) for row in rows[:limit]]
+
+    def delete_history(self, access_token, caption_id):
+        self._check_history()
+        return self.history.get(access_token, {}).pop(caption_id, None) is not None
+
+
+class FakeAIProvider(AIProvider):
+    """Returns `result` (or raises `error`) instead of calling a real AI. Records every call."""
+    name = "fake"
+
+    def __init__(self, result=None, error=None):
+        self.result = result if result is not None else {
+            "captions": ["Caption one #new", "Caption two", "Caption three"],
+        }
+        self.error = error
+        self.calls = []
+
+    @classmethod
+    def from_config(cls, config):
+        return cls()
+
+    def generate_json(self, *, system, prompt, schema, temperature=0.9, max_output_tokens=2048):
+        self.calls.append({"system": system, "prompt": prompt, "schema": schema})
+        if self.error is not None:
+            raise self.error
+        return self.result

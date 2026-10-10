@@ -21,7 +21,9 @@ def create_app(config_name=None):
     _configure_logging(app)
 
     if app.config["BEHIND_PROXY"]:
-        # Render sits in front of the app; trust its forwarded host/scheme headers.
+        # Vercel sits in front of the app; trust its forwarded host/scheme/client-IP headers.
+        # x_for=1 takes the LAST X-Forwarded-For entry, the one Vercel itself writes (Vercel
+        # overwrites the header, so a visitor can't fake their IP; see app/services/client_ip.py).
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
     babel.init_app(app, locale_selector=get_locale)
@@ -46,6 +48,7 @@ def _configure_logging(app):
 def _register_blueprints(app):
     from app.blueprints.auth import bp as auth_bp
     from app.blueprints.dashboard import bp as dashboard_bp
+    from app.blueprints.tools.captions import bp as captions_bp
     from app.blueprints.marketing import bp as marketing_bp
     from app.blueprints.seo import bp as seo_bp
     from app.blueprints.tools.expenses import bp as expenses_bp
@@ -57,6 +60,7 @@ def _register_blueprints(app):
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(notes_bp)
     app.register_blueprint(expenses_bp)
+    app.register_blueprint(captions_bp)
 
 
 def _init_auth(app):
@@ -66,11 +70,16 @@ def _init_auth(app):
 
 
 def _init_tools(app):
+    from app.blueprints.tools.captions import init_captions
     from app.blueprints.tools.expenses import init_expenses
+    from app.services.ai import init_ai
+
+    init_ai(app)
     from app.blueprints.tools.notes import init_notes
 
     init_notes(app)
     init_expenses(app)
+    init_captions(app)
 
 
 def _register_template_globals(app):

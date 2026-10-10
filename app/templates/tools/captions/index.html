@@ -1,0 +1,132 @@
+{% extends "dashboard/app_layout.html" %}
+{% from "partials/icons.html" import icon %}
+
+{# The whole tool is one screen; public/static/js/captions/captions_app.js drives it.
+   Guests and logged-in users use the same API; only logged-in users get a saved history.
+   Translated text the JS needs is passed through data-text-* attributes. #}
+
+{% block title %}{{ _('Captions') }} — Toolverse{% endblock %}
+{% block description %}{{ _('Type a topic and get ready-to-post captions for Instagram and LinkedIn.') }}{% endblock %}
+
+{% block head_extra %}{{ csrf_meta_tag() }}{% endblock %}
+
+{% block app_content %}
+  <div class="captions-app"
+       data-captions-app
+       data-logged-in="{{ 'true' if current_user else 'false' }}"
+       data-api-generate="{{ url_for('captions.api_generate') }}"
+       data-api-usage="{{ url_for('captions.api_usage') }}"
+       data-api-history="{{ url_for('captions.api_history') }}"
+       data-api-history-item-template="{{ url_for('captions.api_delete_history', caption_id='__ID__') }}"
+       data-topic-max="{{ topic_max_length }}"
+       data-text-topic-required="{{ _('Please type a topic.') }}"
+       data-text-topic-too-long="{{ _('The topic is too long (500 characters max).') }}"
+       data-text-generic-error="{{ _('Something went wrong. Please try again.') }}"
+       data-text-network-error="{{ _('Could not connect. Check your internet and try again.') }}"
+       data-text-copy="{{ _('Copy') }}"
+       data-text-copied="{{ _('Copied') }}"
+       data-text-copy-failed="{{ _('Could not copy. Select the text and copy it yourself.') }}"
+       data-text-caption-label="{{ _('Caption') }}"
+       data-text-remaining="{{ _('%(remaining)s of %(limit)s tries left today', remaining='__REMAINING__', limit='__LIMIT__') }}"
+       data-text-none-left-guest="{{ _('No free tries left today. Log in or sign up free to get more.') }}"
+       data-text-none-left-user="{{ _('No captions left today. Come back tomorrow.') }}"
+       data-text-history-empty="{{ _('Your captions will appear here.') }}"
+       data-text-history-load-failed="{{ _('Could not load your history. Please try again.') }}"
+       data-text-delete-confirm="{{ _('Delete these captions from your history?') }}"
+       data-text-delete-failed="{{ _('Could not delete. Please try again.') }}"
+       data-text-delete="{{ _('Delete') }}"
+       data-text-instagram="{{ _('Instagram') }}"
+       data-text-linkedin="{{ _('LinkedIn') }}">
+
+    <p class="label-mono">{{ _('Dashboard') }}</p>
+    <h1 class="heading mt-4 text-[36px] sm:text-5xl">{{ _('Captions') }}</h1>
+    <p class="mt-3 max-w-[34rem] text-[14px] text-muted">
+      {{ _('Type a topic and get ready-to-post captions for Instagram and LinkedIn.') }}
+    </p>
+
+    {% if not current_user %}
+      <div class="surface mt-6 flex flex-wrap items-center justify-between gap-4 p-4">
+        <p class="flex items-center gap-2 text-[13px] text-muted">
+          {{ icon("lock", "h-4 w-4 shrink-0 text-faint") }}
+          {{ _('You are not logged in. You can try it %(limit)s times a day; log in to get more and keep your history.', limit=guest_limit) }}
+        </p>
+        <div class="flex shrink-0 items-center gap-2">
+          <a href="{{ url_for('auth.login', next=request.path) }}" class="btn-secondary btn-sm">{{ _('Log in') }}</a>
+          <a href="{{ url_for('auth.signup', next=request.path) }}" class="btn-primary btn-sm">{{ _('Sign up free') }}</a>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="captions-layout mt-6{{ ' has-history' if current_user }}">
+      <div class="min-w-0">
+        {# ── Form ─────────────────────────────────────────────────────────── #}
+        <form class="surface p-4 sm:p-5" data-generate-form novalidate aria-label="{{ _('Write captions') }}">
+          <label for="captions-topic" class="field-label">{{ _('What is your post about?') }}</label>
+          <textarea id="captions-topic"
+                    class="input captions-topic"
+                    rows="3"
+                    maxlength="{{ topic_max_length }}"
+                    data-field="topic"
+                    placeholder="{{ _('e.g. Started a new job as a junior designer at a small agency') }}"></textarea>
+          <div class="mt-1 flex items-start justify-between gap-3">
+            <p class="text-[12px] text-danger" data-field-error="topic" hidden></p>
+            <p class="ms-auto shrink-0 text-[11px] text-faint" dir="ltr" data-topic-count>0 / {{ topic_max_length }}</p>
+          </div>
+
+          <p class="field-label mt-4" id="captions-platform-label">{{ _('Platform') }}</p>
+          <div class="mt-2 flex flex-wrap gap-2" role="group" aria-labelledby="captions-platform-label">
+            {% for platform in platforms %}
+              <button type="button" class="filter-tab"
+                      data-platform="{{ platform }}"
+                      aria-pressed="{{ 'true' if loop.first else 'false' }}">
+                {{ _('Instagram') if platform == 'instagram' else _('LinkedIn') }}
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <p class="text-[12px] text-faint" data-usage aria-live="polite"></p>
+            <button type="submit" class="btn-primary h-10 px-5" data-action="generate">
+              {{ icon("sparkle", "h-4 w-4") }}
+              <span>{{ _('Write captions') }}</span>
+            </button>
+          </div>
+          <p class="mt-3 text-[13px] text-danger" data-form-error role="alert" hidden></p>
+        </form>
+
+        {# ── Results ──────────────────────────────────────────────────────── #}
+        <section class="mt-4" aria-live="polite" aria-busy="false" data-results-section>
+          <div class="surface flex items-center justify-center gap-3 p-8 text-[13px] text-muted" data-loading hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            {{ _('Writing your captions…') }}
+          </div>
+          <div class="flex flex-col gap-3" data-results></div>
+          <p class="mt-3 text-[12px] text-faint" data-results-hint hidden>
+            {{ _('Edit any caption before you copy it. Check names and facts before you post.') }}
+          </p>
+        </section>
+      </div>
+
+      {# ── History (logged-in only) ─────────────────────────────────────── #}
+      {% if current_user %}
+        <aside class="surface min-w-0 overflow-hidden" aria-labelledby="captions-history-title">
+          <div class="flex items-center gap-2 border-b border-line px-4 py-3">
+            {{ icon("clock", "h-4 w-4 text-faint") }}
+            <h2 class="text-[13px] font-semibold" id="captions-history-title">{{ _('History') }}</h2>
+          </div>
+          <div data-history>
+            <div class="flex items-center justify-center py-8">
+              <span class="spinner" aria-hidden="true"></span>
+            </div>
+          </div>
+        </aside>
+      {% endif %}
+    </div>
+
+    <div class="toast-stack" data-captions-toasts role="status" aria-live="polite"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/captions/captions_app.js') }}" defer></script>
+{% endblock %}

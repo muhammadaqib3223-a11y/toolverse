@@ -127,7 +127,15 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Privacy Policy (`/privacy`) + Terms (`/terms`), EN + UR. Text: `app/blueprints/marketing/legal.py`.
 - Phase 3: Notes tool at `/dashboard/notes` (+ `/ur`). Supabase + RLS for logged-in users; guest notes in `localStorage` with one-tap import after login. SQL: `supabase/migrations/20261010_notes.sql`.
 
-**Next:** Phase 4 — Expense Tracker. See `docs/requirements/expenses.md`.
+- Phase 4: Expense Tracker at `/dashboard/expenses` (+ currency). SQL: `supabase/migrations/20261011_expenses.sql`.
+- Phase 5: Caption Generator at `/dashboard/captions`. First AI tool (Gemini `gemini-3.5-flash-lite` via `google-genai`). Daily limits: guest 3 (by IP), user 20, whole site 500 — all in config. History for logged-in users. SQL: `20261012_captions.sql` + `20261013_captions_limits.sql`.
+
+**Next:** CV Generator / CV Checker. See `docs/requirements/`.
+
+**How AI works (follow for CV Checker/Generator):**
+- Tools call `get_ai_provider().generate_json(system=, prompt=, schema=)` only. Errors: `AIUnavailable` / `AIQuotaExceeded` / `AIBlocked` (`.code`). New vendor = new file in `app/services/ai/` + `PROVIDERS` entry + `AI_PROVIDER` in `.env`.
+- Prompts live in the tool's `prompts.py`. Tests use `ai_provider` fixture (`FakeAIProvider`), never the real API.
+- Daily limits: reserve a try in Postgres BEFORE the AI call (`consume_caption_try`), refund by secret try id if AI fails. Guest IP = `app/services/client_ip.py` (`ip_fingerprint()`, HMAC, IPv6 /64); on Vercel the IP comes from the last X-Forwarded-For entry via ProxyFix.
 
 **How auth works (follow in every phase):**
 - All Supabase calls → `app/blueprints/auth/services.py` (`get_auth_service()`). Routes get `AuthError` with a code; text in `auth/messages.py`.
@@ -150,5 +158,7 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Send real Vercel URL for Supabase Site URL + Redirect URLs.
 - Test real signup/login/reset/Google with own email.
 - Run `supabase/migrations/20261010_notes.sql` in Supabase SQL Editor, then test Notes.
+- Run `20261013_captions_limits.sql` in Supabase SQL Editor; add `GEMINI_API_KEY` to `.env` + Vercel; then test Captions.
+- Run once (fix): `alter table public.expenses alter column user_id set default auth.uid();`
 - Before going live: Brevo SMTP.
 - Pre-existing gap: some Terms/Privacy lines, a few FAQ/landing strings still lack Urdu translation in `app/translations/ur/LC_MESSAGES/messages.po`.

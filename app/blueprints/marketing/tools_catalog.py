@@ -284,6 +284,8 @@ TOOLS = (
                 _l('No. You copy the caption and paste it into Instagram or LinkedIn yourself. Toolverse does not connect to your social media accounts.')),
         ),
         article=ARTICLES['captions'],
+        status=Status.LIVE,
+        app_endpoint="captions.index",
     ),
     Tool(
         slug="notes",
