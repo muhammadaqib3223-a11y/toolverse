@@ -71,3 +71,23 @@ def test_urdu_dashboard(client, log_in):
     assert 'action="/ur/logout"' in html
     assert 'hreflang="ur" href="/dashboard"' not in html
     assert '<a href="/dashboard"\n         lang="en"' in html  # language switch keeps the user on the dashboard
+
+
+def test_guest_sidebar_has_no_link_to_login_only_dashboard_home(client, notes_repository):
+    # /dashboard needs login, so linking guests there would bounce them to the login page.
+    for path in ("/dashboard/notes", "/dashboard/expenses", "/ur/dashboard/notes"):
+        html = client.get(path).get_data(as_text=True)
+        assert 'href="/dashboard"' not in html
+        assert 'href="/ur/dashboard"' not in html
+
+
+def test_logged_in_sidebar_links_to_dashboard_home(client, log_in, notes_repository):
+    log_in()
+    html = client.get("/dashboard/notes").get_data(as_text=True)
+    assert 'href="/dashboard" class="side-link' in html
+
+
+def test_live_tool_detail_try_it_free_opens_the_tool_for_guests(client, notes_repository):
+    html = client.get("/tools/notes").get_data(as_text=True)
+    assert 'href="/dashboard/notes" class="btn-primary"' in html
+    assert client.get("/dashboard/notes").status_code == 200

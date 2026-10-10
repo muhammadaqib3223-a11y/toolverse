@@ -58,7 +58,7 @@
         {{ _('Currency') }}
       </label>
       <select id="currency-picker"
-              class="input w-auto text-[13px] py-1 px-2 h-8"
+              class="input mt-0 w-auto text-[13px] py-1 px-2 h-8"
               data-currency-picker
               aria-label="{{ _('Currency') }}">
         <option value="PKR">PKR — {{ _('Pakistani Rupee') }}</option>
@@ -117,7 +117,7 @@
             <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint select-none"
                   data-currency-symbol>Rs</span>
             <input type="number" min="0.01" step="any"
-                   class="input ps-8 w-full h-10"
+                   class="input mt-0 ps-8 w-full h-10"
                    data-field="amount"
                    placeholder="0.00"
                    aria-label="{{ _('Amount') }}"
@@ -129,7 +129,7 @@
         {# Description: flexible, fills remaining space #}
         <div class="flex flex-col gap-1 sm:flex-1">
           <input type="text"
-                 class="input w-full h-10"
+                 class="input mt-0 w-full h-10"
                  data-field="description"
                  maxlength="200"
                  placeholder="{{ _('What was it for?') }}"
@@ -141,7 +141,7 @@
         {# Date: only as wide as needed #}
         <div class="flex flex-col gap-1 sm:shrink-0">
           <input type="date"
-                 class="input w-auto h-10 text-[13px]"
+                 class="input mt-0 w-auto h-10 text-[13px]"
                  data-field="spent_at"
                  aria-label="{{ _('Date') }}">
           <p class="text-[11px] text-danger" data-field-error="spent_at" hidden></p>
@@ -184,7 +184,7 @@
               <span class="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[13px] text-faint"
                     data-edit-currency-symbol>Rs</span>
               <input type="number" min="0.01" step="any"
-                     class="input ps-8 w-full h-10"
+                     class="input mt-0 ps-8 w-full h-10"
                      data-field="amount"
                      placeholder="0.00"
                      aria-label="{{ _('Amount') }}">
@@ -195,7 +195,7 @@
           {# Description #}
           <div class="flex flex-col gap-1 mb-3">
             <input type="text"
-                   class="input w-full h-10"
+                   class="input mt-0 w-full h-10"
                    data-field="description"
                    maxlength="200"
                    placeholder="{{ _('What was it for?') }}"
@@ -206,7 +206,7 @@
           {# Date #}
           <div class="flex flex-col gap-1">
             <input type="date"
-                   class="input w-auto h-10 text-[13px]"
+                   class="input mt-0 w-auto h-10 text-[13px]"
                    data-field="spent_at"
                    aria-label="{{ _('Date') }}">
             <p class="text-[11px] text-danger" data-edit-field-error="spent_at" hidden></p>

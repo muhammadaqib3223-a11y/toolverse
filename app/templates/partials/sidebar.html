@@ -36,13 +36,16 @@
     </a>
 
     <nav class="mt-8 flex-1 overflow-y-auto" aria-label="{{ _('Dashboard') }}">
-      <a href="{{ url_for('dashboard.home') }}" class="side-link{{ ' is-active' if active == 'home' }}"
-         {% if active == 'home' %}aria-current="page"{% endif %}>
-        {{ icon("home", "h-4 w-4") }}
-        <span>{{ _('Dashboard') }}</span>
-      </a>
+      {# Dashboard home is login-only, so guests would be sent to the login page. #}
+      {% if user %}
+        <a href="{{ url_for('dashboard.home') }}" class="side-link{{ ' is-active' if active == 'home' }}"
+           {% if active == 'home' %}aria-current="page"{% endif %}>
+          {{ icon("home", "h-4 w-4") }}
+          <span>{{ _('Dashboard') }}</span>
+        </a>
+      {% endif %}
 
-      <p class="label-mono mt-7 px-3">{{ _('Tools') }}</p>
+      <p class="label-mono {{ 'mt-7' if user else 'mt-0' }} px-3">{{ _('Tools') }}</p>
       <ul class="mt-2 space-y-0.5">
         {% for tool in nav_tools %}
           <li>{{ _tool_link(tool, active) }}</li>
@@ -98,13 +101,15 @@
   </header>
 {%- endmacro %}
 
-{% macro mobile_bottom_nav(active="home") -%}
+{% macro mobile_bottom_nav(user, active="home") -%}
   <nav class="mobile-nav md:hidden" aria-label="{{ _('Dashboard menu') }}">
-    <a href="{{ url_for('dashboard.home') }}" class="mobile-nav-item{{ ' is-active' if active == 'home' }}"
-       {% if active == 'home' %}aria-current="page"{% endif %}>
-      {{ icon("home", "h-5 w-5") }}
-      <span class="max-w-full truncate">{{ _('Home') }}</span>
-    </a>
+    {% if user %}
+      <a href="{{ url_for('dashboard.home') }}" class="mobile-nav-item{{ ' is-active' if active == 'home' }}"
+         {% if active == 'home' %}aria-current="page"{% endif %}>
+        {{ icon("home", "h-5 w-5") }}
+        <span class="max-w-full truncate">{{ _('Home') }}</span>
+      </a>
+    {% endif %}
     {% for tool in nav_tools %}
       {% if tool.is_live %}
         <a href="{{ url_for(tool.app_endpoint) }}" class="mobile-nav-item{{ ' is-active' if active == tool.slug }}"

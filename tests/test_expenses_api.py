@@ -261,3 +261,11 @@ def test_guest_currency_not_in_template(client, expenses_repository):
     html = client.get("/dashboard/expenses").get_data(as_text=True)
     # data-user-currency should be empty for guests.
     assert 'data-user-currency=""' in html
+
+
+def test_compiled_css_has_the_expense_form_classes():
+    # If Tailwind isn't rebuilt after template changes, ps-8 goes missing and "Rs" overlaps the amount.
+    from pathlib import Path
+    css = (Path(__file__).resolve().parent.parent / "public/static/css/app.css").read_text(encoding="utf-8")
+    for cls in (".ps-8", ".mt-0", ".h-10", r".sm\:flex-row", r".sm\:flex-1", r".sm\:w-36", r".sm\:items-start"):
+        assert cls in css, f"{cls} missing — rebuild Tailwind"

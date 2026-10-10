@@ -39,6 +39,6 @@
     </div>
   </div>
 
-  {{ mobile_bottom_nav(active=active_nav | default("home")) }}
+  {{ mobile_bottom_nav(current_user, active=active_nav | default("home")) }}
   <script src="{{ url_for('static', filename='js/shared/guest_import.js') }}" defer></script>
 {% endblock %}
