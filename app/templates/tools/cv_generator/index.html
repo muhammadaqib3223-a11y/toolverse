@@ -69,6 +69,18 @@
        data-default-template="{{ default_template }}"
        data-default-accent="{{ default_accent }}"
        data-max-cvs="{{ max_saved_cvs }}"
+       data-api-improve="{{ url_for('cv_generator.api_improve') }}"
+       data-api-ai-usage="{{ url_for('cv_generator.api_ai_usage') }}"
+       data-text-ai-working="{{ _('The AI is writing…') }}"
+       data-text-ai-left="{{ _('%(remaining)s of %(limit)s AI tries left today', remaining='__REMAINING__', limit='__LIMIT__') }}"
+       data-text-ai-none-left-guest="{{ _('No free AI tries left today. Log in or sign up free to get more.') }}"
+       data-text-ai-none-left-user="{{ _('No AI tries left today. Come back tomorrow.') }}"
+       data-text-ai-removed="{{ _('We took out %(count)s line(s) with numbers you did not write.', count='__COUNT__') }}"
+       data-text-ai-applied="{{ _('Done. You can still change anything.') }}"
+       data-text-ai-nothing="{{ _('The AI had no changes to suggest.') }}"
+       data-text-headline="{{ _('Job title') }}"
+       data-text-summary="{{ _('Summary') }}"
+       data-text-skills="{{ _('Skills') }}"
        data-max-experience="{{ max_experience }}"
        data-max-education="{{ max_education }}"
        data-max-skills="{{ max_skills }}"
@@ -150,10 +162,16 @@
       </nav>
 
       <form class="surface min-w-0 p-4 sm:p-6" data-cv-form novalidate aria-label="{{ _('Your CV') }}">
-        <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
-          <p class="label-mono" data-step-counter aria-live="polite"></p>
-          <p class="text-[12px] text-faint" data-save-status aria-live="polite"></p>
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <p class="label-mono" data-step-counter aria-live="polite"></p>
+            <p class="text-[12px] text-faint" data-save-status aria-live="polite"></p>
+          </div>
+          <button type="button" class="cv-ai-whole" data-action="ai-improve-all">
+            {{ icon("sparkle", "h-4 w-4") }}<span>{{ _('Make my whole CV professional') }}</span>
+          </button>
         </div>
+        <p class="-mt-3 mb-5 text-[12px] text-faint" data-ai-usage aria-live="polite"></p>
 
         {# Step 1: personal details #}
         <section data-step-panel="personal" aria-labelledby="cv-step-personal">
@@ -180,6 +198,12 @@
                     data-path="summary" maxlength="{{ limits.summary }}"
                     placeholder="{{ _('e.g. Data analyst with two years of experience turning messy spreadsheets into clear dashboards.') }}"></textarea>
           <p class="mt-1 text-end text-[11px] text-faint" dir="ltr" data-count-for="summary">0 / {{ limits.summary }}</p>
+          <div class="mt-3 flex flex-wrap items-center gap-3" data-ai-slot="summary">
+            <button type="button" class="cv-ai-btn" data-action="ai-improve" data-section="summary">
+              {{ icon("sparkle", "h-3.5 w-3.5") }}<span>{{ _('Improve with AI') }}</span>
+            </button>
+            <p class="text-[12px] text-faint">{{ _('Write simply, in English or Roman Urdu. The AI rewrites it in professional English.') }}</p>
+          </div>
           <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav() }}
         </section>
@@ -222,6 +246,12 @@
           </div>
           <div class="mt-4 flex flex-wrap gap-2" data-skills-list aria-live="polite"></div>
           <p class="mt-3 text-[11px] text-faint" dir="ltr" data-skills-count></p>
+          <div class="mt-3 flex flex-wrap items-center gap-3" data-ai-slot="skills">
+            <button type="button" class="cv-ai-btn" data-action="ai-improve" data-section="skills">
+              {{ icon("sparkle", "h-3.5 w-3.5") }}<span>{{ _('Improve with AI') }}</span>
+            </button>
+            <p class="text-[12px] text-faint">{{ _('The AI cleans up your skills and adds ones your CV already shows.') }}</p>
+          </div>
           <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav() }}
         </section>
@@ -326,6 +356,11 @@
             <textarea class="input cv-textarea" rows="4" dir="auto" data-key="description" maxlength="{{ limits.description }}"
                       placeholder="{{ _('- Helped 30+ customers a day') }}"></textarea>
             <p class="field-hint">{{ _('Start a line with - to make a bullet point.') }}</p>
+            <div class="mt-3 flex flex-wrap items-center gap-3" data-ai-slot="experience">
+              <button type="button" class="cv-ai-btn" data-action="ai-improve" data-section="experience">
+                {{ icon("sparkle", "h-3.5 w-3.5") }}<span>{{ _('Improve with AI') }}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -355,6 +390,42 @@
       </div>
     </template>
 
+    {# An AI suggestion under a section; ai_writer.js fills it. The text can be edited before accepting. #}
+    <template data-suggestion-template>
+      <div class="cv-suggestion" data-suggestion>
+        <div class="flex items-center gap-2">
+          {{ icon("sparkle", "h-4 w-4 text-accent") }}
+          <p class="label-mono">{{ _('AI suggestion') }}</p>
+        </div>
+        <label class="sr-only" data-suggestion-label>{{ _('AI suggestion') }}</label>
+        <textarea class="input cv-textarea" rows="5" dir="auto" data-suggestion-text></textarea>
+        <p class="field-hint">{{ _('Read it first: you can edit it here, then accept. The AI only rewords what you wrote.') }}</p>
+        <p class="mt-1 text-[12px] text-faint" data-suggestion-note hidden></p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <button type="button" class="btn-primary btn-sm" data-action="ai-accept">{{ icon("check", "h-3.5 w-3.5") }}<span>{{ _('Accept') }}</span></button>
+          <button type="button" class="btn-secondary btn-sm" data-action="ai-discard">{{ _('Discard') }}</button>
+        </div>
+      </div>
+    </template>
+
+    <dialog class="cv-ai-dialog" data-ai-dialog aria-labelledby="cv-ai-dialog-title">
+      <form method="dialog" class="flex max-h-[85vh] flex-col">
+        <div class="flex items-start justify-between gap-3 border-b border-line p-5">
+          <div>
+            <h2 class="text-[18px] font-semibold tracking-tight" id="cv-ai-dialog-title">{{ _('Your CV, made professional') }}</h2>
+            <p class="mt-1 text-[13px] text-muted">{{ _("Untick anything you don't want, edit any text, then apply.") }}</p>
+          </div>
+          <button type="button" class="cv-icon-btn" data-action="ai-dialog-close" aria-label="{{ _('Close') }}">{{ icon("close", "h-4 w-4") }}</button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5" data-ai-dialog-items></div>
+        <p class="px-5 text-[12px] text-faint" data-ai-dialog-note hidden></p>
+        <div class="flex flex-wrap justify-end gap-2 border-t border-line p-5">
+          <button type="button" class="btn-secondary h-10 px-5" data-action="ai-dialog-close">{{ _('Cancel') }}</button>
+          <button type="button" class="btn-primary h-10 px-5" data-action="ai-dialog-apply">{{ icon("check", "h-4 w-4") }}<span>{{ _('Apply selected') }}</span></button>
+        </div>
+      </form>
+    </dialog>
+
     <div class="toast-stack" data-cv-toasts role="status" aria-live="polite"></div>
   </div>
 {% endblock %}
@@ -362,4 +433,5 @@
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/cv_generator/stores.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/cv_generator/cv_app.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/cv_generator/ai_writer.js') }}" defer></script>
 {% endblock %}

@@ -100,10 +100,9 @@ def test_guest_gets_three_tries_per_ip_per_day(client, tools):
     assert _generate(client, ip="203.0.113.99").status_code == 200
 
 
-def test_guest_limit_does_not_store_the_raw_ip(client, tools):
-    repository, _ = tools
+def test_guest_limit_does_not_store_the_raw_ip(client, tools, ai_quota_repository):
     _generate(client)
-    assert all(GUEST_IP not in subject for subject in repository.tries.values())
+    assert all(GUEST_IP not in subject for _tool, subject in ai_quota_repository.tries.values())
 
 
 def test_guest_usage(client, tools):
@@ -142,12 +141,11 @@ def test_user_is_counted_by_account_not_ip(client, log_in, app, tools):
     assert response.get_json()["code"] == "limit_user"
 
 
-def test_user_tries_do_not_use_up_guest_tries_on_same_ip(client, log_in, tools):
-    repository, _ = tools
+def test_user_tries_do_not_use_up_guest_tries_on_same_ip(client, log_in, tools, ai_quota_repository):
     log_in()
     _generate(client)
-    assert repository.used(ip_hash="anything") == 0
-    assert all(subject.startswith("user:") for subject in repository.tries.values())
+    assert ai_quota_repository.used("captions", ip_hash="anything") == 0
+    assert all(subject.startswith("user:") for _tool, subject in ai_quota_repository.tries.values())
 
 
 def test_history_save_failure_still_returns_captions(client, log_in, tools):
@@ -162,7 +160,7 @@ def test_history_save_failure_still_returns_captions(client, log_in, tools):
 # ── Site-wide daily limit ───────────────────────────────────────────────────
 
 def test_site_wide_limit_stops_everyone(client, app, log_in, tools):
-    app.config["CAPTIONS_SITE_DAILY_LIMIT"] = 2
+    app.config["AI_SITE_DAILY_LIMIT"] = 2
     assert _generate(client, ip="203.0.113.1").status_code == 200
     assert _generate(client, ip="203.0.113.2").status_code == 200
     response = _generate(client, ip="203.0.113.3")
@@ -172,21 +170,27 @@ def test_site_wide_limit_stops_everyone(client, app, log_in, tools):
     assert _generate(client).get_json()["code"] == "site_limit"
 
 
-def test_site_limit_is_sent_to_the_database(client, tools):
-    repository, _ = tools
+def test_site_limit_is_sent_to_the_database(client, tools, ai_quota_repository):
     _generate(client)
-    assert repository.calls[0][-1] == 500
+    assert ai_quota_repository.calls[0][2] == "captions"
+    assert ai_quota_repository.calls[0][-1] == 500
+
+
+def test_site_limit_is_shared_with_other_ai_tools(client, app, tools, ai_quota_repository):
+    app.config["AI_SITE_DAILY_LIMIT"] = 1
+    ai_quota_repository.tries["other"] = ("cv_writer", "ip:someone-else")
+    assert _generate(client).get_json()["code"] == "site_limit"
 
 
 # ── Validation ──────────────────────────────────────────────────────────────
 
 @pytest.mark.parametrize("topic, code", [("", "topic_required"), ("   ", "topic_required"), ("x" * 501, "topic_too_long"), (None, "topic_required")])
-def test_bad_topic(client, tools, topic, code):
-    repository, ai = tools
+def test_bad_topic(client, tools, ai_quota_repository, topic, code):
+    _, ai = tools
     response = _generate(client, topic=topic)
     assert response.status_code == 400
     assert response.get_json()["code"] == code
-    assert repository.tries == {} and ai.calls == []
+    assert ai_quota_repository.tries == {} and ai.calls == []
 
 
 def test_bad_platform(client, tools):
@@ -207,21 +211,21 @@ def test_error_messages_are_translated(client, tools):
     (AIUnavailable(), "ai_unavailable", 503),
     (AIBlocked(), "ai_blocked", 422),
 ])
-def test_ai_failure_refunds_the_try(client, tools, error, code, status):
-    repository, ai = tools
+def test_ai_failure_refunds_the_try(client, tools, ai_quota_repository, error, code, status):
+    _, ai = tools
     ai.error = error
     response = _generate(client)
     assert response.status_code == status
     assert response.get_json()["code"] == code
-    assert repository.tries == {}
+    assert ai_quota_repository.tries == {}
 
 
-def test_ai_answer_without_captions_is_an_error_and_refunded(client, tools):
-    repository, ai = tools
+def test_ai_answer_without_captions_is_an_error_and_refunded(client, tools, ai_quota_repository):
+    _, ai = tools
     ai.result = {"captions": ["", "   ", 5]}
     response = _generate(client)
     assert response.get_json()["code"] == "ai_unavailable"
-    assert repository.tries == {}
+    assert ai_quota_repository.tries == {}
 
 
 def test_ai_answer_is_cleaned(client, tools):
@@ -230,9 +234,9 @@ def test_ai_answer_is_cleaned(client, tools):
     assert _generate(client).get_json()["captions"] == ["one", "two", "three"]
 
 
-def test_supabase_down_is_friendly(client, tools):
-    repository, ai = tools
-    repository.unavailable = True
+def test_supabase_down_is_friendly(client, tools, ai_quota_repository):
+    _, ai = tools
+    ai_quota_repository.unavailable = True
     response = _generate(client)
     assert response.status_code == 503
     assert response.get_json()["code"] == "unavailable"

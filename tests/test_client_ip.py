@@ -4,7 +4,7 @@ import pytest
 from app import create_app
 from app.config import ProductionConfig
 from app.services.client_ip import ip_fingerprint
-from tests.fakes import FakeCaptionsRepository
+from tests.fakes import FakeAIQuotaRepository, FakeCaptionsRepository
 
 
 def test_fingerprint_is_stable_and_not_the_raw_ip(app):
@@ -37,8 +37,9 @@ def test_ipv4_mapped_ipv6_counts_as_the_ipv4_address(app):
 def production_client(monkeypatch):
     monkeypatch.setattr(ProductionConfig, "SECRET_KEY", "prod-test-secret")
     app = create_app("production")
-    repository = FakeCaptionsRepository()
-    app.extensions["captions_repository"] = repository
+    app.extensions["captions_repository"] = FakeCaptionsRepository()
+    repository = FakeAIQuotaRepository()
+    app.extensions["ai_quota_repository"] = repository
     return app, app.test_client(), repository
 
 
@@ -46,6 +47,6 @@ def test_production_uses_the_ip_vercel_wrote_not_one_the_visitor_sent(production
     app, client, repository = production_client
     # A visitor can put anything in X-Forwarded-For; Vercel's own entry is always the last one.
     with app.app_context():
-        repository.consume_try(None, ip_fingerprint("198.51.100.4"), 3, 500)
+        repository.consume_try(None, "captions", ip_fingerprint("198.51.100.4"), 3, 500)
     response = client.get("/api/captions/usage", headers={"X-Forwarded-For": "9.9.9.9, 198.51.100.4"})
     assert response.get_json()["used"] == 1

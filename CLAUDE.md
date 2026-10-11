@@ -136,7 +136,9 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 
 - Phase 6B part 1: saved CVs (max 20 per user, `/api/cvs` + `/api/cvs/import`, SQL `20261015_cvs.sql`; guest CVs in `localStorage` move after login), 5 templates (Modern, Classic, Minimal, Creative, Executive) + 6 accent colours, SVG thumbnails in `tools/cv_generator/_thumbnails.html`. Business rules for saving: `cv_generator/saved_cvs.py`.
 
-**Next:** Phase 6B part 2: AI writing help (one shared AI limit system `ai_tries`, SQL `20261014_ai_tries.sql`, run AFTER that commit is live). Then "check this CV" link + CV Checker. See `docs/requirements/`.
+- Phase 6B part 2: "Improve with AI" (summary, each job, skills) + "Make my whole CV professional" (`/api/cv-generator/improve`, logic `cv_generator/writer.py`, prompts `cv_generator/prompts.py`, UI `ai_writer.js`). Suggestion shown first; user edits/accepts. Answers are checked: new numbers removed, skills must quote the CV (`source`), name/contact never sent. Limits: guest 3, user 30 (config). One shared AI limit system for all tools (`app/services/ai_quota.py`, SQL `20261014_ai_tries.sql`); Captions uses it too.
+
+**Next:** "Check this CV" link + CV Checker. See `docs/requirements/`.
 
 **How PDFs work (follow for CV Checker too):**
 - `app/services/pdf_builder.py`: `new_document()` + `render()`. Text is real text (ATS-readable); tests read it back with `pypdf` (dev only).
@@ -147,7 +149,7 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 **How AI works (follow for CV Checker/Generator):**
 - Tools call `get_ai_provider().generate_json(system=, prompt=, schema=)` only. Errors: `AIUnavailable` / `AIQuotaExceeded` / `AIBlocked` (`.code`). New vendor = new file in `app/services/ai/` + `PROVIDERS` entry + `AI_PROVIDER` in `.env`.
 - Prompts live in the tool's `prompts.py`. Tests use `ai_provider` fixture (`FakeAIProvider`), never the real API.
-- Daily limits: reserve a try in Postgres BEFORE the AI call (`consume_caption_try`), refund by secret try id if AI fails. Guest IP = `app/services/client_ip.py` (`ip_fingerprint()`, HMAC, IPv6 /64); on Vercel the IP comes from the last X-Forwarded-For entry via ProxyFix.
+- Daily limits: `app/services/ai_quota.py` — `reserve(tool, requester, limit)` BEFORE the AI call, `refund(requester, reservation)` if AI fails. Per-tool limits + one `AI_SITE_DAILY_LIMIT` for all tools. A new AI tool = add its name to `ai_quota.TOOLS` AND to the `tool in (...)` lists in a new SQL migration. Tests: `ai_quota_repository` fixture (autouse fake). Guest IP = `app/services/client_ip.py` (`ip_fingerprint()`, HMAC, IPv6 /64); on Vercel the IP comes from the last X-Forwarded-For entry via ProxyFix.
 
 **How auth works (follow in every phase):**
 - All Supabase calls → `app/blueprints/auth/services.py` (`get_auth_service()`). Routes get `AuthError` with a code; text in `auth/messages.py`.
@@ -170,7 +172,7 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Send real Vercel URL for Supabase Site URL + Redirect URLs.
 - Test real signup/login/reset/Google with own email.
 - Run `supabase/migrations/20261010_notes.sql` in Supabase SQL Editor, then test Notes.
-- Run `20261013_captions_limits.sql` in Supabase SQL Editor; add `GEMINI_API_KEY` to `.env` + Vercel; then test Captions.
+- Run `20261014_ai_tries.sql` in Supabase SQL Editor (after the Phase 6B part 2 commit is live; it replaces `20261013_captions_limits.sql`); add `GEMINI_API_KEY` to `.env` + Vercel; then test Captions and CV "Improve with AI".
 - Run once (fix): `alter table public.expenses alter column user_id set default auth.uid();`
 - Before going live: Brevo SMTP.
 - **TODO (security, do together with "Delete account"):** the AI limit functions (`consume_ai_try` etc.) can be called directly with the publishable key, so someone could fill up the site-wide daily limit. Fix by calling them only from the server with a server-only key.

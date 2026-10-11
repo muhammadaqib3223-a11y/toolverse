@@ -4,6 +4,7 @@ from app import create_app
 from app.blueprints.auth.session import SESSION_KEY
 from tests.fakes import (
     FakeAIProvider,
+    FakeAIQuotaRepository,
     FakeAuthService,
     FakeCaptionsRepository,
     FakeCVsRepository,
@@ -59,6 +60,14 @@ def cvs_repository(app):
     """Replace Supabase with the fake saved-CVs repository for this test."""
     repository = FakeCVsRepository()
     app.extensions["cvs_repository"] = repository
+    return repository
+
+
+@pytest.fixture(autouse=True)
+def ai_quota_repository(app):
+    """Daily AI tries are always counted in memory in tests (never Supabase)."""
+    repository = FakeAIQuotaRepository()
+    app.extensions["ai_quota_repository"] = repository
     return repository
 
 

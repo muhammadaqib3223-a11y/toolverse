@@ -3,20 +3,21 @@
 Routes call these functions and never see the repository or the AI provider directly, so tests
 can swap in fakes (tests/fakes.py) and never call Supabase or Gemini.
 
-A try is reserved BEFORE the AI call (so many requests at once can't go over the limit) and
-given back if the AI fails, so a guest never loses one of their few tries to an outage.
+Daily limits use the shared AI limit system (app/services/ai_quota.py): a try is reserved BEFORE
+the AI call (so many requests at once can't go over the limit) and given back if the AI fails,
+so a guest never loses one of their few tries to an outage.
 """
 import logging
 import re
-from dataclasses import dataclass
-from typing import Optional
 
 from flask import current_app
 
 from app.blueprints.tools.captions.errors import CaptionError, CaptionNotFound, CaptionsUnavailable
 from app.blueprints.tools.captions.prompts import CAPTION_COUNT, SCHEMA, SYSTEM, build_prompt
 from app.blueprints.tools.captions.repository import get_repository
+from app.services import ai_quota
 from app.services.ai import AIError, AIUnavailable, get_ai_provider
+from app.services.ai_quota import QuotaError, Requester  # noqa: F401  (Requester is used by routes.py)
 
 logger = logging.getLogger(__name__)
 
@@ -25,18 +26,9 @@ TOPIC_MAX_LENGTH = 500
 CAPTION_MAX_LENGTH = 3000
 HISTORY_LIMIT = 20
 
+AI_TOOL = "captions"  # name in the shared AI limits (ai_quota)
+
 _ID_RE = re.compile(r"^[0-9a-fA-F-]{8,36}$")
-
-
-@dataclass(frozen=True)
-class Requester:
-    """Who is asking. access_token is None for a guest, who is counted by ip_hash instead."""
-    ip_hash: str
-    access_token: Optional[str] = None
-
-    @property
-    def is_guest(self):
-        return not self.access_token
 
 
 def daily_limit(requester):
@@ -46,7 +38,10 @@ def daily_limit(requester):
 
 def usage(requester):
     limit = daily_limit(requester)
-    used = get_repository().tries_used(requester.access_token, requester.ip_hash)
+    try:
+        used = ai_quota.tries_used(AI_TOOL, requester)
+    except QuotaError:
+        raise CaptionsUnavailable() from None
     return {"limit": limit, "used": used, "remaining": max(limit - used, 0)}
 
 
@@ -56,23 +51,19 @@ def generate(requester, topic, platform):
     limit = daily_limit(requester)
     repo = get_repository()
 
-    reservation = repo.consume_try(
-        requester.access_token, requester.ip_hash, limit, current_app.config["CAPTIONS_SITE_DAILY_LIMIT"]
-    ) or {}
-    status = reservation.get("status")
-    if status == "limit":
-        raise CaptionError("limit_guest" if requester.is_guest else "limit_user")
-    if status == "site_limit":
-        logger.warning("Captions site-wide daily limit reached")
-        raise CaptionError("site_limit")
-    if status != "ok":
-        logger.error("Unexpected consume_caption_try result: %r", reservation)
-        raise CaptionsUnavailable()
+    try:
+        reservation = ai_quota.reserve(AI_TOOL, requester, limit)
+    except QuotaError as error:
+        if error.code == "limit":
+            raise CaptionError("limit_guest" if requester.is_guest else "limit_user") from None
+        if error.code == "site_limit":
+            raise CaptionError("site_limit") from None
+        raise CaptionsUnavailable() from None
 
     try:
         captions = _write_captions(topic, platform)
     except AIError as error:
-        _refund(repo, requester, reservation.get("try_id"))
+        ai_quota.refund(requester, reservation)
         raise CaptionError(error.code) from None
 
     saved = None
@@ -83,14 +74,13 @@ def generate(requester, topic, platform):
             # The captions are still shown; only the history entry is missing.
             logger.warning("Captions written but not saved to history")
 
-    used = int(reservation.get("used") or 0)
     return {
         "captions": captions,
         "topic": topic,
         "platform": platform,
         "saved": saved,
         "limit": limit,
-        "remaining": max(limit - used, 0),
+        "remaining": reservation.remaining,
     }
 
 
@@ -117,15 +107,6 @@ def _write_captions(topic, platform):
         logger.warning("AI returned no usable captions: %.200r", result)
         raise AIUnavailable("no_captions")
     return captions[:CAPTION_COUNT]
-
-
-def _refund(repo, requester, try_id):
-    if not try_id:
-        return
-    try:
-        repo.refund_try(requester.access_token, try_id)
-    except CaptionsUnavailable:
-        logger.warning("Could not give back caption try %s", try_id)
 
 
 def _validate(topic, platform):

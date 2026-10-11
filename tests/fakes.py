@@ -12,6 +12,7 @@ from app.blueprints.tools.cv_generator.errors import CVError, CVsUnavailable
 from app.blueprints.tools.expenses.errors import ExpensesUnavailable
 from app.blueprints.tools.notes.errors import NotesUnavailable
 from app.services.ai.base import AIProvider
+from app.services.ai_quota_repository import QuotaUnavailable
 
 GOOGLE_URL = "https://test-project.supabase.co/auth/v1/authorize?provider=google"
 GOOGLE_VERIFIER = "test-code-verifier"
@@ -300,37 +301,36 @@ class FakeExpensesRepository:
 
 
 @dataclass
-class FakeCaptionsRepository:
-    """In-memory version of SupabaseCaptionsRepository, with the same daily-limit rules as the
-    Postgres functions in supabase/migrations/20261013_captions_limits.sql. No network."""
+class FakeAIQuotaRepository:
+    """In-memory version of SupabaseAIQuotaRepository, with the same rules as the Postgres
+    functions in supabase/migrations/20261014_ai_tries.sql (per-tool limit, one site limit for
+    all tools). No network."""
     unavailable: bool = False
-    history_unavailable: bool = False   # only saving/reading history fails
-    tries: dict = field(default_factory=dict)    # try_id -> subject (all "today")
-    history: dict = field(default_factory=dict)  # access_token -> {id: row}
+    tries: dict = field(default_factory=dict)  # try_id -> (tool, subject), all "today"
     calls: list = field(default_factory=list)
 
     def _check(self):
         if self.unavailable:
-            raise CaptionsUnavailable()
+            raise QuotaUnavailable()
 
     @staticmethod
     def subject(access_token, ip_hash):
         return f"user:{access_token}" if access_token else f"ip:{ip_hash}"
 
-    def used(self, access_token=None, ip_hash=None):
-        subject = self.subject(access_token, ip_hash)
-        return sum(1 for s in self.tries.values() if s == subject)
+    def used(self, tool, access_token=None, ip_hash=None):
+        key = (tool, self.subject(access_token, ip_hash))
+        return sum(1 for value in self.tries.values() if value == key)
 
-    def consume_try(self, access_token, ip_hash, limit, site_limit):
+    def consume_try(self, access_token, tool, ip_hash, limit, site_limit):
         self._check()
-        self.calls.append(("consume_try", access_token, ip_hash, limit, site_limit))
-        used = self.used(access_token, ip_hash)
+        self.calls.append(("consume_try", access_token, tool, ip_hash, limit, site_limit))
+        used = self.used(tool, access_token, ip_hash)
         if used >= limit:
             return {"status": "limit", "try_id": None, "used": used}
         if len(self.tries) >= site_limit:
             return {"status": "site_limit", "try_id": None, "used": used}
         try_id = str(uuid.uuid4())
-        self.tries[try_id] = self.subject(access_token, ip_hash)
+        self.tries[try_id] = (tool, self.subject(access_token, ip_hash))
         return {"status": "ok", "try_id": try_id, "used": used + 1}
 
     def refund_try(self, access_token, try_id):
@@ -338,9 +338,21 @@ class FakeCaptionsRepository:
         self.calls.append(("refund_try", access_token, try_id))
         self.tries.pop(try_id, None)
 
-    def tries_used(self, access_token, ip_hash):
+    def tries_used(self, access_token, tool, ip_hash):
         self._check()
-        return self.used(access_token, ip_hash)
+        return self.used(tool, access_token, ip_hash)
+
+
+@dataclass
+class FakeCaptionsRepository:
+    """In-memory version of SupabaseCaptionsRepository (history only). No network."""
+    unavailable: bool = False
+    history_unavailable: bool = False   # only saving/reading history fails
+    history: dict = field(default_factory=dict)  # access_token -> {id: row}
+
+    def _check(self):
+        if self.unavailable:
+            raise CaptionsUnavailable()
 
     def _check_history(self):
         self._check()

@@ -193,22 +193,27 @@ def _parse_experience(raw):
     items = _list(raw)
     if len(items) > MAX_EXPERIENCE:
         raise CVError("too_many_experience", "experience")
-    jobs = []
-    for index, item in enumerate(items):
-        item = _dict(item)
-        prefix = f"experience.{index}."
-        job = Experience(
-            job_title=_text(item, "job_title", prefix + "job_title", LIMITS["job_title"]),
-            company=_text(item, "company", prefix + "company", LIMITS["company"]),
-            location=_text(item, "location", prefix + "location", LIMITS["location"]),
-            start=_text(item, "start", prefix + "start", LIMITS["date"]),
-            end=_text(item, "end", prefix + "end", LIMITS["date"]),
-            current=item.get("current") is True,
-            description=_text(item, "description", prefix + "description", LIMITS["description"], multiline=True),
-        )
-        if job.job_title or job.company or job.description:
-            jobs.append(job)
-    return tuple(jobs)
+    jobs = [parse_job(item, index) for index, item in enumerate(items)]
+    return tuple(job for job in jobs if job_has_content(job))
+
+
+def parse_job(item, index):
+    """One job from the form (its position `index` is used in error field names)."""
+    item = _dict(item)
+    prefix = f"experience.{index}."
+    return Experience(
+        job_title=_text(item, "job_title", prefix + "job_title", LIMITS["job_title"]),
+        company=_text(item, "company", prefix + "company", LIMITS["company"]),
+        location=_text(item, "location", prefix + "location", LIMITS["location"]),
+        start=_text(item, "start", prefix + "start", LIMITS["date"]),
+        end=_text(item, "end", prefix + "end", LIMITS["date"]),
+        current=item.get("current") is True,
+        description=_text(item, "description", prefix + "description", LIMITS["description"], multiline=True),
+    )
+
+
+def job_has_content(job):
+    return bool(job.job_title or job.company or job.description)
 
 
 def _parse_education(raw):

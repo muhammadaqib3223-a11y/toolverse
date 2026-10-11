@@ -178,6 +178,44 @@
     }).catch(function () { /* the list refreshes on the next page load */ });
   });
 
+  // ── For ai_writer.js: read the form, and put accepted AI text back in ──────
+
+  window.CvApp = {
+    collect: collect,
+    entries: function (kind) {
+      return Array.prototype.slice.call(lists[kind].querySelectorAll("[data-entry]"));
+    },
+    setPath: function (path, value) {
+      var input = root.querySelector('[data-path="' + path + '"]');
+      if (!input) return;
+      input.value = value;
+      clearInvalid(input);
+      updateCounts();
+      scheduleSave();
+    },
+    setEntryField: function (entry, key, value) {
+      var input = entry && entry.querySelector('[data-key="' + key + '"]');
+      if (!input) return;
+      input.value = value;
+      scheduleSave();
+    },
+    setSkills: function (skills) {
+      var seen = {};
+      state.skills = skills.map(function (skill) { return String(skill).trim().slice(0, MAX.skillLength); })
+        .filter(function (skill) {
+          var key = skill.toLowerCase();
+          if (!skill || seen[key]) return false;
+          seen[key] = true;
+          return true;
+        })
+        .slice(0, MAX.skills);
+      hideStepError("skills");
+      renderSkills();
+      scheduleSave();
+    },
+    toast: function (message, kind) { showToast(message, kind); },
+  };
+
   // ── My CVs ────────────────────────────────────────────────────────────────
 
   function loadLibrary() {
@@ -318,6 +356,8 @@
       .filter(function (skill) { return typeof skill === "string" && skill.trim(); })
       .slice(0, MAX.skills);
     panels.forEach(function (panel) { hideStepError(panel.dataset.stepPanel); });
+    // AI suggestions belonged to the CV that was open before.
+    root.querySelectorAll("[data-suggestion]").forEach(function (card) { card.remove(); });
     closePreview();
     renderPicker();
     renderSkills();

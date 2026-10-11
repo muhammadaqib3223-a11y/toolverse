@@ -76,8 +76,10 @@ def _init_tools(app):
     from app.blueprints.tools.cv_generator import init_cv_generator
     from app.blueprints.tools.expenses import init_expenses
     from app.services.ai import init_ai
+    from app.services.ai_quota import init_ai_quota
 
     init_ai(app)
+    init_ai_quota(app)
     from app.blueprints.tools.notes import init_notes
 
     init_notes(app)

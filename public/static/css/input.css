@@ -463,6 +463,31 @@
   .cv-preview { @apply overflow-hidden rounded-[14px] border border-line bg-white; }
   .cv-preview iframe { @apply block w-full; aspect-ratio: 1 / 1.414; }
   .cv-entry input:disabled { @apply cursor-not-allowed opacity-50; }
+  /* AI writing help: small accent buttons, an editable suggestion card, and the whole-CV dialog. */
+  .cv-ai-btn {
+    @apply inline-flex h-8 items-center gap-1.5 rounded-full border border-accent/40 bg-accent/[0.08] px-3.5 text-[12.5px] font-medium text-accent;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .cv-ai-btn:hover { @apply border-accent/70 bg-accent/[0.14]; transform: translateY(-1px); }
+  .cv-ai-btn:disabled, .cv-ai-whole:disabled { @apply cursor-not-allowed opacity-50; transform: none; }
+  .cv-ai-whole {
+    @apply inline-flex h-9 items-center gap-2 rounded-full border border-accent/50 bg-accent px-4 text-[13px] font-semibold text-black;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cv-ai-whole:hover { transform: translateY(-1px); box-shadow: 0 0 0 4px rgb(155 140 255 / 0.18); }
+  .cv-ai-btn.is-working svg, .cv-ai-whole.is-working svg { animation: ai-pulse 1.2s ease-in-out infinite; }
+  @keyframes ai-pulse { 50% { opacity: 0.35; transform: scale(0.85); } }
+  .cv-suggestion {
+    @apply mt-3 rounded-[16px] border border-accent/30 bg-accent/[0.05] p-4;
+    animation: fade-up 0.35s ease both;
+  }
+  .cv-ai-dialog {
+    @apply m-auto w-[min(44rem,calc(100vw-2rem))] rounded-[20px] border border-line-strong bg-surface p-0 text-fg;
+  }
+  .cv-ai-dialog::backdrop { background: rgb(0 0 0 / 0.7); backdrop-filter: blur(4px); }
+  .cv-ai-dialog[open] { animation: fade-up 0.3s ease both; }
+  .cv-ai-item + .cv-ai-item { @apply mt-5 border-t border-line pt-5; }
+  .cv-ai-item textarea:disabled { @apply opacity-40; }
   [dir="rtl"] .cv-step { font-size: 15px; }
   [dir="rtl"] .cv-skill { font-size: 15px; }
 }
@@ -508,6 +533,8 @@
     transition-duration: 0.01ms !important;
   }
   .spinner { animation: none !important; }
-  .lift:hover, .btn:hover, .cv-template:hover, .cv-swatch:hover, .cv-template:hover .cv-template-thumb svg { transform: none; }
+  .cv-ai-btn.is-working svg, .cv-ai-whole.is-working svg { animation: none !important; }
+  .lift:hover, .btn:hover, .cv-template:hover, .cv-swatch:hover, .cv-template:hover .cv-template-thumb svg,
+  .cv-ai-btn:hover, .cv-ai-whole:hover { transform: none; }
   [data-aos] { opacity: 1 !important; transform: none !important; }
 }

@@ -12,11 +12,13 @@ from flask_babel import get_locale
 
 from app.blueprints.auth.decorators import login_optional
 from app.blueprints.auth.session import current_auth_session
-from app.blueprints.tools.cv_generator import bp, saved_cvs, services
+from app.blueprints.tools.cv_generator import bp, saved_cvs, services, writer
 from app.blueprints.tools.cv_generator.errors import CVError
 from app.blueprints.tools.cv_generator.messages import error_message
 from app.blueprints.tools.cv_generator.pdf_templates import ACCENT_HEX, ATS_SAFEST, DEFAULT_ACCENT
 from app.i18n import localized_route
+from app.services.ai_quota import Requester
+from app.services.client_ip import ip_fingerprint
 
 # Every other CVError is a bad request (400): a problem the user can fix in the form.
 _ERROR_STATUS = {
@@ -24,8 +26,14 @@ _ERROR_STATUS = {
     "not_found": 404,
     "cv_limit": 409,
     "too_large": 413,
+    "ai_blocked": 422,
+    "limit_guest": 429,
+    "limit_user": 429,
+    "site_limit": 429,
     "pdf_failed": 500,
     "unavailable": 503,
+    "ai_quota": 503,
+    "ai_unavailable": 503,
 }
 
 
@@ -48,6 +56,7 @@ def index():
         max_experience=services.MAX_EXPERIENCE,
         max_education=services.MAX_EDUCATION,
         max_skills=services.MAX_SKILLS,
+        ai_guest_limit=current_app.config["CV_AI_GUEST_DAILY_LIMIT"],
     )
 
 
@@ -65,6 +74,26 @@ def api_pdf():
     # The PDF holds personal details: never keep it in a shared cache.
     response.headers["Cache-Control"] = "private, no-store"
     return response
+
+
+@localized_route(bp, "/api/cv-generator/improve", methods=["POST"])
+@login_optional
+def api_improve():
+    """AI writing help. Guests may use it too (a smaller daily limit, counted by IP)."""
+    try:
+        data = _json_body()
+        return jsonify(writer.improve(_requester(), data.get("section"), data.get("cv"), data.get("index")))
+    except CVError as error:
+        return _error_response(error)
+
+
+@localized_route(bp, "/api/cv-generator/ai-usage", methods=["GET"])
+@login_optional
+def api_ai_usage():
+    try:
+        return jsonify(writer.usage(_requester()))
+    except CVError as error:
+        return _error_response(error)
 
 
 @localized_route(bp, "/api/cvs", methods=["GET", "POST"])
@@ -103,6 +132,11 @@ def api_import():
         return jsonify(cvs=saved_cvs.import_cvs(access_token, data.get("cvs") or []))
     except CVError as error:
         return _error_response(error)
+
+
+def _requester():
+    auth_session = current_auth_session() if g.get("user") is not None else None
+    return Requester(ip_hash=ip_fingerprint(), access_token=auth_session.access_token if auth_session else None)
 
 
 def _access_token():

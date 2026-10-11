@@ -46,11 +46,18 @@ class BaseConfig:
     # Stable, free-tier model (checked against ai.google.dev/gemini-api/docs/models, Oct 2026).
     GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
 
-    # Caption Generator daily limits (reset at midnight UTC). The site limit covers everyone
-    # together, so the AI's free daily quota is never used up.
+    # Daily AI limits (reset at midnight UTC), counted by app/services/ai_quota.py.
+    # The site limit covers ALL AI tools and everyone together, so the AI's free daily quota is
+    # never used up. (CAPTIONS_SITE_DAILY_LIMIT is the old name, still read if set.)
+    AI_SITE_DAILY_LIMIT = int(
+        os.environ.get("AI_SITE_DAILY_LIMIT") or os.environ.get("CAPTIONS_SITE_DAILY_LIMIT") or "500"
+    )
     CAPTIONS_GUEST_DAILY_LIMIT = int(os.environ.get("CAPTIONS_GUEST_DAILY_LIMIT", "3"))
     CAPTIONS_USER_DAILY_LIMIT = int(os.environ.get("CAPTIONS_USER_DAILY_LIMIT", "20"))
-    CAPTIONS_SITE_DAILY_LIMIT = int(os.environ.get("CAPTIONS_SITE_DAILY_LIMIT", "500"))
+    # CV Generator "Improve with AI" (each button press is one try; "whole CV" is one try too).
+    # An empty value in .env means "use the default".
+    CV_AI_GUEST_DAILY_LIMIT = int(os.environ.get("CV_AI_GUEST_DAILY_LIMIT") or "3")
+    CV_AI_USER_DAILY_LIMIT = int(os.environ.get("CV_AI_USER_DAILY_LIMIT") or "30")
 
     # CV Generator: the biggest request allowed for one CV (PDF or save; a full CV is ~10-20 KB),
     # and for moving all of a guest's browser CVs into the account at once.
@@ -70,9 +77,11 @@ class TestingConfig(BaseConfig):
     SUPABASE_URL = "https://test-project.supabase.co"
     SUPABASE_PUBLISHABLE_KEY = "sb_publishable_test"
     GEMINI_API_KEY = ""  # tests use the fake provider in tests/fakes.py
+    AI_SITE_DAILY_LIMIT = 500
     CAPTIONS_GUEST_DAILY_LIMIT = 3
     CAPTIONS_USER_DAILY_LIMIT = 20
-    CAPTIONS_SITE_DAILY_LIMIT = 500
+    CV_AI_GUEST_DAILY_LIMIT = 3
+    CV_AI_USER_DAILY_LIMIT = 30
 
 
 class ProductionConfig(BaseConfig):
