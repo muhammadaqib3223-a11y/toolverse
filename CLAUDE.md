@@ -140,7 +140,11 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 
 - Phase 6C part 1: extra CV sections (LinkedIn, projects, certifications, languages + level, hobbies, references / "on request"), all optional, empty = not in PDF. Optional profile photo: browser shrinks it (`photo.js`), server re-saves a clean JPEG with Pillow (`app/services/photos.py`, removes EXIF/GPS). Guests: photo in `localStorage`. Users: private bucket `cv-photos/<user id>/<cv id>.jpg` (SQL `20261016_cv_photos.sql`), Storage calls via `create_user_storage()` (the user's own token; `create_user_client()` does NOT sign Storage requests). Photo and references never go to the AI.
 
-**Next:** Phase 6C part 2: fuller page templates (coloured sidebar/header, bigger type); part 3: AI "Suggest responsibilities" / "Suggest skills" with checkboxes. Then "check this CV" link + CV Checker. See `docs/requirements/`.
+**Still to do in the CV Generator (Phase 6C, plan approved):**
+- Commit 2: new full-page design for all 5 templates — coloured sidebar/header band, bigger and clearer type, better spacing, accent-coloured headings, a place for the photo; all still ATS-friendly with selectable text.
+- Commit 3: AI suggestions — 4–6 job bullets from what the user wrote; "Suggest responsibilities" (6–8 common duties for the job title, checkboxes, none ticked by default, only ticked ones go in); "Suggest skills" from job titles (checkboxes); "Improve with AI" for Projects.
+
+**Next after that:** "check this CV" link + CV Checker. See `docs/requirements/`.
 
 **How PDFs work (follow for CV Checker too):**
 - `app/services/pdf_builder.py`: `new_document()` + `render()`. Text is real text (ATS-readable); tests read it back with `pypdf` (dev only).
@@ -177,6 +181,5 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Run `20261014_ai_tries.sql` in Supabase SQL Editor (after the Phase 6B part 2 commit is live; it replaces `20261013_captions_limits.sql`); add `GEMINI_API_KEY` to `.env` + Vercel; then test Captions and CV "Improve with AI".
 - Run once (fix): `alter table public.expenses alter column user_id set default auth.uid();`
 - Before going live: Brevo SMTP.
-- Run `20261016_cv_photos.sql` (photos for saved CVs) BEFORE deploying Phase 6C part 1: saved CVs read the new `photo_path` column.
 - **TODO (security, do together with "Delete account"):** the AI limit functions (`consume_ai_try` etc.) can be called directly with the publishable key, so someone could fill up the site-wide daily limit. Fix by calling them only from the server with a server-only key.
 - Pre-existing gap: some Terms/Privacy lines, a few FAQ/landing strings still lack Urdu translation in `app/translations/ur/LC_MESSAGES/messages.po`.
