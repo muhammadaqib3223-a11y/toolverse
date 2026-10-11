@@ -73,6 +73,7 @@ def _init_auth(app):
 
 def _init_tools(app):
     from app.blueprints.tools.captions import init_captions
+    from app.blueprints.tools.cv_generator import init_cv_generator
     from app.blueprints.tools.expenses import init_expenses
     from app.services.ai import init_ai
 
@@ -82,6 +83,7 @@ def _init_tools(app):
     init_notes(app)
     init_expenses(app)
     init_captions(app)
+    init_cv_generator(app)
 
 
 def _register_template_globals(app):

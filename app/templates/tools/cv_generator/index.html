@@ -1,8 +1,9 @@
 {% extends "dashboard/app_layout.html" %}
 {% from "partials/icons.html" import icon %}
+{% from "tools/cv_generator/_thumbnails.html" import thumbnail %}
 
-{# Step-by-step CV form; public/static/js/cv_generator/cv_app.js drives it. The form is kept in
-   this browser (stores.js); the server only turns it into a PDF and keeps nothing.
+{# Step-by-step CV form; public/static/js/cv_generator/cv_app.js drives it. A guest's CVs are
+   kept in this browser, a logged-in user's in their account (stores.js picks the store).
    Translated text the JS needs is passed through data-text-* attributes. #}
 
 {% macro text_field(key, label, maxlength, type="text", dir="auto", placeholder="", autocomplete="", required=false, wide=false) %}
@@ -60,9 +61,14 @@
 {% block app_content %}
   <div class="cv-app"
        data-cv-app
+       data-logged-in="{{ 'true' if current_user else 'false' }}"
        data-api-pdf="{{ url_for('cv_generator.api_pdf') }}"
+       data-api-cvs="{{ url_for('cv_generator.api_cvs') }}"
+       data-api-cv-template="{{ url_for('cv_generator.api_cv', cv_id='__ID__') }}"
        data-default-language="{{ cv_language }}"
-       data-default-template="{{ templates[0] }}"
+       data-default-template="{{ default_template }}"
+       data-default-accent="{{ default_accent }}"
+       data-max-cvs="{{ max_saved_cvs }}"
        data-max-experience="{{ max_experience }}"
        data-max-education="{{ max_education }}"
        data-max-skills="{{ max_skills }}"
@@ -77,7 +83,14 @@
        data-text-remove-skill="{{ _('Remove %(skill)s', skill='__SKILL__') }}"
        data-text-job="{{ _('Job %(number)s', number='__N__') }}"
        data-text-education="{{ _('Education %(number)s', number='__N__') }}"
-       data-text-saved="{{ _('Saved in this browser') }}"
+       data-text-saved="{{ _('Saved in your account') if current_user else _('Saved in this browser') }}"
+       data-text-saving="{{ _('Saving…') }}"
+       data-text-save-failed="{{ _('Could not save. We will try again when you make a change.') }}"
+       data-text-load-failed="{{ _('Could not load your CVs. Please refresh the page.') }}"
+       data-text-untitled="{{ _('Untitled CV') }}"
+       data-text-copy-of="{{ _('%(title)s (copy)', title='__TITLE__') }}"
+       data-text-delete-confirm="{{ _('Delete this CV? This cannot be undone.') }}"
+       data-text-cv-limit="{{ _('You can keep up to %(max)s CVs. Delete one to add a new one.', max=max_saved_cvs) }}"
        data-text-downloaded="{{ _('Your PDF is ready.') }}"
        data-text-clear-confirm="{{ _('Clear the whole form? This cannot be undone.') }}"
        data-text-step-of="{{ _('Step %(current)s of %(total)s', current='__CURRENT__', total='__TOTAL__') }}">
@@ -88,9 +101,41 @@
       {{ _('Fill in a simple form, choose a template and download your CV as a PDF.') }}
     </p>
 
-    <div class="surface mt-6 flex items-start gap-2 p-4 text-[13px] text-muted">
-      {{ icon("lock", "mt-0.5 h-4 w-4 shrink-0 text-faint") }}
-      <p>{{ _('Your CV is kept only in this browser. To make your PDF we read it once and do not keep it.') }}</p>
+    {# ── My CVs ───────────────────────────────────────────────────────────── #}
+    <div class="surface mt-6 p-3 sm:p-4" data-cv-library>
+      <div class="flex flex-wrap items-center gap-2">
+        <label for="cv-picker" class="sr-only">{{ _('My CVs') }}</label>
+        <select id="cv-picker" class="input mt-0 h-10 min-w-0 flex-1 basis-40 text-[14px] sm:max-w-[16rem]" data-cv-picker></select>
+        <label for="cv-title" class="sr-only">{{ _('CV name') }}</label>
+        <input id="cv-title" type="text" class="input mt-0 h-10 min-w-0 flex-1 basis-40 text-[14px]" dir="auto"
+               maxlength="{{ title_max_length }}" placeholder="{{ _('CV name, e.g. Data jobs') }}" data-cv-title>
+        <div class="flex shrink-0 items-center gap-1">
+          <button type="button" class="btn-secondary h-10 px-4 text-[13px]" data-action="new-cv">
+            {{ icon("plus", "h-4 w-4") }}<span>{{ _('New CV') }}</span>
+          </button>
+          <button type="button" class="cv-icon-btn h-10 w-10" data-action="duplicate-cv" aria-label="{{ _('Duplicate this CV') }}" title="{{ _('Duplicate this CV') }}">
+            {{ icon("copy", "h-4 w-4") }}
+          </button>
+          <button type="button" class="cv-icon-btn h-10 w-10" data-action="delete-cv" aria-label="{{ _('Delete this CV') }}" title="{{ _('Delete this CV') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+      </div>
+      <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[12px]">
+        {% if current_user %}
+          <p class="flex items-center gap-1.5 text-faint">
+            {{ icon("lock", "h-3.5 w-3.5 shrink-0") }}{{ _('Your CVs are saved privately in your account.') }}
+          </p>
+        {% else %}
+          <p class="flex items-center gap-1.5 text-faint">
+            {{ icon("lock", "h-3.5 w-3.5 shrink-0") }}{{ _('Your CVs are kept only in this browser. Log in to save them in your account.') }}
+          </p>
+          <div class="flex items-center gap-2">
+            <a href="{{ url_for('auth.login', next=request.path) }}" class="btn-secondary btn-sm">{{ _('Log in') }}</a>
+            <a href="{{ url_for('auth.signup', next=request.path) }}" class="btn-primary btn-sm">{{ _('Sign up free') }}</a>
+          </div>
+        {% endif %}
+      </div>
     </div>
 
     <div class="cv-layout mt-6">
@@ -187,33 +232,37 @@
           <p class="mt-1 text-[13px] text-muted">{{ _('Pick a design. You can switch and download again anytime.') }}</p>
 
           <p class="field-label mt-5" id="cv-template-label">{{ _('Template') }}</p>
-          <div class="mt-2 grid grid-cols-2 gap-3" role="group" aria-labelledby="cv-template-label">
+          {% set template_info = {
+            "modern": (_("Modern"), _("Side column for contact and skills.")),
+            "classic": (_("Classic"), _("One column. Simple and safe for any job.")),
+            "minimal": (_("Minimal"), _("Lots of white space, labels on the side.")),
+            "creative": (_("Creative"), _("A bold colour band for your name.")),
+            "executive": (_("Executive"), _("Formal and centred, with a serif font.")),
+          } %}
+          <div class="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-3" role="group" aria-labelledby="cv-template-label" data-template-picker>
             {% for template in templates %}
               <button type="button" class="cv-template" data-template="{{ template }}" aria-pressed="false">
-                <span class="cv-template-thumb" aria-hidden="true">
-                  {% if template == "classic" %}
-                    <svg viewBox="0 0 60 78" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                      <path d="M8 10h26"/><path d="M8 16h16" opacity=".5"/><path d="M8 23h44" opacity=".35"/>
-                      <path d="M8 31h12"/><path d="M8 37h44" opacity=".5"/><path d="M8 42h38" opacity=".5"/>
-                      <path d="M8 50h12"/><path d="M8 56h44" opacity=".5"/><path d="M8 61h30" opacity=".5"/>
-                      <path d="M8 69h44" opacity=".35"/>
-                    </svg>
-                  {% else %}
-                    <svg viewBox="0 0 60 78" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                      <path d="M8 10h26"/><path d="M8 16h16" class="text-accent" stroke="currentColor"/>
-                      <path d="M8 26h12" opacity=".5"/><path d="M8 31h12" opacity=".5"/><path d="M8 36h10" opacity=".5"/>
-                      <path d="M8 46h12" opacity=".5"/><path d="M8 51h9" opacity=".5"/>
-                      <path d="M24 24v32" opacity=".25"/>
-                      <path d="M29 26h14"/><path d="M29 32h23" opacity=".5"/><path d="M29 37h20" opacity=".5"/>
-                      <path d="M29 45h14"/><path d="M29 51h23" opacity=".5"/><path d="M29 56h17" opacity=".5"/>
-                    </svg>
-                  {% endif %}
+                <span class="cv-template-thumb">{{ thumbnail(template) }}</span>
+                <span class="mt-3 flex items-center justify-between gap-2">
+                  <span class="text-[14px] font-semibold text-fg">{{ template_info[template][0] }}</span>
+                  {% if template in ats_safest %}<span class="cv-ats-badge">{{ _('ATS best') }}</span>{% endif %}
                 </span>
-                <span class="mt-3 block text-[14px] font-semibold text-fg">{{ _('Classic') if template == "classic" else _('Modern') }}</span>
-                <span class="mt-1 block text-[12px] text-muted">
-                  {{ _('One column. Simple and safe for any job.') if template == "classic" else _('A side column for contact and skills.') }}
-                </span>
+                <span class="mt-1 block text-[12px] text-muted">{{ template_info[template][1] }}</span>
               </button>
+            {% endfor %}
+          </div>
+          <p class="field-hint">{{ _('All templates have real, selectable text. One-column templates are the safest for older ATS software.') }}</p>
+
+          <p class="field-label mt-6" id="cv-accent-label">{{ _('Colour') }}</p>
+          {% set accent_names = {
+            "indigo": _("Indigo"), "blue": _("Blue"), "teal": _("Teal"),
+            "green": _("Green"), "maroon": _("Maroon"), "charcoal": _("Charcoal"),
+          } %}
+          <div class="mt-2 flex flex-wrap gap-2" role="group" aria-labelledby="cv-accent-label">
+            {% for name, hex in accents.items() %}
+              <button type="button" class="cv-swatch" data-accent="{{ name }}" data-hex="{{ hex }}"
+                      style="--swatch: {{ hex }}" aria-pressed="false"
+                      aria-label="{{ accent_names[name] }}" title="{{ accent_names[name] }}"></button>
             {% endfor %}
           </div>
 

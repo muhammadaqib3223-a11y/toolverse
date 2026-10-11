@@ -34,6 +34,16 @@
              _('Your expenses are now in your account.'),
              _('Could not move your expenses. Please try again.')
            ) }}
+        {{ import_prompt(
+             url_for('cv_generator.api_import'),
+             'toolverse_guest_cvs',
+             'toolverse_cvs_import_dismissed',
+             'cvs',
+             _('You have CVs saved only in this browser. Move them to your account?'),
+             _('Moving your CVs…'),
+             _('Your CVs are now in your account.'),
+             _('Could not move your CVs. Please try again.')
+           ) }}
         {% block app_content %}{% endblock %}
       </main>
     </div>

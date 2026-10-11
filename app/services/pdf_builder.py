@@ -21,13 +21,17 @@ logging.getLogger("fontTools").setLevel(logging.WARNING)
 FONTS_DIR = Path(__file__).resolve().parent.parent / "assets" / "fonts"
 SANS = "geist"
 URDU = "nastaliq"
+SERIF = "serif"  # print-only font for formal CV templates (not used on the website)
 
 # Plain (non-variable) Regular and Bold files: fpdf2 loads these fast. Building a weight out of
 # a variable font on every request took seconds.
 FONT_FILES = {
     SANS: {"": "Geist-Regular.ttf", "B": "Geist-Bold.ttf"},
     URDU: {"": "NotoNastaliqUrdu-Regular.ttf", "B": "NotoNastaliqUrdu-Bold.ttf"},
+    SERIF: {"": "SourceSerif4-Regular.ttf", "B": "SourceSerif4-Bold.ttf"},
 }
+# Always loaded; other families only when a document asks for them (each font costs load time).
+BASE_FAMILIES = (SANS, URDU)
 
 # Arabic-script letters (Urdu uses these blocks). Used to pick line height and alignment.
 _URDU_RANGES = ((0x0600, 0x06FF), (0x0750, 0x077F), (0x08A0, 0x08FF), (0xFB50, 0xFDFF), (0xFE70, 0xFEFF))
@@ -56,12 +60,13 @@ def line_height(font_size, text=""):
     return font_size * (URDU_LINE_HEIGHT if contains_urdu(text) else LATIN_LINE_HEIGHT)
 
 
-def new_document(*, title="", author="", language="en", rtl=False):
-    """An empty A4 document (units: points) with our fonts and Urdu shaping ready."""
+def new_document(*, title="", author="", language="en", rtl=False, extra_families=()):
+    """An empty A4 document (units: points) with our fonts and Urdu shaping ready.
+    `extra_families`: more FONT_FILES families to load, e.g. (SERIF,)."""
     try:
         pdf = FPDF(unit="pt", format="A4")
-        for family, styles in FONT_FILES.items():
-            for style, file_name in styles.items():
+        for family in (*BASE_FAMILIES, *extra_families):
+            for style, file_name in FONT_FILES[family].items():
                 pdf.add_font(family, style, FONTS_DIR / file_name)
     except (OSError, ValueError) as error:
         log.exception("PDF fonts could not be loaded from %s", FONTS_DIR)

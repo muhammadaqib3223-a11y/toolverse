@@ -1,0 +1,73 @@
+{# Small drawings of each CV template for the template picker. Accent parts use the
+   .cv-thumb-a (stroke) / .cv-thumb-f (fill) classes, coloured by the --cv-accent CSS variable
+   that cv_app.js sets from the chosen colour. Grey lines stand for text. #}
+{% macro thumbnail(name) %}
+<svg viewBox="0 0 60 78" fill="none" stroke-linecap="round" stroke-width="1.6" aria-hidden="true" focusable="false">
+  {% if name == "modern" %}
+    <path class="cv-thumb-ink" stroke-width="2.6" d="M7 9h22"/>
+    <path class="cv-thumb-a" d="M7 15h14"/>
+    <path class="cv-thumb-a" stroke-width="1.2" d="M7 23h10"/>
+    <path class="cv-thumb-line" d="M7 28h13M7 32h11M7 36h12"/>
+    <path class="cv-thumb-a" stroke-width="1.2" d="M7 44h8"/>
+    <rect class="cv-thumb-chip" x="7" y="48" width="7" height="3.6" rx="1.8"/>
+    <rect class="cv-thumb-chip" x="15.5" y="48" width="6" height="3.6" rx="1.8"/>
+    <rect class="cv-thumb-chip" x="7" y="53.5" width="9" height="3.6" rx="1.8"/>
+    <path class="cv-thumb-rule" stroke-width=".8" d="M25 22v38"/>
+    <path class="cv-thumb-a" stroke-width="1.2" d="M29 23h10"/>
+    <path class="cv-thumb-line" d="M29 28h24M29 32h20"/>
+    <path class="cv-thumb-a" stroke-width="1.2" d="M29 40h12"/>
+    <path class="cv-thumb-ink" d="M29 45h14"/>
+    <path class="cv-thumb-line" d="M29 50h24M29 54h22M29 58h18"/>
+  {% elif name == "classic" %}
+    <path class="cv-thumb-ink" stroke-width="2.6" d="M7 9h24"/>
+    <path class="cv-thumb-line" d="M7 15h16"/>
+    <path class="cv-thumb-line" stroke-width="1.1" d="M7 20h40"/>
+    <path class="cv-thumb-a" stroke-width="1.8" d="M7 25h46"/>
+    <path class="cv-thumb-ink" stroke-width="1.3" d="M7 31h12"/>
+    <path class="cv-thumb-line" d="M7 36h46M7 40h40"/>
+    <path class="cv-thumb-ink" stroke-width="1.3" d="M7 47h14"/>
+    <path class="cv-thumb-ink" d="M7 52h16"/>
+    <path class="cv-thumb-line" d="M7 57h46M7 61h42M7 65h30"/>
+  {% elif name == "minimal" %}
+    <path class="cv-thumb-ink" stroke-width="2.4" d="M7 10h20"/>
+    <path class="cv-thumb-a" d="M7 16h13"/>
+    <path class="cv-thumb-line" stroke-width="1.1" d="M7 21h34"/>
+    <path class="cv-thumb-a" stroke-width="1.1" d="M7 30h8"/>
+    <path class="cv-thumb-line" d="M21 30h32M21 34h28"/>
+    <path class="cv-thumb-rule" stroke-width=".6" d="M7 41h46"/>
+    <path class="cv-thumb-a" stroke-width="1.1" d="M7 47h9"/>
+    <path class="cv-thumb-ink" d="M21 47h16"/>
+    <path class="cv-thumb-line" d="M21 52h32M21 56h26"/>
+    <path class="cv-thumb-rule" stroke-width=".6" d="M7 63h46"/>
+    <path class="cv-thumb-a" stroke-width="1.1" d="M7 69h7"/>
+    <path class="cv-thumb-line" d="M21 69h28"/>
+  {% elif name == "creative" %}
+    <rect class="cv-thumb-f" x="0" y="0" width="60" height="22"/>
+    <path class="cv-thumb-paper" stroke-width="2.6" d="M7 9h22"/>
+    <path class="cv-thumb-paper" stroke-width="1.1" opacity=".75" d="M7 15h14M7 18.5h30"/>
+    <path class="cv-thumb-a" stroke-width="1.3" d="M7 29h11"/>
+    <path class="cv-thumb-a" stroke-width="2" d="M7 32h5"/>
+    <path class="cv-thumb-line" d="M7 37h46M7 41h38"/>
+    <path class="cv-thumb-a" stroke-width="1.3" d="M7 48h13"/>
+    <path class="cv-thumb-a" stroke-width="2" d="M7 51h5"/>
+    <path class="cv-thumb-ink" d="M7 56h16"/>
+    <path class="cv-thumb-line" d="M7 61h44"/>
+    <rect class="cv-thumb-chip-a" x="7" y="67" width="9" height="4" rx="2"/>
+    <rect class="cv-thumb-chip-a" x="18" y="67" width="7" height="4" rx="2"/>
+    <rect class="cv-thumb-chip-a" x="27" y="67" width="10" height="4" rx="2"/>
+  {% elif name == "executive" %}
+    <path class="cv-thumb-ink" stroke-width="2.6" d="M18 9h24"/>
+    <path class="cv-thumb-line" d="M23 15h14"/>
+    <path class="cv-thumb-line" stroke-width="1.1" d="M12 20h36"/>
+    <path class="cv-thumb-a" stroke-width="1.6" d="M7 25h46"/>
+    <path class="cv-thumb-a" stroke-width=".7" d="M7 27.6h46"/>
+    <path class="cv-thumb-a" stroke-width="1.3" d="M7 34h13"/>
+    <path class="cv-thumb-rule" stroke-width=".6" d="M7 37h46"/>
+    <path class="cv-thumb-line" d="M7 42h46M7 46h40"/>
+    <path class="cv-thumb-a" stroke-width="1.3" d="M7 53h15"/>
+    <path class="cv-thumb-rule" stroke-width=".6" d="M7 56h46"/>
+    <path class="cv-thumb-ink" d="M7 61h16"/>
+    <path class="cv-thumb-line" d="M7 66h44M7 70h34"/>
+  {% endif %}
+</svg>
+{% endmacro %}

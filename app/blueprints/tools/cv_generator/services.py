@@ -1,20 +1,23 @@
 """Business rules for the CV Generator: check and clean the form data, then build the PDF.
 
-No Supabase here (part A saves nothing). The PDF layouts live in pdf_templates/, the shared PDF
-setup (fonts, Urdu shaping) in app/services/pdf_builder.py.
+No Supabase here: saving CVs is saved_cvs.py (which uses this file's cleaning rules). The PDF
+layouts live in pdf_templates/, the shared PDF setup (fonts, Urdu shaping) in
+app/services/pdf_builder.py.
 """
 import re
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 
 from flask_babel import force_locale
 from flask_babel import gettext as _
 
 from app.blueprints.tools.cv_generator.errors import CVError
-from app.blueprints.tools.cv_generator.pdf_templates import render_cv
+from app.blueprints.tools.cv_generator.pdf_templates import ACCENTS, DEFAULT_ACCENT, LAYOUTS, render_cv
 from app.services.pdf_builder import PdfBuildError
 
-TEMPLATES = ("classic", "modern")
+TEMPLATES = tuple(LAYOUTS)
+DEFAULT_TEMPLATE = TEMPLATES[0]
+ACCENT_NAMES = tuple(ACCENTS)
 LANGUAGES = ("en", "ur")
 
 MAX_EXPERIENCE = 15
@@ -98,27 +101,39 @@ class PdfFile:
     filename: str
 
 
-def build_pdf(data, template, language):
+def build_pdf(data, template, language, accent=None):
     """Check the form data and turn it into a PDF. Raises CVError for anything the user can fix."""
-    if template not in TEMPLATES:
-        raise CVError("template_invalid", "template")
-    if language not in LANGUAGES:
-        raise CVError("language_invalid", "language")
+    template, language, accent = check_design(template, language, accent)
     cv = parse_cv(data)
     try:
-        content = render_cv(template, cv, labels(language), rtl=language == "ur", language=language)
+        content = render_cv(template, cv, labels(language), rtl=language == "ur", language=language,
+                            accent=accent)
     except PdfBuildError as error:
         raise CVError("pdf_failed") from error
     return PdfFile(content=content, filename=pdf_filename(cv.personal.full_name))
 
 
-def parse_cv(data):
-    """A clean CV from the raw JSON the form sends. Empty jobs/education rows are dropped."""
+def check_design(template, language, accent=None):
+    """(template, language, accent) after checking them; a missing accent means the default."""
+    if template not in TEMPLATES:
+        raise CVError("template_invalid", "template")
+    if language not in LANGUAGES:
+        raise CVError("language_invalid", "language")
+    if accent is None or accent == "":
+        accent = DEFAULT_ACCENT
+    if accent not in ACCENT_NAMES:
+        raise CVError("accent_invalid", "accent")
+    return template, language, accent
+
+
+def parse_cv(data, require_name=True):
+    """A clean CV from the raw JSON the form sends. Empty jobs/education rows are dropped.
+    `require_name=False` for saving an unfinished CV (the PDF needs a name, a draft doesn't)."""
     if not isinstance(data, dict):
         raise CVError("invalid_data")
     personal = _dict(data.get("personal"))
     full_name = _text(personal, "full_name", "personal.full_name", LIMITS["full_name"])
-    if not full_name:
+    if require_name and not full_name:
         raise CVError("name_required", "personal.full_name")
     email = _text(personal, "email", "personal.email", LIMITS["email"])
     if email and not _EMAIL_RE.match(email):
@@ -141,6 +156,15 @@ def parse_cv(data):
         education=_parse_education(data.get("education")),
         skills=_parse_skills(data.get("skills")),
     )
+
+
+def cv_to_dict(cv):
+    """A parsed CV as plain JSON-ready data (what gets saved; the same shape the form sends)."""
+    data = asdict(cv)
+    data["experience"] = list(data["experience"])
+    data["education"] = list(data["education"])
+    data["skills"] = list(data["skills"])
+    return data
 
 
 def labels(language):

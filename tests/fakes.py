@@ -1,4 +1,4 @@
-"""Fake services with the same methods as the real ones (auth, notes, expenses, captions, AI). No network."""
+"""Fake services with the same methods as the real ones (auth, notes, expenses, captions, CVs, AI). No network."""
 import itertools
 import time
 import uuid
@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from app.blueprints.auth.errors import AuthError, AuthUnavailable, SessionEnded, TokenExpired
 from app.blueprints.auth.services import EMAIL_LINK_TYPES, AuthSession, AuthUser, GoogleLogin
 from app.blueprints.tools.captions.errors import CaptionsUnavailable
+from app.blueprints.tools.cv_generator.errors import CVError, CVsUnavailable
 from app.blueprints.tools.expenses.errors import ExpensesUnavailable
 from app.blueprints.tools.notes.errors import NotesUnavailable
 from app.services.ai.base import AIProvider
@@ -366,6 +367,75 @@ class FakeCaptionsRepository:
     def delete_history(self, access_token, caption_id):
         self._check_history()
         return self.history.get(access_token, {}).pop(caption_id, None) is not None
+
+
+@dataclass
+class FakeCVsRepository:
+    """In-memory saved CVs with the same methods as SupabaseCVsRepository. No network.
+    CVs are kept per access_token (like RLS keys off the token's user), and the 20-CV limit
+    behaves like the database trigger."""
+    unavailable: bool = False
+    max_cvs: int = 20
+    cvs: dict = field(default_factory=dict)  # access_token -> {cv_id: row}
+
+    def _bucket(self, access_token):
+        return self.cvs.setdefault(access_token, {})
+
+    def _check(self):
+        if self.unavailable:
+            raise CVsUnavailable()
+
+    @staticmethod
+    def _summary(row):
+        return {key: row[key] for key in ("id", "title", "template", "accent", "language", "created_at", "updated_at")}
+
+    def _full(self, row):
+        return {**self._summary(row), "data": row["data"]}
+
+    def _new_row(self, access_token, row):
+        bucket = self._bucket(access_token)
+        if len(bucket) >= self.max_cvs:
+            raise CVError("cv_limit")
+        now = _now_iso()
+        stored = {"id": str(uuid.uuid4()), "client_id": None, "created_at": now, "updated_at": now, **row}
+        bucket[stored["id"]] = stored
+        return stored
+
+    def list_cvs(self, access_token, limit):
+        self._check()
+        rows = sorted(self._bucket(access_token).values(), key=lambda row: row["updated_at"], reverse=True)
+        return [self._summary(row) for row in rows[:limit]]
+
+    def get_cv(self, access_token, cv_id):
+        self._check()
+        row = self._bucket(access_token).get(cv_id)
+        return self._full(row) if row else None
+
+    def insert_cv(self, access_token, row):
+        self._check()
+        return self._full(self._new_row(access_token, row))
+
+    def update_cv(self, access_token, cv_id, row):
+        self._check()
+        stored = self._bucket(access_token).get(cv_id)
+        if stored is None:
+            return None
+        stored.update(row, updated_at=_now_iso())
+        return self._full(stored)
+
+    def delete_cv(self, access_token, cv_id):
+        self._check()
+        return self._bucket(access_token).pop(cv_id, None) is not None
+
+    def import_cvs(self, access_token, rows):
+        self._check()
+        bucket = self._bucket(access_token)
+        imported = []
+        for row in rows:
+            if any(existing["client_id"] == row["client_id"] for existing in bucket.values()):
+                continue
+            imported.append(self._summary(self._new_row(access_token, row)))
+        return imported
 
 
 class FakeAIProvider(AIProvider):

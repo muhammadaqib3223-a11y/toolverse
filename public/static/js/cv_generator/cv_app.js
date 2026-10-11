@@ -1,21 +1,32 @@
-/* CV Generator UI: a step-by-step form (personal details, summary, experience, education,
- * skills, then template + download). The form is saved to the store (stores.js) as you type;
- * "Download PDF" sends it to the server, which returns the PDF and keeps nothing.
- * All user-visible text comes from data-text-* attributes. */
+/* CV Generator UI: "My CVs" (pick, rename, new, duplicate, delete), a step-by-step form
+ * (personal details, summary, experience, education, skills, then template + colour +
+ * download). The open CV is saved to the store (stores.js) as you type: the account for a
+ * logged-in user, this browser for a guest. "Download PDF" sends the form to the server,
+ * which returns the PDF and keeps nothing. All user-visible text comes from data-text-*. */
 (function () {
   "use strict";
 
   var root = document.querySelector("[data-cv-app]");
   if (!root || !window.CvStores) return;
 
-  var store = window.CvStores.GuestStore;
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var STEPS = ["personal", "summary", "experience", "education", "skills", "download"];
+  var isLoggedIn = root.dataset.loggedIn === "true";
   var MAX = {
+    cvs: parseInt(root.dataset.maxCvs, 10) || 20,
     experience: parseInt(root.dataset.maxExperience, 10) || 15,
     education: parseInt(root.dataset.maxEducation, 10) || 10,
     skills: parseInt(root.dataset.maxSkills, 10) || 40,
     skillLength: parseInt(root.dataset.maxSkillLength, 10) || 60,
+  };
+  var store = isLoggedIn
+    ? window.CvStores.makeServerStore(root.dataset.apiCvs, root.dataset.apiCvTemplate)
+    : window.CvStores.makeGuestStore(MAX.cvs);
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var STEPS = ["personal", "summary", "experience", "education", "skills", "download"];
+  var SAVE_DELAY = isLoggedIn ? 900 : 400;
+  var DEFAULTS = {
+    template: root.dataset.defaultTemplate || "modern",
+    accent: root.dataset.defaultAccent || "indigo",
+    language: root.dataset.defaultLanguage || "en",
   };
   var TEXT = {
     nameRequired:      root.dataset.textNameRequired,
@@ -29,6 +40,13 @@
     job:               root.dataset.textJob,
     education:         root.dataset.textEducation,
     saved:             root.dataset.textSaved,
+    saving:            root.dataset.textSaving,
+    saveFailed:        root.dataset.textSaveFailed,
+    loadFailed:        root.dataset.textLoadFailed,
+    untitled:          root.dataset.textUntitled,
+    copyOf:            root.dataset.textCopyOf,
+    deleteConfirm:     root.dataset.textDeleteConfirm,
+    cvLimit:           root.dataset.textCvLimit,
     downloaded:        root.dataset.textDownloaded,
     clearConfirm:      root.dataset.textClearConfirm,
     stepOf:            root.dataset.textStepOf,
@@ -39,46 +57,48 @@
 
   // ── DOM refs ──────────────────────────────────────────────────────────────
 
-  var form         = root.querySelector("[data-cv-form]");
-  var stepLinks    = root.querySelectorAll("[data-step-link]");
-  var panels       = root.querySelectorAll("[data-step-panel]");
-  var stepCounter  = root.querySelector("[data-step-counter]");
-  var saveStatus   = root.querySelector("[data-save-status]");
-  var lists        = { experience: root.querySelector('[data-list="experience"]'), education: root.querySelector('[data-list="education"]') };
-  var skillInput   = root.querySelector("[data-skill-input]");
-  var skillsList   = root.querySelector("[data-skills-list]");
-  var skillsCount  = root.querySelector("[data-skills-count]");
-  var templateBtns = root.querySelectorAll("[data-template]");
-  var languageBtns = root.querySelectorAll("[data-language]");
-  var downloadBtn  = root.querySelector('[data-action="download"]');
-  var previewBtn   = root.querySelector('[data-action="preview"]');
-  var busyEl       = root.querySelector("[data-busy]");
-  var previewBox   = root.querySelector("[data-preview]");
-  var previewFrame = root.querySelector("[data-preview-frame]");
-  var toastStack   = root.querySelector("[data-cv-toasts]");
+  var form           = root.querySelector("[data-cv-form]");
+  var picker         = root.querySelector("[data-cv-picker]");
+  var titleInput     = root.querySelector("[data-cv-title]");
+  var stepLinks      = root.querySelectorAll("[data-step-link]");
+  var panels         = root.querySelectorAll("[data-step-panel]");
+  var stepCounter    = root.querySelector("[data-step-counter]");
+  var saveStatus     = root.querySelector("[data-save-status]");
+  var lists          = { experience: root.querySelector('[data-list="experience"]'), education: root.querySelector('[data-list="education"]') };
+  var skillInput     = root.querySelector("[data-skill-input]");
+  var skillsList     = root.querySelector("[data-skills-list]");
+  var skillsCount    = root.querySelector("[data-skills-count]");
+  var templatePicker = root.querySelector("[data-template-picker]");
+  var templateBtns   = root.querySelectorAll("[data-template]");
+  var accentBtns     = root.querySelectorAll("[data-accent]");
+  var languageBtns   = root.querySelectorAll("[data-language]");
+  var downloadBtn    = root.querySelector('[data-action="download"]');
+  var previewBtn     = root.querySelector('[data-action="preview"]');
+  var busyEl         = root.querySelector("[data-busy]");
+  var previewBox     = root.querySelector("[data-preview]");
+  var previewFrame   = root.querySelector("[data-preview-frame]");
+  var toastStack     = root.querySelector("[data-cv-toasts]");
 
   var state = {
-    id: null,
+    cvs: [],            // summaries for the picker, newest first
+    id: null,           // the open CV (null if the CVs could not be loaded)
     step: "personal",
     skills: [],
-    template: root.dataset.defaultTemplate || "classic",
-    language: root.dataset.defaultLanguage || "en",
+    template: DEFAULTS.template,
+    accent: DEFAULTS.accent,
+    language: DEFAULTS.language,
     busy: false,
     previewUrl: null,
+    dirty: false,       // changes not saved yet
+    saving: null,       // the save in progress (a Promise)
   };
   var saveTimer = null;
 
   // ── Init ──────────────────────────────────────────────────────────────────
 
-  store.list().then(function (cvs) {
-    if (cvs.length) {
-      load(cvs[0]);
-      return;
-    }
-    return store.create(snapshot()).then(function (cv) { state.id = cv.id; });
-  }).then(function () {
-    render();
-  });
+  renderStep();
+  renderChoices();
+  loadLibrary();
 
   stepLinks.forEach(function (link) {
     link.addEventListener("click", function () { goTo(link.dataset.stepLink); });
@@ -98,9 +118,9 @@
     }
   });
 
-  form.addEventListener("click", function (e) {
+  root.addEventListener("click", function (e) {
     var button = e.target.closest("[data-action]");
-    if (!button) return;
+    if (!button || !root.contains(button)) return;
     var action = button.dataset.action;
     if (action === "next") goTo(STEPS[STEPS.indexOf(state.step) + 1]);
     else if (action === "back") goTo(STEPS[STEPS.indexOf(state.step) - 1]);
@@ -111,6 +131,19 @@
     else if (action === "download") makePdf("download");
     else if (action === "preview") makePdf("preview");
     else if (action === "clear") clearForm();
+    else if (action === "new-cv") newCv();
+    else if (action === "duplicate-cv") duplicateCv();
+    else if (action === "delete-cv") deleteCv();
+  });
+
+  picker.addEventListener("change", function () { openCv(picker.value); });
+  titleInput.addEventListener("input", function () {
+    var current = currentSummary();
+    if (current) {
+      current.title = titleInput.value;
+      renderPicker();
+    }
+    scheduleSave();
   });
 
   skillInput.addEventListener("keydown", function (e) {
@@ -121,64 +154,160 @@
   });
 
   templateBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      state.template = btn.dataset.template;
-      renderChoices();
-      scheduleSave();
-      refreshPreview();
-    });
+    btn.addEventListener("click", function () { choose("template", btn.dataset.template); });
+  });
+  accentBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () { choose("accent", btn.dataset.accent); });
   });
   languageBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      state.language = btn.dataset.language;
-      renderChoices();
-      scheduleSave();
-      refreshPreview();
-    });
+    btn.addEventListener("click", function () { choose("language", btn.dataset.language); });
   });
 
-  // ── Steps ─────────────────────────────────────────────────────────────────
+  // Save what's left when the page is closed or hidden (e.g. switching apps on a phone).
+  window.addEventListener("pagehide", function () { flush({ keepalive: true }); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") flush({ keepalive: true });
+  });
 
-  function goTo(step) {
-    if (STEPS.indexOf(step) === -1) return;
-    state.step = step;
-    renderStep();
-    var panel = panelFor(step);
-    var heading = panel.querySelector("h2");
-    if (heading) {
-      heading.setAttribute("tabindex", "-1");
-      heading.focus({ preventScroll: true });
-    }
-    form.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  // Guest CVs moved into the account (shared/guest_import.js): show them in the list.
+  document.addEventListener("toolverse:guest-imported", function (e) {
+    if (!isLoggedIn || !e.detail || e.detail.key !== window.CvStores.GUEST_KEY) return;
+    store.list().then(function (cvs) {
+      state.cvs = cvs;
+      renderPicker();
+    }).catch(function () { /* the list refreshes on the next page load */ });
+  });
+
+  // ── My CVs ────────────────────────────────────────────────────────────────
+
+  function loadLibrary() {
+    setLibraryBusy(true);
+    store.list()
+      .then(function (cvs) {
+        state.cvs = cvs;
+        if (cvs.length) return openCv(cvs[0].id);
+        return store.create(blankRecord()).then(function (record) {
+          state.cvs = [record];
+          showRecord(record);
+        });
+      })
+      .catch(function () {
+        state.id = null;
+        setStatus(TEXT.loadFailed);
+      })
+      .then(function () { setLibraryBusy(false); });
   }
 
-  function renderStep() {
-    panels.forEach(function (panel) { panel.hidden = panel.dataset.stepPanel !== state.step; });
-    stepLinks.forEach(function (link) {
-      link.setAttribute("aria-current", link.dataset.stepLink === state.step ? "step" : "false");
+  function openCv(id) {
+    if (!id || id === state.id) return Promise.resolve();
+    setLibraryBusy(true);
+    return flush()
+      .then(function () { return store.get(id); })
+      .then(showRecord)
+      .catch(function (error) { showToast(messageFor(error), "error"); renderPicker(); })
+      .then(function () { setLibraryBusy(false); });
+  }
+
+  function newCv() {
+    createAndOpen(blankRecord());
+  }
+
+  function duplicateCv() {
+    var data = snapshot();
+    data.title = TEXT.copyOf.replace("__TITLE__", data.title || TEXT.untitled);
+    createAndOpen(data);
+  }
+
+  function createAndOpen(data) {
+    setLibraryBusy(true);
+    flush()
+      .then(function () { return store.create(data); })
+      .then(function (record) {
+        state.cvs.unshift(summaryOf(record));
+        showRecord(record);
+        goTo("personal");
+      })
+      .catch(function (error) { showToast(messageFor(error), "error"); })
+      .then(function () { setLibraryBusy(false); });
+  }
+
+  function deleteCv() {
+    if (!state.id || !window.confirm(TEXT.deleteConfirm)) return;
+    var id = state.id;
+    window.clearTimeout(saveTimer);
+    state.dirty = false;
+    setLibraryBusy(true);
+    store.remove(id)
+      .then(function () {
+        state.cvs = state.cvs.filter(function (cv) { return cv.id !== id; });
+        state.id = null;
+        if (state.cvs.length) return openCv(state.cvs[0].id);
+        return store.create(blankRecord()).then(function (record) {
+          state.cvs = [summaryOf(record)];
+          showRecord(record);
+        });
+      })
+      .catch(function (error) { showToast(messageFor(error), "error"); })
+      .then(function () { setLibraryBusy(false); });
+  }
+
+  function blankRecord() {
+    return {
+      title: TEXT.untitled,
+      cv: {},
+      template: DEFAULTS.template,
+      accent: DEFAULTS.accent,
+      language: DEFAULTS.language,
+    };
+  }
+
+  function summaryOf(record) {
+    return {
+      id: record.id, title: record.title, template: record.template,
+      accent: record.accent, language: record.language, updatedAt: record.updatedAt,
+    };
+  }
+
+  function currentSummary() {
+    return state.cvs.find(function (cv) { return cv.id === state.id; });
+  }
+
+  function renderPicker() {
+    picker.innerHTML = "";
+    state.cvs.forEach(function (cv) {
+      var option = document.createElement("option");
+      option.value = cv.id;
+      option.textContent = (cv.title || "").trim() || TEXT.untitled;
+      option.selected = cv.id === state.id;
+      picker.appendChild(option);
     });
-    stepCounter.textContent = TEXT.stepOf
-      .replace("__CURRENT__", STEPS.indexOf(state.step) + 1)
-      .replace("__TOTAL__", STEPS.length);
   }
 
-  function panelFor(step) {
-    return root.querySelector('[data-step-panel="' + step + '"]');
+  function setLibraryBusy(busy) {
+    picker.disabled = busy;
+    root.querySelectorAll('[data-action="new-cv"], [data-action="duplicate-cv"], [data-action="delete-cv"]')
+      .forEach(function (btn) { btn.disabled = busy; });
   }
 
-  // ── Load / save ───────────────────────────────────────────────────────────
+  // ── Fill / read the form ──────────────────────────────────────────────────
 
-  function load(saved) {
-    var cv = saved.cv || {};
+  function showRecord(record) {
+    var cv = record.cv || {};
     var personal = cv.personal || {};
-    state.id = saved.id;
-    if (saved.template) state.template = saved.template;
-    if (saved.language) state.language = saved.language;
+    state.id = record.id;
+    state.dirty = false;
+    state.template = record.template || DEFAULTS.template;
+    state.accent = record.accent || DEFAULTS.accent;
+    state.language = record.language || DEFAULTS.language;
+    titleInput.value = record.title || "";
     root.querySelectorAll("[data-path]").forEach(function (input) {
       var path = input.dataset.path.split(".");
       var value = path[0] === "personal" ? personal[path[1]] : cv[path[0]];
       input.value = typeof value === "string" ? value : "";
+      input.classList.remove("is-invalid");
     });
+    lists.experience.innerHTML = "";
+    lists.education.innerHTML = "";
     (Array.isArray(cv.experience) ? cv.experience : []).slice(0, MAX.experience).forEach(function (item) {
       addEntry("experience", item, false);
     });
@@ -188,13 +317,13 @@
     state.skills = (Array.isArray(cv.skills) ? cv.skills : [])
       .filter(function (skill) { return typeof skill === "string" && skill.trim(); })
       .slice(0, MAX.skills);
-  }
-
-  function render() {
-    renderStep();
+    panels.forEach(function (panel) { hideStepError(panel.dataset.stepPanel); });
+    closePreview();
+    renderPicker();
     renderSkills();
     renderChoices();
     updateCounts();
+    setStatus("");
   }
 
   function collect() {
@@ -217,19 +346,60 @@
   }
 
   function snapshot() {
-    return { cv: collect(), template: state.template, language: state.language };
+    return {
+      title: titleInput.value.trim(),
+      cv: collect(),
+      template: state.template,
+      accent: state.accent,
+      language: state.language,
+    };
   }
+
+  // ── Saving ────────────────────────────────────────────────────────────────
 
   function scheduleSave() {
+    if (!state.id) return;
+    state.dirty = true;
     window.clearTimeout(saveTimer);
-    saveTimer = window.setTimeout(save, 400);
+    saveTimer = window.setTimeout(save, SAVE_DELAY);
   }
 
-  function save() {
-    if (!state.id) return;
-    store.update(state.id, snapshot())
-      .then(function () { saveStatus.textContent = TEXT.saved; })
-      .catch(function () { saveStatus.textContent = ""; });
+  // Saves one at a time; changes made while a save runs are saved right after it.
+  function save(options) {
+    if (!state.id || !state.dirty) return state.saving || Promise.resolve();
+    if (state.saving) {
+      return state.saving.then(function () { return save(options); });
+    }
+    var id = state.id;
+    var data = snapshot();
+    state.dirty = false;
+    setStatus(TEXT.saving);
+    state.saving = store.update(id, data, options)
+      .then(function (record) {
+        var current = state.cvs.find(function (cv) { return cv.id === id; });
+        if (current) {
+          current.updatedAt = record.updatedAt;
+          current.title = record.title;
+        }
+        if (id === state.id && !state.dirty) setStatus(TEXT.saved);
+      })
+      .catch(function (error) {
+        if (id === state.id) {
+          state.dirty = true;  // try again with the next change
+          setStatus(error && error.code === "too_large" ? messageFor(error) : TEXT.saveFailed);
+        }
+      })
+      .then(function () { state.saving = null; });
+    return state.saving;
+  }
+
+  function flush(options) {
+    window.clearTimeout(saveTimer);
+    return save(options);
+  }
+
+  function setStatus(text) {
+    saveStatus.textContent = text || "";
   }
 
   function clearForm() {
@@ -241,8 +411,36 @@
     closePreview();
     renderSkills();
     updateCounts();
-    save();
+    scheduleSave();
     goTo("personal");
+  }
+
+  // ── Steps ─────────────────────────────────────────────────────────────────
+
+  function goTo(step) {
+    if (STEPS.indexOf(step) === -1) return;
+    state.step = step;
+    renderStep();
+    var heading = panelFor(step).querySelector("h2");
+    if (heading) {
+      heading.setAttribute("tabindex", "-1");
+      heading.focus({ preventScroll: true });
+    }
+    form.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+  }
+
+  function renderStep() {
+    panels.forEach(function (panel) { panel.hidden = panel.dataset.stepPanel !== state.step; });
+    stepLinks.forEach(function (link) {
+      link.setAttribute("aria-current", link.dataset.stepLink === state.step ? "step" : "false");
+    });
+    stepCounter.textContent = TEXT.stepOf
+      .replace("__CURRENT__", STEPS.indexOf(state.step) + 1)
+      .replace("__TOTAL__", STEPS.length);
+  }
+
+  function panelFor(step) {
+    return root.querySelector('[data-step-panel="' + step + '"]');
   }
 
   // ── Experience / education entries ───────────────────────────────────────
@@ -344,12 +542,27 @@
     skillsCount.textContent = state.skills.length + " / " + MAX.skills;
   }
 
-  // ── Template and language ─────────────────────────────────────────────────
+  // ── Template, colour and language ─────────────────────────────────────────
+
+  function choose(kind, value) {
+    if (state[kind] === value) return;
+    state[kind] = value;
+    renderChoices();
+    scheduleSave();
+    refreshPreview();
+  }
 
   function renderChoices() {
     templateBtns.forEach(function (btn) {
       btn.setAttribute("aria-pressed", btn.dataset.template === state.template ? "true" : "false");
     });
+    var hex = null;
+    accentBtns.forEach(function (btn) {
+      var on = btn.dataset.accent === state.accent;
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      if (on) hex = btn.dataset.hex;
+    });
+    if (hex && templatePicker) templatePicker.style.setProperty("--cv-accent", hex);
     languageBtns.forEach(function (btn) {
       btn.setAttribute("aria-pressed", btn.dataset.language === state.language ? "true" : "false");
     });
@@ -375,7 +588,7 @@
       method: "POST",
       headers: headers,
       credentials: "same-origin",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ cv: data.cv, template: data.template, accent: data.accent, language: data.language }),
     }).then(function (response) {
       var type = response.headers.get("Content-Type") || "";
       if (response.ok && type.indexOf("application/pdf") === 0) {
@@ -460,8 +673,6 @@
       if (entry) input = entry.querySelector('[data-key="' + parts[2] + '"]');
     } else if (step === "skills") {
       input = skillInput;
-    } else {
-      step = "download";
     }
     if (STEPS.indexOf(step) === -1) step = "download";
     goTo(step);
@@ -469,6 +680,12 @@
   }
 
   // ── Errors ────────────────────────────────────────────────────────────────
+
+  function messageFor(error) {
+    if (error && error.code === "cv_limit") return TEXT.cvLimit;
+    if (error && error.message && error.message !== error.code && error.code !== "request_failed") return error.message;
+    return error instanceof TypeError ? TEXT.networkError : TEXT.genericError;
+  }
 
   function markInvalid(input, step, message) {
     showStepError(step, message);
@@ -494,8 +711,7 @@
   }
 
   function hideStepError(step) {
-    var el = panelFor(step).querySelector("[data-step-error]");
-    el.hidden = true;
+    panelFor(step).querySelector("[data-step-error]").hidden = true;
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────

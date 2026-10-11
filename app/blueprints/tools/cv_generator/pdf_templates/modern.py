@@ -1,36 +1,29 @@
 """Modern: name on top, then a narrow side column (contact, skills) next to the main column
-(summary, experience, education). Purple headings. The side column moves right for Urdu CVs.
+(summary, experience, education). Accent-coloured headings. The side column moves right for
+Urdu CVs.
 """
-from app.blueprints.tools.cv_generator.pdf_templates.base import (
-    ACCENT,
-    INK,
-    PAGE_MARGIN,
-    RULE,
-    CvLayout,
-)
+from app.blueprints.tools.cv_generator.pdf_templates.base import INK, RULE, CvLayout
 
 SIDE_WIDTH = 150
 GUTTER = 28
 
 
 class ModernLayout(CvLayout):
-    heading_color = ACCENT
+    skills_style = "chips"
+
+    @property
+    def heading_color(self):
+        return self.accent
 
     def draw(self):
         personal = self.cv.personal
         self.paragraph(personal.full_name, 26, bold=True)
         if personal.headline:
             self.gap(3)
-            self.paragraph(personal.headline, 12.5, color=ACCENT)
+            self.paragraph(personal.headline, 12.5, color=self.accent)
         self.gap(20)
 
-        page_left, page_right = PAGE_MARGIN, self.pdf.w - PAGE_MARGIN
-        if self.rtl:
-            side = (page_right - SIDE_WIDTH, page_right)
-            main = (page_left, page_right - SIDE_WIDTH - GUTTER)
-        else:
-            side = (page_left, page_left + SIDE_WIDTH)
-            main = (page_left + SIDE_WIDTH + GUTTER, page_right)
+        side, main = self.split(SIDE_WIDTH, GUTTER)
         columns_top = self.pdf.get_y()
 
         # The side column must fit on the first page (going back to page 1 afterwards would
@@ -46,16 +39,13 @@ class ModernLayout(CvLayout):
 
         self.set_column(*main)
         self.pdf.set_y(columns_top)
-        self.draw_summary()
-        self.draw_experience()
-        self.draw_education()
-        if self.cv.skills and not skills_in_side:
-            self.section_heading(self.labels["skills"])
-            self.chips(list(self.cv.skills))
+        order = ("summary", "experience", "education") if skills_in_side else (
+            "summary", "experience", "education", "skills")
+        self.draw_sections(order)
 
     def _draw_side_column(self, top):
         self.pdf.set_y(top)
-        contacts = [(text, link) for text, link in self.contact_items() if text]
+        contacts = self.contact_items()
         if contacts:
             self.section_heading(self.labels["contact"], keep_with_next=0)
             for text, link in contacts:

@@ -2,7 +2,10 @@
 education entries, bullet lists and flowing rows of items (contact details, skill chips).
 
 Everything is mirrored for right-to-left CVs (Urdu): text is right-aligned, dates and bullets
-move to the left/right side, and items flow from the right. Sizes are in points (A4 = 595 x 842).
+move to the other side, and items flow from the right. Sizes are in points (A4 = 595 x 842).
+
+ATS rules every template follows: all text is real text (no images of text), no letter-spacing
+(readers split spaced letters), and sections come in reading order.
 """
 from app.services import pdf_builder
 from app.services.pdf_builder import contains_urdu, line_height
@@ -11,34 +14,60 @@ INK = (17, 17, 19)
 MUTED = (88, 88, 96)
 FAINT = (140, 140, 148)
 RULE = (224, 224, 229)
-# The site's purple (#9B8CFF) is too light for text on white paper; this is a darker shade of it.
-ACCENT = (98, 80, 220)
+WHITE = (255, 255, 255)
+
+# Accent colours the user can pick: dark enough for text on white paper, and still clear when
+# printed in black and white. Names are stored with the CV; the form shows the same colours.
+ACCENTS = {
+    "indigo": (88, 72, 214),
+    "blue": (29, 94, 196),
+    "teal": (13, 118, 120),
+    "green": (31, 117, 66),
+    "maroon": (140, 32, 52),
+    "charcoal": (45, 45, 52),
+}
+DEFAULT_ACCENT = "indigo"
 
 PAGE_MARGIN = 48
 BOTTOM_MARGIN = 48
+SECTION_GAP = 16
 
 BULLET_PREFIXES = ("- ", "• ", "* ", "–")
 BULLET_INDENT = 12
 SEPARATOR = "·"
 
 
+def hex_color(rgb):
+    return "#{:02X}{:02X}{:02X}".format(*rgb)
+
+
+def tint(rgb, amount):
+    """`rgb` mixed with white: amount 0 = unchanged, 1 = white."""
+    return tuple(round(c + (255 - c) * amount) for c in rgb)
+
+
 class CvLayout:
     """Base class: a template subclasses this and implements draw()."""
 
-    heading_color = INK
+    extra_families = ()           # more fonts to load, e.g. (pdf_builder.SERIF,)
+    body_font = pdf_builder.SANS  # main font for Latin text
+    skills_style = "inline"       # "inline" (dot-separated) or "chips"
 
-    def __init__(self, cv, labels, *, rtl=False, language="en"):
+    def __init__(self, cv, labels, *, rtl=False, language="en", accent=DEFAULT_ACCENT):
         self.cv = cv
         self.labels = labels
         self.rtl = rtl
+        self.accent = ACCENTS.get(accent, ACCENTS[DEFAULT_ACCENT])
         name = cv.personal.full_name
-        self.pdf = pdf_builder.new_document(title=f"{name} - CV", author=name, language=language, rtl=rtl)
+        self.pdf = pdf_builder.new_document(
+            title=f"{name} - CV", author=name, language=language, rtl=rtl, extra_families=self.extra_families
+        )
         self.pdf.set_margins(PAGE_MARGIN, PAGE_MARGIN, PAGE_MARGIN)
         # No inner padding in cells: our own columns and gaps decide where text sits.
         self.pdf.c_margin = 0
         self.pdf.set_auto_page_break(True, margin=BOTTOM_MARGIN)
         self.pdf.add_page()
-        self.set_column(PAGE_MARGIN, self.pdf.w - PAGE_MARGIN)
+        self.full_column()
 
     def render(self):
         self.draw()
@@ -46,6 +75,10 @@ class CvLayout:
 
     def draw(self):
         raise NotImplementedError
+
+    @property
+    def heading_color(self):
+        return INK
 
     # ── Columns and spacing ──────────────────────────────────────────────────
 
@@ -55,6 +88,17 @@ class CvLayout:
         self.pdf.set_left_margin(x0)
         self.pdf.set_right_margin(self.pdf.w - x1)
         self.pdf.set_x(x0)
+
+    def full_column(self):
+        self.set_column(PAGE_MARGIN, self.pdf.w - PAGE_MARGIN)
+
+    def split(self, start_width, gutter):
+        """Two columns: the first `start_width` wide on the reading-start side (left, or right
+        for Urdu), the rest after a gutter. Returns ((x0, x1), (x0, x1))."""
+        left, right = PAGE_MARGIN, self.pdf.w - PAGE_MARGIN
+        if self.rtl:
+            return (right - start_width, right), (left, right - start_width - gutter)
+        return (left, left + start_width), (left + start_width + gutter, right)
 
     @property
     def col_w(self):
@@ -84,44 +128,59 @@ class CvLayout:
 
     # ── Text ─────────────────────────────────────────────────────────────────
 
-    def font(self, size, bold=False, color=INK, text=""):
-        """Pick the font for `text`: Nastaliq when it has any Urdu, Geist otherwise.
+    def font(self, size, bold=False, color=INK, text="", family=None):
+        """Pick the font for `text`: Nastaliq when it has any Urdu, otherwise `family` or the
+        template's body font.
 
-        Urdu must be written with Nastaliq as the main font (not as Geist's fallback): otherwise
+        Urdu must be written with Nastaliq as the main font (not as a fallback): otherwise
         every word becomes its own piece and PDF readers (ATS, our CV Checker) read the words
         back in reverse order.
         """
-        family = pdf_builder.URDU if contains_urdu(text) else pdf_builder.SANS
-        self.pdf.set_font(family, "B" if bold else "", size)
+        if contains_urdu(text):
+            family = pdf_builder.URDU
+        self.pdf.set_font(family or self.body_font, "B" if bold else "", size)
         self.pdf.set_text_color(*color)
 
-    def text_width(self, text, size, bold=False):
-        self.font(size, bold, text=text)
+    def text_width(self, text, size, bold=False, family=None):
+        self.font(size, bold, text=text, family=family)
         return self.pdf.get_string_width(text)
 
-    def paragraph(self, text, size, *, bold=False, color=INK, x=None, width=None, link=None):
+    def paragraph(self, text, size, *, bold=False, color=INK, x=None, width=None, link=None,
+                  align=None, family=None):
         """Wrapped text across the column (or across `width` starting at `x`)."""
         if not text:
             return
-        self.font(size, bold, color, text=text)
+        self.font(size, bold, color, text=text, family=family)
         self.pdf.set_x(self.col_x0 if x is None else x)
         self.pdf.multi_cell(
             self.col_w if width is None else width,
             line_height(size, text),
             text,
-            align=self.align,
+            align=align or self.align,
             new_x="LMARGIN",
             new_y="NEXT",
             link=link or None,
         )
 
-    def section_heading(self, title, *, keep_with_next=60, color=None):
+    def measure(self, text, size, *, bold=False, width=None, family=None):
+        """Height `paragraph()` would use for this text, without drawing anything."""
+        if not text:
+            return 0
+        self.font(size, bold, text=text, family=family)
+        return self.pdf.multi_cell(
+            self.col_w if width is None else width, line_height(size, text), text,
+            dry_run=True, output="HEIGHT",
+        )
+
+    def heading_text(self, title):
+        """Latin headings in capitals; Urdu has no capitals."""
+        return title if contains_urdu(title) else title.upper()
+
+    def section_heading(self, title, *, keep_with_next=60):
         if keep_with_next:
             self.ensure_space(keep_with_next)
-        # No letter-spacing: PDF readers would read spaced letters as "E X P E R I E N C E".
-        latin = not contains_urdu(title)
-        self.paragraph(title.upper() if latin else title, 10 if latin else 12, bold=True,
-                       color=color or self.heading_color)
+        self.paragraph(self.heading_text(title), 12 if contains_urdu(title) else 10, bold=True,
+                       color=self.heading_color)
         self.gap(3)
         self.rule()
         self.gap(9)
@@ -144,10 +203,53 @@ class CvLayout:
         self.font(size, color=MUTED)
         bullet_x = self.col_x1 - BULLET_INDENT if self.rtl else self.col_x0
         self.pdf.set_xy(bullet_x, top)
-        self.pdf.cell(BULLET_INDENT, line_height(size, text), "•", align="L" if not self.rtl else "R")
+        self.pdf.cell(BULLET_INDENT, line_height(size, text), "•", align="R" if self.rtl else "L")
         self.pdf.set_y(top)
         text_x = self.col_x0 if self.rtl else self.col_x0 + BULLET_INDENT
         self.paragraph(text, size, color=MUTED, x=text_x, width=self.col_w - BULLET_INDENT)
+
+    # ── Sections ─────────────────────────────────────────────────────────────
+
+    def draw_sections(self, order=("summary", "experience", "education", "skills")):
+        bodies = {
+            "summary": (self.cv.summary, self.summary_body),
+            "experience": (self.cv.experience, self.experience_body),
+            "education": (self.cv.education, self.education_body),
+            "skills": (self.cv.skills, self.skills_body),
+        }
+        for key in order:
+            content, body = bodies[key]
+            if content:
+                self.draw_section(self.labels[key], body)
+
+    def draw_section(self, title, body):
+        """A heading, then its content. Templates with a different heading layout override this."""
+        self.section_heading(title)
+        body()
+        self.gap(SECTION_GAP)
+
+    def summary_body(self):
+        self.description(self.cv.summary, size=10)
+
+    def experience_body(self):
+        for index, job in enumerate(self.cv.experience):
+            if index:
+                self.gap(10)
+            self.entry(job.job_title, _join(job.company, job.location),
+                       self.date_range(job.start, job.end, job.current), job.description)
+
+    def education_body(self):
+        for index, item in enumerate(self.cv.education):
+            if index:
+                self.gap(10)
+            self.entry(item.degree, _join(item.school, item.location),
+                       self.date_range(item.start, item.end), item.description)
+
+    def skills_body(self):
+        if self.skills_style == "chips":
+            self.chips(list(self.cv.skills))
+        else:
+            self.inline_items([(skill, None) for skill in self.cv.skills], 9.5, color=INK)
 
     # ── Entries (jobs, education) ────────────────────────────────────────────
 
@@ -180,28 +282,49 @@ class CvLayout:
 
     # ── Flowing rows of items ────────────────────────────────────────────────
 
-    def inline_items(self, items, size, color=MUTED):
+    def inline_layout(self, items, size):
+        """Where inline_items() would put each item: (widths, rows, row_h, sep_w), or None."""
+        if not items:
+            return None
+        self.font(size)
+        sep_w = self.pdf.get_string_width(f"  {SEPARATOR}  ")
+        widths = [min(self.text_width(text, size) + 1, self.col_w) for text, _link in items]
+        row_h = max(line_height(size, text) for text, _link in items)
+        return widths, _flow(widths, self.col_w, sep_w), row_h, sep_w
+
+    def inline_height(self, items, size):
+        layout = self.inline_layout([(text, link) for text, link in items if text], size)
+        if layout is None:
+            return 0
+        _widths, rows, row_h, _sep_w = layout
+        return (rows[-1][0] + 1) * row_h
+
+    def inline_items(self, items, size, color=MUTED, *, centered=False, sep_color=FAINT):
         """(text, link) pairs on one line, separated by dots, wrapping when the line is full."""
         items = [(text, link) for text, link in items if text]
-        if not items:
+        layout = self.inline_layout(items, size)
+        if layout is None:
             return
-        self.font(size, color=color)
-        sep_w = self.pdf.get_string_width(f"  {SEPARATOR}  ")
-        widths = [self.text_width(text, size) + 1 for text, _link in items]
-        row_h = max(line_height(size, text) for text, _link in items)
+        widths, rows, row_h, sep_w = layout
         self.ensure_space(row_h)
-        rows = _flow(widths, self.col_w, sep_w)
         top = self.pdf.get_y()
+        # For centred rows, shift every row so it sits in the middle of the column.
+        shifts = {}
+        if centered:
+            for (row, offset), width in zip(rows, widths):
+                shifts[row] = max(shifts.get(row, 0), offset + width)
+            shifts = {row: (self.col_w - used) / 2 for row, used in shifts.items()}
         for (text, link), width, (row, offset) in zip(items, widths, rows):
             y = top + row * row_h
-            if offset > 0:
-                self.font(size, color=FAINT)
-                self._draw_at(offset - sep_w, sep_w, y, row_h, SEPARATOR, None, align="C")
+            x_offset = offset + shifts.get(row, 0)
+            if offset > 0:  # not the first item on its row
+                self.font(size, color=sep_color)
+                self._draw_at(x_offset - sep_w, sep_w, y, row_h, SEPARATOR, None, align="C")
             self.font(size, color=color, text=text)
-            self._draw_at(offset, min(width, self.col_w), y, row_h, text, link)
+            self._draw_at(x_offset, width, y, row_h, text, link)
         self.pdf.set_y(top + (rows[-1][0] + 1) * row_h)
 
-    def chips(self, items, size=8.5):
+    def chips(self, items, size=8.5, border=RULE, text_color=INK):
         """Skills as small rounded tags that wrap onto new lines."""
         geometry = self.chips_geometry(items, size)
         if geometry is None:
@@ -209,14 +332,14 @@ class CvLayout:
         widths, rows, chip_h, gap = geometry
         self.ensure_space(chip_h)
         top = self.pdf.get_y()
-        self.pdf.set_draw_color(*RULE)
+        self.pdf.set_draw_color(*border)
         self.pdf.set_line_width(0.6)
         for text, width, (row, offset) in zip(items, widths, rows):
             y = top + row * (chip_h + gap)
             x = self.col_x1 - offset - width if self.rtl else self.col_x0 + offset
             self.pdf.rect(x, y, width, chip_h, style="D", round_corners=True, corner_radius=chip_h / 2)
             self.pdf.set_xy(x, y)
-            self.font(size, color=INK, text=text)
+            self.font(size, color=text_color, text=text)
             self.pdf.cell(width, chip_h, text, align="C")
         self.pdf.set_y(top + (rows[-1][0] + 1) * (chip_h + gap) - gap)
 
@@ -244,51 +367,19 @@ class CvLayout:
 
     def contact_items(self):
         personal = self.cv.personal
-        return [
+        items = [
             (personal.email, f"mailto:{personal.email}" if personal.email else None),
             (personal.phone, None),
             (personal.location, None),
             (personal.website, personal.website_url or None),
         ]
+        return [(text, link) for text, link in items if text]
 
     def date_range(self, start, end, current=False):
         end = self.labels["present"] if current else end
         if start and end:
             return f"{start} – {end}"
         return start or end
-
-    def draw_experience(self):
-        if not self.cv.experience:
-            return
-        self.section_heading(self.labels["experience"])
-        for index, job in enumerate(self.cv.experience):
-            if index:
-                self.gap(10)
-            self.entry(
-                job.job_title,
-                _join(job.company, job.location),
-                self.date_range(job.start, job.end, job.current),
-                job.description,
-            )
-        self.gap(16)
-
-    def draw_education(self):
-        if not self.cv.education:
-            return
-        self.section_heading(self.labels["education"])
-        for index, item in enumerate(self.cv.education):
-            if index:
-                self.gap(10)
-            self.entry(item.degree, _join(item.school, item.location),
-                       self.date_range(item.start, item.end), item.description)
-        self.gap(16)
-
-    def draw_summary(self):
-        if not self.cv.summary:
-            return
-        self.section_heading(self.labels["summary"])
-        self.description(self.cv.summary, size=10)
-        self.gap(16)
 
 
 def _join(*parts):

@@ -108,6 +108,7 @@ Style: approved "Version 3 — Framer style" (premium, minimal, like framer.com 
 Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 
 **Fonts (only these two):** Geist (headings + body, bold 700, tight letter-spacing ≈-0.05em) · Geist Mono (labels, step numbers, tags). Urdu: Noto Nastaliq Urdu + RTL.
+*Exception:* CV PDF templates are printed documents, not the website: they may use other print fonts (Executive uses Source Serif) and their own colours. The website itself keeps the rule above.
 
 **Shapes:** cards 14–22px radius, 1px border, no heavy shadows. Buttons + badges: pill. Icons: line SVGs stroke ~1.8, never emoji.
 
@@ -133,7 +134,9 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 
 - Phase 6A: CV Generator at `/dashboard/cv-generator`: step form, Classic + Modern templates, PDF download for guests and users (`POST /api/cv-generator/pdf`, stores nothing). Form kept in `localStorage` (`toolverse_guest_cvs`, `public/static/js/cv_generator/stores.js`). PDF layouts: `cv_generator/pdf_templates/`.
 
-**Next:** Phase 6B: saved CVs (several per user) + AI help for summary/experience + "check this CV" link. Then CV Checker. See `docs/requirements/`.
+- Phase 6B part 1: saved CVs (max 20 per user, `/api/cvs` + `/api/cvs/import`, SQL `20261015_cvs.sql`; guest CVs in `localStorage` move after login), 5 templates (Modern, Classic, Minimal, Creative, Executive) + 6 accent colours, SVG thumbnails in `tools/cv_generator/_thumbnails.html`. Business rules for saving: `cv_generator/saved_cvs.py`.
+
+**Next:** Phase 6B part 2: AI writing help (one shared AI limit system `ai_tries`, SQL `20261014_ai_tries.sql`, run AFTER that commit is live). Then "check this CV" link + CV Checker. See `docs/requirements/`.
 
 **How PDFs work (follow for CV Checker too):**
 - `app/services/pdf_builder.py`: `new_document()` + `render()`. Text is real text (ATS-readable); tests read it back with `pypdf` (dev only).
@@ -170,4 +173,5 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Run `20261013_captions_limits.sql` in Supabase SQL Editor; add `GEMINI_API_KEY` to `.env` + Vercel; then test Captions.
 - Run once (fix): `alter table public.expenses alter column user_id set default auth.uid();`
 - Before going live: Brevo SMTP.
+- **TODO (security, do together with "Delete account"):** the AI limit functions (`consume_ai_try` etc.) can be called directly with the publishable key, so someone could fill up the site-wide daily limit. Fix by calling them only from the server with a server-only key.
 - Pre-existing gap: some Terms/Privacy lines, a few FAQ/landing strings still lack Urdu translation in `app/translations/ur/LC_MESSAGES/messages.po`.

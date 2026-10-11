@@ -8,3 +8,15 @@ class CVError(Exception):
         super().__init__(code)
         self.code = code
         self.field = field
+
+
+class CVNotFound(CVError):
+    def __init__(self):
+        super().__init__("not_found")
+
+
+class CVsUnavailable(CVError):
+    """Supabase is down or not configured."""
+
+    def __init__(self):
+        super().__init__("unavailable")

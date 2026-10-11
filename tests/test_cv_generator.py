@@ -81,7 +81,8 @@ def test_tool_page_try_button_opens_the_tool(client):
 
 def test_compiled_css_has_the_cv_classes(app):
     css = (pathlib.Path(app.static_folder) / "css" / "app.css").read_text(encoding="utf-8")
-    for selector in (".cv-layout", ".cv-step", ".cv-entry", ".cv-skill", ".cv-template", ".cv-preview"):
+    for selector in (".cv-layout", ".cv-step", ".cv-entry", ".cv-skill", ".cv-template", ".cv-preview",
+                     ".cv-swatch", ".cv-thumb-a", ".cv-ats-badge"):
         assert selector in css
 
 
@@ -197,7 +198,7 @@ def test_non_json_body_is_rejected(client):
 
 
 def test_oversized_request_is_rejected(client, app):
-    big = "x" * (app.config["CV_PDF_MAX_REQUEST_BYTES"] + 1)
+    big = "x" * (app.config["CV_MAX_REQUEST_BYTES"] + 1)
     response = _post(client, cv=_cv(summary=big))
     assert response.status_code == 413
     assert response.get_json()["code"] == "too_large"
@@ -257,3 +258,33 @@ def test_contains_urdu():
     assert pdf_builder.contains_urdu(URDU_NAME)
     assert pdf_builder.contains_urdu("Aqib " + URDU_NAME)
     assert not pdf_builder.contains_urdu("Sara Khan")
+
+
+# ── Templates and colours ───────────────────────────────────────────────────
+
+def test_five_templates_each_with_a_thumbnail(client):
+    assert services.TEMPLATES == ("modern", "classic", "minimal", "creative", "executive")
+    html = client.get("/dashboard/cv-generator").get_data(as_text=True)
+    for template in services.TEMPLATES:
+        assert f'data-template="{template}"' in html
+    assert html.count("<svg viewBox=\"0 0 60 78\"") == len(services.TEMPLATES)
+    for accent in services.ACCENT_NAMES:
+        assert f'data-accent="{accent}"' in html
+
+
+@pytest.mark.parametrize("accent", services.ACCENT_NAMES)
+def test_every_accent_colour_makes_a_pdf(client, accent):
+    response = client.post("/api/cv-generator/pdf", json={
+        "cv": _cv(), "template": "creative", "language": "en", "accent": accent})
+    assert response.status_code == 200
+
+
+def test_unknown_accent_is_rejected(client):
+    response = client.post("/api/cv-generator/pdf", json={
+        "cv": _cv(), "template": "modern", "language": "en", "accent": "pink"})
+    assert response.status_code == 400
+    assert response.get_json()["code"] == "accent_invalid"
+
+
+def test_missing_accent_uses_the_default(client):
+    assert _post(client).status_code == 200  # _post sends no accent

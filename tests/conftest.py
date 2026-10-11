@@ -6,6 +6,7 @@ from tests.fakes import (
     FakeAIProvider,
     FakeAuthService,
     FakeCaptionsRepository,
+    FakeCVsRepository,
     FakeExpensesRepository,
     FakeNotesRepository,
 )
@@ -50,6 +51,14 @@ def captions_repository(app):
     """Replace Supabase with the fake captions repository for this test."""
     repository = FakeCaptionsRepository()
     app.extensions["captions_repository"] = repository
+    return repository
+
+
+@pytest.fixture
+def cvs_repository(app):
+    """Replace Supabase with the fake saved-CVs repository for this test."""
+    repository = FakeCVsRepository()
+    app.extensions["cvs_repository"] = repository
     return repository
 
 

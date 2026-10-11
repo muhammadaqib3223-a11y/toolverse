@@ -60,6 +60,8 @@
         .then(function (response) {
           if (!response.ok) throw new Error("import_failed");
           try { window.localStorage.removeItem(guestKey); } catch (e) { /* ignore */ }
+          // Lets an open tool (e.g. the CV Generator) reload its list to show the moved items.
+          document.dispatchEvent(new CustomEvent("toolverse:guest-imported", { detail: { key: guestKey } }));
           messageEl.textContent = prompt.dataset.textMoved;
           window.setTimeout(function () { prompt.hidden = true; }, 2500);
         })

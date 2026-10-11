@@ -1,12 +1,19 @@
 """CV Generator: a step-by-step form (personal details, summary, experience, education, skills),
-a choice of templates and a PDF download.
+five templates with an accent colour, and a PDF download.
 
-Part A (this code): the form lives in the browser (public/static/js/cv_generator/) for guests
-and logged-in users alike; the server only turns it into a PDF and keeps nothing.
-Saved CVs and AI writing help come in part B.
+Guests keep their CVs in the browser (public/static/js/cv_generator/) and can download the PDF
+without logging in; logged-in users' CVs are saved in Supabase (several per user), private to
+them through Row Level Security.
 """
 from flask import Blueprint
 
 bp = Blueprint("cv_generator", __name__)
 
 from app.blueprints.tools.cv_generator import routes  # noqa: E402,F401  (registers the routes)
+
+
+def init_cv_generator(app):
+    """Install the real Supabase-backed repository (tests swap in a fake one)."""
+    from app.blueprints.tools.cv_generator.repository import SupabaseCVsRepository
+
+    app.extensions["cvs_repository"] = SupabaseCVsRepository()
