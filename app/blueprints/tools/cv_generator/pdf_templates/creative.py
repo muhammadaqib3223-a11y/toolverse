@@ -7,6 +7,7 @@ BAND_TOP = 40
 BAND_BOTTOM_PADDING = 26
 BAR_WIDTH = 28
 BAR_HEIGHT = 2.5
+PHOTO_SIZE = 84
 
 
 class CreativeLayout(CvLayout):
@@ -19,15 +20,22 @@ class CreativeLayout(CvLayout):
     def draw(self):
         personal = self.cv.personal
         contacts = self.contact_items()
-        name_h = self.measure(personal.full_name, 26, bold=True)
-        headline_h = self.measure(personal.headline, 12.5) + 3 if personal.headline else 0
+        text_w = self.col_w - (PHOTO_SIZE + 18 if self.photo else 0)
+        name_h = self.measure(personal.full_name, 26, bold=True, width=text_w)
+        headline_h = self.measure(personal.headline, 12.5, width=text_w) + 3 if personal.headline else 0
         contacts_h = self.inline_height(contacts, 9) + 10 if contacts else 0
-        band_h = BAND_TOP + name_h + headline_h + contacts_h + BAND_BOTTOM_PADDING
+        band_h = BAND_TOP + max(name_h + headline_h + contacts_h, PHOTO_SIZE if self.photo else 0) + BAND_BOTTOM_PADDING
 
         self.pdf.set_fill_color(*self.accent)
         self.pdf.rect(0, 0, self.pdf.w, band_h, style="F")
 
         self.pdf.set_y(BAND_TOP)
+        self.header_beside_photo(PHOTO_SIZE, lambda: self._band_text(contacts))
+        self.pdf.set_y(band_h + 26)
+        self.draw_sections()
+
+    def _band_text(self, contacts):
+        personal = self.cv.personal
         self.paragraph(personal.full_name, 26, bold=True, color=WHITE)
         if personal.headline:
             self.gap(3)
@@ -36,9 +44,6 @@ class CreativeLayout(CvLayout):
             self.gap(10)
             light = tint(self.accent, 0.75)
             self.inline_items(contacts, 9, color=WHITE, sep_color=light)
-
-        self.pdf.set_y(band_h + 26)
-        self.draw_sections()
 
     def section_heading(self, title, *, keep_with_next=60):
         self.ensure_space(keep_with_next)

@@ -2,8 +2,9 @@
  * logged-in user). Both have the same methods and return Promises, so cv_app.js does not need
  * to know which one it is talking to (same idea as the Notes and Expenses stores).
  *
- * A CV record: { id, title, cv, template, accent, language, updatedAt }.
+ * A CV record: { id, title, cv, template, accent, language, hasPhoto, updatedAt }.
  * list() returns records WITHOUT `cv` (the form data); get(id) returns the full record.
+ * The photo is separate: getPhoto(id) -> data: URL or null, setPhoto(id, dataUrl), removePhoto(id).
  * Errors are Error objects with a `code` (e.g. "cv_limit") and, from the server, a message. */
 (function (window) {
   "use strict";
@@ -34,6 +35,7 @@
       template: record.template,
       accent: record.accent,
       language: record.language,
+      hasPhoto: !!(record.photo || record.hasPhoto),
       updatedAt: record.updatedAt,
     };
   }
@@ -60,9 +62,11 @@
     }
   }
 
-  function guestRecord(id, data) {
+  // `photo` is kept from the old record: saving the form never touches the photo.
+  function guestRecord(id, data, photo) {
     return {
       id: id,
+      photo: photo || null,
       title: data.title || "",
       cv: data.cv || {},
       template: data.template || "",
@@ -89,7 +93,7 @@
       create: function (data) {
         var cvs = readCvs();
         if (cvs.length >= maxCvs) return Promise.reject(codedError("cv_limit"));
-        var cv = guestRecord(uuid(), data || {});
+        var cv = guestRecord(uuid(), data || {}, data && data.photo);
         cvs.push(cv);
         writeCvs(cvs);
         return Promise.resolve(cv);
@@ -99,9 +103,22 @@
         var cvs = readCvs();
         var index = cvs.findIndex(function (candidate) { return candidate.id === id; });
         if (index === -1) return Promise.reject(codedError("not_found"));
-        cvs[index] = guestRecord(id, data || {});
+        cvs[index] = guestRecord(id, data || {}, cvs[index].photo);
         if (!writeCvs(cvs)) return Promise.reject(codedError("storage_full"));
         return Promise.resolve(cvs[index]);
+      },
+
+      getPhoto: function (id) {
+        var cv = readCvs().find(function (candidate) { return candidate.id === id; });
+        return Promise.resolve(cv && cv.photo ? cv.photo : null);
+      },
+
+      setPhoto: function (id, dataUrl) {
+        return setGuestPhoto(id, dataUrl);
+      },
+
+      removePhoto: function (id) {
+        return setGuestPhoto(id, null);
       },
 
       remove: function (id) {
@@ -109,6 +126,16 @@
         return Promise.resolve();
       },
     };
+  }
+
+  function setGuestPhoto(id, dataUrl) {
+    var cvs = readCvs();
+    var cv = cvs.find(function (candidate) { return candidate.id === id; });
+    if (!cv) return Promise.reject(codedError("not_found"));
+    cv.photo = dataUrl || null;
+    cv.updatedAt = Date.now();
+    if (!writeCvs(cvs)) return Promise.reject(codedError("storage_full"));
+    return Promise.resolve(summary(cv));
   }
 
   // ── Logged in: the account (via the API) ─────────────────────────────────
@@ -143,6 +170,7 @@
       template: cv.template,
       accent: cv.accent,
       language: cv.language,
+      hasPhoto: !!cv.has_photo,
       updatedAt: Date.parse(cv.updated_at) || Date.now(),
     };
     if (cv.cv) record.cv = cv.cv;
@@ -159,9 +187,13 @@
     };
   }
 
-  function makeServerStore(listUrl, itemTemplate) {
+  function makeServerStore(listUrl, itemTemplate, photoTemplate) {
     function itemUrl(id) {
       return itemTemplate.replace("__ID__", encodeURIComponent(id));
+    }
+
+    function photoUrl(id) {
+      return photoTemplate.replace("__ID__", encodeURIComponent(id));
     }
 
     return {
@@ -188,6 +220,23 @@
 
       remove: function (id) {
         return apiFetch(itemUrl(id), { method: "DELETE" });
+      },
+
+      getPhoto: function (id) {
+        return window.fetch(photoUrl(id), { credentials: "same-origin" }).then(function (response) {
+          if (response.status === 404) return null;
+          if (!response.ok) throw codedError("request_failed");
+          return response.blob().then(window.CvPhoto.blobToDataUrl);
+        });
+      },
+
+      setPhoto: function (id, dataUrl) {
+        return apiFetch(photoUrl(id), { method: "PUT", body: { photo: dataUrl } })
+          .then(function (result) { return fromServer(result.cv); });
+      },
+
+      removePhoto: function (id) {
+        return apiFetch(photoUrl(id), { method: "DELETE" });
       },
     };
   }

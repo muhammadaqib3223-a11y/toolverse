@@ -5,6 +5,13 @@ from app.blueprints.tools.cv_generator.pdf_templates.base import MUTED, CvLayout
 
 class ClassicLayout(CvLayout):
     def draw(self):
+        self.header_beside_photo(84, self._header)
+        self.gap(14)
+        self.rule(color=self.accent, width=1.2)
+        self.gap(18)
+        self.draw_sections()
+
+    def _header(self):
         personal = self.cv.personal
         self.paragraph(personal.full_name, 24, bold=True)
         if personal.headline:
@@ -13,7 +20,3 @@ class ClassicLayout(CvLayout):
         if self.contact_items():
             self.gap(8)
             self.inline_items(self.contact_items(), 9)
-        self.gap(14)
-        self.rule(color=self.accent, width=1.2)
-        self.gap(18)
-        self.draw_sections()

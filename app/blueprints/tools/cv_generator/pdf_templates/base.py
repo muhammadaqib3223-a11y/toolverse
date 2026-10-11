@@ -7,6 +7,8 @@ move to the other side, and items flow from the right. Sizes are in points (A4 =
 ATS rules every template follows: all text is real text (no images of text), no letter-spacing
 (readers split spaced letters), and sections come in reading order.
 """
+import io
+
 from app.services import pdf_builder
 from app.services.pdf_builder import contains_urdu, line_height
 
@@ -53,10 +55,11 @@ class CvLayout:
     body_font = pdf_builder.SANS  # main font for Latin text
     skills_style = "inline"       # "inline" (dot-separated) or "chips"
 
-    def __init__(self, cv, labels, *, rtl=False, language="en", accent=DEFAULT_ACCENT):
+    def __init__(self, cv, labels, *, rtl=False, language="en", accent=DEFAULT_ACCENT, photo=None):
         self.cv = cv
         self.labels = labels
         self.rtl = rtl
+        self.photo = photo  # clean JPEG bytes (app/services/photos.py) or None
         self.accent = ACCENTS.get(accent, ACCENTS[DEFAULT_ACCENT])
         name = cv.personal.full_name
         self.pdf = pdf_builder.new_document(
@@ -210,14 +213,27 @@ class CvLayout:
 
     # ── Sections ─────────────────────────────────────────────────────────────
 
-    def draw_sections(self, order=("summary", "experience", "education", "skills")):
-        bodies = {
-            "summary": (self.cv.summary, self.summary_body),
-            "experience": (self.cv.experience, self.experience_body),
-            "education": (self.cv.education, self.education_body),
-            "skills": (self.cv.skills, self.skills_body),
+    SECTION_ORDER = ("summary", "experience", "projects", "education", "certifications",
+                     "skills", "languages", "hobbies", "references")
+
+    def section_bodies(self):
+        """key -> (content, draw function). Empty content = the section is left out."""
+        cv = self.cv
+        return {
+            "summary": (cv.summary, self.summary_body),
+            "experience": (cv.experience, self.experience_body),
+            "projects": (cv.projects, self.projects_body),
+            "education": (cv.education, self.education_body),
+            "certifications": (cv.certifications, self.certifications_body),
+            "skills": (cv.skills, self.skills_body),
+            "languages": (cv.languages, self.languages_body),
+            "hobbies": (cv.hobbies, self.hobbies_body),
+            "references": (cv.references or cv.references_on_request, self.references_body),
         }
-        for key in order:
+
+    def draw_sections(self, order=None):
+        bodies = self.section_bodies()
+        for key in order or self.SECTION_ORDER:
             content, body = bodies[key]
             if content:
                 self.draw_section(self.labels[key], body)
@@ -244,6 +260,70 @@ class CvLayout:
                 self.gap(10)
             self.entry(item.degree, _join(item.school, item.location),
                        self.date_range(item.start, item.end), item.description)
+
+    def projects_body(self):
+        for index, project in enumerate(self.cv.projects):
+            if index:
+                self.gap(10)
+            self.entry(project.name, project.link, "", project.description)
+
+    def certifications_body(self):
+        for index, item in enumerate(self.cv.certifications):
+            if index:
+                self.gap(6)
+            self.entry(item.name, item.issuer, item.date, "")
+
+    def language_text(self, language):
+        level = self.labels["levels"].get(language.level, "")
+        return f"{language.name} ({level})" if level else language.name
+
+    def languages_body(self):
+        self.inline_items([(self.language_text(item), None) for item in self.cv.languages], 9.5, color=INK)
+
+    def hobbies_body(self):
+        self.inline_items([(hobby, None) for hobby in self.cv.hobbies], 9.5, color=INK)
+
+    def references_body(self):
+        if not self.cv.references:
+            self.paragraph(self.labels["references_on_request"], 9.5, color=MUTED)
+            return
+        for index, ref in enumerate(self.cv.references):
+            if index:
+                self.gap(8)
+            self.paragraph(ref.name, 10, bold=True)
+            if ref.title:
+                self.paragraph(ref.title, 9.5, color=MUTED)
+            if ref.contact:
+                self.paragraph(ref.contact, 9.5, color=MUTED)
+
+    # ── Photo ─────────────────────────────────────────────────────────────────
+
+    def draw_photo(self, x, y, size, ring=None):
+        """The profile photo as a circle with its top-left corner at (x, y). Does nothing
+        without a photo. ATS software ignores pictures, so nothing important may be only here."""
+        if not self.photo:
+            return
+        with self.pdf.round_clip(x=x, y=y, r=size):
+            self.pdf.image(io.BytesIO(self.photo), x=x, y=y, w=size, h=size)
+        if ring:
+            self.pdf.set_draw_color(*ring)
+            self.pdf.set_line_width(2)
+            self.pdf.circle(x=x + size / 2, y=y + size / 2, radius=size / 2, style="D")
+
+    def header_beside_photo(self, size, draw_header, gap=18):
+        """Run draw_header() in a column narrowed so the photo fits at the far top corner
+        (right, or left for Urdu). Without a photo, draw_header() just uses the full column."""
+        if not self.photo:
+            draw_header()
+            return
+        top = self.pdf.get_y()
+        x0, x1 = self.col_x0, self.col_x1
+        self.draw_photo(x0 if self.rtl else x1 - size, top, size)
+        self.set_column(x0 + size + gap, x1) if self.rtl else self.set_column(x0, x1 - size - gap)
+        self.pdf.set_y(top)
+        draw_header()
+        self.set_column(x0, x1)
+        self.pdf.set_y(max(self.pdf.get_y(), top + size))
 
     def skills_body(self):
         if self.skills_style == "chips":
@@ -371,6 +451,7 @@ class CvLayout:
             (personal.email, f"mailto:{personal.email}" if personal.email else None),
             (personal.phone, None),
             (personal.location, None),
+            (personal.linkedin, personal.linkedin_url or None),
             (personal.website, personal.website_url or None),
         ]
         return [(text, link) for text, link in items if text]

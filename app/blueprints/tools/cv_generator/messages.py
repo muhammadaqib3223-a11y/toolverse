@@ -1,7 +1,16 @@
 from flask_babel import lazy_gettext as _l
 
 from app.blueprints.tools.cv_generator.saved_cvs import MAX_SAVED_CVS
-from app.blueprints.tools.cv_generator.services import MAX_EDUCATION, MAX_EXPERIENCE, MAX_SKILLS
+from app.blueprints.tools.cv_generator.services import (
+    MAX_CERTIFICATIONS,
+    MAX_EDUCATION,
+    MAX_EXPERIENCE,
+    MAX_HOBBIES,
+    MAX_LANGUAGES,
+    MAX_PROJECTS,
+    MAX_REFERENCES,
+    MAX_SKILLS,
+)
 
 ERROR_MESSAGES = {
     "invalid_data": _l("Something in the form is not right. Please check it and try again."),
@@ -12,6 +21,13 @@ ERROR_MESSAGES = {
     "too_many_experience": _l("You can add up to %(max)s jobs.", max=MAX_EXPERIENCE),
     "too_many_education": _l("You can add up to %(max)s education entries.", max=MAX_EDUCATION),
     "too_many_skills": _l("You can add up to %(max)s skills.", max=MAX_SKILLS),
+    "too_many_projects": _l("You can add up to %(max)s projects.", max=MAX_PROJECTS),
+    "too_many_certifications": _l("You can add up to %(max)s certifications.", max=MAX_CERTIFICATIONS),
+    "too_many_languages": _l("You can add up to %(max)s languages.", max=MAX_LANGUAGES),
+    "too_many_hobbies": _l("You can add up to %(max)s hobbies.", max=MAX_HOBBIES),
+    "too_many_references": _l("You can add up to %(max)s references.", max=MAX_REFERENCES),
+    "photo_invalid": _l("This photo can't be used. Please choose a JPG or PNG picture."),
+    "photo_too_large": _l("This photo is too big. Please choose a smaller picture."),
     "template_invalid": _l("Please choose a template."),
     "accent_invalid": _l("Please choose a colour."),
     "title_too_long": _l("The CV name is too long (120 characters max)."),

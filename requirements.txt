@@ -15,3 +15,5 @@ google-genai==2.29.0
 # uharfbuzz lets fpdf2 join Urdu letters and write them right to left.
 fpdf2==2.8.9
 uharfbuzz==0.56.3
+# Images: checks and re-saves CV photos (also removes hidden data like GPS). fpdf2 needs it too.
+Pillow==12.3.0

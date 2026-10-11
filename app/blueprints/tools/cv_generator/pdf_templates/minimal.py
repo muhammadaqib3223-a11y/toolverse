@@ -9,6 +9,12 @@ GUTTER = 22
 
 class MinimalLayout(CvLayout):
     def draw(self):
+        self.header_beside_photo(72, self._header)
+        self.gap(26)
+        self._first_section = True
+        self.draw_sections()
+
+    def _header(self):
         personal = self.cv.personal
         self.paragraph(personal.full_name, 22, bold=True)
         if personal.headline:
@@ -17,9 +23,6 @@ class MinimalLayout(CvLayout):
         if self.contact_items():
             self.gap(8)
             self.inline_items(self.contact_items(), 9, color=MUTED)
-        self.gap(26)
-        self._first_section = True
-        self.draw_sections()
 
     def draw_section(self, title, body):
         self.full_column()

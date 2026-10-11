@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-10-11 16:20+0500\n"
+"POT-Creation-Date: 2026-10-11 17:05+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ur\n"
@@ -33,7 +33,7 @@ msgid "Use at most %(count)s characters."
 msgstr "زیادہ سے زیادہ %(count)s حروف لکھیں۔"
 
 #: app/blueprints/auth/forms.py:29
-#: app/templates/tools/cv_generator/index.html:183
+#: app/templates/tools/cv_generator/index.html:242
 msgid "Email"
 msgstr "ای میل"
 
@@ -124,11 +124,11 @@ msgstr "لاگ ان ابھی دستیاب نہیں۔ براہ کرم چند من
 
 #: app/blueprints/auth/messages.py:17
 #: app/blueprints/tools/captions/messages.py:16
-#: app/blueprints/tools/cv_generator/messages.py:33
+#: app/blueprints/tools/cv_generator/messages.py:49
 #: app/blueprints/tools/expenses/messages.py:13
 #: app/blueprints/tools/notes/messages.py:11
 #: app/templates/tools/captions/index.html:24
-#: app/templates/tools/cv_generator/index.html:89
+#: app/templates/tools/cv_generator/index.html:132
 msgid "Something went wrong. Please try again."
 msgstr "کچھ غلط ہو گیا۔ براہ کرم دوبارہ کوشش کریں۔"
 
@@ -159,8 +159,8 @@ msgstr "سی وی چیکر"
 
 #: app/blueprints/marketing/content.py:29
 #: app/blueprints/marketing/tools_catalog.py:113
-#: app/templates/tools/cv_generator/index.html:56
-#: app/templates/tools/cv_generator/index.html:111
+#: app/templates/tools/cv_generator/index.html:80
+#: app/templates/tools/cv_generator/index.html:153
 msgid "CV Generator"
 msgstr "سی وی جنریٹر"
 
@@ -189,7 +189,7 @@ msgstr "اخراجات"
 #: app/templates/partials/navbar.html:36 app/templates/partials/navbar.html:61
 #: app/templates/partials/sidebar.html:75
 #: app/templates/tools/captions/index.html:55
-#: app/templates/tools/cv_generator/index.html:147
+#: app/templates/tools/cv_generator/index.html:189
 #: app/templates/tools/expenses/index.html:50
 #: app/templates/tools/notes/index.html:46
 msgid "Sign up free"
@@ -275,7 +275,7 @@ msgid ""
 msgstr "جی ہاں۔ اوپر والے مینو سے اردو چنیں اور پوری سائٹ اردو میں بدل جائے گی۔"
 
 #: app/blueprints/marketing/content.py:70 app/blueprints/marketing/legal.py:204
-#: app/blueprints/tools/cv_generator/services.py:178
+#: app/blueprints/tools/cv_generator/services.py:264
 #: app/templates/partials/footer.html:7
 msgid "Contact"
 msgstr "رابطہ"
@@ -3285,7 +3285,7 @@ msgid "[Amount]"
 msgstr "[رقم]"
 
 #: app/blueprints/marketing/tools_catalog.py:364
-#: app/templates/tools/cv_generator/index.html:244
+#: app/templates/tools/cv_generator/index.html:73
 #: app/templates/tools/expenses/index.html:155
 msgid "Add"
 msgstr "شامل کریں"
@@ -3475,7 +3475,7 @@ msgid "The Caption Generator is very busy today. Please try again tomorrow."
 msgstr "کیپشن جنریٹر آج بہت مصروف ہے۔ براہِ کرم کل دوبارہ کوشش کریں۔"
 
 #: app/blueprints/tools/captions/messages.py:12
-#: app/blueprints/tools/cv_generator/messages.py:27
+#: app/blueprints/tools/cv_generator/messages.py:43
 msgid "The AI is busy right now. Please try again in a minute."
 msgstr "AI اس وقت مصروف ہے۔ براہِ کرم ایک منٹ بعد دوبارہ کوشش کریں۔"
 
@@ -3486,7 +3486,7 @@ msgid ""
 msgstr "AI اس موضوع پر کیپشن نہیں لکھ سکا۔ براہِ کرم کوئی اور موضوع آزمائیں۔"
 
 #: app/blueprints/tools/captions/messages.py:14
-#: app/blueprints/tools/cv_generator/messages.py:29
+#: app/blueprints/tools/cv_generator/messages.py:45
 msgid "The AI isn't available right now. Please try again in a moment."
 msgstr "AI اس وقت دستیاب نہیں۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
@@ -3494,102 +3494,142 @@ msgstr "AI اس وقت دستیاب نہیں۔ براہِ کرم تھوڑی دی
 msgid "Captions aren't available right now. Please try again in a moment."
 msgstr "کیپشنز اس وقت دستیاب نہیں۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:7
+#: app/blueprints/tools/cv_generator/messages.py:16
 msgid "Something in the form is not right. Please check it and try again."
 msgstr "فارم میں کچھ درست نہیں۔ براہِ کرم دیکھ کر دوبارہ کوشش کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:8
-#: app/templates/tools/cv_generator/index.html:88
+#: app/blueprints/tools/cv_generator/messages.py:17
+#: app/templates/tools/cv_generator/index.html:131
 msgid "Please type your full name."
 msgstr "براہِ کرم اپنا پورا نام لکھیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:9
+#: app/blueprints/tools/cv_generator/messages.py:18
 msgid "Please type a valid email address."
 msgstr "براہِ کرم درست ای میل ایڈریس لکھیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:10
+#: app/blueprints/tools/cv_generator/messages.py:19
 msgid "Please type a website like example.com or https://example.com."
 msgstr "ویب سائٹ اس طرح لکھیں: example.com یا https://example.com"
 
-#: app/blueprints/tools/cv_generator/messages.py:11
+#: app/blueprints/tools/cv_generator/messages.py:20
 msgid "This is too long. Please shorten it."
 msgstr "یہ بہت لمبا ہے۔ براہِ کرم اسے مختصر کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:12
-#: app/templates/tools/cv_generator/index.html:91
+#: app/blueprints/tools/cv_generator/messages.py:21
+#: app/templates/tools/cv_generator/index.html:134
 #, python-format
 msgid "You can add up to %(max)s jobs."
 msgstr "آپ زیادہ سے زیادہ %(max)s نوکریاں شامل کر سکتے ہیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:13
-#: app/templates/tools/cv_generator/index.html:92
+#: app/blueprints/tools/cv_generator/messages.py:22
+#: app/templates/tools/cv_generator/index.html:135
 #, python-format
 msgid "You can add up to %(max)s education entries."
 msgstr "آپ زیادہ سے زیادہ %(max)s تعلیمی اندراجات شامل کر سکتے ہیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:14
-#: app/templates/tools/cv_generator/index.html:93
+#: app/blueprints/tools/cv_generator/messages.py:23
+#: app/templates/tools/cv_generator/index.html:136
 #, python-format
 msgid "You can add up to %(max)s skills."
 msgstr "آپ زیادہ سے زیادہ %(max)s مہارتیں شامل کر سکتے ہیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:15
+#: app/blueprints/tools/cv_generator/messages.py:24
+#: app/templates/tools/cv_generator/index.html:119
+#, python-format
+msgid "You can add up to %(max)s projects."
+msgstr "آپ زیادہ سے زیادہ %(max)s منصوبے شامل کر سکتے ہیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:25
+#: app/templates/tools/cv_generator/index.html:120
+#, python-format
+msgid "You can add up to %(max)s certifications."
+msgstr "آپ زیادہ سے زیادہ %(max)s سرٹیفکیٹ شامل کر سکتے ہیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:26
+#: app/templates/tools/cv_generator/index.html:121
+#, python-format
+msgid "You can add up to %(max)s languages."
+msgstr "آپ زیادہ سے زیادہ %(max)s زبانیں شامل کر سکتے ہیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:27
+#: app/templates/tools/cv_generator/index.html:123
+#, python-format
+msgid "You can add up to %(max)s hobbies."
+msgstr "آپ زیادہ سے زیادہ %(max)s مشاغل شامل کر سکتے ہیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:28
+#: app/templates/tools/cv_generator/index.html:122
+#, python-format
+msgid "You can add up to %(max)s references."
+msgstr "آپ زیادہ سے زیادہ %(max)s حوالے شامل کر سکتے ہیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:29
+#: app/templates/tools/cv_generator/index.html:128
+msgid "This photo can't be used. Please choose a JPG or PNG picture."
+msgstr "یہ تصویر استعمال نہیں ہو سکتی۔ براہِ کرم JPG یا PNG تصویر چنیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:30
+#: app/templates/tools/cv_generator/index.html:129
+msgid "This photo is too big. Please choose a smaller picture."
+msgstr "یہ تصویر بہت بڑی ہے۔ براہِ کرم چھوٹی تصویر چنیں۔"
+
+#: app/blueprints/tools/cv_generator/messages.py:31
 msgid "Please choose a template."
 msgstr "براہِ کرم ٹیمپلیٹ چنیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:16
+#: app/blueprints/tools/cv_generator/messages.py:32
 msgid "Please choose a colour."
 msgstr "براہِ کرم رنگ چنیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:17
+#: app/blueprints/tools/cv_generator/messages.py:33
 msgid "The CV name is too long (120 characters max)."
 msgstr "CV کا نام بہت لمبا ہے (زیادہ سے زیادہ 120 حروف)۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:18
+#: app/blueprints/tools/cv_generator/messages.py:34
 msgid "Please log in to save your CVs."
 msgstr "اپنی CVs محفوظ کرنے کے لیے براہِ کرم لاگ اِن کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:19
+#: app/blueprints/tools/cv_generator/messages.py:35
 msgid "That CV no longer exists."
 msgstr "یہ CV اب موجود نہیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:20
-#: app/templates/tools/cv_generator/index.html:105
+#: app/blueprints/tools/cv_generator/messages.py:36
+#: app/templates/tools/cv_generator/index.html:147
 #, python-format
 msgid "You can keep up to %(max)s CVs. Delete one to add a new one."
 msgstr ""
 "آپ زیادہ سے زیادہ %(max)s CVs رکھ سکتے ہیں۔ نئی بنانے کے لیے ایک ڈیلیٹ "
 "کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:21
+#: app/blueprints/tools/cv_generator/messages.py:37
 msgid "Your CVs can't be reached right now. Please try again in a moment."
 msgstr "آپ کی CVs ابھی نہیں کھل رہیں۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:22
+#: app/blueprints/tools/cv_generator/messages.py:38
 msgid "Please choose what the AI should improve."
 msgstr "براہِ کرم چنیں کہ AI کیا بہتر کرے۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:23
+#: app/blueprints/tools/cv_generator/messages.py:39
 msgid ""
 "Write a few words here first, then the AI can make them sound "
 "professional."
 msgstr "پہلے یہاں چند الفاظ لکھیں، پھر AI انہیں پروفیشنل بنا سکتا ہے۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:24
+#: app/blueprints/tools/cv_generator/messages.py:40
 msgid ""
 "You have used your free AI help for today. Log in or sign up free to get "
 "more."
 msgstr "آج کی مفت AI مدد ختم ہو گئی۔ مزید کے لیے لاگ اِن کریں یا مفت سائن اپ کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:25
+#: app/blueprints/tools/cv_generator/messages.py:41
 msgid "You have used all your AI help for today. Come back tomorrow."
 msgstr "آج کی ساری AI مدد استعمال ہو چکی۔ کل دوبارہ آئیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:26
+#: app/blueprints/tools/cv_generator/messages.py:42
 msgid "The AI is very busy today. Please try again tomorrow."
 msgstr "AI آج بہت مصروف ہے۔ براہِ کرم کل دوبارہ کوشش کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:28
+#: app/blueprints/tools/cv_generator/messages.py:44
 msgid ""
 "The AI couldn't work on this text. Please change it a little and try "
 "again."
@@ -3597,50 +3637,104 @@ msgstr ""
 "AI اس تحریر پر کام نہیں کر سکا۔ براہِ کرم اسے تھوڑا بدل کر دوبارہ کوشش "
 "کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:30
+#: app/blueprints/tools/cv_generator/messages.py:46
 msgid "Please choose the CV language."
 msgstr "براہِ کرم CV کی زبان چنیں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:31
+#: app/blueprints/tools/cv_generator/messages.py:47
 msgid "Your CV is too long to turn into a PDF. Please shorten it."
 msgstr "آپ کی CV اتنی لمبی ہے کہ PDF نہیں بن سکتی۔ براہِ کرم اسے مختصر کریں۔"
 
-#: app/blueprints/tools/cv_generator/messages.py:32
+#: app/blueprints/tools/cv_generator/messages.py:48
 msgid "We couldn't make your PDF. Please try again in a moment."
 msgstr "ہم آپ کی PDF نہیں بنا سکے۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
 
-#: app/blueprints/tools/cv_generator/services.py:174
+#: app/blueprints/tools/cv_generator/services.py:260
 #: app/templates/tools/cv_generator/index.html:49
-#: app/templates/tools/cv_generator/index.html:82
-#: app/templates/tools/cv_generator/index.html:194
-#: app/templates/tools/cv_generator/index.html:196
+#: app/templates/tools/cv_generator/index.html:106
+#: app/templates/tools/cv_generator/index.html:254
+#: app/templates/tools/cv_generator/index.html:256
 msgid "Summary"
 msgstr "خلاصہ"
 
-#: app/blueprints/tools/cv_generator/services.py:175
+#: app/blueprints/tools/cv_generator/services.py:261
 #: app/templates/marketing/sections/tools.html:47
 #: app/templates/tools/cv_generator/index.html:50
-#: app/templates/tools/cv_generator/index.html:213
+#: app/templates/tools/cv_generator/index.html:273
 msgid "Experience"
 msgstr "تجربہ"
 
-#: app/blueprints/tools/cv_generator/services.py:176
-#: app/templates/tools/cv_generator/index.html:51
-#: app/templates/tools/cv_generator/index.html:225
+#: app/blueprints/tools/cv_generator/services.py:262
+#: app/templates/tools/cv_generator/index.html:52
+#: app/templates/tools/cv_generator/index.html:291
 msgid "Education"
 msgstr "تعلیم"
 
-#: app/blueprints/tools/cv_generator/services.py:177
+#: app/blueprints/tools/cv_generator/services.py:263
 #: app/templates/marketing/sections/tools.html:53
-#: app/templates/tools/cv_generator/index.html:52
-#: app/templates/tools/cv_generator/index.html:83
-#: app/templates/tools/cv_generator/index.html:237
+#: app/templates/tools/cv_generator/index.html:107
 msgid "Skills"
 msgstr "مہارتیں"
 
-#: app/blueprints/tools/cv_generator/services.py:179
+#: app/blueprints/tools/cv_generator/services.py:265
 msgid "Present"
 msgstr "اب تک"
+
+#: app/blueprints/tools/cv_generator/services.py:266
+#: app/templates/tools/cv_generator/index.html:51
+#: app/templates/tools/cv_generator/index.html:282
+msgid "Projects"
+msgstr "منصوبے"
+
+#: app/blueprints/tools/cv_generator/services.py:267
+#: app/templates/tools/cv_generator/index.html:54
+#: app/templates/tools/cv_generator/index.html:319
+msgid "Certifications"
+msgstr "سرٹیفکیٹس"
+
+#: app/blueprints/tools/cv_generator/services.py:268
+#: app/templates/tools/cv_generator/index.html:310
+msgid "Languages"
+msgstr "زبانیں"
+
+#: app/blueprints/tools/cv_generator/services.py:269
+#: app/templates/tools/cv_generator/index.html:330
+msgid "Hobbies"
+msgstr "مشاغل"
+
+#: app/blueprints/tools/cv_generator/services.py:270
+#: app/templates/tools/cv_generator/index.html:333
+msgid "References"
+msgstr "حوالے"
+
+#: app/blueprints/tools/cv_generator/services.py:271
+msgid "References available on request."
+msgstr "حوالے درخواست پر دستیاب ہیں۔"
+
+#: app/blueprints/tools/cv_generator/services.py:273
+#: app/templates/tools/cv_generator/index.html:522
+msgid "Native"
+msgstr "مادری"
+
+#: app/blueprints/tools/cv_generator/services.py:274
+#: app/templates/tools/cv_generator/index.html:523
+msgid "Fluent"
+msgstr "روانی سے"
+
+#: app/blueprints/tools/cv_generator/services.py:275
+#: app/templates/tools/cv_generator/index.html:524
+msgid "Advanced"
+msgstr "اعلیٰ"
+
+#: app/blueprints/tools/cv_generator/services.py:276
+#: app/templates/tools/cv_generator/index.html:525
+msgid "Intermediate"
+msgstr "درمیانہ"
+
+#: app/blueprints/tools/cv_generator/services.py:277
+#: app/templates/tools/cv_generator/index.html:526
+msgid "Basic"
+msgstr "بنیادی"
 
 # ── Expenses tool
 # ────────────────────────────────────────────────────────────
@@ -3855,7 +3949,7 @@ msgstr "یاد آ گیا؟"
 #: app/templates/partials/navbar.html:60 app/templates/partials/sidebar.html:72
 #: app/templates/partials/sidebar.html:96
 #: app/templates/tools/captions/index.html:54
-#: app/templates/tools/cv_generator/index.html:146
+#: app/templates/tools/cv_generator/index.html:188
 #: app/templates/tools/expenses/index.html:49
 #: app/templates/tools/notes/index.html:45
 msgid "Log in"
@@ -4010,7 +4104,7 @@ msgstr "CVs منتقل نہیں ہو سکیں۔ براہِ کرم دوبارہ �
 #: app/templates/partials/sidebar.html:38
 #: app/templates/partials/sidebar.html:44
 #: app/templates/tools/captions/index.html:41
-#: app/templates/tools/cv_generator/index.html:110
+#: app/templates/tools/cv_generator/index.html:152
 #: app/templates/tools/expenses/index.html:36
 #: app/templates/tools/notes/index.html:32
 msgid "Dashboard"
@@ -4387,7 +4481,7 @@ msgid "No tools in this category yet."
 msgstr "اس کیٹیگری میں ابھی کوئی ٹول نہیں۔"
 
 #: app/templates/partials/flash_messages.html:12
-#: app/templates/tools/cv_generator/index.html:418
+#: app/templates/tools/cv_generator/index.html:575
 #: app/templates/tools/notes/index.html:30
 msgid "Close"
 msgstr "بند کریں"
@@ -4410,6 +4504,7 @@ msgid "Move to my account"
 msgstr "اپنے اکاؤنٹ میں منتقل کریں"
 
 #: app/templates/partials/language_switch.html:3
+#: app/templates/tools/cv_generator/index.html:517
 msgid "Language"
 msgstr "زبان"
 
@@ -4451,7 +4546,7 @@ msgstr ""
 " کریں۔"
 
 #: app/templates/tools/captions/index.html:25
-#: app/templates/tools/cv_generator/index.html:90
+#: app/templates/tools/cv_generator/index.html:133
 msgid "Could not connect. Check your internet and try again."
 msgstr "رابطہ نہیں ہو سکا۔ اپنا انٹرنیٹ چیک کریں اور دوبارہ کوشش کریں۔"
 
@@ -4503,6 +4598,7 @@ msgstr "انسٹاگرام"
 
 #: app/templates/tools/captions/index.html:39
 #: app/templates/tools/captions/index.html:82
+#: app/templates/tools/cv_generator/index.html:245
 msgid "LinkedIn"
 msgstr "لنکڈاِن"
 
@@ -4549,154 +4645,183 @@ msgid "Next"
 msgstr "آگے"
 
 #: app/templates/tools/cv_generator/index.html:48
-#: app/templates/tools/cv_generator/index.html:178
+#: app/templates/tools/cv_generator/index.html:220
 msgid "Personal details"
 msgstr "ذاتی معلومات"
 
 #: app/templates/tools/cv_generator/index.html:53
-#: app/templates/tools/cv_generator/index.html:261
+#: app/templates/tools/cv_generator/index.html:300
+msgid "Skills and languages"
+msgstr "مہارتیں اور زبانیں"
+
+#: app/templates/tools/cv_generator/index.html:55
+#: app/templates/tools/cv_generator/index.html:328
+msgid "Hobbies and references"
+msgstr "مشاغل اور حوالے"
+
+#: app/templates/tools/cv_generator/index.html:56
+#: app/templates/tools/cv_generator/index.html:346
 msgid "Template and download"
 msgstr "ٹیمپلیٹ اور ڈاؤن لوڈ"
 
-#: app/templates/tools/cv_generator/index.html:57
-#: app/templates/tools/cv_generator/index.html:113
+#: app/templates/tools/cv_generator/index.html:81
+#: app/templates/tools/cv_generator/index.html:155
 msgid "Fill in a simple form, choose a template and download your CV as a PDF."
 msgstr "ایک آسان فارم بھریں، ٹیمپلیٹ چنیں اور اپنی CV بطور PDF ڈاؤن لوڈ کریں۔"
 
-#: app/templates/tools/cv_generator/index.html:74
+#: app/templates/tools/cv_generator/index.html:98
 msgid "The AI is writing…"
 msgstr "AI لکھ رہا ہے…"
 
-#: app/templates/tools/cv_generator/index.html:75
+#: app/templates/tools/cv_generator/index.html:99
 #, python-format
 msgid "%(remaining)s of %(limit)s AI tries left today"
 msgstr "آج AI کی %(limit)s میں سے %(remaining)s کوششیں باقی ہیں"
 
-#: app/templates/tools/cv_generator/index.html:76
+#: app/templates/tools/cv_generator/index.html:100
 msgid "No free AI tries left today. Log in or sign up free to get more."
 msgstr ""
 "آج AI کی کوئی مفت کوشش باقی نہیں۔ مزید کے لیے لاگ اِن کریں یا مفت سائن اپ"
 " کریں۔"
 
-#: app/templates/tools/cv_generator/index.html:77
+#: app/templates/tools/cv_generator/index.html:101
 msgid "No AI tries left today. Come back tomorrow."
 msgstr "آج AI کی کوئی کوشش باقی نہیں۔ کل دوبارہ آئیں۔"
 
-#: app/templates/tools/cv_generator/index.html:78
+#: app/templates/tools/cv_generator/index.html:102
 #, python-format
 msgid "We took out %(count)s line(s) with numbers you did not write."
 msgstr "ہم نے %(count)s ایسی لائنیں ہٹا دیں جن میں وہ نمبر تھے جو آپ نے نہیں لکھے۔"
 
-#: app/templates/tools/cv_generator/index.html:79
+#: app/templates/tools/cv_generator/index.html:103
 msgid "Done. You can still change anything."
 msgstr "ہو گیا۔ آپ اب بھی کچھ بھی بدل سکتے ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:80
+#: app/templates/tools/cv_generator/index.html:104
 msgid "The AI had no changes to suggest."
 msgstr "AI کے پاس تجویز کرنے کو کوئی تبدیلی نہیں تھی۔"
 
-#: app/templates/tools/cv_generator/index.html:81
-#: app/templates/tools/cv_generator/index.html:182
-#: app/templates/tools/cv_generator/index.html:344
+#: app/templates/tools/cv_generator/index.html:105
+#: app/templates/tools/cv_generator/index.html:241
+#: app/templates/tools/cv_generator/index.html:429
 msgid "Job title"
 msgstr "عہدہ"
 
-#: app/templates/tools/cv_generator/index.html:94
-msgid "This skill is already on your list."
-msgstr "یہ مہارت پہلے سے آپ کی فہرست میں ہے۔"
+#: app/templates/tools/cv_generator/index.html:124
+msgid "This is already on your list."
+msgstr "یہ پہلے سے آپ کی فہرست میں ہے۔"
 
-#: app/templates/tools/cv_generator/index.html:95
+#: app/templates/tools/cv_generator/index.html:125
+#, python-format
+msgid "Project %(number)s"
+msgstr "منصوبہ %(number)s"
+
+#: app/templates/tools/cv_generator/index.html:126
+#, python-format
+msgid "Certification %(number)s"
+msgstr "سرٹیفکیٹ %(number)s"
+
+#: app/templates/tools/cv_generator/index.html:127
+#, python-format
+msgid "Reference %(number)s"
+msgstr "حوالہ %(number)s"
+
+#: app/templates/tools/cv_generator/index.html:130
+msgid "Your browser has no room left to keep this photo."
+msgstr "آپ کے براؤزر میں یہ تصویر رکھنے کی جگہ نہیں بچی۔"
+
+#: app/templates/tools/cv_generator/index.html:137
 #, python-format
 msgid "Remove %(skill)s"
 msgstr "%(skill)s ہٹائیں"
 
-#: app/templates/tools/cv_generator/index.html:96
+#: app/templates/tools/cv_generator/index.html:138
 #, python-format
 msgid "Job %(number)s"
 msgstr "نوکری %(number)s"
 
-#: app/templates/tools/cv_generator/index.html:97
+#: app/templates/tools/cv_generator/index.html:139
 #, python-format
 msgid "Education %(number)s"
 msgstr "تعلیم %(number)s"
 
-#: app/templates/tools/cv_generator/index.html:98
+#: app/templates/tools/cv_generator/index.html:140
 msgid "Saved in your account"
 msgstr "آپ کے اکاؤنٹ میں محفوظ"
 
-#: app/templates/tools/cv_generator/index.html:98
+#: app/templates/tools/cv_generator/index.html:140
 msgid "Saved in this browser"
 msgstr "اس براؤزر میں محفوظ"
 
-#: app/templates/tools/cv_generator/index.html:99
+#: app/templates/tools/cv_generator/index.html:141
 #: app/templates/tools/expenses/index.html:24
 #: app/templates/tools/notes/index.html:23
 msgid "Saving…"
 msgstr "محفوظ ہو رہا ہے…"
 
-#: app/templates/tools/cv_generator/index.html:100
+#: app/templates/tools/cv_generator/index.html:142
 msgid "Could not save. We will try again when you make a change."
 msgstr "محفوظ نہیں ہو سکا۔ آپ کی اگلی تبدیلی پر ہم دوبارہ کوشش کریں گے۔"
 
-#: app/templates/tools/cv_generator/index.html:101
+#: app/templates/tools/cv_generator/index.html:143
 msgid "Could not load your CVs. Please refresh the page."
 msgstr "آپ کی CVs لوڈ نہیں ہو سکیں۔ براہِ کرم صفحہ ریفریش کریں۔"
 
-#: app/templates/tools/cv_generator/index.html:102
+#: app/templates/tools/cv_generator/index.html:144
 msgid "Untitled CV"
 msgstr "بے نام CV"
 
-#: app/templates/tools/cv_generator/index.html:103
+#: app/templates/tools/cv_generator/index.html:145
 #, python-format
 msgid "%(title)s (copy)"
 msgstr "%(title)s (کاپی)"
 
-#: app/templates/tools/cv_generator/index.html:104
+#: app/templates/tools/cv_generator/index.html:146
 msgid "Delete this CV? This cannot be undone."
 msgstr "یہ CV ڈیلیٹ کر دیں؟ یہ واپس نہیں ہو سکے گی۔"
 
-#: app/templates/tools/cv_generator/index.html:106
+#: app/templates/tools/cv_generator/index.html:148
 msgid "Your PDF is ready."
 msgstr "آپ کی PDF تیار ہے۔"
 
-#: app/templates/tools/cv_generator/index.html:107
+#: app/templates/tools/cv_generator/index.html:149
 msgid "Clear the whole form? This cannot be undone."
 msgstr "پورا فارم صاف کر دیں؟ یہ واپس نہیں ہو سکے گا۔"
 
-#: app/templates/tools/cv_generator/index.html:108
+#: app/templates/tools/cv_generator/index.html:150
 #, python-format
 msgid "Step %(current)s of %(total)s"
 msgstr "مرحلہ %(current)s از %(total)s"
 
-#: app/templates/tools/cv_generator/index.html:119
+#: app/templates/tools/cv_generator/index.html:161
 msgid "My CVs"
 msgstr "میری CVs"
 
-#: app/templates/tools/cv_generator/index.html:121
+#: app/templates/tools/cv_generator/index.html:163
 msgid "CV name"
 msgstr "CV کا نام"
 
-#: app/templates/tools/cv_generator/index.html:123
+#: app/templates/tools/cv_generator/index.html:165
 msgid "CV name, e.g. Data jobs"
 msgstr "CV کا نام، مثلاً ڈیٹا کی نوکریاں"
 
-#: app/templates/tools/cv_generator/index.html:126
+#: app/templates/tools/cv_generator/index.html:168
 msgid "New CV"
 msgstr "نئی CV"
 
-#: app/templates/tools/cv_generator/index.html:128
+#: app/templates/tools/cv_generator/index.html:170
 msgid "Duplicate this CV"
 msgstr "اس CV کی کاپی بنائیں"
 
-#: app/templates/tools/cv_generator/index.html:131
+#: app/templates/tools/cv_generator/index.html:173
 msgid "Delete this CV"
 msgstr "یہ CV ڈیلیٹ کریں"
 
-#: app/templates/tools/cv_generator/index.html:139
+#: app/templates/tools/cv_generator/index.html:181
 msgid "Your CVs are saved privately in your account."
 msgstr "آپ کی CVs آپ کے اکاؤنٹ میں نجی طور پر محفوظ ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:143
+#: app/templates/tools/cv_generator/index.html:185
 msgid ""
 "Your CVs are kept only in this browser. Log in to save them in your "
 "account."
@@ -4704,59 +4829,83 @@ msgstr ""
 "آپ کی CVs صرف اسی براؤزر میں ہیں۔ اکاؤنٹ میں محفوظ کرنے کے لیے لاگ اِن "
 "کریں۔"
 
-#: app/templates/tools/cv_generator/index.html:155
+#: app/templates/tools/cv_generator/index.html:197
 msgid "CV steps"
 msgstr "CV کے مراحل"
 
-#: app/templates/tools/cv_generator/index.html:164
+#: app/templates/tools/cv_generator/index.html:206
 msgid "Your CV"
 msgstr "آپ کی CV"
 
-#: app/templates/tools/cv_generator/index.html:171
+#: app/templates/tools/cv_generator/index.html:213
 msgid "Make my whole CV professional"
 msgstr "میری پوری CV پروفیشنل بنائیں"
 
-#: app/templates/tools/cv_generator/index.html:179
+#: app/templates/tools/cv_generator/index.html:221
 msgid "How employers will see and contact you."
 msgstr "آجر آپ کو کیسے دیکھیں گے اور آپ سے کیسے رابطہ کریں گے۔"
 
-#: app/templates/tools/cv_generator/index.html:181
+#: app/templates/tools/cv_generator/index.html:224
+msgid "Your photo"
+msgstr "آپ کی تصویر"
+
+#: app/templates/tools/cv_generator/index.html:228
+msgid "Photo (optional)"
+msgstr "تصویر (اختیاری)"
+
+#: app/templates/tools/cv_generator/index.html:232
+msgid "Add photo"
+msgstr "تصویر شامل کریں"
+
+#: app/templates/tools/cv_generator/index.html:234
+msgid "Remove photo"
+msgstr "تصویر ہٹائیں"
+
+#: app/templates/tools/cv_generator/index.html:236
+msgid ""
+"Many ATS systems and some countries prefer CVs without a photo. Add one "
+"only if the job asks for it."
+msgstr ""
+"کئی ATS سسٹم اور کچھ ممالک بغیر تصویر کی CV پسند کرتے ہیں۔ تصویر صرف تب "
+"لگائیں جب نوکری میں مانگی گئی ہو۔"
+
+#: app/templates/tools/cv_generator/index.html:240
 msgid "Full name"
 msgstr "پورا نام"
 
-#: app/templates/tools/cv_generator/index.html:181
+#: app/templates/tools/cv_generator/index.html:240
 msgid "e.g. Sara Khan"
 msgstr "مثلاً سارہ خان"
 
-#: app/templates/tools/cv_generator/index.html:182
+#: app/templates/tools/cv_generator/index.html:241
 msgid "e.g. Junior Data Analyst"
 msgstr "مثلاً جونیئر ڈیٹا اینالسٹ"
 
-#: app/templates/tools/cv_generator/index.html:184
+#: app/templates/tools/cv_generator/index.html:243
 msgid "Phone"
 msgstr "فون"
 
-#: app/templates/tools/cv_generator/index.html:185
-#: app/templates/tools/cv_generator/index.html:346
-#: app/templates/tools/cv_generator/index.html:380
+#: app/templates/tools/cv_generator/index.html:244
+#: app/templates/tools/cv_generator/index.html:431
+#: app/templates/tools/cv_generator/index.html:465
 msgid "City"
 msgstr "شہر"
 
-#: app/templates/tools/cv_generator/index.html:185
+#: app/templates/tools/cv_generator/index.html:244
 msgid "e.g. Lahore, Pakistan"
 msgstr "مثلاً لاہور، پاکستان"
 
-#: app/templates/tools/cv_generator/index.html:186
-msgid "Website or LinkedIn"
-msgstr "ویب سائٹ یا LinkedIn"
+#: app/templates/tools/cv_generator/index.html:246
+msgid "Website or portfolio"
+msgstr "ویب سائٹ یا پورٹ فولیو"
 
-#: app/templates/tools/cv_generator/index.html:195
+#: app/templates/tools/cv_generator/index.html:255
 msgid ""
 "Two to four sentences: who you are, what you are good at and what job you"
 " want."
 msgstr "دو سے چار جملے: آپ کون ہیں، کس چیز میں اچھے ہیں اور کیسی نوکری چاہتے ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:199
+#: app/templates/tools/cv_generator/index.html:259
 msgid ""
 "e.g. Data analyst with two years of experience turning messy spreadsheets"
 " into clear dashboards."
@@ -4764,13 +4913,13 @@ msgstr ""
 "مثلاً دو سال کے تجربے والی ڈیٹا اینالسٹ جو بکھرے ہوئے ڈیٹا کو صاف ڈیش "
 "بورڈز میں بدلتی ہے۔"
 
-#: app/templates/tools/cv_generator/index.html:203
-#: app/templates/tools/cv_generator/index.html:251
-#: app/templates/tools/cv_generator/index.html:361
+#: app/templates/tools/cv_generator/index.html:263
+#: app/templates/tools/cv_generator/index.html:305
+#: app/templates/tools/cv_generator/index.html:446
 msgid "Improve with AI"
 msgstr "AI سے بہتر بنائیں"
 
-#: app/templates/tools/cv_generator/index.html:205
+#: app/templates/tools/cv_generator/index.html:265
 msgid ""
 "Write simply, in English or Roman Urdu. The AI rewrites it in "
 "professional English."
@@ -4778,7 +4927,7 @@ msgstr ""
 "سادہ انداز میں انگریزی یا رومن اردو میں لکھیں۔ AI اسے پروفیشنل انگریزی "
 "میں لکھ دے گا۔"
 
-#: app/templates/tools/cv_generator/index.html:214
+#: app/templates/tools/cv_generator/index.html:274
 msgid ""
 "Your jobs and internships, newest first. No experience yet? Skip this "
 "step."
@@ -4786,91 +4935,147 @@ msgstr ""
 "آپ کی نوکریاں اور انٹرن شپس، سب سے نئی پہلے۔ ابھی تجربہ نہیں؟ یہ مرحلہ "
 "چھوڑ دیں۔"
 
-#: app/templates/tools/cv_generator/index.html:217
+#: app/templates/tools/cv_generator/index.html:275
 msgid "Add a job"
 msgstr "نوکری شامل کریں"
 
-#: app/templates/tools/cv_generator/index.html:226
+#: app/templates/tools/cv_generator/index.html:283
+msgid ""
+"University, freelance or personal projects that show what you can do. "
+"Optional."
+msgstr "یونیورسٹی، فری لانس یا ذاتی منصوبے جو آپ کی صلاحیت دکھائیں۔ اختیاری۔"
+
+#: app/templates/tools/cv_generator/index.html:284
+msgid "Add a project"
+msgstr "منصوبہ شامل کریں"
+
+#: app/templates/tools/cv_generator/index.html:292
 msgid "Degrees, diplomas and courses, newest first."
 msgstr "ڈگریاں، ڈپلومے اور کورسز، سب سے نیا پہلے۔"
 
-#: app/templates/tools/cv_generator/index.html:229
+#: app/templates/tools/cv_generator/index.html:293
 msgid "Add education"
 msgstr "تعلیم شامل کریں"
 
-#: app/templates/tools/cv_generator/index.html:238
+#: app/templates/tools/cv_generator/index.html:301
 msgid "Type a skill and press Enter. Add the skills the job asks for."
 msgstr ""
 "مہارت لکھیں اور Enter دبائیں۔ وہ مہارتیں شامل کریں جو نوکری میں مانگی گئی"
 " ہوں۔"
 
-#: app/templates/tools/cv_generator/index.html:240
+#: app/templates/tools/cv_generator/index.html:302
 msgid "New skill"
 msgstr "نئی مہارت"
 
-#: app/templates/tools/cv_generator/index.html:242
+#: app/templates/tools/cv_generator/index.html:302
 msgid "e.g. Python"
 msgstr "مثلاً Python"
 
-#: app/templates/tools/cv_generator/index.html:253
+#: app/templates/tools/cv_generator/index.html:307
 msgid "The AI cleans up your skills and adds ones your CV already shows."
 msgstr ""
 "AI آپ کی مہارتیں صاف کرتا ہے اور وہ شامل کرتا ہے جو آپ کی CV میں پہلے سے "
 "نظر آتی ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:262
+#: app/templates/tools/cv_generator/index.html:311
+msgid "Languages you speak, and how well. Optional."
+msgstr "آپ کون سی زبانیں بولتے ہیں، اور کتنی اچھی۔ اختیاری۔"
+
+#: app/templates/tools/cv_generator/index.html:312
+msgid "Add a language"
+msgstr "زبان شامل کریں"
+
+#: app/templates/tools/cv_generator/index.html:320
+msgid ""
+"Courses and certificates, e.g. from Coursera, DigiSkills or Google. "
+"Optional."
+msgstr "کورسز اور سرٹیفکیٹ، مثلاً Coursera، DigiSkills یا Google سے۔ اختیاری۔"
+
+#: app/templates/tools/cv_generator/index.html:321
+msgid "Add a certification"
+msgstr "سرٹیفکیٹ شامل کریں"
+
+#: app/templates/tools/cv_generator/index.html:329
+msgid "Both are optional. Leave them empty and they won't appear on your CV."
+msgstr "دونوں اختیاری ہیں۔ خالی چھوڑیں تو یہ آپ کی CV میں نہیں آئیں گے۔"
+
+#: app/templates/tools/cv_generator/index.html:331
+msgid "New hobby"
+msgstr "نیا مشغلہ"
+
+#: app/templates/tools/cv_generator/index.html:331
+msgid "e.g. Cricket"
+msgstr "مثلاً کرکٹ"
+
+#: app/templates/tools/cv_generator/index.html:334
+msgid ""
+"People who can speak about your work. Ask them first before adding their "
+"details."
+msgstr ""
+"وہ لوگ جو آپ کے کام کے بارے میں بتا سکیں۔ ان کی تفصیل لکھنے سے پہلے ان سے"
+" پوچھ لیں۔"
+
+#: app/templates/tools/cv_generator/index.html:335
+msgid "Add a reference"
+msgstr "حوالہ شامل کریں"
+
+#: app/templates/tools/cv_generator/index.html:338
+msgid "Show \"References available on request\" instead"
+msgstr "اس کی جگہ \"حوالے درخواست پر دستیاب ہیں\" دکھائیں"
+
+#: app/templates/tools/cv_generator/index.html:347
 msgid "Pick a design. You can switch and download again anytime."
 msgstr "ڈیزائن چنیں۔ آپ کسی بھی وقت بدل کر دوبارہ ڈاؤن لوڈ کر سکتے ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:264
+#: app/templates/tools/cv_generator/index.html:349
 msgid "Template"
 msgstr "ٹیمپلیٹ"
 
-#: app/templates/tools/cv_generator/index.html:266
+#: app/templates/tools/cv_generator/index.html:351
 msgid "Modern"
 msgstr "ماڈرن"
 
-#: app/templates/tools/cv_generator/index.html:266
+#: app/templates/tools/cv_generator/index.html:351
 msgid "Side column for contact and skills."
 msgstr "رابطے اور مہارتوں کے لیے الگ کالم۔"
 
-#: app/templates/tools/cv_generator/index.html:267
+#: app/templates/tools/cv_generator/index.html:352
 msgid "Classic"
 msgstr "کلاسک"
 
-#: app/templates/tools/cv_generator/index.html:267
+#: app/templates/tools/cv_generator/index.html:352
 msgid "One column. Simple and safe for any job."
 msgstr "ایک کالم۔ سادہ اور ہر نوکری کے لیے موزوں۔"
 
-#: app/templates/tools/cv_generator/index.html:268
+#: app/templates/tools/cv_generator/index.html:353
 msgid "Minimal"
 msgstr "مِنیمل"
 
-#: app/templates/tools/cv_generator/index.html:268
+#: app/templates/tools/cv_generator/index.html:353
 msgid "Lots of white space, labels on the side."
 msgstr "کھلی جگہ، سرخیاں ایک طرف۔"
 
-#: app/templates/tools/cv_generator/index.html:269
+#: app/templates/tools/cv_generator/index.html:354
 msgid "Creative"
 msgstr "کریئیٹو"
 
-#: app/templates/tools/cv_generator/index.html:269
+#: app/templates/tools/cv_generator/index.html:354
 msgid "A bold colour band for your name."
 msgstr "آپ کے نام کے لیے نمایاں رنگین پٹی۔"
 
-#: app/templates/tools/cv_generator/index.html:270
+#: app/templates/tools/cv_generator/index.html:355
 msgid "Executive"
 msgstr "ایگزیکٹو"
 
-#: app/templates/tools/cv_generator/index.html:270
+#: app/templates/tools/cv_generator/index.html:355
 msgid "Formal and centred, with a serif font."
 msgstr "رسمی انداز، درمیان میں ترتیب اور سیرف فونٹ۔"
 
-#: app/templates/tools/cv_generator/index.html:278
+#: app/templates/tools/cv_generator/index.html:363
 msgid "ATS best"
 msgstr "ATS کے لیے بہترین"
 
-#: app/templates/tools/cv_generator/index.html:284
+#: app/templates/tools/cv_generator/index.html:369
 msgid ""
 "All templates have real, selectable text. One-column templates are the "
 "safest for older ATS software."
@@ -4878,39 +5083,39 @@ msgstr ""
 "تمام ٹیمپلیٹس میں اصل، سلیکٹ ہونے والا متن ہے۔ پرانے ATS سافٹ ویئر کے لیے"
 " ایک کالم والی ٹیمپلیٹس سب سے محفوظ ہیں۔"
 
-#: app/templates/tools/cv_generator/index.html:286
+#: app/templates/tools/cv_generator/index.html:371
 msgid "Colour"
 msgstr "رنگ"
 
-#: app/templates/tools/cv_generator/index.html:288
+#: app/templates/tools/cv_generator/index.html:373
 msgid "Indigo"
 msgstr "نیلا بنفشی"
 
-#: app/templates/tools/cv_generator/index.html:288
+#: app/templates/tools/cv_generator/index.html:373
 msgid "Blue"
 msgstr "نیلا"
 
-#: app/templates/tools/cv_generator/index.html:288
+#: app/templates/tools/cv_generator/index.html:373
 msgid "Teal"
 msgstr "فیروزی"
 
-#: app/templates/tools/cv_generator/index.html:289
+#: app/templates/tools/cv_generator/index.html:374
 msgid "Green"
 msgstr "سبز"
 
-#: app/templates/tools/cv_generator/index.html:289
+#: app/templates/tools/cv_generator/index.html:374
 msgid "Maroon"
 msgstr "عنابی"
 
-#: app/templates/tools/cv_generator/index.html:289
+#: app/templates/tools/cv_generator/index.html:374
 msgid "Charcoal"
 msgstr "گہرا سرمئی"
 
-#: app/templates/tools/cv_generator/index.html:299
+#: app/templates/tools/cv_generator/index.html:384
 msgid "CV language"
 msgstr "CV کی زبان"
 
-#: app/templates/tools/cv_generator/index.html:304
+#: app/templates/tools/cv_generator/index.html:389
 msgid ""
 "Sets the section headings and the text direction in your PDF. Choose Urdu"
 " only if your CV is written in Urdu."
@@ -4918,115 +5123,193 @@ msgstr ""
 "اس سے PDF میں سرخیاں اور تحریر کی سمت طے ہوتی ہے۔ اردو صرف تب چنیں جب آپ "
 "کی CV اردو میں لکھی ہو۔"
 
-#: app/templates/tools/cv_generator/index.html:308
+#: app/templates/tools/cv_generator/index.html:393
 msgid "Download PDF"
 msgstr "PDF ڈاؤن لوڈ کریں"
 
-#: app/templates/tools/cv_generator/index.html:311
+#: app/templates/tools/cv_generator/index.html:396
 msgid "Preview"
 msgstr "پیش منظر"
 
-#: app/templates/tools/cv_generator/index.html:314
+#: app/templates/tools/cv_generator/index.html:399
 msgid "Making your PDF…"
 msgstr "آپ کی PDF بن رہی ہے…"
 
-#: app/templates/tools/cv_generator/index.html:320
+#: app/templates/tools/cv_generator/index.html:405
 msgid "PDF preview"
 msgstr "PDF کا پیش منظر"
 
-#: app/templates/tools/cv_generator/index.html:328
+#: app/templates/tools/cv_generator/index.html:413
 msgid "Clear form"
 msgstr "فارم صاف کریں"
 
-#: app/templates/tools/cv_generator/index.html:339
-#: app/templates/tools/cv_generator/index.html:373
+#: app/templates/tools/cv_generator/index.html:424
+#: app/templates/tools/cv_generator/index.html:458
+#: app/templates/tools/cv_generator/index.html:482
+#: app/templates/tools/cv_generator/index.html:503
+#: app/templates/tools/cv_generator/index.html:528
+#: app/templates/tools/cv_generator/index.html:538
 msgid "Remove"
 msgstr "ہٹائیں"
 
-#: app/templates/tools/cv_generator/index.html:344
+#: app/templates/tools/cv_generator/index.html:429
 msgid "e.g. Sales Assistant"
 msgstr "مثلاً سیلز اسسٹنٹ"
 
-#: app/templates/tools/cv_generator/index.html:345
+#: app/templates/tools/cv_generator/index.html:430
 msgid "Company"
 msgstr "کمپنی"
 
-#: app/templates/tools/cv_generator/index.html:345
+#: app/templates/tools/cv_generator/index.html:430
 msgid "e.g. Daraz"
 msgstr "مثلاً دراز"
 
-#: app/templates/tools/cv_generator/index.html:348
-#: app/templates/tools/cv_generator/index.html:382
+#: app/templates/tools/cv_generator/index.html:433
+#: app/templates/tools/cv_generator/index.html:467
 msgid "Start date"
 msgstr "شروع کی تاریخ"
 
-#: app/templates/tools/cv_generator/index.html:348
+#: app/templates/tools/cv_generator/index.html:433
 msgid "e.g. Jan 2023"
 msgstr "مثلاً جنوری 2023"
 
-#: app/templates/tools/cv_generator/index.html:349
-#: app/templates/tools/cv_generator/index.html:383
+#: app/templates/tools/cv_generator/index.html:434
+#: app/templates/tools/cv_generator/index.html:468
 msgid "End date"
 msgstr "ختم کی تاریخ"
 
-#: app/templates/tools/cv_generator/index.html:349
+#: app/templates/tools/cv_generator/index.html:434
 msgid "e.g. Mar 2024"
 msgstr "مثلاً مارچ 2024"
 
-#: app/templates/tools/cv_generator/index.html:352
+#: app/templates/tools/cv_generator/index.html:437
 msgid "I work here now"
 msgstr "میں ابھی یہاں کام کرتا/کرتی ہوں"
 
-#: app/templates/tools/cv_generator/index.html:355
+#: app/templates/tools/cv_generator/index.html:440
 msgid "What did you do?"
 msgstr "آپ نے کیا کام کیا؟"
 
-#: app/templates/tools/cv_generator/index.html:357
+#: app/templates/tools/cv_generator/index.html:442
 msgid "- Helped 30+ customers a day"
 msgstr "- روزانہ 30 سے زیادہ گاہکوں کی مدد کی"
 
-#: app/templates/tools/cv_generator/index.html:358
+#: app/templates/tools/cv_generator/index.html:443
+#: app/templates/tools/cv_generator/index.html:493
 msgid "Start a line with - to make a bullet point."
 msgstr "بُلٹ پوائنٹ کے لیے لائن کے شروع میں - لگائیں۔"
 
-#: app/templates/tools/cv_generator/index.html:378
+#: app/templates/tools/cv_generator/index.html:463
 msgid "Degree or course"
 msgstr "ڈگری یا کورس"
 
-#: app/templates/tools/cv_generator/index.html:378
+#: app/templates/tools/cv_generator/index.html:463
 msgid "e.g. BS Computer Science"
 msgstr "مثلاً بی ایس کمپیوٹر سائنس"
 
-#: app/templates/tools/cv_generator/index.html:379
+#: app/templates/tools/cv_generator/index.html:464
 msgid "School or university"
 msgstr "اسکول یا یونیورسٹی"
 
-#: app/templates/tools/cv_generator/index.html:379
+#: app/templates/tools/cv_generator/index.html:464
 msgid "e.g. University of the Punjab"
 msgstr "مثلاً پنجاب یونیورسٹی"
 
-#: app/templates/tools/cv_generator/index.html:382
+#: app/templates/tools/cv_generator/index.html:467
 msgid "e.g. 2019"
 msgstr "مثلاً 2019"
 
-#: app/templates/tools/cv_generator/index.html:383
+#: app/templates/tools/cv_generator/index.html:468
 msgid "e.g. 2023"
 msgstr "مثلاً 2023"
 
-#: app/templates/tools/cv_generator/index.html:385
+#: app/templates/tools/cv_generator/index.html:470
 msgid "Details (optional)"
 msgstr "تفصیل (اختیاری)"
 
-#: app/templates/tools/cv_generator/index.html:387
+#: app/templates/tools/cv_generator/index.html:472
 msgid "e.g. CGPA 3.4 / 4.0"
 msgstr "مثلاً CGPA 3.4 / 4.0"
 
-#: app/templates/tools/cv_generator/index.html:398
-#: app/templates/tools/cv_generator/index.html:400
+#: app/templates/tools/cv_generator/index.html:487
+msgid "Project name"
+msgstr "منصوبے کا نام"
+
+#: app/templates/tools/cv_generator/index.html:487
+msgid "e.g. Online shop for a local bakery"
+msgstr "مثلاً ایک مقامی بیکری کی آن لائن دکان"
+
+#: app/templates/tools/cv_generator/index.html:488
+msgid "Link (optional)"
+msgstr "لنک (اختیاری)"
+
+#: app/templates/tools/cv_generator/index.html:490
+msgid "What did you build or do?"
+msgstr "آپ نے کیا بنایا یا کیا کیا؟"
+
+#: app/templates/tools/cv_generator/index.html:492
+msgid "- Made the website with Python and Flask"
+msgstr "- Python اور Flask سے ویب سائٹ بنائی"
+
+#: app/templates/tools/cv_generator/index.html:508
+msgid "Certificate"
+msgstr "سرٹیفکیٹ"
+
+#: app/templates/tools/cv_generator/index.html:508
+msgid "e.g. Google Data Analytics"
+msgstr "مثلاً Google Data Analytics"
+
+#: app/templates/tools/cv_generator/index.html:509
+msgid "Given by"
+msgstr "جاری کرنے والا ادارہ"
+
+#: app/templates/tools/cv_generator/index.html:509
+msgid "e.g. Coursera"
+msgstr "مثلاً Coursera"
+
+#: app/templates/tools/cv_generator/index.html:510
+msgid "Year"
+msgstr "سال"
+
+#: app/templates/tools/cv_generator/index.html:510
+msgid "e.g. 2024"
+msgstr "مثلاً 2024"
+
+#: app/templates/tools/cv_generator/index.html:518
+msgid "e.g. English"
+msgstr "مثلاً انگریزی"
+
+#: app/templates/tools/cv_generator/index.html:519
+#: app/templates/tools/cv_generator/index.html:521
+msgid "Level"
+msgstr "سطح"
+
+#: app/templates/tools/cv_generator/index.html:543
+msgid "Name"
+msgstr "نام"
+
+#: app/templates/tools/cv_generator/index.html:543
+msgid "e.g. Ali Raza"
+msgstr "مثلاً علی رضا"
+
+#: app/templates/tools/cv_generator/index.html:544
+msgid "Job title and company"
+msgstr "عہدہ اور کمپنی"
+
+#: app/templates/tools/cv_generator/index.html:544
+msgid "e.g. Manager, Daraz"
+msgstr "مثلاً منیجر، دراز"
+
+#: app/templates/tools/cv_generator/index.html:545
+msgid "Phone or email"
+msgstr "فون یا ای میل"
+
+#: app/templates/tools/cv_generator/index.html:555
+#: app/templates/tools/cv_generator/index.html:557
 msgid "AI suggestion"
 msgstr "AI کی تجویز"
 
-#: app/templates/tools/cv_generator/index.html:402
+#: app/templates/tools/cv_generator/index.html:559
 msgid ""
 "Read it first: you can edit it here, then accept. The AI only rewords "
 "what you wrote."
@@ -5034,28 +5317,28 @@ msgstr ""
 "پہلے پڑھ لیں: آپ یہیں اسے بدل سکتے ہیں، پھر قبول کریں۔ AI صرف آپ کی لکھی "
 "بات کو بہتر الفاظ دیتا ہے۔"
 
-#: app/templates/tools/cv_generator/index.html:405
+#: app/templates/tools/cv_generator/index.html:562
 msgid "Accept"
 msgstr "قبول کریں"
 
-#: app/templates/tools/cv_generator/index.html:406
+#: app/templates/tools/cv_generator/index.html:563
 msgid "Discard"
 msgstr "رد کریں"
 
-#: app/templates/tools/cv_generator/index.html:415
+#: app/templates/tools/cv_generator/index.html:572
 msgid "Your CV, made professional"
 msgstr "آپ کی CV، پروفیشنل انداز میں"
 
-#: app/templates/tools/cv_generator/index.html:416
+#: app/templates/tools/cv_generator/index.html:573
 msgid "Untick anything you don't want, edit any text, then apply."
 msgstr "جو نہیں چاہیے اس کا نشان ہٹا دیں، جو چاہیں بدلیں، پھر لاگو کریں۔"
 
-#: app/templates/tools/cv_generator/index.html:423
+#: app/templates/tools/cv_generator/index.html:580
 #: app/templates/tools/expenses/index.html:225
 msgid "Cancel"
 msgstr "منسوخ کریں"
 
-#: app/templates/tools/cv_generator/index.html:424
+#: app/templates/tools/cv_generator/index.html:581
 msgid "Apply selected"
 msgstr "منتخب لاگو کریں"
 

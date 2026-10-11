@@ -56,6 +56,11 @@ def index():
         max_experience=services.MAX_EXPERIENCE,
         max_education=services.MAX_EDUCATION,
         max_skills=services.MAX_SKILLS,
+        max_projects=services.MAX_PROJECTS,
+        max_certifications=services.MAX_CERTIFICATIONS,
+        max_languages=services.MAX_LANGUAGES,
+        max_hobbies=services.MAX_HOBBIES,
+        max_references=services.MAX_REFERENCES,
         ai_guest_limit=current_app.config["CV_AI_GUEST_DAILY_LIMIT"],
     )
 
@@ -65,7 +70,9 @@ def index():
 def api_pdf():
     try:
         data = _json_body()
-        pdf = services.build_pdf(data.get("cv"), data.get("template"), data.get("language"), data.get("accent"))
+        pdf = services.build_pdf(
+            data.get("cv"), data.get("template"), data.get("language"), data.get("accent"), data.get("photo")
+        )
     except CVError as error:
         return _error_response(error)
 
@@ -129,7 +136,25 @@ def api_import():
     try:
         access_token = _access_token()
         data = _json_body(current_app.config["CV_IMPORT_MAX_REQUEST_BYTES"])
-        return jsonify(cvs=saved_cvs.import_cvs(access_token, data.get("cvs") or []))
+        return jsonify(cvs=saved_cvs.import_cvs(access_token, data.get("cvs") or [], g.user.id))
+    except CVError as error:
+        return _error_response(error)
+
+
+@localized_route(bp, "/api/cvs/<cv_id>/photo", methods=["GET", "PUT", "DELETE"])
+@login_optional
+def api_cv_photo(cv_id):
+    try:
+        access_token = _access_token()
+        if request.method == "PUT":
+            data = _json_body()
+            return jsonify(cv=saved_cvs.set_photo(access_token, g.user.id, cv_id, data.get("photo")))
+        if request.method == "DELETE":
+            saved_cvs.remove_photo(access_token, cv_id)
+            return "", 204
+        response = Response(saved_cvs.get_photo(access_token, cv_id), mimetype="image/jpeg")
+        response.headers["Cache-Control"] = "private, no-store"
+        return response
     except CVError as error:
         return _error_response(error)
 

@@ -15,6 +15,11 @@ class ExecutiveLayout(CvLayout):
 
     def draw(self):
         personal = self.cv.personal
+        if self.photo:
+            size = 84
+            top = self.pdf.get_y()
+            self.draw_photo((self.pdf.w - size) / 2, top, size, ring=self.accent)
+            self.pdf.set_y(top + size + 12)
         self.paragraph(personal.full_name, 25, bold=True, align="C")
         if personal.headline:
             self.gap(3)

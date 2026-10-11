@@ -1,55 +1,85 @@
 /* CV Generator UI: "My CVs" (pick, rename, new, duplicate, delete), a step-by-step form
- * (personal details, summary, experience, education, skills, then template + colour +
- * download). The open CV is saved to the store (stores.js) as you type: the account for a
- * logged-in user, this browser for a guest. "Download PDF" sends the form to the server,
- * which returns the PDF and keeps nothing. All user-visible text comes from data-text-*. */
+ * (personal details + photo, summary, experience, projects, education, skills + languages,
+ * certifications, hobbies + references, then template + colour + download). The open CV is
+ * saved to the store (stores.js) as you type: the account for a logged-in user, this browser
+ * for a guest. "Download PDF" sends the form to the server, which returns the PDF and keeps
+ * nothing. All user-visible text comes from data-text-* attributes.
+ *
+ * Repeating rows (jobs, projects, languages, ...) live in [data-list="<kind>"] and are cloned
+ * from <template data-entry-template="<kind>">; short word lists (skills, hobbies) are chips. */
 (function () {
   "use strict";
 
   var root = document.querySelector("[data-cv-app]");
-  if (!root || !window.CvStores) return;
+  if (!root || !window.CvStores || !window.CvPhoto) return;
 
-  var isLoggedIn = root.dataset.loggedIn === "true";
+  var data = root.dataset;
+  var isLoggedIn = data.loggedIn === "true";
+  function number(value, fallback) { return parseInt(value, 10) || fallback; }
+
+  var ENTRY_KINDS = ["experience", "projects", "education", "languages", "certifications", "references"];
+  var WORD_KINDS = ["skills", "hobbies"];
   var MAX = {
-    cvs: parseInt(root.dataset.maxCvs, 10) || 20,
-    experience: parseInt(root.dataset.maxExperience, 10) || 15,
-    education: parseInt(root.dataset.maxEducation, 10) || 10,
-    skills: parseInt(root.dataset.maxSkills, 10) || 40,
-    skillLength: parseInt(root.dataset.maxSkillLength, 10) || 60,
+    cvs: number(data.maxCvs, 20),
+    experience: number(data.maxExperience, 15),
+    education: number(data.maxEducation, 10),
+    projects: number(data.maxProjects, 10),
+    certifications: number(data.maxCertifications, 15),
+    languages: number(data.maxLanguages, 10),
+    references: number(data.maxReferences, 4),
+    skills: number(data.maxSkills, 40),
+    hobbies: number(data.maxHobbies, 15),
   };
+  var WORD_LENGTH = { skills: number(data.maxSkillsLength, 60), hobbies: number(data.maxHobbiesLength, 40) };
   var store = isLoggedIn
-    ? window.CvStores.makeServerStore(root.dataset.apiCvs, root.dataset.apiCvTemplate)
+    ? window.CvStores.makeServerStore(data.apiCvs, data.apiCvTemplate, data.apiCvPhotoTemplate)
     : window.CvStores.makeGuestStore(MAX.cvs);
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var STEPS = ["personal", "summary", "experience", "education", "skills", "download"];
   var SAVE_DELAY = isLoggedIn ? 900 : 400;
   var DEFAULTS = {
-    template: root.dataset.defaultTemplate || "modern",
-    accent: root.dataset.defaultAccent || "indigo",
-    language: root.dataset.defaultLanguage || "en",
+    template: data.defaultTemplate || "modern",
+    accent: data.defaultAccent || "indigo",
+    language: data.defaultLanguage || "en",
   };
   var TEXT = {
-    nameRequired:      root.dataset.textNameRequired,
-    genericError:      root.dataset.textGenericError,
-    networkError:      root.dataset.textNetworkError,
-    tooManyExperience: root.dataset.textTooManyExperience,
-    tooManyEducation:  root.dataset.textTooManyEducation,
-    tooManySkills:     root.dataset.textTooManySkills,
-    skillExists:       root.dataset.textSkillExists,
-    removeSkill:       root.dataset.textRemoveSkill,
-    job:               root.dataset.textJob,
-    education:         root.dataset.textEducation,
-    saved:             root.dataset.textSaved,
-    saving:            root.dataset.textSaving,
-    saveFailed:        root.dataset.textSaveFailed,
-    loadFailed:        root.dataset.textLoadFailed,
-    untitled:          root.dataset.textUntitled,
-    copyOf:            root.dataset.textCopyOf,
-    deleteConfirm:     root.dataset.textDeleteConfirm,
-    cvLimit:           root.dataset.textCvLimit,
-    downloaded:        root.dataset.textDownloaded,
-    clearConfirm:      root.dataset.textClearConfirm,
-    stepOf:            root.dataset.textStepOf,
+    nameRequired:  data.textNameRequired,
+    genericError:  data.textGenericError,
+    networkError:  data.textNetworkError,
+    tooMany: {
+      experience: data.textTooManyExperience,
+      education: data.textTooManyEducation,
+      projects: data.textTooManyProjects,
+      certifications: data.textTooManyCertifications,
+      languages: data.textTooManyLanguages,
+      references: data.textTooManyReferences,
+      skills: data.textTooManySkills,
+      hobbies: data.textTooManyHobbies,
+    },
+    entryTitle: {
+      experience: data.textJob,
+      education: data.textEducation,
+      projects: data.textProject,
+      certifications: data.textCertification,
+      references: data.textReference,
+    },
+    wordExists:    data.textWordExists,
+    removeWord:    data.textRemoveWord,
+    photo: {
+      photo_invalid: data.textPhotoInvalid,
+      photo_too_large: data.textPhotoTooLarge,
+      storage_full: data.textPhotoStorageFull,
+    },
+    saved:         data.textSaved,
+    saving:        data.textSaving,
+    saveFailed:    data.textSaveFailed,
+    loadFailed:    data.textLoadFailed,
+    untitled:      data.textUntitled,
+    copyOf:        data.textCopyOf,
+    deleteConfirm: data.textDeleteConfirm,
+    cvLimit:       data.textCvLimit,
+    downloaded:    data.textDownloaded,
+    clearConfirm:  data.textClearConfirm,
+    stepOf:        data.textStepOf,
   };
   var ICONS = {
     close: '<path d="M18 6 6 18"/><path d="M6 6l12 12"/>',
@@ -62,12 +92,23 @@
   var titleInput     = root.querySelector("[data-cv-title]");
   var stepLinks      = root.querySelectorAll("[data-step-link]");
   var panels         = root.querySelectorAll("[data-step-panel]");
+  var STEPS          = Array.prototype.map.call(panels, function (panel) { return panel.dataset.stepPanel; });
   var stepCounter    = root.querySelector("[data-step-counter]");
   var saveStatus     = root.querySelector("[data-save-status]");
-  var lists          = { experience: root.querySelector('[data-list="experience"]'), education: root.querySelector('[data-list="education"]') };
-  var skillInput     = root.querySelector("[data-skill-input]");
-  var skillsList     = root.querySelector("[data-skills-list]");
-  var skillsCount    = root.querySelector("[data-skills-count]");
+  var lists          = {};
+  ENTRY_KINDS.forEach(function (kind) { lists[kind] = root.querySelector('[data-list="' + kind + '"]'); });
+  var words          = {};
+  WORD_KINDS.forEach(function (kind) {
+    words[kind] = {
+      input: root.querySelector('[data-word-input="' + kind + '"]'),
+      list: root.querySelector('[data-word-list="' + kind + '"]'),
+      count: root.querySelector('[data-word-count="' + kind + '"]'),
+    };
+  });
+  var photoInput     = root.querySelector("[data-photo-input]");
+  var photoPreview   = root.querySelector("[data-photo-preview]");
+  var photoEmpty     = root.querySelector("[data-photo-empty]");
+  var photoRemoveBtn = root.querySelector('[data-action="remove-photo"]');
   var templatePicker = root.querySelector("[data-template-picker]");
   var templateBtns   = root.querySelectorAll("[data-template]");
   var accentBtns     = root.querySelectorAll("[data-accent]");
@@ -82,8 +123,9 @@
   var state = {
     cvs: [],            // summaries for the picker, newest first
     id: null,           // the open CV (null if the CVs could not be loaded)
-    step: "personal",
-    skills: [],
+    step: STEPS[0],
+    words: { skills: [], hobbies: [] },
+    photo: null,        // data: URL of the open CV's photo, or null
     template: DEFAULTS.template,
     accent: DEFAULTS.accent,
     language: DEFAULTS.language,
@@ -98,6 +140,7 @@
 
   renderStep();
   renderChoices();
+  renderPhoto();
   loadLibrary();
 
   stepLinks.forEach(function (link) {
@@ -106,16 +149,14 @@
 
   form.addEventListener("submit", function (e) { e.preventDefault(); });
   form.addEventListener("input", function (e) {
-    if (e.target === skillInput) return;
+    if (e.target.matches("[data-word-input], [data-photo-input]")) return;
     clearInvalid(e.target);
     updateCounts();
     scheduleSave();
   });
   form.addEventListener("change", function (e) {
-    if (e.target.matches('[data-key="current"]')) {
-      syncCurrentJob(e.target.closest("[data-entry]"));
-      scheduleSave();
-    }
+    if (e.target.matches('[data-key="current"]')) syncCurrentJob(e.target.closest("[data-entry]"));
+    if (e.target.matches('select, input[type="checkbox"]')) scheduleSave();
   });
 
   root.addEventListener("click", function (e) {
@@ -124,10 +165,10 @@
     var action = button.dataset.action;
     if (action === "next") goTo(STEPS[STEPS.indexOf(state.step) + 1]);
     else if (action === "back") goTo(STEPS[STEPS.indexOf(state.step) - 1]);
-    else if (action === "add-experience") addEntry("experience", {}, true);
-    else if (action === "add-education") addEntry("education", {}, true);
+    else if (action === "add-entry") addEntry(button.dataset.kind, {}, true);
     else if (action === "remove-entry") removeEntry(button.closest("[data-entry]"));
-    else if (action === "add-skill") addSkillFromInput();
+    else if (action === "add-word") addWordsFromInput(button.dataset.kind);
+    else if (action === "remove-photo") removePhoto();
     else if (action === "download") makePdf("download");
     else if (action === "preview") makePdf("preview");
     else if (action === "clear") clearForm();
@@ -146,11 +187,19 @@
     scheduleSave();
   });
 
-  skillInput.addEventListener("keydown", function (e) {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault();
-      addSkillFromInput();
-    }
+  WORD_KINDS.forEach(function (kind) {
+    words[kind].input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === ",") {
+        e.preventDefault();
+        addWordsFromInput(kind);
+      }
+    });
+  });
+
+  photoInput.addEventListener("change", function () {
+    var file = photoInput.files && photoInput.files[0];
+    photoInput.value = "";
+    if (file) setPhotoFromFile(file);
   });
 
   templateBtns.forEach(function (btn) {
@@ -200,17 +249,11 @@
       scheduleSave();
     },
     setSkills: function (skills) {
-      var seen = {};
-      state.skills = skills.map(function (skill) { return String(skill).trim().slice(0, MAX.skillLength); })
-        .filter(function (skill) {
-          var key = skill.toLowerCase();
-          if (!skill || seen[key]) return false;
-          seen[key] = true;
-          return true;
-        })
-        .slice(0, MAX.skills);
-      hideStepError("skills");
-      renderSkills();
+      setWords("skills", skills);
+      scheduleSave();
+    },
+    addSkills: function (skills) {
+      setWords("skills", state.words.skills.concat(skills));
       scheduleSave();
     },
     toast: function (message, kind) { showToast(message, kind); },
@@ -225,8 +268,8 @@
         state.cvs = cvs;
         if (cvs.length) return openCv(cvs[0].id);
         return store.create(blankRecord()).then(function (record) {
-          state.cvs = [record];
-          showRecord(record);
+          state.cvs = [summaryOf(record)];
+          return showRecord(record);
         });
       })
       .catch(function () {
@@ -247,24 +290,32 @@
   }
 
   function newCv() {
-    createAndOpen(blankRecord());
+    createAndOpen(blankRecord(), null);
   }
 
   function duplicateCv() {
-    var data = snapshot();
-    data.title = TEXT.copyOf.replace("__TITLE__", data.title || TEXT.untitled);
-    createAndOpen(data);
+    var copy = snapshot();
+    copy.title = TEXT.copyOf.replace("__TITLE__", copy.title || TEXT.untitled);
+    createAndOpen(copy, state.photo);
   }
 
-  function createAndOpen(data) {
+  function createAndOpen(record, photo) {
     setLibraryBusy(true);
     flush()
-      .then(function () { return store.create(data); })
-      .then(function (record) {
-        state.cvs.unshift(summaryOf(record));
-        showRecord(record);
-        goTo("personal");
+      .then(function () { return store.create(record); })
+      .then(function (created) {
+        // The server keeps photos apart from the form, so a copied photo is stored separately.
+        if (!photo) return created;
+        return store.setPhoto(created.id, photo).then(function () {
+          created.hasPhoto = true;
+          return created;
+        }).catch(function () { return created; });
       })
+      .then(function (created) {
+        state.cvs.unshift(summaryOf(created));
+        return showRecord(created);
+      })
+      .then(function () { goTo(STEPS[0]); })
       .catch(function (error) { showToast(messageFor(error), "error"); })
       .then(function () { setLibraryBusy(false); });
   }
@@ -282,7 +333,7 @@
         if (state.cvs.length) return openCv(state.cvs[0].id);
         return store.create(blankRecord()).then(function (record) {
           state.cvs = [summaryOf(record)];
-          showRecord(record);
+          return showRecord(record);
         });
       })
       .catch(function (error) { showToast(messageFor(error), "error"); })
@@ -301,8 +352,8 @@
 
   function summaryOf(record) {
     return {
-      id: record.id, title: record.title, template: record.template,
-      accent: record.accent, language: record.language, updatedAt: record.updatedAt,
+      id: record.id, title: record.title, template: record.template, accent: record.accent,
+      language: record.language, hasPhoto: !!record.hasPhoto, updatedAt: record.updatedAt,
     };
   }
 
@@ -341,39 +392,48 @@
     root.querySelectorAll("[data-path]").forEach(function (input) {
       var path = input.dataset.path.split(".");
       var value = path[0] === "personal" ? personal[path[1]] : cv[path[0]];
-      input.value = typeof value === "string" ? value : "";
+      if (input.type === "checkbox") input.checked = value === true;
+      else input.value = typeof value === "string" ? value : "";
       input.classList.remove("is-invalid");
     });
-    lists.experience.innerHTML = "";
-    lists.education.innerHTML = "";
-    (Array.isArray(cv.experience) ? cv.experience : []).slice(0, MAX.experience).forEach(function (item) {
-      addEntry("experience", item, false);
+    ENTRY_KINDS.forEach(function (kind) {
+      lists[kind].innerHTML = "";
+      (Array.isArray(cv[kind]) ? cv[kind] : []).slice(0, MAX[kind]).forEach(function (item) {
+        if (item && typeof item === "object") addEntry(kind, item, false);
+      });
     });
-    (Array.isArray(cv.education) ? cv.education : []).slice(0, MAX.education).forEach(function (item) {
-      addEntry("education", item, false);
-    });
-    state.skills = (Array.isArray(cv.skills) ? cv.skills : [])
-      .filter(function (skill) { return typeof skill === "string" && skill.trim(); })
-      .slice(0, MAX.skills);
+    WORD_KINDS.forEach(function (kind) { setWords(kind, Array.isArray(cv[kind]) ? cv[kind] : []); });
     panels.forEach(function (panel) { hideStepError(panel.dataset.stepPanel); });
     // AI suggestions belonged to the CV that was open before.
     root.querySelectorAll("[data-suggestion]").forEach(function (card) { card.remove(); });
     closePreview();
     renderPicker();
-    renderSkills();
     renderChoices();
     updateCounts();
     setStatus("");
+
+    state.photo = null;
+    renderPhoto();
+    var id = record.id;
+    var hasPhoto = record.photo || record.hasPhoto;
+    if (!hasPhoto) return Promise.resolve();
+    return store.getPhoto(id).then(function (photo) {
+      if (state.id !== id) return;
+      state.photo = photo;
+      renderPhoto();
+    }).catch(function () { /* the CV still works without its photo */ });
   }
 
   function collect() {
-    var cv = { personal: {}, summary: "", experience: [], education: [], skills: state.skills.slice() };
+    var cv = { personal: {}, summary: "" };
     root.querySelectorAll("[data-path]").forEach(function (input) {
       var path = input.dataset.path.split(".");
-      if (path[0] === "personal") cv.personal[path[1]] = input.value;
-      else cv[path[0]] = input.value;
+      var value = input.type === "checkbox" ? input.checked : input.value;
+      if (path[0] === "personal") cv.personal[path[1]] = value;
+      else cv[path[0]] = value;
     });
-    ["experience", "education"].forEach(function (kind) {
+    ENTRY_KINDS.forEach(function (kind) {
+      cv[kind] = [];
       lists[kind].querySelectorAll("[data-entry]").forEach(function (entry) {
         var item = {};
         entry.querySelectorAll("[data-key]").forEach(function (input) {
@@ -382,6 +442,7 @@
         cv[kind].push(item);
       });
     });
+    WORD_KINDS.forEach(function (kind) { cv[kind] = state.words[kind].slice(); });
     return cv;
   }
 
@@ -411,10 +472,10 @@
       return state.saving.then(function () { return save(options); });
     }
     var id = state.id;
-    var data = snapshot();
+    var snap = snapshot();
     state.dirty = false;
     setStatus(TEXT.saving);
-    state.saving = store.update(id, data, options)
+    state.saving = store.update(id, snap, options)
       .then(function (record) {
         var current = state.cvs.find(function (cv) { return cv.id === id; });
         if (current) {
@@ -444,15 +505,65 @@
 
   function clearForm() {
     if (!window.confirm(TEXT.clearConfirm)) return;
-    root.querySelectorAll("[data-path]").forEach(function (input) { input.value = ""; });
-    lists.experience.innerHTML = "";
-    lists.education.innerHTML = "";
-    state.skills = [];
+    root.querySelectorAll("[data-path]").forEach(function (input) {
+      if (input.type === "checkbox") input.checked = false;
+      else input.value = "";
+    });
+    ENTRY_KINDS.forEach(function (kind) { lists[kind].innerHTML = ""; });
+    WORD_KINDS.forEach(function (kind) { setWords(kind, []); });
     closePreview();
-    renderSkills();
     updateCounts();
     scheduleSave();
-    goTo("personal");
+    goTo(STEPS[0]);
+  }
+
+  // ── Photo ─────────────────────────────────────────────────────────────────
+
+  function setPhotoFromFile(file) {
+    if (!state.id) return;
+    var id = state.id;
+    hideStepError("personal");
+    window.CvPhoto.compress(file)
+      .then(function (photo) {
+        return store.setPhoto(id, photo).then(function () {
+          if (state.id !== id) return;
+          state.photo = photo;
+          markHasPhoto(id, true);
+          renderPhoto();
+          refreshPreview();
+        });
+      })
+      .catch(function (error) {
+        showStepError("personal", TEXT.photo[error && error.code] || messageFor(error));
+      });
+  }
+
+  function removePhoto() {
+    if (!state.id) return;
+    var id = state.id;
+    store.removePhoto(id)
+      .then(function () {
+        if (state.id !== id) return;
+        state.photo = null;
+        markHasPhoto(id, false);
+        renderPhoto();
+        refreshPreview();
+      })
+      .catch(function (error) { showToast(messageFor(error), "error"); });
+  }
+
+  function markHasPhoto(id, value) {
+    var current = state.cvs.find(function (cv) { return cv.id === id; });
+    if (current) current.hasPhoto = value;
+  }
+
+  function renderPhoto() {
+    var has = !!state.photo;
+    photoPreview.hidden = !has;
+    photoEmpty.hidden = has;
+    photoRemoveBtn.hidden = !has;
+    if (has) photoPreview.src = state.photo;
+    else photoPreview.removeAttribute("src");
   }
 
   // ── Steps ─────────────────────────────────────────────────────────────────
@@ -483,13 +594,19 @@
     return root.querySelector('[data-step-panel="' + step + '"]');
   }
 
-  // ── Experience / education entries ───────────────────────────────────────
+  function stepOf(element) {
+    var panel = element && element.closest("[data-step-panel]");
+    return panel ? panel.dataset.stepPanel : STEPS[STEPS.length - 1];
+  }
+
+  // ── Repeating rows (jobs, projects, languages, ...) ───────────────────────
 
   function addEntry(kind, item, focus) {
     var list = lists[kind];
+    if (!list) return;
     var count = list.querySelectorAll("[data-entry]").length;
     if (count >= MAX[kind]) {
-      showStepError(kind, kind === "experience" ? TEXT.tooManyExperience : TEXT.tooManyEducation);
+      showStepError(stepOf(list), TEXT.tooMany[kind]);
       return;
     }
     var template = root.querySelector('[data-entry-template="' + kind + '"]');
@@ -516,17 +633,19 @@
 
   function removeEntry(entry) {
     if (!entry) return;
-    var kind = entry.parentElement === lists.experience ? "experience" : "education";
+    var kind = entry.parentElement.dataset.list;
     entry.remove();
     renumber(kind);
-    hideStepError(kind);
+    hideStepError(stepOf(lists[kind]));
     scheduleSave();
   }
 
   function renumber(kind) {
-    var label = kind === "experience" ? TEXT.job : TEXT.education;
+    var label = TEXT.entryTitle[kind];
+    if (!label) return;
     lists[kind].querySelectorAll("[data-entry]").forEach(function (entry, index) {
-      entry.querySelector("[data-entry-title]").textContent = label.replace("__N__", index + 1);
+      var title = entry.querySelector("[data-entry-title]");
+      if (title) title.textContent = label.replace("__N__", index + 1);
     });
   }
 
@@ -537,49 +656,67 @@
     if (current && end) end.disabled = current.checked;
   }
 
-  // ── Skills ────────────────────────────────────────────────────────────────
+  // ── Word chips (skills, hobbies) ──────────────────────────────────────────
 
-  function addSkillFromInput() {
-    var parts = skillInput.value.split(",").map(function (part) { return part.trim(); }).filter(Boolean);
+  function addWordsFromInput(kind) {
+    var input = words[kind].input;
+    var parts = input.value.split(",").map(function (part) { return part.trim(); }).filter(Boolean);
     if (!parts.length) return;
-    hideStepError("skills");
+    var step = stepOf(input);
+    hideStepError(step);
+    var list = state.words[kind];
     for (var i = 0; i < parts.length; i++) {
-      var skill = parts[i].slice(0, MAX.skillLength);
-      var exists = state.skills.some(function (existing) { return existing.toLowerCase() === skill.toLowerCase(); });
-      if (exists) { showStepError("skills", TEXT.skillExists); continue; }
-      if (state.skills.length >= MAX.skills) { showStepError("skills", TEXT.tooManySkills); break; }
-      state.skills.push(skill);
+      var word = parts[i].slice(0, WORD_LENGTH[kind]);
+      var exists = list.some(function (existing) { return existing.toLowerCase() === word.toLowerCase(); });
+      if (exists) { showStepError(step, TEXT.wordExists); continue; }
+      if (list.length >= MAX[kind]) { showStepError(step, TEXT.tooMany[kind]); break; }
+      list.push(word);
     }
-    skillInput.value = "";
-    renderSkills();
+    input.value = "";
+    renderWords(kind);
     scheduleSave();
   }
 
-  function renderSkills() {
-    skillsList.innerHTML = "";
-    state.skills.forEach(function (skill, index) {
+  // Replace the list (trimmed, no empties, no repeats, within the limit).
+  function setWords(kind, values) {
+    var seen = {};
+    state.words[kind] = values.map(function (value) { return String(value).trim().slice(0, WORD_LENGTH[kind]); })
+      .filter(function (value) {
+        var key = value.toLowerCase();
+        if (!value || seen[key]) return false;
+        seen[key] = true;
+        return true;
+      })
+      .slice(0, MAX[kind]);
+    renderWords(kind);
+  }
+
+  function renderWords(kind) {
+    var refs = words[kind];
+    refs.list.innerHTML = "";
+    state.words[kind].forEach(function (word, index) {
       var chip = document.createElement("span");
       chip.className = "cv-skill";
       var text = document.createElement("span");
       text.dir = "auto";
-      text.textContent = skill;
+      text.textContent = word;
       var remove = document.createElement("button");
       remove.type = "button";
       remove.className = "cv-skill-remove";
-      remove.setAttribute("aria-label", TEXT.removeSkill.replace("__SKILL__", skill));
+      remove.setAttribute("aria-label", TEXT.removeWord.replace("__SKILL__", word));
       remove.innerHTML = svg(ICONS.close, "h-3 w-3");
       remove.addEventListener("click", function () {
-        state.skills.splice(index, 1);
-        hideStepError("skills");
-        renderSkills();
+        state.words[kind].splice(index, 1);
+        hideStepError(stepOf(refs.input));
+        renderWords(kind);
         scheduleSave();
-        skillInput.focus();
+        refs.input.focus();
       });
       chip.appendChild(text);
       chip.appendChild(remove);
-      skillsList.appendChild(chip);
+      refs.list.appendChild(chip);
     });
-    skillsCount.textContent = state.skills.length + " / " + MAX.skills;
+    refs.count.textContent = state.words[kind].length + " / " + MAX[kind];
   }
 
   // ── Template, colour and language ─────────────────────────────────────────
@@ -613,22 +750,24 @@
   function makePdf(mode) {
     if (state.busy) return;
     hideStepError("download");
-    var data = snapshot();
-    if (!data.cv.personal.full_name || !data.cv.personal.full_name.trim()) {
-      goTo("personal");
-      markInvalid(root.querySelector('[data-path="personal.full_name"]'), "personal", TEXT.nameRequired);
+    var snap = snapshot();
+    if (!snap.cv.personal.full_name || !snap.cv.personal.full_name.trim()) {
+      goTo(STEPS[0]);
+      markInvalid(root.querySelector('[data-path="personal.full_name"]'), STEPS[0], TEXT.nameRequired);
       return;
     }
     setBusy(true);
     var headers = { "Content-Type": "application/json", "Accept": "application/pdf, application/json" };
     var csrfEl = document.querySelector('meta[name="csrf-token"]');
     if (csrfEl) headers["X-CSRFToken"] = csrfEl.content;
+    var body = { cv: snap.cv, template: snap.template, accent: snap.accent, language: snap.language };
+    if (state.photo) body.photo = state.photo;
 
-    fetch(root.dataset.apiPdf, {
+    fetch(data.apiPdf, {
       method: "POST",
       headers: headers,
       credentials: "same-origin",
-      body: JSON.stringify({ cv: data.cv, template: data.template, accent: data.accent, language: data.language }),
+      body: JSON.stringify(body),
     }).then(function (response) {
       var type = response.headers.get("Content-Type") || "";
       if (response.ok && type.indexOf("application/pdf") === 0) {
@@ -639,9 +778,9 @@
           else downloadBlob(blob, name);
         });
       }
-      return response.json().catch(function () { return null; }).then(function (body) {
+      return response.json().catch(function () { return null; }).then(function (result) {
         setBusy(false);
-        showServerError(body);
+        showServerError(result);
       });
     }).catch(function () {
       setBusy(false);
@@ -698,31 +837,33 @@
     return "CV.pdf";
   }
 
-  // The server names the field that has a problem, e.g. "experience.1.description".
-  function showServerError(body) {
-    var message = (body && body.message) || TEXT.genericError;
-    var field = body && body.field;
+  // The server names the field that has a problem, e.g. "projects.1.link" or "personal.email".
+  function showServerError(result) {
+    var message = (result && result.message) || TEXT.genericError;
+    var field = result && result.field;
     if (!field) { showStepError("download", message); return; }
     var parts = field.split(".");
-    var step = parts[0];
     var input = null;
-    if (step === "personal" || step === "summary") {
+    if (parts[0] === "personal" || field === "summary" || field === "references_on_request") {
       input = root.querySelector('[data-path="' + field + '"]');
-    } else if ((step === "experience" || step === "education") && parts.length === 3) {
-      var entry = lists[step].querySelectorAll("[data-entry]")[parseInt(parts[1], 10)];
+    } else if (lists[parts[0]] && parts.length === 3) {
+      var entry = lists[parts[0]].querySelectorAll("[data-entry]")[parseInt(parts[1], 10)];
       if (entry) input = entry.querySelector('[data-key="' + parts[2] + '"]');
-    } else if (step === "skills") {
-      input = skillInput;
+    } else if (words[parts[0]]) {
+      input = words[parts[0]].input;
+    } else if (field === "photo") {
+      input = photoInput;
     }
-    if (STEPS.indexOf(step) === -1) step = "download";
+    var step = input ? stepOf(input) : (lists[parts[0]] ? stepOf(lists[parts[0]]) : "download");
     goTo(step);
-    markInvalid(input, step, message);
+    markInvalid(input && input !== photoInput ? input : null, step, message);
   }
 
   // ── Errors ────────────────────────────────────────────────────────────────
 
   function messageFor(error) {
     if (error && error.code === "cv_limit") return TEXT.cvLimit;
+    if (error && TEXT.photo[error.code]) return TEXT.photo[error.code];
     if (error && error.message && error.message !== error.code && error.code !== "request_failed") return error.message;
     return error instanceof TypeError ? TEXT.networkError : TEXT.genericError;
   }
@@ -751,7 +892,8 @@
   }
 
   function hideStepError(step) {
-    panelFor(step).querySelector("[data-step-error]").hidden = true;
+    var panel = panelFor(step);
+    if (panel) panel.querySelector("[data-step-error]").hidden = true;
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────────

@@ -59,10 +59,11 @@ class BaseConfig:
     CV_AI_GUEST_DAILY_LIMIT = int(os.environ.get("CV_AI_GUEST_DAILY_LIMIT") or "3")
     CV_AI_USER_DAILY_LIMIT = int(os.environ.get("CV_AI_USER_DAILY_LIMIT") or "30")
 
-    # CV Generator: the biggest request allowed for one CV (PDF or save; a full CV is ~10-20 KB),
+    # CV Generator: the biggest request allowed for one CV (PDF or save; a full CV is ~10-30 KB),
     # and for moving all of a guest's browser CVs into the account at once.
-    CV_MAX_REQUEST_BYTES = 64 * 1024
-    CV_IMPORT_MAX_REQUEST_BYTES = 1024 * 1024
+    # (A photo adds up to ~400 KB as text; the browser shrinks it first.)
+    CV_MAX_REQUEST_BYTES = 512 * 1024
+    CV_IMPORT_MAX_REQUEST_BYTES = 3 * 1024 * 1024
 
 
 class DevelopmentConfig(BaseConfig):

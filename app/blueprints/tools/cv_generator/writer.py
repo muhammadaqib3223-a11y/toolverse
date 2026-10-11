@@ -112,7 +112,7 @@ def _read_cv(raw_cv):
         raise CVError("invalid_data")
     personal = raw_cv.get("personal") if isinstance(raw_cv.get("personal"), dict) else {}
     # Contact details are not needed to write better text, so they never reach the AI.
-    private = {"full_name", "email", "phone", "website"}
+    private = {"full_name", "email", "phone", "website", "linkedin"}
     safe = dict(raw_cv, personal={key: value for key, value in personal.items() if key not in private})
     cv = services.parse_cv(safe, require_name=False)
     raw_jobs = raw_cv.get("experience") if isinstance(raw_cv.get("experience"), list) else []

@@ -2,7 +2,9 @@
 
 No Supabase here: saving CVs is saved_cvs.py (which uses this file's cleaning rules). The PDF
 layouts live in pdf_templates/, the shared PDF setup (fonts, Urdu shaping) in
-app/services/pdf_builder.py.
+app/services/pdf_builder.py, photo checks in app/services/photos.py.
+
+Every section except the name is optional; an empty section never appears in the PDF.
 """
 import re
 import unicodedata
@@ -13,16 +15,23 @@ from flask_babel import gettext as _
 
 from app.blueprints.tools.cv_generator.errors import CVError
 from app.blueprints.tools.cv_generator.pdf_templates import ACCENTS, DEFAULT_ACCENT, LAYOUTS, render_cv
+from app.services import photos
 from app.services.pdf_builder import PdfBuildError
 
 TEMPLATES = tuple(LAYOUTS)
 DEFAULT_TEMPLATE = TEMPLATES[0]
 ACCENT_NAMES = tuple(ACCENTS)
 LANGUAGES = ("en", "ur")
+LANGUAGE_LEVELS = ("native", "fluent", "advanced", "intermediate", "basic")
 
 MAX_EXPERIENCE = 15
 MAX_EDUCATION = 10
 MAX_SKILLS = 40
+MAX_PROJECTS = 10
+MAX_CERTIFICATIONS = 15
+MAX_LANGUAGES = 10
+MAX_HOBBIES = 15
+MAX_REFERENCES = 4
 
 # Max characters per field. The form uses the same numbers (maxlength), so normal users never
 # hit these; they stop oversized requests.
@@ -41,11 +50,26 @@ LIMITS = {
     "date": 30,
     "description": 2000,
     "skill": 60,
+    "language": 40,
+    "certificate": 160,
+    "issuer": 120,
+    "project": 120,
+    "hobby": 40,
+    "reference_name": 100,
+    "reference_title": 120,
+    "reference_contact": 120,
 }
 
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _WEBSITE_RE = re.compile(r"^(https?://)?[\w.-]+\.[a-z]{2,}(/\S*)?$", re.IGNORECASE)
 _MANY_BLANK_LINES_RE = re.compile(r"\n{3,}")
+
+
+def _as_link(address):
+    """A clickable https link for a web address, or "" if there is none."""
+    if not address:
+        return ""
+    return address if re.match(r"^https?://", address, re.I) else "https://" + address
 
 
 @dataclass(frozen=True)
@@ -56,13 +80,15 @@ class Personal:
     phone: str = ""
     location: str = ""
     website: str = ""
+    linkedin: str = ""
 
     @property
     def website_url(self):
-        """A clickable https link for the website, or "" if there is none."""
-        if not self.website:
-            return ""
-        return self.website if re.match(r"^https?://", self.website, re.I) else "https://" + self.website
+        return _as_link(self.website)
+
+    @property
+    def linkedin_url(self):
+        return _as_link(self.linkedin)
 
 
 @dataclass(frozen=True)
@@ -87,12 +113,49 @@ class Education:
 
 
 @dataclass(frozen=True)
+class Project:
+    name: str = ""
+    link: str = ""
+    description: str = ""
+
+    @property
+    def link_url(self):
+        return _as_link(self.link)
+
+
+@dataclass(frozen=True)
+class Certification:
+    name: str = ""
+    issuer: str = ""
+    date: str = ""
+
+
+@dataclass(frozen=True)
+class Language:
+    name: str = ""
+    level: str = ""   # one of LANGUAGE_LEVELS, or "" (not said)
+
+
+@dataclass(frozen=True)
+class Reference:
+    name: str = ""
+    title: str = ""     # job title and company, e.g. "Manager, Daraz"
+    contact: str = ""   # phone or email
+
+
+@dataclass(frozen=True)
 class CV:
     personal: Personal
     summary: str = ""
     experience: tuple = field(default_factory=tuple)
     education: tuple = field(default_factory=tuple)
     skills: tuple = field(default_factory=tuple)
+    projects: tuple = field(default_factory=tuple)
+    certifications: tuple = field(default_factory=tuple)
+    languages: tuple = field(default_factory=tuple)
+    hobbies: tuple = field(default_factory=tuple)
+    references: tuple = field(default_factory=tuple)
+    references_on_request: bool = False
 
 
 @dataclass(frozen=True)
@@ -101,16 +164,26 @@ class PdfFile:
     filename: str
 
 
-def build_pdf(data, template, language, accent=None):
-    """Check the form data and turn it into a PDF. Raises CVError for anything the user can fix."""
+def build_pdf(data, template, language, accent=None, photo=None):
+    """Check the form data (and the optional photo, a data: URL) and turn it into a PDF.
+    Raises CVError for anything the user can fix."""
     template, language, accent = check_design(template, language, accent)
     cv = parse_cv(data)
+    photo_bytes = clean_photo(photo) if photo else None
     try:
         content = render_cv(template, cv, labels(language), rtl=language == "ur", language=language,
-                            accent=accent)
+                            accent=accent, photo=photo_bytes)
     except PdfBuildError as error:
         raise CVError("pdf_failed") from error
     return PdfFile(content=content, filename=pdf_filename(cv.personal.full_name))
+
+
+def clean_photo(data_url):
+    """The photo as a clean JPEG, or CVError("photo_invalid" / "photo_too_large")."""
+    try:
+        return photos.clean_data_url(data_url)
+    except photos.PhotoError as error:
+        raise CVError(error.code, "photo") from None
 
 
 def check_design(template, language, accent=None):
@@ -127,7 +200,7 @@ def check_design(template, language, accent=None):
 
 
 def parse_cv(data, require_name=True):
-    """A clean CV from the raw JSON the form sends. Empty jobs/education rows are dropped.
+    """A clean CV from the raw JSON the form sends. Empty rows are dropped.
     `require_name=False` for saving an unfinished CV (the PDF needs a name, a draft doesn't)."""
     if not isinstance(data, dict):
         raise CVError("invalid_data")
@@ -138,9 +211,6 @@ def parse_cv(data, require_name=True):
     email = _text(personal, "email", "personal.email", LIMITS["email"])
     if email and not _EMAIL_RE.match(email):
         raise CVError("email_invalid", "personal.email")
-    website = _text(personal, "website", "personal.website", LIMITS["website"])
-    if website and not _WEBSITE_RE.match(website):
-        raise CVError("website_invalid", "personal.website")
 
     return CV(
         personal=Personal(
@@ -149,21 +219,37 @@ def parse_cv(data, require_name=True):
             email=email,
             phone=_text(personal, "phone", "personal.phone", LIMITS["phone"]),
             location=_text(personal, "location", "personal.location", LIMITS["location"]),
-            website=website,
+            website=_web_address(personal, "website"),
+            linkedin=_web_address(personal, "linkedin"),
         ),
         summary=_text(data, "summary", "summary", LIMITS["summary"], multiline=True),
         experience=_parse_experience(data.get("experience")),
-        education=_parse_education(data.get("education")),
-        skills=_parse_skills(data.get("skills")),
+        education=_parse_entries(data.get("education"), "education", MAX_EDUCATION, Education, {
+            "degree": "degree", "school": "school", "location": "location",
+            "start": "date", "end": "date", "description": "description",
+        }, required=("degree", "school", "description")),
+        skills=_parse_words(data.get("skills"), "skills", MAX_SKILLS, LIMITS["skill"]),
+        projects=_parse_entries(data.get("projects"), "projects", MAX_PROJECTS, Project, {
+            "name": "project", "link": "website", "description": "description",
+        }, required=("name", "description")),
+        certifications=_parse_entries(data.get("certifications"), "certifications", MAX_CERTIFICATIONS,
+                                      Certification, {"name": "certificate", "issuer": "issuer", "date": "date"},
+                                      required=("name",)),
+        languages=_parse_languages(data.get("languages")),
+        hobbies=_parse_words(data.get("hobbies"), "hobbies", MAX_HOBBIES, LIMITS["hobby"]),
+        references=_parse_entries(data.get("references"), "references", MAX_REFERENCES, Reference, {
+            "name": "reference_name", "title": "reference_title", "contact": "reference_contact",
+        }, required=("name",)),
+        references_on_request=data.get("references_on_request") is True,
     )
 
 
 def cv_to_dict(cv):
     """A parsed CV as plain JSON-ready data (what gets saved; the same shape the form sends)."""
     data = asdict(cv)
-    data["experience"] = list(data["experience"])
-    data["education"] = list(data["education"])
-    data["skills"] = list(data["skills"])
+    for key, value in data.items():
+        if isinstance(value, tuple):
+            data[key] = list(value)
     return data
 
 
@@ -177,6 +263,19 @@ def labels(language):
             "skills": _("Skills"),
             "contact": _("Contact"),
             "present": _("Present"),
+            "projects": _("Projects"),
+            "certifications": _("Certifications"),
+            "languages": _("Languages"),
+            "hobbies": _("Hobbies"),
+            "references": _("References"),
+            "references_on_request": _("References available on request."),
+            "levels": {
+                "native": _("Native"),
+                "fluent": _("Fluent"),
+                "advanced": _("Advanced"),
+                "intermediate": _("Intermediate"),
+                "basic": _("Basic"),
+            },
         }
 
 
@@ -216,43 +315,66 @@ def job_has_content(job):
     return bool(job.job_title or job.company or job.description)
 
 
-def _parse_education(raw):
+def _parse_entries(raw, kind, max_items, entry_class, fields, required):
+    """Rows of `kind` (e.g. "projects"). `fields`: form key -> LIMITS key. A row is kept only if
+    one of the `required` fields has text."""
     items = _list(raw)
-    if len(items) > MAX_EDUCATION:
-        raise CVError("too_many_education", "education")
+    if len(items) > max_items:
+        raise CVError(f"too_many_{kind}", kind)
     entries = []
     for index, item in enumerate(items):
         item = _dict(item)
-        prefix = f"education.{index}."
-        entry = Education(
-            degree=_text(item, "degree", prefix + "degree", LIMITS["degree"]),
-            school=_text(item, "school", prefix + "school", LIMITS["school"]),
-            location=_text(item, "location", prefix + "location", LIMITS["location"]),
-            start=_text(item, "start", prefix + "start", LIMITS["date"]),
-            end=_text(item, "end", prefix + "end", LIMITS["date"]),
-            description=_text(item, "description", prefix + "description", LIMITS["description"], multiline=True),
-        )
-        if entry.degree or entry.school or entry.description:
-            entries.append(entry)
+        values = {
+            key: _text(item, key, f"{kind}.{index}.{key}", LIMITS[limit], multiline=key == "description")
+            for key, limit in fields.items()
+        }
+        if "link" in values and values["link"] and not _WEBSITE_RE.match(values["link"]):
+            raise CVError("website_invalid", f"{kind}.{index}.link")
+        if any(values[key] for key in required):
+            entries.append(entry_class(**values))
     return tuple(entries)
 
 
-def _parse_skills(raw):
+def _parse_languages(raw):
     items = _list(raw)
-    if len(items) > MAX_SKILLS:
-        raise CVError("too_many_skills", "skills")
-    skills = []
-    seen = set()
+    if len(items) > MAX_LANGUAGES:
+        raise CVError("too_many_languages", "languages")
+    languages, seen = [], set()
+    for index, item in enumerate(items):
+        item = _dict(item)
+        name = _text(item, "name", f"languages.{index}.name", LIMITS["language"])
+        level = item.get("level") or ""
+        if level not in LANGUAGE_LEVELS and level != "":
+            raise CVError("invalid_data", f"languages.{index}.level")
+        if name and name.casefold() not in seen:
+            seen.add(name.casefold())
+            languages.append(Language(name=name, level=level))
+    return tuple(languages)
+
+
+def _parse_words(raw, kind, max_items, max_length):
+    """A list of short words (skills, hobbies): trimmed, no empties, no repeats."""
+    items = _list(raw)
+    if len(items) > max_items:
+        raise CVError(f"too_many_{kind}", kind)
+    words, seen = [], set()
     for item in items:
         if not isinstance(item, str):
-            raise CVError("invalid_data", "skills")
-        skill = _clean(item)
-        if len(skill) > LIMITS["skill"]:
-            raise CVError("too_long", "skills")
-        if skill and skill.casefold() not in seen:
-            seen.add(skill.casefold())
-            skills.append(skill)
-    return tuple(skills)
+            raise CVError("invalid_data", kind)
+        word = _clean(item)
+        if len(word) > max_length:
+            raise CVError("too_long", kind)
+        if word and word.casefold() not in seen:
+            seen.add(word.casefold())
+            words.append(word)
+    return tuple(words)
+
+
+def _web_address(personal, key):
+    value = _text(personal, key, f"personal.{key}", LIMITS["website"])
+    if value and not _WEBSITE_RE.match(value):
+        raise CVError("website_invalid", f"personal.{key}")
+    return value
 
 
 def _dict(value):

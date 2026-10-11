@@ -22,6 +22,7 @@ ATS_SAFEST = ("classic", "minimal", "executive")
 ACCENT_HEX = {name: hex_color(rgb) for name, rgb in ACCENTS.items()}
 
 
-def render_cv(template, cv, labels, *, rtl=False, language="en", accent=DEFAULT_ACCENT):
-    """The CV as PDF bytes. Raises pdf_builder.PdfBuildError if the PDF can't be made."""
-    return LAYOUTS[template](cv, labels, rtl=rtl, language=language, accent=accent).render()
+def render_cv(template, cv, labels, *, rtl=False, language="en", accent=DEFAULT_ACCENT, photo=None):
+    """The CV as PDF bytes. `photo`: clean JPEG bytes or None.
+    Raises pdf_builder.PdfBuildError if the PDF can't be made."""
+    return LAYOUTS[template](cv, labels, rtl=rtl, language=language, accent=accent, photo=photo).render()

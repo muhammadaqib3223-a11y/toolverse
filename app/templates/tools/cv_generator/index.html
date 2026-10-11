@@ -48,10 +48,34 @@
   ("personal", _("Personal details")),
   ("summary", _("Summary")),
   ("experience", _("Experience")),
+  ("projects", _("Projects")),
   ("education", _("Education")),
-  ("skills", _("Skills")),
+  ("skills", _("Skills and languages")),
+  ("certifications", _("Certifications")),
+  ("more", _("Hobbies and references")),
   ("download", _("Template and download")),
 ] %}
+
+{% macro entry_list(kind, add_label, hint) %}
+  <div class="mt-5 flex flex-col gap-3" data-list="{{ kind }}"></div>
+  <button type="button" class="btn-secondary mt-4 h-10 px-5" data-action="add-entry" data-kind="{{ kind }}">
+    {{ icon("plus", "h-4 w-4") }}<span>{{ add_label }}</span>
+  </button>
+  {% if hint %}<p class="field-hint">{{ hint }}</p>{% endif %}
+{% endmacro %}
+
+{% macro word_list(kind, label, placeholder, maxlength) %}
+  <div class="mt-4 flex gap-2">
+    <label for="cv-{{ kind }}-input" class="sr-only">{{ label }}</label>
+    <input id="cv-{{ kind }}-input" type="text" class="input mt-0" dir="auto" maxlength="{{ maxlength }}"
+           data-word-input="{{ kind }}" placeholder="{{ placeholder }}" enterkeyhint="done">
+    <button type="button" class="btn-secondary h-11 shrink-0 px-5" data-action="add-word" data-kind="{{ kind }}">
+      {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add') }}</span>
+    </button>
+  </div>
+  <div class="mt-4 flex flex-wrap gap-2" data-word-list="{{ kind }}" aria-live="polite"></div>
+  <p class="mt-3 text-[11px] text-faint" dir="ltr" data-word-count="{{ kind }}"></p>
+{% endmacro %}
 
 {% block title %}{{ _('CV Generator') }} — Toolverse{% endblock %}
 {% block description %}{{ _('Fill in a simple form, choose a template and download your CV as a PDF.') }}{% endblock %}
@@ -81,18 +105,36 @@
        data-text-headline="{{ _('Job title') }}"
        data-text-summary="{{ _('Summary') }}"
        data-text-skills="{{ _('Skills') }}"
+       data-api-cv-photo-template="{{ url_for('cv_generator.api_cv_photo', cv_id='__ID__') }}"
        data-max-experience="{{ max_experience }}"
        data-max-education="{{ max_education }}"
+       data-max-projects="{{ max_projects }}"
+       data-max-certifications="{{ max_certifications }}"
+       data-max-languages="{{ max_languages }}"
+       data-max-references="{{ max_references }}"
        data-max-skills="{{ max_skills }}"
-       data-max-skill-length="{{ limits.skill }}"
+       data-max-hobbies="{{ max_hobbies }}"
+       data-max-skills-length="{{ limits.skill }}"
+       data-max-hobbies-length="{{ limits.hobby }}"
+       data-text-too-many-projects="{{ _('You can add up to %(max)s projects.', max=max_projects) }}"
+       data-text-too-many-certifications="{{ _('You can add up to %(max)s certifications.', max=max_certifications) }}"
+       data-text-too-many-languages="{{ _('You can add up to %(max)s languages.', max=max_languages) }}"
+       data-text-too-many-references="{{ _('You can add up to %(max)s references.', max=max_references) }}"
+       data-text-too-many-hobbies="{{ _('You can add up to %(max)s hobbies.', max=max_hobbies) }}"
+       data-text-word-exists="{{ _('This is already on your list.') }}"
+       data-text-project="{{ _('Project %(number)s', number='__N__') }}"
+       data-text-certification="{{ _('Certification %(number)s', number='__N__') }}"
+       data-text-reference="{{ _('Reference %(number)s', number='__N__') }}"
+       data-text-photo-invalid="{{ _("This photo can't be used. Please choose a JPG or PNG picture.") }}"
+       data-text-photo-too-large="{{ _('This photo is too big. Please choose a smaller picture.') }}"
+       data-text-photo-storage-full="{{ _('Your browser has no room left to keep this photo.') }}"
        data-text-name-required="{{ _('Please type your full name.') }}"
        data-text-generic-error="{{ _('Something went wrong. Please try again.') }}"
        data-text-network-error="{{ _('Could not connect. Check your internet and try again.') }}"
        data-text-too-many-experience="{{ _('You can add up to %(max)s jobs.', max=max_experience) }}"
        data-text-too-many-education="{{ _('You can add up to %(max)s education entries.', max=max_education) }}"
        data-text-too-many-skills="{{ _('You can add up to %(max)s skills.', max=max_skills) }}"
-       data-text-skill-exists="{{ _('This skill is already on your list.') }}"
-       data-text-remove-skill="{{ _('Remove %(skill)s', skill='__SKILL__') }}"
+       data-text-remove-word="{{ _('Remove %(skill)s', skill='__SKILL__') }}"
        data-text-job="{{ _('Job %(number)s', number='__N__') }}"
        data-text-education="{{ _('Education %(number)s', number='__N__') }}"
        data-text-saved="{{ _('Saved in your account') if current_user else _('Saved in this browser') }}"
@@ -177,13 +219,31 @@
         <section data-step-panel="personal" aria-labelledby="cv-step-personal">
           <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-personal">{{ _('Personal details') }}</h2>
           <p class="mt-1 text-[13px] text-muted">{{ _('How employers will see and contact you.') }}</p>
+          <div class="mt-5 flex flex-wrap items-center gap-4">
+            <div class="cv-photo" data-photo-box>
+              <img alt="{{ _('Your photo') }}" data-photo-preview hidden>
+              <span data-photo-empty>{{ icon("user", "h-7 w-7") }}</span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="field-label">{{ _('Photo (optional)') }}</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                <label class="btn-secondary btn-sm cursor-pointer">
+                  <input type="file" class="sr-only" accept="image/jpeg,image/png,image/webp" data-photo-input>
+                  {{ icon("upload", "h-3.5 w-3.5") }}<span data-photo-add-label>{{ _('Add photo') }}</span>
+                </label>
+                <button type="button" class="btn-secondary btn-sm" data-action="remove-photo" hidden>{{ _('Remove photo') }}</button>
+              </div>
+              <p class="field-hint">{{ _('Many ATS systems and some countries prefer CVs without a photo. Add one only if the job asks for it.') }}</p>
+            </div>
+          </div>
           <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {{ text_field("full_name", _("Full name"), limits.full_name, placeholder=_("e.g. Sara Khan"), autocomplete="name", required=true) }}
             {{ text_field("headline", _("Job title"), limits.headline, placeholder=_("e.g. Junior Data Analyst"), autocomplete="organization-title") }}
             {{ text_field("email", _("Email"), limits.email, type="email", dir="ltr", placeholder="sara@example.com", autocomplete="email") }}
             {{ text_field("phone", _("Phone"), limits.phone, type="tel", dir="ltr", placeholder="+92 300 1234567", autocomplete="tel") }}
             {{ text_field("location", _("City"), limits.location, placeholder=_("e.g. Lahore, Pakistan"), autocomplete="address-level2") }}
-            {{ text_field("website", _("Website or LinkedIn"), limits.website, dir="ltr", placeholder="linkedin.com/in/sarakhan", autocomplete="url") }}
+            {{ text_field("linkedin", _("LinkedIn"), limits.website, dir="ltr", placeholder="linkedin.com/in/sarakhan") }}
+            {{ text_field("website", _("Website or portfolio"), limits.website, dir="ltr", placeholder="sarakhan.dev", autocomplete="url") }}
           </div>
           <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav(back=false) }}
@@ -212,46 +272,71 @@
         <section data-step-panel="experience" aria-labelledby="cv-step-experience" hidden>
           <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-experience">{{ _('Experience') }}</h2>
           <p class="mt-1 text-[13px] text-muted">{{ _('Your jobs and internships, newest first. No experience yet? Skip this step.') }}</p>
-          <div class="mt-5 flex flex-col gap-3" data-list="experience"></div>
-          <button type="button" class="btn-secondary mt-4 h-10 px-5" data-action="add-experience">
-            {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add a job') }}</span>
-          </button>
+          {{ entry_list("experience", _("Add a job"), "") }}
           <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav() }}
         </section>
 
-        {# Step 4: education #}
+        {# Step 4: projects #}
+        <section data-step-panel="projects" aria-labelledby="cv-step-projects" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-projects">{{ _('Projects') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('University, freelance or personal projects that show what you can do. Optional.') }}</p>
+          {{ entry_list("projects", _("Add a project"), "") }}
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 5: education #}
         <section data-step-panel="education" aria-labelledby="cv-step-education" hidden>
           <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-education">{{ _('Education') }}</h2>
           <p class="mt-1 text-[13px] text-muted">{{ _('Degrees, diplomas and courses, newest first.') }}</p>
-          <div class="mt-5 flex flex-col gap-3" data-list="education"></div>
-          <button type="button" class="btn-secondary mt-4 h-10 px-5" data-action="add-education">
-            {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add education') }}</span>
-          </button>
+          {{ entry_list("education", _("Add education"), "") }}
           <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav() }}
         </section>
 
         {# Step 5: skills #}
         <section data-step-panel="skills" aria-labelledby="cv-step-skills" hidden>
-          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-skills">{{ _('Skills') }}</h2>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-skills">{{ _('Skills and languages') }}</h2>
           <p class="mt-1 text-[13px] text-muted">{{ _('Type a skill and press Enter. Add the skills the job asks for.') }}</p>
-          <div class="mt-5 flex gap-2">
-            <label for="cv-skill-input" class="sr-only">{{ _('New skill') }}</label>
-            <input id="cv-skill-input" type="text" class="input mt-0" dir="auto" maxlength="{{ limits.skill }}"
-                   data-skill-input placeholder="{{ _('e.g. Python') }}" enterkeyhint="done">
-            <button type="button" class="btn-secondary h-11 shrink-0 px-5" data-action="add-skill">
-              {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add') }}</span>
-            </button>
-          </div>
-          <div class="mt-4 flex flex-wrap gap-2" data-skills-list aria-live="polite"></div>
-          <p class="mt-3 text-[11px] text-faint" dir="ltr" data-skills-count></p>
+          {{ word_list("skills", _("New skill"), _("e.g. Python"), limits.skill) }}
           <div class="mt-3 flex flex-wrap items-center gap-3" data-ai-slot="skills">
             <button type="button" class="cv-ai-btn" data-action="ai-improve" data-section="skills">
               {{ icon("sparkle", "h-3.5 w-3.5") }}<span>{{ _('Improve with AI') }}</span>
             </button>
             <p class="text-[12px] text-faint">{{ _('The AI cleans up your skills and adds ones your CV already shows.') }}</p>
           </div>
+
+          <h3 class="mt-8 text-[16px] font-semibold tracking-tight">{{ _('Languages') }}</h3>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Languages you speak, and how well. Optional.') }}</p>
+          {{ entry_list("languages", _("Add a language"), "") }}
+          <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 7: certifications #}
+        <section data-step-panel="certifications" aria-labelledby="cv-step-certifications" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-certifications">{{ _('Certifications') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Courses and certificates, e.g. from Coursera, DigiSkills or Google. Optional.') }}</p>
+          {{ entry_list("certifications", _("Add a certification"), "") }}
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 8: hobbies and references #}
+        <section data-step-panel="more" aria-labelledby="cv-step-more" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-more">{{ _('Hobbies and references') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _("Both are optional. Leave them empty and they won't appear on your CV.") }}</p>
+          <h3 class="mt-6 text-[16px] font-semibold tracking-tight">{{ _('Hobbies') }}</h3>
+          {{ word_list("hobbies", _("New hobby"), _("e.g. Cricket"), limits.hobby) }}
+
+          <h3 class="mt-8 text-[16px] font-semibold tracking-tight">{{ _('References') }}</h3>
+          <p class="mt-1 text-[13px] text-muted">{{ _('People who can speak about your work. Ask them first before adding their details.') }}</p>
+          {{ entry_list("references", _("Add a reference"), "") }}
+          <label class="mt-4 flex items-center gap-2 text-[13px] text-muted">
+            <input type="checkbox" class="cv-checkbox" data-path="references_on_request">
+            <span>{{ _('Show "References available on request" instead') }}</span>
+          </label>
           <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
           {{ step_nav() }}
         </section>
@@ -390,6 +475,78 @@
       </div>
     </template>
 
+    <template data-entry-template="projects">
+      <div class="cv-entry" data-entry>
+        <div class="flex items-center justify-between gap-3">
+          <p class="label-mono" data-entry-title></p>
+          <button type="button" class="cv-icon-btn" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+        <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {{ entry_field("name", _("Project name"), limits.project, placeholder=_("e.g. Online shop for a local bakery")) }}
+          {{ entry_field("link", _("Link (optional)"), limits.website, placeholder="github.com/sara/shop", dir="ltr") }}
+          <div class="sm:col-span-2">
+            <label class="field-label" data-label-for="description">{{ _('What did you build or do?') }}</label>
+            <textarea class="input cv-textarea" rows="3" dir="auto" data-key="description" maxlength="{{ limits.description }}"
+                      placeholder="{{ _('- Made the website with Python and Flask') }}"></textarea>
+            <p class="field-hint">{{ _('Start a line with - to make a bullet point.') }}</p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template data-entry-template="certifications">
+      <div class="cv-entry" data-entry>
+        <div class="flex items-center justify-between gap-3">
+          <p class="label-mono" data-entry-title></p>
+          <button type="button" class="cv-icon-btn" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+        <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {{ entry_field("name", _("Certificate"), limits.certificate, placeholder=_("e.g. Google Data Analytics")) }}
+          {{ entry_field("issuer", _("Given by"), limits.issuer, placeholder=_("e.g. Coursera")) }}
+          {{ entry_field("date", _("Year"), limits.date, placeholder=_("e.g. 2024")) }}
+        </div>
+      </div>
+    </template>
+
+    <template data-entry-template="languages">
+      <div class="cv-lang-row" data-entry>
+        <label class="sr-only" data-label-for="name">{{ _('Language') }}</label>
+        <input type="text" class="input mt-0" dir="auto" data-key="name" maxlength="{{ limits.language }}" placeholder="{{ _('e.g. English') }}">
+        <label class="sr-only" data-label-for="level">{{ _('Level') }}</label>
+        <select class="input mt-0" data-key="level">
+          <option value="">{{ _('Level') }}</option>
+          <option value="native">{{ _('Native') }}</option>
+          <option value="fluent">{{ _('Fluent') }}</option>
+          <option value="advanced">{{ _('Advanced') }}</option>
+          <option value="intermediate">{{ _('Intermediate') }}</option>
+          <option value="basic">{{ _('Basic') }}</option>
+        </select>
+        <button type="button" class="cv-icon-btn h-11 w-11" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+          {{ icon("trash", "h-4 w-4") }}
+        </button>
+      </div>
+    </template>
+
+    <template data-entry-template="references">
+      <div class="cv-entry" data-entry>
+        <div class="flex items-center justify-between gap-3">
+          <p class="label-mono" data-entry-title></p>
+          <button type="button" class="cv-icon-btn" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+        <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {{ entry_field("name", _("Name"), limits.reference_name, placeholder=_("e.g. Ali Raza")) }}
+          {{ entry_field("title", _("Job title and company"), limits.reference_title, placeholder=_("e.g. Manager, Daraz")) }}
+          {{ entry_field("contact", _("Phone or email"), limits.reference_contact, dir="ltr") }}
+        </div>
+      </div>
+    </template>
+
     {# An AI suggestion under a section; ai_writer.js fills it. The text can be edited before accepting. #}
     <template data-suggestion-template>
       <div class="cv-suggestion" data-suggestion>
@@ -432,6 +589,7 @@
 
 {% block scripts %}
   <script src="{{ url_for('static', filename='js/cv_generator/stores.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/cv_generator/photo.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/cv_generator/cv_app.js') }}" defer></script>
   <script src="{{ url_for('static', filename='js/cv_generator/ai_writer.js') }}" defer></script>
 {% endblock %}

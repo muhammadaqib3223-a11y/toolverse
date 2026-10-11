@@ -8,6 +8,7 @@ import threading
 
 import httpx
 from flask import current_app
+from storage3 import SyncStorageClient
 from supabase import Client, ClientOptions, create_client
 
 _http_client = None
@@ -53,6 +54,20 @@ def create_user_client(access_token) -> Client:
     client = create_supabase_client()
     client.postgrest.auth(access_token)
     return client
+
+
+def create_user_storage(access_token) -> SyncStorageClient:
+    """Supabase Storage acting as one signed-in user, so the bucket's policies see them as
+    auth.uid(). (create_user_client() only signs database queries, not Storage requests.)"""
+    if not is_supabase_configured():
+        raise SupabaseNotConfigured("Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY in .env")
+    key = current_app.config["SUPABASE_PUBLISHABLE_KEY"]
+    return SyncStorageClient(
+        url=f"{supabase_url()}/storage/v1",
+        # Sent with each request only; the shared connection pool never keeps them.
+        headers={"apikey": key, "Authorization": f"Bearer {access_token}"},
+        http_client=_shared_http_client(),
+    )
 
 
 def _shared_http_client():

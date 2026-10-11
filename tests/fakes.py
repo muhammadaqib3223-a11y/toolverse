@@ -45,7 +45,7 @@ class FakeAuthService:
     # --- helpers for tests ---
 
     def add_user(self, email="sara@example.com", password="correct-horse", name="", confirmed=True):
-        user = FakeUser(id=f"user-{next(self._ids)}", email=email, password=password, name=name, confirmed=confirmed)
+        user = FakeUser(id=str(uuid.uuid4()), email=email, password=password, name=name, confirmed=confirmed)
         self.users[email] = user
         return user
 
@@ -389,6 +389,7 @@ class FakeCVsRepository:
     unavailable: bool = False
     max_cvs: int = 20
     cvs: dict = field(default_factory=dict)  # access_token -> {cv_id: row}
+    photos: dict = field(default_factory=dict)  # "<user id>/<cv id>.jpg" -> bytes
 
     def _bucket(self, access_token):
         return self.cvs.setdefault(access_token, {})
@@ -399,7 +400,8 @@ class FakeCVsRepository:
 
     @staticmethod
     def _summary(row):
-        return {key: row[key] for key in ("id", "title", "template", "accent", "language", "created_at", "updated_at")}
+        keys = ("id", "title", "template", "accent", "language", "created_at", "updated_at")
+        return {**{key: row[key] for key in keys}, "photo_path": row.get("photo_path")}
 
     def _full(self, row):
         return {**self._summary(row), "data": row["data"]}
@@ -409,7 +411,8 @@ class FakeCVsRepository:
         if len(bucket) >= self.max_cvs:
             raise CVError("cv_limit")
         now = _now_iso()
-        stored = {"id": str(uuid.uuid4()), "client_id": None, "created_at": now, "updated_at": now, **row}
+        stored = {"id": str(uuid.uuid4()), "client_id": None, "photo_path": None,
+                  "created_at": now, "updated_at": now, **row}
         bucket[stored["id"]] = stored
         return stored
 
@@ -446,8 +449,26 @@ class FakeCVsRepository:
         for row in rows:
             if any(existing["client_id"] == row["client_id"] for existing in bucket.values()):
                 continue
-            imported.append(self._summary(self._new_row(access_token, row)))
+            stored = self._new_row(access_token, row)
+            imported.append({**self._summary(stored), "client_id": stored["client_id"]})
         return imported
+
+    # Photos: one in-memory "bucket" shared by everyone, like the real one; owners are checked
+    # by folder name the way the Storage policies do (folder = the token's user).
+    def set_photo_path(self, access_token, cv_id, photo_path):
+        return self.update_cv(access_token, cv_id, {"photo_path": photo_path})
+
+    def upload_photo(self, access_token, path, jpeg_bytes):
+        self._check()
+        self.photos[path] = jpeg_bytes
+
+    def download_photo(self, access_token, path):
+        self._check()
+        return self.photos.get(path)
+
+    def delete_photo(self, access_token, path):
+        self._check()
+        self.photos.pop(path, None)
 
 
 class FakeAIProvider(AIProvider):

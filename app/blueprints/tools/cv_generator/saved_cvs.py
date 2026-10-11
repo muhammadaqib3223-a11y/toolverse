@@ -4,12 +4,18 @@ browser CVs into the account. Routes call these functions and never see the repo
 
 The form data is cleaned with the same rules as the PDF (services.parse_cv), except that an
 unfinished CV may be saved without a name yet.
+
+Photos live in the private Storage bucket as <user id>/<cv id>.jpg (one per CV), after
+services.clean_photo() has checked them and removed hidden data.
 """
+import logging
 import re
 
 from app.blueprints.tools.cv_generator import services
 from app.blueprints.tools.cv_generator.errors import CVError, CVNotFound
 from app.blueprints.tools.cv_generator.repository import get_repository
+
+logger = logging.getLogger(__name__)
 
 MAX_SAVED_CVS = 20  # also enforced by the database (20261015_cvs.sql)
 TITLE_MAX_LENGTH = 120
@@ -45,17 +51,60 @@ def update_cv(access_token, cv_id, payload):
 
 def delete_cv(access_token, cv_id):
     _check_id(cv_id)
-    if not get_repository().delete_cv(access_token, cv_id):
+    repo = get_repository()
+    row = repo.get_cv(access_token, cv_id)
+    if row is None or not repo.delete_cv(access_token, cv_id):
         raise CVNotFound()
+    if row.get("photo_path"):
+        _delete_photo_file(access_token, row["photo_path"])
 
 
-def import_cvs(access_token, guest_cvs):
+def set_photo(access_token, user_id, cv_id, data_url):
+    """Check the photo, store it for this CV (replacing any old one) and return the CV summary."""
+    _check_id(cv_id)
+    jpeg = services.clean_photo(data_url)
+    repo = get_repository()
+    if repo.get_cv(access_token, cv_id) is None:
+        raise CVNotFound()
+    path = _photo_path(user_id, cv_id)
+    repo.upload_photo(access_token, path, jpeg)
+    row = repo.set_photo_path(access_token, cv_id, path)
+    if row is None:
+        raise CVNotFound()
+    return _summary(row)
+
+
+def get_photo(access_token, cv_id):
+    """The CV's photo as JPEG bytes, or CVNotFound if it has none."""
+    _check_id(cv_id)
+    repo = get_repository()
+    row = repo.get_cv(access_token, cv_id)
+    if row is None or not row.get("photo_path"):
+        raise CVNotFound()
+    photo = repo.download_photo(access_token, row["photo_path"])
+    if photo is None:
+        raise CVNotFound()
+    return photo
+
+
+def remove_photo(access_token, cv_id):
+    _check_id(cv_id)
+    repo = get_repository()
+    row = repo.get_cv(access_token, cv_id)
+    if row is None:
+        raise CVNotFound()
+    if row.get("photo_path"):
+        repo.set_photo_path(access_token, cv_id, None)
+        _delete_photo_file(access_token, row["photo_path"])
+
+
+def import_cvs(access_token, guest_cvs, user_id):
     """Move a guest's browser CVs into the account. Each keeps its browser id as client_id, so
     retrying after a dropped connection never duplicates it. A CV that doesn't pass the checks
     is skipped rather than failing the whole move, and never more than the account has room for."""
     repo = get_repository()
     room = MAX_SAVED_CVS - len(repo.list_cvs(access_token, MAX_SAVED_CVS))
-    rows = []
+    rows, photos = [], {}
     for item in guest_cvs if isinstance(guest_cvs, list) else []:
         if len(rows) >= room:
             break
@@ -67,7 +116,17 @@ def import_cvs(access_token, guest_cvs):
             continue
         row["client_id"] = item["id"]
         rows.append(row)
-    return [_summary(row) for row in repo.import_cvs(access_token, rows)]
+        if item.get("photo"):
+            photos[item["id"]] = item["photo"]
+
+    imported = repo.import_cvs(access_token, rows)
+    result = []
+    for row in imported:
+        photo = photos.get(row.get("client_id"))
+        if photo:
+            row = _import_photo(access_token, user_id, row, photo)
+        result.append(_summary(row))
+    return result
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
@@ -97,6 +156,32 @@ def _title(raw, cv):
     return title or cv.personal.full_name or DEFAULT_TITLE
 
 
+def _import_photo(access_token, user_id, row, data_url):
+    """Store a moved guest CV's photo. A photo that fails is skipped: the CV itself is safe."""
+    try:
+        jpeg = services.clean_photo(data_url)
+        path = _photo_path(user_id, row["id"])
+        get_repository().upload_photo(access_token, path, jpeg)
+        return get_repository().set_photo_path(access_token, row["id"], path) or row
+    except CVError as error:
+        logger.warning("Guest CV photo not moved (%s)", error.code)
+        return row
+
+
+def _photo_path(user_id, cv_id):
+    if not _UUID_RE.match(str(user_id or "")):
+        raise CVError("login_required")
+    return f"{str(user_id).lower()}/{str(cv_id).lower()}.jpg"
+
+
+def _delete_photo_file(access_token, path):
+    try:
+        get_repository().delete_photo(access_token, path)
+    except CVError:
+        # The CV row is already gone or updated; a left-over file is only reachable by its owner.
+        logger.warning("Could not delete CV photo %s", path)
+
+
 def _check_id(cv_id):
     if not cv_id or not _UUID_RE.match(str(cv_id)):
         raise CVNotFound()
@@ -109,6 +194,7 @@ def _summary(row):
         "template": row["template"],
         "accent": row["accent"],
         "language": row["language"],
+        "has_photo": bool(row.get("photo_path")),
         "updated_at": row["updated_at"],
     }
 
