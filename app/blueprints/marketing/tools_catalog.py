@@ -166,6 +166,8 @@ TOOLS = (
                 _l('Yes. Use the CV Checker to get a score and tips for your new CV.')),
         ),
         article=ARTICLES['cv-generator'],
+        status=Status.LIVE,
+        app_endpoint="cv_generator.index",
     ),
     Tool(
         slug="cv-checker",

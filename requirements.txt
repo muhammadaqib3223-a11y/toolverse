@@ -11,3 +11,7 @@ email-validator==2.3.0
 PyJWT[crypto]==2.15.1
 # AI: Google's official Gemini SDK (only app/services/ai/gemini.py imports it)
 google-genai==2.29.0
+# PDF: builds CV PDFs in pure Python (no system packages, works on Vercel).
+# uharfbuzz lets fpdf2 join Urdu letters and write them right to left.
+fpdf2==2.8.9
+uharfbuzz==0.56.3

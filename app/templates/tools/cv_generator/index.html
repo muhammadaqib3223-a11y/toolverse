@@ -1,0 +1,316 @@
+{% extends "dashboard/app_layout.html" %}
+{% from "partials/icons.html" import icon %}
+
+{# Step-by-step CV form; public/static/js/cv_generator/cv_app.js drives it. The form is kept in
+   this browser (stores.js); the server only turns it into a PDF and keeps nothing.
+   Translated text the JS needs is passed through data-text-* attributes. #}
+
+{% macro text_field(key, label, maxlength, type="text", dir="auto", placeholder="", autocomplete="", required=false, wide=false) %}
+  <div class="{{ 'sm:col-span-2' if wide }}">
+    <label for="cv-{{ key }}" class="field-label">
+      {{ label }}{% if required %} <span class="text-accent" aria-hidden="true">*</span>{% endif %}
+    </label>
+    <input id="cv-{{ key }}" type="{{ type }}" class="input" dir="{{ dir }}"
+           data-path="personal.{{ key }}" maxlength="{{ maxlength }}"
+           {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+           {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+           {% if required %}required aria-required="true"{% endif %}>
+  </div>
+{% endmacro %}
+
+{% macro entry_field(key, label, maxlength, placeholder="", wide=false, dir="auto") %}
+  <div class="{{ 'sm:col-span-2' if wide }}">
+    <label class="field-label" data-label-for="{{ key }}">{{ label }}</label>
+    <input type="text" class="input" dir="{{ dir }}" data-key="{{ key }}" maxlength="{{ maxlength }}"
+           {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}>
+  </div>
+{% endmacro %}
+
+{% macro step_nav(back=true, next=true) %}
+  <div class="mt-6 flex items-center justify-between gap-3 border-t border-line pt-5">
+    {% if back %}
+      <button type="button" class="btn-secondary h-10 px-5" data-action="back">
+        {{ icon("arrow-right", "h-4 w-4 rotate-180 rtl:rotate-0") }}
+        <span>{{ _('Back') }}</span>
+      </button>
+    {% else %}<span></span>{% endif %}
+    {% if next %}
+      <button type="button" class="btn-primary h-10 px-5" data-action="next">
+        <span>{{ _('Next') }}</span>
+        {{ icon("arrow-right", "h-4 w-4 rtl:-scale-x-100") }}
+      </button>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% set steps = [
+  ("personal", _("Personal details")),
+  ("summary", _("Summary")),
+  ("experience", _("Experience")),
+  ("education", _("Education")),
+  ("skills", _("Skills")),
+  ("download", _("Template and download")),
+] %}
+
+{% block title %}{{ _('CV Generator') }} — Toolverse{% endblock %}
+{% block description %}{{ _('Fill in a simple form, choose a template and download your CV as a PDF.') }}{% endblock %}
+
+{% block head_extra %}{{ csrf_meta_tag() }}{% endblock %}
+
+{% block app_content %}
+  <div class="cv-app"
+       data-cv-app
+       data-api-pdf="{{ url_for('cv_generator.api_pdf') }}"
+       data-default-language="{{ cv_language }}"
+       data-default-template="{{ templates[0] }}"
+       data-max-experience="{{ max_experience }}"
+       data-max-education="{{ max_education }}"
+       data-max-skills="{{ max_skills }}"
+       data-max-skill-length="{{ limits.skill }}"
+       data-text-name-required="{{ _('Please type your full name.') }}"
+       data-text-generic-error="{{ _('Something went wrong. Please try again.') }}"
+       data-text-network-error="{{ _('Could not connect. Check your internet and try again.') }}"
+       data-text-too-many-experience="{{ _('You can add up to %(max)s jobs.', max=max_experience) }}"
+       data-text-too-many-education="{{ _('You can add up to %(max)s education entries.', max=max_education) }}"
+       data-text-too-many-skills="{{ _('You can add up to %(max)s skills.', max=max_skills) }}"
+       data-text-skill-exists="{{ _('This skill is already on your list.') }}"
+       data-text-remove-skill="{{ _('Remove %(skill)s', skill='__SKILL__') }}"
+       data-text-job="{{ _('Job %(number)s', number='__N__') }}"
+       data-text-education="{{ _('Education %(number)s', number='__N__') }}"
+       data-text-saved="{{ _('Saved in this browser') }}"
+       data-text-downloaded="{{ _('Your PDF is ready.') }}"
+       data-text-clear-confirm="{{ _('Clear the whole form? This cannot be undone.') }}"
+       data-text-step-of="{{ _('Step %(current)s of %(total)s', current='__CURRENT__', total='__TOTAL__') }}">
+
+    <p class="label-mono">{{ _('Dashboard') }}</p>
+    <h1 class="heading mt-4 text-[36px] sm:text-5xl">{{ _('CV Generator') }}</h1>
+    <p class="mt-3 max-w-[34rem] text-[14px] text-muted">
+      {{ _('Fill in a simple form, choose a template and download your CV as a PDF.') }}
+    </p>
+
+    <div class="surface mt-6 flex items-start gap-2 p-4 text-[13px] text-muted">
+      {{ icon("lock", "mt-0.5 h-4 w-4 shrink-0 text-faint") }}
+      <p>{{ _('Your CV is kept only in this browser. To make your PDF we read it once and do not keep it.') }}</p>
+    </div>
+
+    <div class="cv-layout mt-6">
+      {# ── Steps ───────────────────────────────────────────────────────────── #}
+      <nav class="cv-steps" aria-label="{{ _('CV steps') }}">
+        {% for key, label in steps %}
+          <button type="button" class="cv-step" data-step-link="{{ key }}" aria-current="{{ 'step' if loop.first else 'false' }}">
+            <span class="cv-step-number">{{ '%02d' % loop.index }}</span>
+            <span class="truncate">{{ label }}</span>
+          </button>
+        {% endfor %}
+      </nav>
+
+      <form class="surface min-w-0 p-4 sm:p-6" data-cv-form novalidate aria-label="{{ _('Your CV') }}">
+        <div class="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <p class="label-mono" data-step-counter aria-live="polite"></p>
+          <p class="text-[12px] text-faint" data-save-status aria-live="polite"></p>
+        </div>
+
+        {# Step 1: personal details #}
+        <section data-step-panel="personal" aria-labelledby="cv-step-personal">
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-personal">{{ _('Personal details') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('How employers will see and contact you.') }}</p>
+          <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {{ text_field("full_name", _("Full name"), limits.full_name, placeholder=_("e.g. Sara Khan"), autocomplete="name", required=true) }}
+            {{ text_field("headline", _("Job title"), limits.headline, placeholder=_("e.g. Junior Data Analyst"), autocomplete="organization-title") }}
+            {{ text_field("email", _("Email"), limits.email, type="email", dir="ltr", placeholder="sara@example.com", autocomplete="email") }}
+            {{ text_field("phone", _("Phone"), limits.phone, type="tel", dir="ltr", placeholder="+92 300 1234567", autocomplete="tel") }}
+            {{ text_field("location", _("City"), limits.location, placeholder=_("e.g. Lahore, Pakistan"), autocomplete="address-level2") }}
+            {{ text_field("website", _("Website or LinkedIn"), limits.website, dir="ltr", placeholder="linkedin.com/in/sarakhan", autocomplete="url") }}
+          </div>
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav(back=false) }}
+        </section>
+
+        {# Step 2: summary #}
+        <section data-step-panel="summary" aria-labelledby="cv-step-summary" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-summary">{{ _('Summary') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Two to four sentences: who you are, what you are good at and what job you want.') }}</p>
+          <label for="cv-summary" class="sr-only">{{ _('Summary') }}</label>
+          <textarea id="cv-summary" class="input cv-textarea" rows="6" dir="auto"
+                    data-path="summary" maxlength="{{ limits.summary }}"
+                    placeholder="{{ _('e.g. Data analyst with two years of experience turning messy spreadsheets into clear dashboards.') }}"></textarea>
+          <p class="mt-1 text-end text-[11px] text-faint" dir="ltr" data-count-for="summary">0 / {{ limits.summary }}</p>
+          <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 3: experience #}
+        <section data-step-panel="experience" aria-labelledby="cv-step-experience" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-experience">{{ _('Experience') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Your jobs and internships, newest first. No experience yet? Skip this step.') }}</p>
+          <div class="mt-5 flex flex-col gap-3" data-list="experience"></div>
+          <button type="button" class="btn-secondary mt-4 h-10 px-5" data-action="add-experience">
+            {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add a job') }}</span>
+          </button>
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 4: education #}
+        <section data-step-panel="education" aria-labelledby="cv-step-education" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-education">{{ _('Education') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Degrees, diplomas and courses, newest first.') }}</p>
+          <div class="mt-5 flex flex-col gap-3" data-list="education"></div>
+          <button type="button" class="btn-secondary mt-4 h-10 px-5" data-action="add-education">
+            {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add education') }}</span>
+          </button>
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 5: skills #}
+        <section data-step-panel="skills" aria-labelledby="cv-step-skills" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-skills">{{ _('Skills') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Type a skill and press Enter. Add the skills the job asks for.') }}</p>
+          <div class="mt-5 flex gap-2">
+            <label for="cv-skill-input" class="sr-only">{{ _('New skill') }}</label>
+            <input id="cv-skill-input" type="text" class="input mt-0" dir="auto" maxlength="{{ limits.skill }}"
+                   data-skill-input placeholder="{{ _('e.g. Python') }}" enterkeyhint="done">
+            <button type="button" class="btn-secondary h-11 shrink-0 px-5" data-action="add-skill">
+              {{ icon("plus", "h-4 w-4") }}<span>{{ _('Add') }}</span>
+            </button>
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2" data-skills-list aria-live="polite"></div>
+          <p class="mt-3 text-[11px] text-faint" dir="ltr" data-skills-count></p>
+          <p class="mt-2 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+          {{ step_nav() }}
+        </section>
+
+        {# Step 6: template, language and download #}
+        <section data-step-panel="download" aria-labelledby="cv-step-download" hidden>
+          <h2 class="text-[20px] font-semibold tracking-tight" id="cv-step-download">{{ _('Template and download') }}</h2>
+          <p class="mt-1 text-[13px] text-muted">{{ _('Pick a design. You can switch and download again anytime.') }}</p>
+
+          <p class="field-label mt-5" id="cv-template-label">{{ _('Template') }}</p>
+          <div class="mt-2 grid grid-cols-2 gap-3" role="group" aria-labelledby="cv-template-label">
+            {% for template in templates %}
+              <button type="button" class="cv-template" data-template="{{ template }}" aria-pressed="false">
+                <span class="cv-template-thumb" aria-hidden="true">
+                  {% if template == "classic" %}
+                    <svg viewBox="0 0 60 78" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                      <path d="M8 10h26"/><path d="M8 16h16" opacity=".5"/><path d="M8 23h44" opacity=".35"/>
+                      <path d="M8 31h12"/><path d="M8 37h44" opacity=".5"/><path d="M8 42h38" opacity=".5"/>
+                      <path d="M8 50h12"/><path d="M8 56h44" opacity=".5"/><path d="M8 61h30" opacity=".5"/>
+                      <path d="M8 69h44" opacity=".35"/>
+                    </svg>
+                  {% else %}
+                    <svg viewBox="0 0 60 78" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                      <path d="M8 10h26"/><path d="M8 16h16" class="text-accent" stroke="currentColor"/>
+                      <path d="M8 26h12" opacity=".5"/><path d="M8 31h12" opacity=".5"/><path d="M8 36h10" opacity=".5"/>
+                      <path d="M8 46h12" opacity=".5"/><path d="M8 51h9" opacity=".5"/>
+                      <path d="M24 24v32" opacity=".25"/>
+                      <path d="M29 26h14"/><path d="M29 32h23" opacity=".5"/><path d="M29 37h20" opacity=".5"/>
+                      <path d="M29 45h14"/><path d="M29 51h23" opacity=".5"/><path d="M29 56h17" opacity=".5"/>
+                    </svg>
+                  {% endif %}
+                </span>
+                <span class="mt-3 block text-[14px] font-semibold text-fg">{{ _('Classic') if template == "classic" else _('Modern') }}</span>
+                <span class="mt-1 block text-[12px] text-muted">
+                  {{ _('One column. Simple and safe for any job.') if template == "classic" else _('A side column for contact and skills.') }}
+                </span>
+              </button>
+            {% endfor %}
+          </div>
+
+          <p class="field-label mt-6" id="cv-language-label">{{ _('CV language') }}</p>
+          <div class="mt-2 flex flex-wrap gap-2" role="group" aria-labelledby="cv-language-label">
+            <button type="button" class="filter-tab" data-language="en" aria-pressed="false">English</button>
+            <button type="button" class="filter-tab" data-language="ur" aria-pressed="false" lang="ur">اردو</button>
+          </div>
+          <p class="field-hint">{{ _('Sets the section headings and the text direction in your PDF. Choose Urdu only if your CV is written in Urdu.') }}</p>
+
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <button type="button" class="btn-primary h-11 px-6" data-action="download">
+              {{ icon("download", "h-4 w-4") }}<span>{{ _('Download PDF') }}</span>
+            </button>
+            <button type="button" class="btn-secondary hidden h-11 px-6 lg:inline-flex" data-action="preview">
+              {{ icon("eye", "h-4 w-4") }}<span>{{ _('Preview') }}</span>
+            </button>
+            <span class="flex items-center gap-2 text-[13px] text-muted" data-busy hidden>
+              <span class="spinner" aria-hidden="true"></span>{{ _('Making your PDF…') }}
+            </span>
+          </div>
+          <p class="mt-4 text-[13px] text-danger" data-step-error role="alert" hidden></p>
+
+          <div class="cv-preview mt-6" data-preview hidden>
+            <iframe title="{{ _('PDF preview') }}" data-preview-frame></iframe>
+          </div>
+
+          {{ step_nav(next=false) }}
+        </section>
+
+        <div class="mt-4 flex justify-end">
+          <button type="button" class="inline-flex items-center gap-1.5 text-[12px] text-faint transition-colors hover:text-fg" data-action="clear">
+            {{ icon("trash", "h-3.5 w-3.5") }}<span>{{ _('Clear form') }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    {# One job / one education entry; cv_app.js clones these. #}
+    <template data-entry-template="experience">
+      <div class="cv-entry" data-entry>
+        <div class="flex items-center justify-between gap-3">
+          <p class="label-mono" data-entry-title></p>
+          <button type="button" class="cv-icon-btn" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+        <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {{ entry_field("job_title", _("Job title"), limits.job_title, placeholder=_("e.g. Sales Assistant")) }}
+          {{ entry_field("company", _("Company"), limits.company, placeholder=_("e.g. Daraz")) }}
+          {{ entry_field("location", _("City"), limits.location) }}
+          <div class="hidden sm:block"></div>
+          {{ entry_field("start", _("Start date"), limits.date, placeholder=_("e.g. Jan 2023")) }}
+          {{ entry_field("end", _("End date"), limits.date, placeholder=_("e.g. Mar 2024")) }}
+          <label class="flex items-center gap-2 text-[13px] text-muted sm:col-span-2">
+            <input type="checkbox" class="cv-checkbox" data-key="current">
+            <span>{{ _('I work here now') }}</span>
+          </label>
+          <div class="sm:col-span-2">
+            <label class="field-label" data-label-for="description">{{ _('What did you do?') }}</label>
+            <textarea class="input cv-textarea" rows="4" dir="auto" data-key="description" maxlength="{{ limits.description }}"
+                      placeholder="{{ _('- Helped 30+ customers a day') }}"></textarea>
+            <p class="field-hint">{{ _('Start a line with - to make a bullet point.') }}</p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template data-entry-template="education">
+      <div class="cv-entry" data-entry>
+        <div class="flex items-center justify-between gap-3">
+          <p class="label-mono" data-entry-title></p>
+          <button type="button" class="cv-icon-btn" data-action="remove-entry" aria-label="{{ _('Remove') }}">
+            {{ icon("trash", "h-4 w-4") }}
+          </button>
+        </div>
+        <div class="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {{ entry_field("degree", _("Degree or course"), limits.degree, placeholder=_("e.g. BS Computer Science")) }}
+          {{ entry_field("school", _("School or university"), limits.school, placeholder=_("e.g. University of the Punjab")) }}
+          {{ entry_field("location", _("City"), limits.location) }}
+          <div class="hidden sm:block"></div>
+          {{ entry_field("start", _("Start date"), limits.date, placeholder=_("e.g. 2019")) }}
+          {{ entry_field("end", _("End date"), limits.date, placeholder=_("e.g. 2023")) }}
+          <div class="sm:col-span-2">
+            <label class="field-label" data-label-for="description">{{ _('Details (optional)') }}</label>
+            <textarea class="input cv-textarea" rows="3" dir="auto" data-key="description" maxlength="{{ limits.description }}"
+                      placeholder="{{ _('e.g. CGPA 3.4 / 4.0') }}"></textarea>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <div class="toast-stack" data-cv-toasts role="status" aria-live="polite"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/cv_generator/stores.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/cv_generator/cv_app.js') }}" defer></script>
+{% endblock %}

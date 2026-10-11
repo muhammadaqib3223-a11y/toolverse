@@ -1,3 +1,5 @@
 # Development-only tools (not installed on Render)
 -r requirements.txt
 pytest==9.1.1
+# Reads PDFs back in tests (checks the CV PDF has real, selectable text)
+pypdf==6.20.0

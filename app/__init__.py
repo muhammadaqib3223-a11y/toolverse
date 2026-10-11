@@ -49,6 +49,7 @@ def _register_blueprints(app):
     from app.blueprints.auth import bp as auth_bp
     from app.blueprints.dashboard import bp as dashboard_bp
     from app.blueprints.tools.captions import bp as captions_bp
+    from app.blueprints.tools.cv_generator import bp as cv_generator_bp
     from app.blueprints.marketing import bp as marketing_bp
     from app.blueprints.seo import bp as seo_bp
     from app.blueprints.tools.expenses import bp as expenses_bp
@@ -61,6 +62,7 @@ def _register_blueprints(app):
     app.register_blueprint(notes_bp)
     app.register_blueprint(expenses_bp)
     app.register_blueprint(captions_bp)
+    app.register_blueprint(cv_generator_bp)
 
 
 def _init_auth(app):

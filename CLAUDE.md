@@ -27,7 +27,7 @@ The project owner is a beginner learning to code. Explain what you did in simple
 | Auth | Supabase Auth — email/password AND Google login |
 | Database | Supabase (Postgres) + Row Level Security |
 | File storage | Supabase Storage |
-| PDF generation | Pure-Python (e.g. xhtml2pdf) — no system packages |
+| PDF generation | fpdf2 + uharfbuzz (pure Python, Urdu shaping) — no system packages |
 | AI | Google Gemini API (free tier) |
 | Languages | English + Urdu (Flask-Babel), Urdu RTL. English: `/tools`, Urdu: `/ur/tools`. Use `localized_route` from `app/i18n.py`. Every page gets hreflang tags (en, ur, x-default). |
 | Hosting | Vercel (free Hobby plan) |
@@ -80,11 +80,12 @@ toolverse/
 │   │   │   └── __init__.py    # get_ai_provider()
 │   │   ├── supabase_client.py
 │   │   ├── pdf_reader.py
-│   │   └── pdf_builder.py
+│   │   └── pdf_builder.py     # fpdf2 setup: fonts, Urdu shaping
+│   ├── assets/fonts/          # PDF fonts (Geist, Noto Nastaliq Urdu); shipped with the function
 │   ├── templates/
 │   │   ├── base.html
 │   │   ├── partials/
-│   │   ├── marketing/ auth/ dashboard/ tools/ cv_templates/
+│   │   ├── marketing/ auth/ dashboard/ tools/
 │   └── translations/          # en, ur
 ├── public/static/             # css/ js/ img/
 ├── docs/
@@ -130,7 +131,15 @@ Primary button: white bg, black text, pill. Secondary: `#141416` + border, pill.
 - Phase 4: Expense Tracker at `/dashboard/expenses` (+ currency). SQL: `supabase/migrations/20261011_expenses.sql`.
 - Phase 5: Caption Generator at `/dashboard/captions`. First AI tool (Gemini `gemini-3.5-flash-lite` via `google-genai`). Daily limits: guest 3 (by IP), user 20, whole site 500 — all in config. History for logged-in users. SQL: `20261012_captions.sql` + `20261013_captions_limits.sql`.
 
-**Next:** CV Generator / CV Checker. See `docs/requirements/`.
+- Phase 6A: CV Generator at `/dashboard/cv-generator`: step form, Classic + Modern templates, PDF download for guests and users (`POST /api/cv-generator/pdf`, stores nothing). Form kept in `localStorage` (`toolverse_guest_cvs`, `public/static/js/cv_generator/stores.js`). PDF layouts: `cv_generator/pdf_templates/`.
+
+**Next:** Phase 6B: saved CVs (several per user) + AI help for summary/experience + "check this CV" link. Then CV Checker. See `docs/requirements/`.
+
+**How PDFs work (follow for CV Checker too):**
+- `app/services/pdf_builder.py`: `new_document()` + `render()`. Text is real text (ATS-readable); tests read it back with `pypdf` (dev only).
+- Urdu text must use the Nastaliq font as the MAIN font (`CvLayout.font(text=...)`), not Geist's fallback, or readers get the words in reverse order. No letter-spacing (readers split the letters).
+- Shaped Urdu adds zero-width spaces (U+200B) in extracted text: the CV Checker's `pdf_reader.py` must remove them.
+- Fonts are static Regular/Bold TTFs (variable fonts took ~10 s per PDF).
 
 **How AI works (follow for CV Checker/Generator):**
 - Tools call `get_ai_provider().generate_json(system=, prompt=, schema=)` only. Errors: `AIUnavailable` / `AIQuotaExceeded` / `AIBlocked` (`.code`). New vendor = new file in `app/services/ai/` + `PROVIDERS` entry + `AI_PROVIDER` in `.env`.

@@ -52,6 +52,9 @@ class BaseConfig:
     CAPTIONS_USER_DAILY_LIMIT = int(os.environ.get("CAPTIONS_USER_DAILY_LIMIT", "20"))
     CAPTIONS_SITE_DAILY_LIMIT = int(os.environ.get("CAPTIONS_SITE_DAILY_LIMIT", "500"))
 
+    # CV Generator: the biggest form allowed when asking for a PDF (a full CV is ~10-20 KB).
+    CV_PDF_MAX_REQUEST_BYTES = 64 * 1024
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
